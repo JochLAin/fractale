@@ -1,4 +1,4 @@
-# Fractale-js
+# Fractale
 
 Data Modeling
 
@@ -10,7 +10,7 @@ It will test value of each fields and link model between them.
 ```javascript
 'use strict';
 
-const Fractale = require('fractale-js');
+const Fractale = require('fractale');
 
 const myModel = Fractale.create(
     'Foo', /* Name of your model (required) */
@@ -30,7 +30,7 @@ const myModel = Fractale.create(
 ```javascript
 'use strict';
 
-const Fractale = require('fractale-js');
+const Fractale = require('fractale');
 
 const Book = Fractale.create('Book', {
     title: String,
@@ -44,7 +44,7 @@ const Book = Fractale.create('Book', {
 ```javascript
 'use strict';
 
-const Fractale = require('fractale-js');
+const Fractale = require('fractale');
 
 const Author = Fractale.create('Author', {
     firstname: String,
@@ -63,7 +63,7 @@ const Book = Fractale.create('Book', {
 ```javascript
 'use strict';
 
-const Fractale = require('fractale-js');
+const Fractale = require('fractale');
 
 const Author = Fractale.create('Author', {
     firstname: String,
@@ -113,7 +113,7 @@ console.log(book.serialize());
 
 ```javascript
 
-const library = require('fractale-js/library');
+const library = require('fractale/library');
 
 const save = () => {
     const data = library.all();
