@@ -1,0 +1,15 @@
+{
+  "name": "fractale",
+  "version": "1.0.0",
+  "description": "Modeling architecture data",
+  "main": "factory.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "modeling",
+    "architecture"
+  ],
+  "author": "Jocelyn Faihy <jocelyn@faihy.fr>",
+  "license": "SEE LICENSE IN LICENSE"
+}
