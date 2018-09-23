@@ -4,6 +4,10 @@ class Library {
         this.encyclopedias = [];
     }
 
+    all() {
+        return this.encyclopedias;
+    }
+
     fill(name, schema) {
         const encyclopedia = new Encyclopedia(name, schema);
         this.encyclopedias.push(encyclopedia);

@@ -68,6 +68,7 @@ const Fractale = require('fractale-js');
 const Author = Fractale.create('Author', {
     firstname: String,
     lastname: String,
+    surname: String,
 });
 
 const Chapter = Fractale.create('Chapter', {
@@ -84,7 +85,7 @@ const Book = Fractale.create('Book', {
     chapters: [Chapter],
     comments: [{
         author: String,
-        text: String
+        text: String,
     }],
 });
 ```
@@ -99,11 +100,21 @@ const book = new Book({
     title: 'Air gear',
     author: { firstname: 'Ōgure', lastname: 'Ito', surname: 'Oh! Great' },
     editor: 'Pika Edition',
-    description: `Dans un futur proche, les évolutions technologiques ont permis de créer des rollers contenant un moteur surpuissant, appelés AT (Air Trecks), avec lesquels il est possible d'effectuer des figures et des sauts défiant quasiment les lois de la gravité. Les amateurs de ce sport se rassemblent en groupes (gangs). Itsuki « Ikki » Minami est un collégien plutôt bagarreur vivant chez quatre filles qu'il considère comme ses sœurs qui l'ont recueilli alors qu'il était encore très jeune. L'une d'entre elles, Ringo, est secrètement amoureuse de lui. Ikki est le leader des "Higashi Guns" (ou Higachû) et se fait appeler "Babyface" par ses amis. Selon eux, il n'aurait aucun adversaire à sa taille au combat de rue. Il se bat un jour avec un gang de Storm Riders mais se fait battre à plate couture. Pour se venger, il décide de voler une paire de AT à l'une de ses sœurs. Depuis quelque temps, Ikki est intrigué par ces rollers, en partie à cause d'une fille qu'il vient voir s'entraîner et dont il est tombé amoureux. Il décide finalement de combattre ce gang, les Skull Saders, avec l'aide de ses sœurs qui forment en fait un gang appelé les "Sleeping Forest". Après ce combat, il se découvrira d'étonnantes capacités pour ces Air Trecks et finira finalement par former son propre gang de riders.`
+    description: `...`,
     score: 4.9,
     comments: [{ author: 'Anon.', text: 'Vraiment sublime' }],
 });
 
 book.score = 5;
 console.log(book.serialize());
+```
+
+### Library example
+
+```javascript
+
+const save = () => {
+    require('fractale-js/library').all();
+}
+
 ```
