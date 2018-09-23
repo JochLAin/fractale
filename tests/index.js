@@ -239,6 +239,6 @@ const game = new Game({
 
 game.character = character;
 
-console.log(character, character.move_bottom);
-console.log(game.character(0).move_bottom.frame(0).layer(0).pixel(3));
+// console.log(character, character.move_bottom);
+// console.log(game.character(0).move_bottom.frame(0).layer(0).pixel(3));
 // console.log(game.character(0).move_bottom.frame(0).layer(0).pixel(3));

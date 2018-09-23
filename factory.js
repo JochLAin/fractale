@@ -27,7 +27,7 @@ class ModelFactory {
         }
 
         const entity = class Model extends BasicModel {
-            constructor(props) {
+            constructor(props = {}) {
                 super(props);
                 this._uuid = props.uuid || uuid.v4();
 
