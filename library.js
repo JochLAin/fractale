@@ -20,6 +20,13 @@ class Library {
         return this.encyclopedias.find(encyclopedia => encyclopedia.name == name.toLowerCase());
     }
 
+    read(data) {
+        if (!data || !Array.isArray(data)) {
+            data = [];
+        }
+        this.encyclopedias = data;
+    }
+
     get names() {
         return this.encyclopedias.map(encyclopedia => encyclopedia.name);
     }

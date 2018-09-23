@@ -113,8 +113,14 @@ console.log(book.serialize());
 
 ```javascript
 
+const library = require('fractale-js/library');
+
 const save = () => {
-    require('fractale-js/library').all();
+    const data = library.all();
+    return JSON.stringify(data);
 }
 
+const open = (data) => {
+    library.read(JSON.parse(data));    
+}
 ```
