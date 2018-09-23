@@ -1,2 +1,3 @@
 # fractale-js
-Modeling architecture data
+
+Modeling architecture for data

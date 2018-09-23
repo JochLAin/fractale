@@ -1,5 +1,5 @@
 
-const { singularize } = require('../../inflector');
+const { singularize } = require('../inflector');
 const BasicModel = require('../index');
 const BasicPropertyDefiner = require('./basic');
 
