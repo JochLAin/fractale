@@ -30,6 +30,14 @@ class Library {
     get names() {
         return this.encyclopedias.map(encyclopedia => encyclopedia.name);
     }
+
+    set socket(socket) {
+        this._socket = socket;
+    }
+
+    get socket() {
+        return this._socket;
+    }
 }
 
 class Encyclopedia {

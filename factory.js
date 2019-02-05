@@ -44,6 +44,22 @@ class ModelFactory {
                 }
 
                 library.get(name).set(this.serialize());
+                if (library.socket) {
+                    this.addEventListener('change', () => {
+                        this.socket.emit(`change`, Object.assign({ _name: name }, this.serialize()));
+                        this.socket.on(`refresh`, (props) => {
+                            if (props._name == name && props.uuid == this.uuid) {
+                                this.unserialize(props);
+                            }
+                        });
+                        this.socket.emit(`change_${name.toLowerCase()}`, this.serialize());
+                        this.socket.on(`refresh_${name.toLowerCase()}`, (props) => {
+                            if (props.uuid == this.uuid) {
+                                this.unserialize(props);
+                            }
+                        });
+                    });
+                }
             }
 
             serialize() {
@@ -52,6 +68,14 @@ class ModelFactory {
                     serialized[key] = this[key];
                 }
                 return serialized;
+            }
+
+            unserialize(props) {
+                for (let key in schema) {
+                    if (props[key]) {
+                        this[key] = props[key];
+                    }
+                }
             }
 
             get uuid() {
