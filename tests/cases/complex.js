@@ -3,7 +3,7 @@ const Model = require('../../factory');
 
 module.exports.title = 'Test complex model'
 
-module.exports.promise = new Promise((resolve, reject) => {
+module.exports.run = () => new Promise((resolve, reject) => {
     const Layer = Model.create('Layer', {
         pixels: [String],
         height: Number,
@@ -105,7 +105,6 @@ module.exports.promise = new Promise((resolve, reject) => {
 
     game.character = character;
 
-    console.log(game.character(0).move_bottom);
     if (game.character(0).move_bottom.frame(0).layer(0).pixel(3) !== '#000333') {
         throw new Error('Error on complex accessor');
     }

@@ -3,7 +3,7 @@ const Model = require('../../factory');
 
 module.exports.title = 'Test inception model'
 
-module.exports.promise = new Promise((resolve, reject) => {
+module.exports.run = () => new Promise((resolve, reject) => {
     const Message = Model.create('Message', { text: String, priority: Number });
     const Messenger = Model.create('Messenger', { message: Message });
 

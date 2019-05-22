@@ -3,7 +3,7 @@ const Model = require('../../factory');
 
 module.exports.title = 'Test compound model'
 
-module.exports.promise = new Promise((resolve, reject) => {
+module.exports.run = () => new Promise((resolve, reject) => {
     const Library = Model.create('Library', {
         books: [{
             readable: Boolean,

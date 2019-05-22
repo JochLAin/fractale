@@ -3,7 +3,7 @@ const Model = require('../../factory');
 
 module.exports.title = 'Test compound inception model'
 
-module.exports.promise = new Promise((resolve, reject) => {
+module.exports.run = () => new Promise((resolve, reject) => {
     const Alert = Model.create('Alert', {
         text: String,
         level: String

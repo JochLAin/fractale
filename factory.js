@@ -26,7 +26,7 @@ class ModelFactory {
         }
         library.fill(name, schema);
 
-        const entity = class Model extends this.baseClassModel {
+        const entity = class Model extends this.modelClass {
             constructor(props = {}) {
                 super(props);
                 this._uuid = props.uuid || uuid.v4();
@@ -93,17 +93,17 @@ class ModelFactory {
         };
     }
 
-    set baseClassModel(baseClassModel) {
-        if (baseClassModel instanceof BasicModel) {
-            this._baseClassModel = baseClassModel;
+    set modelClass(modelClass) {
+        if (modelClass instanceof BasicModel) {
+            this._modelClass = modelClass;
         }
     }
 
-    get baseClassModel() {
-        if (!this._baseClassModel) {
-            this._baseClassModel = BasicModel;
+    get modelClass() {
+        if (!this._modelClass) {
+            this._modelClass = BasicModel;
         }
-        return this._baseClassModel;
+        return this._modelClass;
     }
 }
 

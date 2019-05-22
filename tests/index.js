@@ -7,24 +7,27 @@ const cases = [
     require('./cases/compound'),
     require('./cases/inception'),
     require('./cases/inception_compound'),
-    // require('./cases/complex'),
+    require('./cases/complex'),
 ];
 
-const main = Promise.resolve();
+const chain = Promise.resolve();
 
-for (let index in cases) {
-    main.then(() => {
-        return cases[index].promise.then(() => {
-            console.log(console.colorize(cases[index].title, 'cyan', null, 'bold'));
+const loop = async () => {
+    let current = cases.shift();
+    if (current) {
+        console.log(console.colorize(current.title, 'cyan', null, 'bold'));
+
+        await current.run().then(() => {
             console.log(console.colorize('Test passed\n', 'green'));
         }).catch((error) => {
-            console.log(console.colorize(cases[index].title, 'cyan', null, 'bold'));
             console.log(console.colorize('Test error\n', 'red'));
-            console.log(`   > ${error.message}`);
+            console.log(console.colorize(`\n  ${error.message}\n`, 'white', 'red'));
             console.log('');
             process.exit(1);
         });
-    });
-}
 
-main.catch(() => process.exit(2));
+        return loop();
+    }
+};
+
+chain.then(loop).catch(() => process.exit(1));

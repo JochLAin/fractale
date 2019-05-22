@@ -3,7 +3,7 @@ const Model = require('../../factory');
 
 module.exports.title = 'Test simple model'
 
-module.exports.promise = new Promise((resolve, reject) => {
+module.exports.run = () => new Promise((resolve, reject) => {
     const Book = Model.create('Book', {
         readable: Boolean,
         title: String,
