@@ -26,7 +26,7 @@ class ModelFactory {
         }
         library.fill(name, schema);
 
-        const entity = class Model extends BasicModel {
+        const entity = class Model extends this.baseClassModel {
             constructor(props = {}) {
                 super(props);
                 this._uuid = props.uuid || uuid.v4();
@@ -92,6 +92,20 @@ class ModelFactory {
             __options: options
         };
     }
+
+    set baseClassModel(baseClassModel) {
+        if (baseClassModel instanceof BasicModel) {
+            this._baseClassModel = baseClassModel;
+        }
+    }
+
+    get baseClassModel() {
+        if (!this._baseClassModel) {
+            this._baseClassModel = BasicModel;
+        }
+        return this._baseClassModel;
+    }
 }
 
 module.exports = new ModelFactory();
+model.exports.BasicModel = BasicModel;
