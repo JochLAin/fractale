@@ -17,14 +17,14 @@ class ModelFactory {
 
     create(name, parent, schema) {
         this.check(name);
-        library.fill(name, schema);
 
         if (typeof parent == 'function') {
             schema = Object.assign({}, library.get(parent.constructor.name).schema, schema);
         } else {
             schema = parent;
-            parent = undefined;            
+            parent = undefined;
         }
+        library.fill(name, schema);
 
         const entity = class Model extends BasicModel {
             constructor(props = {}) {
