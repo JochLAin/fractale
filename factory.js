@@ -108,4 +108,4 @@ class ModelFactory {
 }
 
 module.exports = new ModelFactory();
-model.exports.BasicModel = BasicModel;
+module.exports.BasicModel = BasicModel;
