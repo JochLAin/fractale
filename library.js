@@ -1,6 +1,9 @@
 
-class Library {
+const EventListener = require('./event_listener');
+
+class Library extends EventListener {
     constructor() {
+        super();
         this.encyclopedias = [];
     }
 
@@ -11,13 +14,14 @@ class Library {
     fill(name, schema) {
         const encyclopedia = new Encyclopedia(name, schema);
         this.encyclopedias.push(encyclopedia);
+        this.dispatchEvent('fill', { name });
     }
 
     get(name) {
         if (!this.names.includes(name.toLowerCase())) {
             throw new Error(`Model with name "${name}" doesn't exists.`);
         }
-        return this.encyclopedias.find(encyclopedia => encyclopedia.name == name.toLowerCase());
+        return this.encyclopedias.find(encyclopedia => encyclopedia.name === name.toLowerCase());
     }
 
     read(data) {
@@ -31,24 +35,25 @@ class Library {
         return this.encyclopedias.map(encyclopedia => encyclopedia.name);
     }
 
-    set socket(socket) {
-        this._socket = socket;
-    }
-
-    get socket() {
-        return this._socket;
-    }
+    // set socket(socket) {
+    //     this._socket = socket;
+    // }
+    //
+    // get socket() {
+    //     return this._socket;
+    // }
 }
 
-class Encyclopedia {
+class Encyclopedia extends EventListener {
     constructor(name, schema) {
+        super();
         this.name = name.toLowerCase();
         this.schema = Object(schema);
         this.instances = [];
     }
 
     set(instance) {
-        const index = this.instances.findIndex(i => i.uuid == instance.uuid);
+        const index = this.instances.findIndex(i => i.uuid === instance.uuid);
         if (index < 0) {
             this._instances.push(instance);
         } else {
@@ -58,7 +63,7 @@ class Encyclopedia {
 
     get(uuid) {
         return this.instances.find(instance => {
-            return instance.uuid == uuid
+            return instance.uuid === uuid
         });
     }
 

@@ -5,7 +5,9 @@ const BasicPropertyDefiner = require('./basic');
 class ObjectPropertyDefiner extends BasicPropertyDefiner {
     constructor(instance, key, type, options) {
         super(instance, key, type, options);
+
         this.items = {};
+
         // for (let _key in this.type) {
         //     this.items[_key] = new ItemPropertyDefiner(
         //         this.instance,

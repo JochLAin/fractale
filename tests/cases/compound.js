@@ -1,17 +1,9 @@
 
-const Fractale = require('../../factory');
+const { Flashbag } = require('./models');
 
-module.exports.title = 'Test compound inception model';
+module.exports.title = 'Test compound model';
 
-module.exports.run = () => new Promise((resolve, reject) => {
-    const Alert = Fractale.create('Alert', {
-        text: String,
-        level: String
-    });
-    const Flashbag = Fractale.create('Flashbag', {
-        alerts: [Alert]
-    });
-
+module.exports.run = () => new Promise((resolve) => {
     const flashbag = new Flashbag({
         alerts: [
             { text: 'Hello world !', level: 'info' },
@@ -21,11 +13,11 @@ module.exports.run = () => new Promise((resolve, reject) => {
     });
 
     if (flashbag.alert(0).text !== 'Hello world !') {
-        return reject(new Error('Error on compound accessor'));
+        throw new Error('Error on compound accessor');
     }
 
     if (!flashbag.serialize()) {
-        return reject(new Error('Error on compound serialize'));
+        throw new Error('Error on compound serialize');
     }
 
     resolve();

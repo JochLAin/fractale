@@ -1,15 +1,9 @@
 
-const Fractale = require('../../factory');
+const { Book } = require('./models');
 
 module.exports.title = 'Test simple model';
 
-module.exports.run = () => new Promise((resolve, reject) => {
-    const Book = Fractale.create('Book', {
-        readable: Boolean,
-        title: String,
-        nb_chapter: Number
-    });
-
+module.exports.run = () => new Promise((resolve) => {
     const book = new Book({
         title: 'Air gear',
         readable: true,
@@ -17,11 +11,11 @@ module.exports.run = () => new Promise((resolve, reject) => {
     });
 
     if (book.title !== 'Air gear') {
-        return reject(new Error('Error on simple accessor'));
+        throw new Error('Error on simple accessor');
     }
 
     if (!book.serialize()) {
-        return reject(new Error('Error on simple serialize'));
+        throw new Error('Error on simple serialize');
     }
 
     resolve();

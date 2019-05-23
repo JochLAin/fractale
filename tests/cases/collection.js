@@ -1,17 +1,9 @@
 
-const Fractale = require('../../factory');
+const { Library } = require('./models');
 
-module.exports.title = 'Test compound model';
+module.exports.title = 'Test collection model';
 
-module.exports.run = () => new Promise((resolve, reject) => {
-    const Library = Fractale.create('Library', {
-        books: [{
-            readable: Boolean,
-            title: String,
-            nb_chapter: Number
-        }]
-    });
-
+module.exports.run = () => new Promise((resolve) => {
     const library = new Library({
         books: [{
             title: 'Air gear',
@@ -25,14 +17,14 @@ module.exports.run = () => new Promise((resolve, reject) => {
     });
 
     if (library.books[0].title !== 'Air gear') {
-        return reject(new Error('Error on collection accessor with brace'));
+        throw new Error('Error on collection accessor with brace');
     }
     if (library.book(1).title !== 'Tenjo tenge') {
-        return reject(new Error('Error on collection accessor with function singular'));
+        throw new Error('Error on collection accessor with function singular');
     }
 
     if (!library.serialize()) {
-        return reject(new Error('Error on collection serialize'));
+        throw new Error('Error on collection serialize');
     }
     resolve();
 });

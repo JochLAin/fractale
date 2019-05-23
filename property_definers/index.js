@@ -5,6 +5,7 @@ const BasicPropertyDefiner = require('./basic');
 const ModelPropertyDefiner = require('./model');
 const ObjectPropertyDefiner = require('./object');
 const SimplePropertyDefiner = require('./simple');
+const { SELF } = require('../constants');
 
 module.exports.get = (instance, key, type, options) => {
     if (type === null || ['undefined'].includes(typeof type) || type === undefined) {
@@ -37,6 +38,9 @@ module.exports.get = (instance, key, type, options) => {
     }
 
     if (['string'].includes(typeof type) || type === String) {
+        if (type === SELF) {
+            return new ModelPropertyDefiner(instance, key, instance.constructor, options);
+        }
         return new SimplePropertyDefiner(instance, key, type, options, 'string', String);
     }
 

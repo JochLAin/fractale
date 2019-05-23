@@ -7,7 +7,9 @@ const cases = [
     require('./cases/collection'),
     require('./cases/inception'),
     require('./cases/compound'),
-    // require('./cases/complex'),
+    require('./cases/self_reference'),
+    require('./cases/deep'),
+    require('./cases/complex'),
 ];
 
 const chain = Promise.resolve();
@@ -15,13 +17,17 @@ const chain = Promise.resolve();
 const loop = async () => {
     let current = cases.shift();
     if (current) {
-        console.log(console.colorize(current.title, 'cyan', null, 'bold'));
+        console.log(console.colorize(`  > ${current.title}`, 'cyan', null, 'bold'));
 
         await current.run().then(() => {
-            console.log(console.colorize('Test passed\n', 'green'));
+            console.log('');
+            console.log(console.colorize('\n  Test passed\n', 'white', 'green'));
+            console.log('');
         }).catch((error) => {
-            console.log(console.colorize('Test error\n', 'red'));
-            console.log(console.colorize(`\n  ${error.message}\n`, 'white', 'red'));
+            console.log('');
+            console.log(console.colorize('\n  Test error\n', 'white', 'red'));
+            console.log('');
+            console.error(error);
             console.log('');
             process.exit(1);
         });

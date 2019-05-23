@@ -1,12 +1,12 @@
 
-
 const uuid = require('uuid');
 const PropertyDefiner = require('./property_definers');
 const BasicModel = require('./index');
 const library = require('./library');
+const { SELF } = require('./constants');
 
 class ModelFactory {
-    check(name) {
+    static check(name) {
         if (!name) {
             throw new Error('You need to pass a name to your model.');
         }
@@ -16,7 +16,7 @@ class ModelFactory {
     }
 
     create(name, parent, schema) {
-        this.check(name);
+        ModelFactory.check(name);
 
         if (typeof parent == 'function') {
             schema = Object.assign({}, library.get(parent.constructor.name).schema, schema);
@@ -39,35 +39,35 @@ class ModelFactory {
                         definer.assign(this, key, schema[key]);
                         definer.define(this, key, schema[key]);
                         if (props[key]) {
-
                             this[key] = props[key];
                         }
                     }
                 }
 
                 library.get(name).set(this.serialize());
-                if (library.socket) {
-                    this.addEventListener('change', () => {
-                        this.socket.emit(`change`, Object.assign({ _name: name }, this.serialize()));
-                        this.socket.on(`refresh`, (props) => {
-                            if (props._name === name && props.uuid === this.uuid) {
-                                this.unserialize(props);
-                            }
-                        });
-                        this.socket.emit(`change_${name.toLowerCase()}`, this.serialize());
-                        this.socket.on(`refresh_${name.toLowerCase()}`, (props) => {
-                            if (props.uuid === this.uuid) {
-                                this.unserialize(props);
-                            }
-                        });
-                    });
-                }
+                library.dispatchEvent('initialize', { name, instance: this });
+                // if (library.socket) {
+                //     this.addEventListener('change', () => {
+                //         this.socket.emit(`change`, Object.assign({_name: name}, this.serialize()));
+                //         this.socket.on(`refresh`, (props) => {
+                //             if (props._name === name && props.uuid === this.uuid) {
+                //                 this.unserialize(props);
+                //             }
+                //         });
+                //         this.socket.emit(`change_${name.toLowerCase()}`, this.serialize());
+                //         this.socket.on(`refresh_${name.toLowerCase()}`, (props) => {
+                //             if (props.uuid === this.uuid) {
+                //                 this.unserialize(props);
+                //             }
+                //         });
+                //     });
+                // }
             }
 
             serialize() {
-                let serialized = { uuid: this.uuid };
+                let serialized = {uuid: this.uuid};
                 for (let key in schema) {
-                    if (this.hasOwnProperty(key)) {
+                    if (schema.hasOwnProperty(key)) {
                         serialized[key] = this[key];
                     }
                 }
@@ -76,7 +76,7 @@ class ModelFactory {
 
             unserialize(props) {
                 for (let key in schema) {
-                    if (props[key]) {
+                    if (schema.hasOwnProperty(key) && props[key]) {
                         this[key] = props[key];
                     }
                 }
@@ -87,7 +87,7 @@ class ModelFactory {
             }
         }
 
-        return Object.defineProperty(entity, 'name', { value: name });
+        return Object.defineProperty(entity, 'name', {value: name});
     }
 
     with(type, options) {
@@ -112,4 +112,6 @@ class ModelFactory {
 }
 
 module.exports = new ModelFactory();
+
 module.exports.BasicModel = BasicModel;
+module.exports.SELF = SELF;
