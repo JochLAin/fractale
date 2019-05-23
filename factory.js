@@ -1,6 +1,5 @@
 
 const uuid = require('uuid');
-const PropertyDefiner = require('./property_definers');
 const BasicModel = require('./index');
 const library = require('./library');
 const { SELF } = require('./constants');
@@ -23,9 +22,8 @@ class ModelFactory {
         } else {
             schema = parent;
         }
-        library.fill(name, schema);
 
-        const entity = class Model extends this.modelClass {
+        const entity = class Model extends this.baseModelClass {
             constructor(props = {}) {
                 super(props);
                 this._uuid = props.uuid || uuid.v4();
@@ -35,7 +33,7 @@ class ModelFactory {
                         throw new Error('Field "uuid" is automatically set');
                     }
                     if (schema.hasOwnProperty(key)) {
-                        const definer = PropertyDefiner.get(this, key, schema[key]);
+                        const definer = require('./property_definers').get(this, key, schema[key]);
                         definer.assign(this, key, schema[key]);
                         definer.define(this, key, schema[key]);
                         if (props[key]) {
@@ -45,7 +43,7 @@ class ModelFactory {
                 }
 
                 library.get(name).set(this.serialize());
-                library.dispatchEvent('initialize', { name, instance: this });
+                library.dispatchEvent('new', { name, instance: this });
                 // if (library.socket) {
                 //     this.addEventListener('change', () => {
                 //         this.socket.emit(`change`, Object.assign({_name: name}, this.serialize()));
@@ -85,9 +83,11 @@ class ModelFactory {
             get uuid() {
                 return this._uuid;
             }
-        }
+        };
 
-        return Object.defineProperty(entity, 'name', {value: name});
+        const model = Object.defineProperty(entity, 'name', {value: name});
+        library.fill(name, schema, model);
+        return model;
     }
 
     with(type, options) {
@@ -97,17 +97,17 @@ class ModelFactory {
         };
     }
 
-    set modelClass(modelClass) {
-        if (modelClass instanceof BasicModel) {
-            this._modelClass = modelClass;
+    set baseModelClass(baseModelClass) {
+        if (baseModelClass instanceof BasicModel) {
+            this._baseModelClass = baseModelClass;
         }
     }
 
-    get modelClass() {
-        if (!this._modelClass) {
-            this._modelClass = BasicModel;
+    get baseModelClass() {
+        if (!this._baseModelClass) {
+            this._baseModelClass = BasicModel;
         }
-        return this._modelClass;
+        return this._baseModelClass;
     }
 }
 

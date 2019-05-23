@@ -40,7 +40,8 @@ class ModelPropertyDefiner extends BasicPropertyDefiner {
             return value;
         }
 
-        if (typeof value === 'object') {
+        if (typeof value === 'object' && !(value instanceof this.type)) {
+            value = Object.assign({}, this.instance[this.key] && this.instance[this.key].serialize(), value);
             value = new this.type(value);
         }
         if (value instanceof this.type) {

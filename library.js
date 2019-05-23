@@ -11,15 +11,16 @@ class Library extends EventListener {
         return this.encyclopedias;
     }
 
-    fill(name, schema) {
-        const encyclopedia = new Encyclopedia(name, schema);
+    fill(name, schema, model) {
+        const encyclopedia = new Encyclopedia(name, schema, model);
         this.encyclopedias.push(encyclopedia);
         this.dispatchEvent('fill', { name });
     }
 
     get(name) {
         if (!this.names.includes(name.toLowerCase())) {
-            throw new Error(`Model with name "${name}" doesn't exists.`);
+            return false;
+            // throw new Error(`Model with name "${name}" doesn't exists.`);
         }
         return this.encyclopedias.find(encyclopedia => encyclopedia.name === name.toLowerCase());
     }
@@ -45,10 +46,11 @@ class Library extends EventListener {
 }
 
 class Encyclopedia extends EventListener {
-    constructor(name, schema) {
+    constructor(name, schema, model) {
         super();
         this.name = name.toLowerCase();
         this.schema = Object(schema);
+        this.model = model;
         this.instances = [];
     }
 
@@ -81,6 +83,14 @@ class Encyclopedia extends EventListener {
 
     get schema() {
         return this._schema;
+    }
+
+    set model(model) {
+        this._model = model;
+    }
+
+    get model() {
+        return this._model;
     }
 
     set instances(instances) {

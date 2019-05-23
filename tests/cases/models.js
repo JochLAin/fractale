@@ -1,18 +1,21 @@
 
 const Fractale = require('../../factory');
 
-const Page = module.exports.Page = Fractale.create('Page', {
-    title: String,
-    robot: {
-        key: String,
-        data: String
-    }
-});
-
 const Book = module.exports.Book = Fractale.create('Book', {
     readable: Boolean,
     title: String,
     nb_chapter: Number
+});
+
+const Page = module.exports.Page = Fractale.create('Page', {
+    title: String,
+    robot: {
+        key: String,
+        data: {
+            key: String,
+            value: String
+        }
+    }
 });
 
 const Library = module.exports.Library = Fractale.create('Library', {
@@ -83,7 +86,7 @@ const Frame = module.exports.Frame = Fractale.create('Frame', {
 });
 
 const Sprite = module.exports.Sprite = Fractale.create('Sprite', {
-    layers: [Fractale.with(Frame, { through: ['height', 'width']})],
+    frames: [Fractale.with(Frame, { through: ['height', 'width']})],
     height: Number,
     width: Number,
 });

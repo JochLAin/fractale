@@ -50,8 +50,7 @@ module.exports.run = () => new Promise((resolve) => {
 
     game.character = character;
 
-    console.log(game.character(0).move.bottom);
-    if (game.character(0).move_bottom.frame(0).layer(0).pixel(3) !== '#000333') {
+    if (game.character(0).move.bottom.frame(0).layer(0).pixel(3) !== '#000333') {
         throw new Error('Error on complex accessor');
     }
 

@@ -1,6 +1,6 @@
 module.exports = class EventListener {
     constructor() {
-        this.events = {};
+        this.__events = {};
     }
 
     addEventListener(event, callback) {
@@ -14,32 +14,32 @@ module.exports = class EventListener {
         }
 
         // Create the event if not exists
-        if (this.events[event] === undefined) {
-            this.events[event] = {
+        if (this.__events[event] === undefined) {
+            this.__events[event] = {
                 listeners: []
             }
         }
 
-        this.events[event].listeners.push(callback);
+        this.__events[event].listeners.push(callback);
     }
 
     removeEventListener(event, callback) {
         // Check if this event not exists
-        if (this.events[event] === undefined) {
+        if (this.__events[event] === undefined) {
             return false;
         }
 
-        this.events[event].listeners = this.events[event].listeners.filter(listener => {
+        this.__events[event].listeners = this.__events[event].listeners.filter(listener => {
             return listener.toString() !== callback.toString();
         });
     }
 
     dispatchEvent(event, details) {
         // Check if this event not exists
-        if (this.events[event] === undefined) {
+        if (this.__events[event] === undefined) {
             return false;
         }
-        this.events[event].listeners.forEach((listener) => {
+        this.__events[event].listeners.forEach((listener) => {
             listener(details);
         });
     }
