@@ -23,7 +23,7 @@ class ObjectPropertyDefiner extends BasicPropertyDefiner {
 
     check(value) {
         if (!['object'].includes(typeof value)) {
-            throw this.createUncorrectTypeError(this, value, 'object');
+            throw BasicPropertyDefiner.createUncorrectTypeError(this, value, 'object');
         }
     }
 

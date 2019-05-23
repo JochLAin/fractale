@@ -10,7 +10,7 @@ class ModelPropertyDefiner extends BasicPropertyDefiner {
 
     check(value) {
         if (value !== null && !(value instanceof this.type || typeof value == 'object')) {
-            throw this.createUncorrectTypeError(this, value, this.type.name + ' or null');
+            throw BasicPropertyDefiner.createUncorrectTypeError(this, value, this.type.name + ' or null');
         }
     }
 
@@ -28,7 +28,6 @@ class ModelPropertyDefiner extends BasicPropertyDefiner {
 
             if (item) {
                 item.addEventListener('change', () => {
-                    // console.log('change', this.key);
                     this.instance[this.key] = item;
                 });
             }

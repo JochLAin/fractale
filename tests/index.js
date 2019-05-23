@@ -4,10 +4,10 @@ const console = require('./console');
 const cases = [
     require('./cases/simple'),
     require('./cases/metadata'),
-    require('./cases/compound'),
+    require('./cases/collection'),
     require('./cases/inception'),
-    require('./cases/inception_compound'),
-    require('./cases/complex'),
+    require('./cases/compound'),
+    // require('./cases/complex'),
 ];
 
 const chain = Promise.resolve();

@@ -11,12 +11,12 @@ class SimplePropertyDefiner extends BasicPropertyDefiner {
 
     assign() {
         const type = typeof this.type;
-        this.instance[`_${this.key}`] = type == this.name ? this.type : null;
+        this.instance[`_${this.key}`] = type === this.name ? this.type : null;
     }
 
     check(value) {
         if (value !== null && ![this.name].includes(typeof value)) {
-            throw this.createUncorrectTypeError(this, value, this.name + ' or null');
+            throw BasicPropertyDefiner.createUncorrectTypeError(this, value, this.name + ' or null');
         }
     }
 

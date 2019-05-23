@@ -8,7 +8,7 @@ class ArrayPropertyDefiner extends BasicPropertyDefiner {
         super(instance, key, type, options);
 
         this.singular = singularize(this.key);
-        if (!Array.isArray(this.singular) && this.singular == this.key) {
+        if (!Array.isArray(this.singular) && this.singular === this.key) {
             throw new Error(`${this.singular} is already a singular or the same as plural (${this.key})`);
         }
 
@@ -34,7 +34,7 @@ class ArrayPropertyDefiner extends BasicPropertyDefiner {
 
     check(value) {
         if (value !== null && !Array.isArray(value)) {
-            throw this.createUncorrectTypeError(this, value, 'array or null');
+            throw ArrayPropertyDefiner.createUncorrectTypeError(this, value, 'array or null');
         }
         for (let index in value) {
             this.item.check(value[index]);
@@ -103,7 +103,7 @@ class ItemPropertyDefiner extends BasicPropertyDefiner {
     define() {
         if (Array.isArray(this.singular)) {
             for (let index in this.singular) {
-                if (this.singular != this.key) {
+                if (this.singular !== this.key) {
                     Object.defineProperty(this.instance, this.singular[index], {
                         get: this.getter(),
                         set: this.setter(),
@@ -126,7 +126,7 @@ class ItemPropertyDefiner extends BasicPropertyDefiner {
                     index = id;
                 } else if (typeof id == 'string') {
                     index = this.instance[this.key].findIndex(value => {
-                        return value && value.uuid == id;
+                        return value && value.uuid === id;
                     });
                 }
 
@@ -144,7 +144,7 @@ class ItemPropertyDefiner extends BasicPropertyDefiner {
 
             let index = -1;
             if (this.subdefiner.type instanceof BasicModel) {
-                index = this.instance[`_${this.key}`].findIndex(item => item.uuid == value.uuid);
+                index = this.instance[`_${this.key}`].findIndex(item => item.uuid === value.uuid);
             }
 
             if (index >= 0) {

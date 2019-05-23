@@ -1,10 +1,10 @@
 
-const Model = require('../../factory');
+const Fractale = require('../../factory');
 
-module.exports.title = 'Test simple model'
+module.exports.title = 'Test simple model';
 
 module.exports.run = () => new Promise((resolve, reject) => {
-    const Book = Model.create('Book', {
+    const Book = Fractale.create('Book', {
         readable: Boolean,
         title: String,
         nb_chapter: Number

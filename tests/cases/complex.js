@@ -1,10 +1,10 @@
 
-const Model = require('../../factory');
+const Fractale = require('../../factory');
 
-module.exports.title = 'Test complex model'
+module.exports.title = 'Test complex model';
 
-module.exports.run = () => new Promise((resolve, reject) => {
-    const Layer = Model.create('Layer', {
+module.exports.run = () => new Promise((resolve) => {
+    const Layer = Fractale.create('Layer', {
         pixels: [String],
         height: Number,
         width: Number,
@@ -13,19 +13,19 @@ module.exports.run = () => new Promise((resolve, reject) => {
         return this.pixels[y * this.width + x];
     };
 
-    const Frame = Model.create('Frame', {
-        layers: [{ __type: Layer, __options: { through: ['height', 'width']}}],
+    const Frame = Fractale.create('Frame', {
+        layers: [Fractale.with(Layer, { through: ['height', 'width']})],
         height: Number,
         width: Number,
     });
 
-    const Sprite = Model.create('Sprite', {
-        frames: [{ __type: Frame, __options: { through: ['height', 'width']}}],
+    const Sprite = Fractale.create('Sprite', {
+        layers: [Fractale.with(Frame, { through: ['height', 'width']})],
         height: Number,
         width: Number,
     });
 
-    const Character = Model.create('Character', {
+    const Character = Fractale.create('Character', {
         name: String,
         preview: Sprite,
         dashes: [Sprite],
@@ -43,7 +43,7 @@ module.exports.run = () => new Promise((resolve, reject) => {
         },
     });
 
-    const Game = Model.create('Game', {
+    const Game = Fractale.create('Game', {
         name: String,
         type: String,
         characters: [Character],

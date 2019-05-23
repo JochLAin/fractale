@@ -1,11 +1,11 @@
 
-const Model = require('../../factory');
+const Fractale = require('../../factory');
 
-module.exports.title = 'Test inception model'
+module.exports.title = 'Test inception model';
 
 module.exports.run = () => new Promise((resolve, reject) => {
-    const Message = Model.create('Message', { text: String, priority: Number });
-    const Messenger = Model.create('Messenger', { message: Message });
+    const Message = Fractale.create('Message', { text: String, priority: Number });
+    const Messenger = Fractale.create('Messenger', { message: Message });
 
     const messenger = new Messenger({
         message: {

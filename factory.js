@@ -22,7 +22,6 @@ class ModelFactory {
             schema = Object.assign({}, library.get(parent.constructor.name).schema, schema);
         } else {
             schema = parent;
-            parent = undefined;
         }
         library.fill(name, schema);
 
@@ -32,14 +31,17 @@ class ModelFactory {
                 this._uuid = props.uuid || uuid.v4();
 
                 for (let key in schema) {
-                    if (key == 'uuid') {
+                    if (key === 'uuid') {
                         throw new Error('Field "uuid" is automatically set');
                     }
-                    const definer = PropertyDefiner.get(this, key, schema[key]);
-                    definer.assign(this, key, schema[key]);
-                    definer.define(this, key, schema[key]);
-                    if (props[key]) {
-                        this[key] = props[key];
+                    if (schema.hasOwnProperty(key)) {
+                        const definer = PropertyDefiner.get(this, key, schema[key]);
+                        definer.assign(this, key, schema[key]);
+                        definer.define(this, key, schema[key]);
+                        if (props[key]) {
+
+                            this[key] = props[key];
+                        }
                     }
                 }
 
@@ -48,13 +50,13 @@ class ModelFactory {
                     this.addEventListener('change', () => {
                         this.socket.emit(`change`, Object.assign({ _name: name }, this.serialize()));
                         this.socket.on(`refresh`, (props) => {
-                            if (props._name == name && props.uuid == this.uuid) {
+                            if (props._name === name && props.uuid === this.uuid) {
                                 this.unserialize(props);
                             }
                         });
                         this.socket.emit(`change_${name.toLowerCase()}`, this.serialize());
                         this.socket.on(`refresh_${name.toLowerCase()}`, (props) => {
-                            if (props.uuid == this.uuid) {
+                            if (props.uuid === this.uuid) {
                                 this.unserialize(props);
                             }
                         });
@@ -65,7 +67,9 @@ class ModelFactory {
             serialize() {
                 let serialized = { uuid: this.uuid };
                 for (let key in schema) {
-                    serialized[key] = this[key];
+                    if (this.hasOwnProperty(key)) {
+                        serialized[key] = this[key];
+                    }
                 }
                 return serialized;
             }

@@ -1,9 +1,6 @@
-
-
 module.exports = class BasicModel {
-    constructor(props = {}) {
+    constructor() {
         this.events = {};
-        this.props = props;
     }
 
     addEventListener(event, callback) {

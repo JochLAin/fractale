@@ -1,10 +1,10 @@
 
-const Model = require('../../factory');
+const Fractale = require('../../factory');
 
-module.exports.title = 'Test metadata model'
+module.exports.title = 'Test metadata model';
 
 module.exports.run = () => new Promise((resolve, reject) => {
-    const Page = Model.create('Page', {
+    const Page = Fractale.create('Page', {
         title: String,
         robot: {
             key: String,

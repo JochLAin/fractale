@@ -1,38 +1,32 @@
 
-const Model = require('../../factory');
+const Fractale = require('../../factory');
 
-module.exports.title = 'Test compound model'
+module.exports.title = 'Test compound inception model';
 
 module.exports.run = () => new Promise((resolve, reject) => {
-    const Library = Model.create('Library', {
-        books: [{
-            readable: Boolean,
-            title: String,
-            nb_chapter: Number
-        }]
+    const Alert = Fractale.create('Alert', {
+        text: String,
+        level: String
+    });
+    const Flashbag = Fractale.create('Flashbag', {
+        alerts: [Alert]
     });
 
-    const library = new Library({
-        books: [{
-            title: 'Air gear',
-            readable: true,
-            nb_chapter: 31
-        }, {
-            title: 'Tenjo tenge',
-            readable: true,
-            nb_chapter: 21
-        }]
+    const flashbag = new Flashbag({
+        alerts: [
+            { text: 'Hello world !', level: 'info' },
+            { text: 'How are you world ?', level: 'warning' },
+            { text: 'Good bye world !', level: 'danger' }
+        ]
     });
 
-    if (library.books[0].title !== 'Air gear') {
-        return reject(new Error('Error on compound accessor with brace'));
-    }
-    if (library.book(1).title !== 'Tenjo tenge') {
-        return reject(new Error('Error on compound accessor with function singular'));
+    if (flashbag.alert(0).text !== 'Hello world !') {
+        return reject(new Error('Error on compound accessor'));
     }
 
-    if (!library.serialize()) {
+    if (!flashbag.serialize()) {
         return reject(new Error('Error on compound serialize'));
     }
+
     resolve();
 });

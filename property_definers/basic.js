@@ -10,14 +10,17 @@ class BasicPropertyDefiner {
         this.options = options;
     }
 
+    // Prepare property default value
     assign() {
         this.instance[`_${this.key}`] = undefined;
     }
 
-    check() {
-        // Do nothing
+    // Check if value correspond on property type
+    check(value) {
+        // Do nothing in this property definer
     }
 
+    // Define getter and setter on property(ies)
     define() {
         Object.defineProperty(this.instance, this.key, {
             get: this.getter(),
@@ -25,12 +28,14 @@ class BasicPropertyDefiner {
         });
     }
 
+    // Get getter of a property
     getter() {
         return () => {
             return this.denormalize(this.instance[`_${this.key}`]);
         };
     }
 
+    // Get setter of a property
     setter() {
         return (value) => {
             this.check(value);
@@ -39,6 +44,7 @@ class BasicPropertyDefiner {
         };
     }
 
+    // Get getter of a property
     normalize(value) {
         return value;
     }
