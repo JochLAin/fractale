@@ -1,0 +1,44 @@
+{
+  "tags": {
+    "allowUnknownTags": ["category"],
+    "dictionaries": ["jsdoc"]
+  },
+  "plugins": [
+    "node_modules/better-docs/category"
+  ],
+  "source": {
+    "include": ["./lib"],
+    "includePattern": ".js$",
+    "excludePattern": "(node_modules/|docs)"
+  },
+  "opts": {
+    "encoding": "utf8",
+    "destination": "docs/",
+    "readme": "README.md",
+    "template": "node_modules/better-docs",
+    "recurse": true,
+    "verbose": true,
+    "tutorials": "./tutorials"
+  },
+  "templates": {
+    "cleverLinks": false,
+    "monospaceLinks": false,
+    "default": {
+      "staticFiles": {
+        "include": [
+          "./tutorials/statics"
+        ]
+      }
+    },
+    "better-docs": {
+      "name": "Fractale Documentation",
+      "logo": "images/logo.svg",
+      "navigation": [
+        {
+          "label": "Github",
+          "href": "https://github.com/JochLAin/fractale"
+        }
+      ]
+    }
+  }
+}

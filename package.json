@@ -4,19 +4,25 @@
   "description": "Modeling architecture data",
   "main": "lib/index.js",
   "scripts": {
+    "doc": "npx jsdoc -c jsdoc.json",
     "test": "node ./tests/index.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JochLAin/fractale-js.git"
+    "url": "git+https://github.com/JochLAin/fractale.git"
   },
   "keywords": [
     "modeling",
     "architecture"
   ],
+  "author": "Jocelyn Faihy <jocelyn@faihy.fr>",
+  "license": "SEE LICENSE IN LICENSE",
   "dependencies": {
+    "minami": "^1.2.3",
     "uuid": "^3.3.2"
   },
-  "author": "Jocelyn Faihy <jocelyn@faihy.fr>",
-  "license": "SEE LICENSE IN LICENSE"
+  "devDependencies": {
+    "better-docs": "^1.1.6",
+    "jsdoc": "^3.6.2"
+  }
 }
