@@ -1,49 +1,43 @@
 
-const { Page } = require('./models');
-const console = require('../console');
+const { Compound } = require('./models');
 
 module.exports.title = 'Test metadata model';
 
 module.exports.run = () => new Promise((resolve) => {
-    const page = new Page({
-        title: 'Hello world',
-        robot: {
-            key: 'before',
-            data: {
-                key: 'before',
-                value: 'before',
-            }
-        }
+    const instance = new Compound({
+        string: 'Hello world',
+        boards: ['Lorem ipsum', 'Dolores sit amet'],
+        metadata: { key: 'Foo', data: { key: 'Bar', value: 12 }}
     });
 
-    const robot = page.robot;
-    robot.key = 'decomposition';
+    const metadata = instance.metadata;
+    metadata.key = 'decomposition';
 
-    if (page.robot.key !== 'decomposition') {
+    if (instance.metadata.key !== 'decomposition') {
         throw new Error('Error on metadata accessor with decomposition');
     }
 
-    page.robot.key = 'dot';
-    if (page.robot.key !== 'dot') {
+    instance.metadata.key = 'dot';
+    if (instance.metadata.key !== 'dot') {
         throw new Error('Error on metadata accessor with dot');
     }
 
-    page.robot = { key: 'assign' };
-    if (page.robot.key !== 'assign') {
+    instance.metadata = { key: 'assign' };
+    if (instance.metadata.key !== 'assign') {
         throw new Error('Error on metadata accessor with assign');
     }
 
-    page.robot = { data: { key: 'after', value: 'after' } };
+    instance.metadata = { data: { key: 'after', value: 'after' } };
 
-    if (page.robot.key !== 'assign') {
+    if (instance.metadata.key !== 'assign') {
         throw new Error('Error on metadata accessor with bracket');
     }
-    if (page.robot.data.key !== 'after') {
+    if (instance.metadata.data.key !== 'after') {
         throw new Error('Error on metadata accessor with bracket');
     }
 
-    if (!page.serialize()) {
-        throw new Error('Error on metadata serialize');
+    if (!instance.serialize()) {
+        throw new Error('Error on metadata serializer');
     }
     resolve();
 });

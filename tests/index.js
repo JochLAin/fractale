@@ -4,9 +4,8 @@ const console = require('./console');
 const cases = [
     require('./cases/simple'),
     require('./cases/metadata'),
-    require('./cases/collection'),
     require('./cases/inception'),
-    require('./cases/compound'),
+    require('./cases/collection'),
     require('./cases/self_reference'),
     require('./cases/deep'),
     require('./cases/complex'),
@@ -19,7 +18,7 @@ const chain = Promise.resolve();
 const loop = async () => {
     let current = cases.shift();
     if (current) {
-        console.log(console.colorize(`  > ${current.title}`, 'cyan', null, 'bold'));
+        console.log(console.colorize(`  > ${current.title}`, 'blue', null, 'bold'));
 
         await current.run().then(() => {
             console.log('');

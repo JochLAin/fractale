@@ -1,18 +1,25 @@
 
-const { Library } = require('./models');
+const { Library, Author } = require('./models');
 
 module.exports.title = 'Test collection model';
 
 module.exports.run = () => new Promise((resolve) => {
+    const author = new Author({
+        firstname: 'Ito',
+        lastname: 'Ōgure',
+        surname: 'Oh! Great',
+        comment: 'N/A',
+    });
+
     const library = new Library({
         books: [{
             title: 'Air gear',
             readable: true,
-            nb_chapter: 31
+            author: author,
         }, {
             title: 'Tenjo tenge',
             readable: true,
-            nb_chapter: 21
+            author: author,
         }]
     });
 
@@ -24,7 +31,7 @@ module.exports.run = () => new Promise((resolve) => {
     }
 
     if (!library.serialize()) {
-        throw new Error('Error on collection serialize');
+        throw new Error('Error on collection serializer');
     }
     resolve();
 });

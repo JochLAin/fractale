@@ -1,74 +1,72 @@
 
 const Fractale = require('../../lib');
 
-const Book = module.exports.Book = Fractale.create('Book', {
-    readable: Boolean,
-    title: String,
-    nb_chapter: Number
+const Simple = module.exports.Simple = Fractale.create('Simple', {
+    mixed: null || undefined,
+    boolean: Boolean,
+    number: Number,
+    string: String,
+});
+
+const Compound = module.exports.Compound = Fractale.create('Compound', Simple, {
+    boards: [String],
+    metadata: { key: String, data: { key: String, value: null }},
+    collections: [{ key: String, value: String }],
 });
 
 const Page = module.exports.Page = Fractale.create('Page', {
     title: String,
-    robot: {
-        key: String,
-        data: {
-            key: String,
-            value: String
-        }
-    }
+    content: String,
+});
+
+const Chapter = module.exports.Chapter = Fractale.create('Chapter', {
+    pages: [Page],
+});
+
+const Author = module.exports.Author = Fractale.create('Author', {
+    firstname: String,
+    lastname: String,
+    surname: String,
+    comment: String,
+});
+
+const Book = module.exports.Book = Fractale.create('Book', {
+    author: Author,
+    readable: Boolean,
+    title: String,
+    chapters: [Chapter]
 });
 
 const Library = module.exports.Library = Fractale.create('Library', {
-    books: [{
-        readable: Boolean,
-        title: String,
-        nb_chapter: Number
-    }]
-});
-
-const Message = module.exports.Message = Fractale.create('Message', {
-    text: String,
-    priority: Number
-});
-
-const Messenger = module.exports.Messenger = Fractale.create('Messenger', {
-    message: Message
-});
-
-const Alert = module.exports.Alert = Fractale.create('Alert', {
-    text: String,
-    level: String
-});
-
-const Flashbag = module.exports.Flashbag = Fractale.create('Flashbag', {
-    alerts: [Alert]
+    books: [Book]
 });
 
 const Variable = module.exports.Variable = Fractale.create('Variable', {
     name: String,
-    value: undefined,
+    value: null,
     static: Boolean,
     scope: Fractale.with(String, { values: ['private', 'protected', 'public'] })
+});
+
+const Method = module.exports.Method = Fractale.create('Method', {
+    signature: {
+        name: String,
+        properties: [Variable]
+    },
+    body: String,
 });
 
 const Class = module.exports.Class = Fractale.create('Class', {
     name: String,
     inheritance: Fractale.SELF,
     variables: Variable,
-    methods: [{
-        signature: {
-            name: String,
-            properties: [Variable]
-        },
-        body: String,
-    }]
+    methods: [Method]
 });
 
 const Program = module.exports.Program = Fractale.create('Program', {
     uses: [Class],
     class: Class
 });
-
 
 const Layer = module.exports.Layer = Fractale.create('Layer', {
     pixels: [String],
@@ -80,13 +78,13 @@ Layer.prototype.pixel = function (x, y) {
 };
 
 const Frame = module.exports.Frame = Fractale.create('Frame', {
-    layers: [Fractale.with(Layer, { through: ['height', 'width']})],
+    layers: [{ __type: Layer, __options: { through: ['height', 'width']}}],
     height: Number,
     width: Number,
 });
 
 const Sprite = module.exports.Sprite = Fractale.create('Sprite', {
-    frames: [Fractale.with(Frame, { through: ['height', 'width']})],
+    frames: [{ __type: Frame, __options: { through: ['height', 'width']}}],
     height: Number,
     width: Number,
 });

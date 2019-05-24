@@ -1,33 +1,38 @@
 
-const { Messenger, Message } = require('./models');
+const { Book } = require('./models');
 
 module.exports.title = 'Test inception model';
 
 module.exports.run = () => new Promise((resolve) => {
-    const messenger = new Messenger({
-        message: {
-            text: 'Hello world !'
-        }
+    const book = new Book({
+        author: {
+            firstname: 'Ito',
+            lastname: 'Ōgure',
+            surname: 'Oh! Great',
+            comment: 'N/A',
+        },
+        title: 'Air gear',
+        readable: true,
     });
 
-    if (messenger.message.text !== 'Hello world !') {
+    if (book.author.comment !== 'N/A') {
         throw new Error('Error on deep getter with dot');
     }
 
-    const message = messenger.message;
-    message.text = 'How are you world ?';
-    messenger.message = message;
-    if (messenger.message.text !== 'How are you world ?') {
+    const author = book.author;
+    author.comment = 'I love this author';
+    book.author = author;
+    if (book.author.comment !== 'I love this author') {
         throw new Error('Error on inception deep setter with dot');
     }
 
-    messenger.message.text = 'Good bye world !';
-    if (messenger.message.text !== 'Good bye world !') {
+    book.author.comment = 'N/A';
+    if (book.author.comment !== 'N/A') {
         throw new Error('Error on deep setter with dot');
     }
 
-    if (!messenger.serialize()) {
-        throw new Error('Error on inception serialize');
+    if (!book.serialize()) {
+        throw new Error('Error on inception serializer');
     }
     resolve();
 });
