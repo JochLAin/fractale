@@ -3,6 +3,7 @@
 Data Modeling
 
 Inspired from [Mongoose](https://mongoosejs.com/docs/guide.html), it allows you to modeling your data to be explicit on data format.
+
 It will test value of each fields and link model between them.
 
 ## Usage
@@ -12,7 +13,7 @@ It will test value of each fields and link model between them.
 
 const Fractale = require('fractale');
 
-const myModel = Fractale.create(
+const Foo = Fractale.create(
     'Foo', /* Name of your model (required) */
     { /* Model's schema */
         boolean: Boolean,
@@ -109,7 +110,7 @@ book.score = 5;
 console.log(book.serialize());
 ```
 
-### Library example
+### Library example (WIP)
 
 ```javascript
 

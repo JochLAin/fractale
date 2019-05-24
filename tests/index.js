@@ -2,14 +2,16 @@
 const console = require('./console');
 
 const cases = [
-    // require('./cases/simple'),
+    require('./cases/simple'),
     require('./cases/metadata'),
-    // require('./cases/collection'),
-    // require('./cases/inception'),
-    // require('./cases/compound'),
-    // require('./cases/self_reference'),
-    // require('./cases/deep'),
-    // require('./cases/complex'),
+    require('./cases/collection'),
+    require('./cases/inception'),
+    require('./cases/compound'),
+    require('./cases/self_reference'),
+    require('./cases/deep'),
+    require('./cases/complex'),
+    // require('./cases/huge'),
+    // require('./cases/deeper'),
 ];
 
 const chain = Promise.resolve();

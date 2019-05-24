@@ -1,5 +1,5 @@
 
-const Fractale = require('../../factory');
+const Fractale = require('../../lib');
 
 const Book = module.exports.Book = Fractale.create('Book', {
     readable: Boolean,

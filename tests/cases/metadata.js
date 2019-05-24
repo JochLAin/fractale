@@ -1,5 +1,6 @@
 
 const { Page } = require('./models');
+const console = require('../console');
 
 module.exports.title = 'Test metadata model';
 
@@ -7,39 +8,37 @@ module.exports.run = () => new Promise((resolve) => {
     const page = new Page({
         title: 'Hello world',
         robot: {
-            key: require('uuid').v4(),
+            key: 'before',
             data: {
-                key: require('uuid').v4(),
-                value: require('uuid').v4(),
+                key: 'before',
+                value: 'before',
             }
         }
     });
 
-    console.log('');
-    console.log('');
-    console.log('');
-    console.log('');
-    console.log('');
-    console.log('');
+    const robot = page.robot;
+    robot.key = 'decomposition';
 
-    page.robot.key = 'AZERTYUIOP';
-    page.robot = { data: { key: 'QSDFGHJKLM', value: 'efopwkwe' } };
-
-    console.log('');
-    console.log('');
-    console.log('');
-    console.log(page);
-    console.log(page.robot);
-    console.log(page.robot.key);
-    console.log(page.robot.data.key);
-
-    if (page.title !== 'Hello world') {
-        throw new Error('Error on simple accessor');
+    if (page.robot.key !== 'decomposition') {
+        throw new Error('Error on metadata accessor with decomposition');
     }
-    if (page.robot.key !== 'AZERTYUIOP') {
+
+    page.robot.key = 'dot';
+    if (page.robot.key !== 'dot') {
         throw new Error('Error on metadata accessor with dot');
     }
-    if (page.robot_data.key !== 'QSDFGHJKLM') {
+
+    page.robot = { key: 'assign' };
+    if (page.robot.key !== 'assign') {
+        throw new Error('Error on metadata accessor with assign');
+    }
+
+    page.robot = { data: { key: 'after', value: 'after' } };
+
+    if (page.robot.key !== 'assign') {
+        throw new Error('Error on metadata accessor with bracket');
+    }
+    if (page.robot.data.key !== 'after') {
         throw new Error('Error on metadata accessor with bracket');
     }
 
