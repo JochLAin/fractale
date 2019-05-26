@@ -5,7 +5,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>JSDoc: library.js</title>
+    <title>JSDoc: factory.js</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -68,7 +68,7 @@
                 <div class="content" id="main-content-wrapper">
                     <header class="page-title">
                         <p>Source</p>
-                        <h1>library.js</h1>
+                        <h1>factory.js</h1>
                     </header>
                     
                     
@@ -79,171 +79,124 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>
-const EventListener = require('./event_listener');
+const uuid = require('uuid');
+const library = require('./library');
 
 /**
- * Model storage manager
- *
- * @class Library
- * @extends EventListener
+ * Create model class
+ * @class Factory
  */
-class Library extends EventListener {
-    constructor() {
-        super();
-        this.encyclopedias = [];
-    }
-
+class Factory {
     /**
-     * Get all encyclopedias
-     * @param {Boolean} with_virtual - Specify if auto-generated models must be included
-     * @returns {Encyclopedia[]}
+     * Check if model name is already used
+     * @param {String} name - Name of the model
      */
-    all(with_virtual = false) {
-        if (with_virtual) {
-            return this.encyclopedias;
+    static check(name) {
+        if (!name) {
+            throw new Error('You need to pass a name to your model.');
         }
-        return this.encyclopedias.filter(e => !e.virtual);
-    }
-
-    /**
-     * Add new encyclopedia to library
-     * @param {String} name - Model name
-     * @param {Object} schema - Model schema
-     * @param {ModelClass} model - Model class
-     * @param {Boolean} virtual - Specify if is auto-generated class
-     */
-    fill(name, schema, model, virtual) {
-        const encyclopedia = new Encyclopedia(name, schema, model, virtual);
-        this.encyclopedias.push(encyclopedia);
-        this.dispatchEvent('fill', { name });
-    }
-
-    /**
-     * Get an encyclopedia by its name
-     * @param {String} name
-     * @returns {Encyclopedia}
-     */
-    get(name) {
-        if (!this.names.includes(name.toLowerCase())) {
-            return false;
-            // throw new Error(`Model with name "${name}" doesn't exists.`);
-        }
-        return this.encyclopedias.find(encyclopedia => encyclopedia.name === name.toLowerCase());
-    }
-
-    /**
-     * Fill library with data serialized
-     * @param {Object} data
-     */
-    read(data) {
-        if (!data || !Array.isArray(data)) {
-            data = [];
-        }
-        this.encyclopedias = data;
-    }
-
-    /**
-     * Get all encyclopedias names
-     * @returns {String[]}
-     */
-    get names() {
-        return this.encyclopedias.map(encyclopedia => encyclopedia.name);
-    }
-
-    // set socket(socket) {
-    //     this._socket = socket;
-    // }
-
-    // get socket() {
-    //     return this._socket;
-    // }
-}
-
-/**
- * Class that store models
- * @class Encyclopedia
- * @param {String} name - Model name
- * @param {Object} schema - Model schema
- * @param {ModelClass} model - Model class
- * @param {Boolean} virtual - Specify if is auto-generated class
- */
-class Encyclopedia extends EventListener {
-    constructor(name, schema, model, virtual) {
-        super();
-        this.name = name.toLowerCase();
-        this.schema = Object(schema);
-        this.model = model;
-        this.virtual = virtual;
-        this.instances = [];
-    }
-
-    /**
-     * Add or update instance
-     * @param {ModelClass} instance - Instance of ModelClass
-     */
-    set(instance) {
-        const index = this.instances.findIndex(i => i.uuid === instance.uuid);
-        if (index &lt; 0) {
-            this._instances.push(instance);
-        } else {
-            this._instances.splice(index, 1, instance);
+        if (library.names.includes(name.toLowerCase())) {
+            throw new Error(`Model with name "${name}" already exists.`);
         }
     }
 
     /**
-     * Get an instance of the model by uuid
-     * @param {String} uuid - Model instance identifier
+     * Create a model class
+     * @param {String} name - Name of the model
+     * @param {ModelClass} parent - Parent from which the schema is inherited
+     * @param {Object} schema - Schema of the model
+     * @param {Boolean} virtual
      * @returns {ModelClass}
      */
-    get(uuid) {
-        return this.instances.find(instance => {
-            return instance.uuid === uuid
-        });
-    }
+    create(name, parent, schema, virtual = false) {
+        Factory.check(name);
 
-    set name(name) {
-        this._name = name;
-    }
+        if (typeof parent == 'function') {
+            schema = Object.assign({}, library.get(parent.constructor.name).schema, schema);
+        } else {
+            schema = parent;
+        }
 
-    get name() {
-        return this._name;
-    }
+        const ModelClass = require('./index').ModelClass;
+        const Entity = class Model extends ModelClass {
+            constructor(props = {}, parent) {
+                props = Object.assign({},
+                    parent instanceof Model ? parent.serialize() : parent,
+                    props instanceof Model ? props.serialize() : props
+                );
 
-    set schema(schema) {
-        this._schema = schema;
-    }
+                super(props);
+                this._uuid = props.uuid || uuid.v4();
 
-    get schema() {
-        return this._schema;
-    }
+                for (let key in schema) {
+                    if (key === 'uuid') {
+                        throw new Error('Field "uuid" is automatically set');
+                    }
+                    if (schema.hasOwnProperty(key)) {
+                        const definer = require('./property_definers').get(this, key, schema[key]);
+                        definer.assign(this, key, schema[key]);
+                        definer.define(this, key, schema[key]);
+                        if (props[key]) {
+                            this[key] = props[key];
+                        }
+                    }
+                }
 
-    set model(model) {
-        this._model = model;
-    }
+                library.get(name).set(this.serialize());
+                library.dispatchEvent('new', { name, instance: this });
+                // if (library.socket) {
+                //     this.addEventListener('change', () => {
+                //         this.socket.emit(`change`, Object.assign({_name: name}, this.serialize()));
+                //         this.socket.on(`refresh`, (props) => {
+                //             if (props._name === name &amp;&amp; props.uuid === this.uuid) {
+                //                 this.unserialize(props);
+                //             }
+                //         });
+                //         this.socket.emit(`change_${name.toLowerCase()}`, this.serialize());
+                //         this.socket.on(`refresh_${name.toLowerCase()}`, (props) => {
+                //             if (props.uuid === this.uuid) {
+                //                 this.unserialize(props);
+                //             }
+                //         });
+                //     });
+                // }
+            }
 
-    get model() {
-        return this._model;
-    }
+            serialize() {
+                let serialized = {uuid: this.uuid};
+                for (let key in schema) {
+                    if (schema.hasOwnProperty(key)) {
+                        if (this[key] instanceof ModelClass) {
+                            serialized[key] = this[key].serialize();
+                        } else {
+                            serialized[key] = this[key];
+                        }
+                    }
+                }
+                return serialized;
+            }
 
-    set virtual(virtual) {
-        this._virtual = virtual;
-    }
+            unserialize(props) {
+                for (let key in schema) {
+                    if (schema.hasOwnProperty(key) &amp;&amp; props[key]) {
+                        this[key] = props[key];
+                    }
+                }
+            }
 
-    get virtual() {
-        return this._virtual;
-    }
+            get uuid() {
+                return this._uuid;
+            }
+        };
 
-    set instances(instances) {
-        this._instances = instances;
-    }
-
-    get instances() {
-        return this._instances;
+        const model = Object.defineProperty(Entity, 'name', {value: name});
+        library.fill(name, schema, model, !!virtual);
+        return model;
     }
 }
 
-const library =  new Library();
-module.exports = library;</code></pre>
+module.exports = new Factory();
+</code></pre>
         </article>
     </section>
 

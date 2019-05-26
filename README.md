@@ -24,96 +24,15 @@ const Model = Fractale.create(
         collections: [{ key: String }]
     }
 );
-```
 
-### Simple example
-
-```javascript
-'use strict';
-
-const Fractale = require('fractale');
-
-const Book = Fractale.create('Book', {
-    title: String,
-    author: String,
-    editor: String
-});
-```
-
-### Composite example
-
-```javascript
-'use strict';
-
-const Fractale = require('fractale');
-
-const Author = Fractale.create('Author', {
-    firstname: String,
-    lastname: String,
+const myModel = new Model({
+    boolean: true,
+    number: 42,
+    string: 'Hello world',
+    boards: ['Lorem ipsum', 'dolores sit amet'],
+    metadata: { key: 'AZERTYUIOP' },
+    collections: [{ key: 'foo' }, { key: 'bar' }],
 });
 
-const Editor = Fractale.create('Editor', {
-    firstname: String,
-    lastname: String,
-});
-
-const Book = Fractale.create('Book', {
-    title: String,
-    author: Author,
-    editor: Editor
-});
-```
-
-### Complex example
-
-```javascript
-'use strict';
-
-const Fractale = require('fractale');
-
-const Author = Fractale.create('Author', {
-    firstname: String,
-    lastname: String,
-    surname: String,
-});
-
-const Chapter = Fractale.create('Chapter', {
-    pages: [String],
-});
-
-const Book = Fractale.create('Book', {
-    title: String,
-    author: Author,
-    editor: String,
-    description: String,
-    summary: String,
-    score: Number,
-    chapters: [Chapter],
-    comments: [{
-        author: String,
-        text: String,
-    }],
-});
-```
-
-### Instance example
-
-```javascript
-
-const { Book } = require('./models');
-
-const book = new Book({
-    title: 'Air gear',
-    author: { firstname: 'Ōgure', lastname: 'Ito', surname: 'Oh! Great' },
-    editor: 'Pika Edition',
-    description: `...`,
-    score: 4.9,
-    comments: [{ author: 'Anon.', text: 'Vraiment sublime' }],
-});
-
-book.score = 5;
-
-console.log(book.title);
-console.log(book.author.surname);
-console.log(book.serialize());
+console.log(myModel.serialize());
 ```

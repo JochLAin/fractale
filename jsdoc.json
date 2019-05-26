@@ -9,7 +9,7 @@
   "source": {
     "include": ["./lib"],
     "includePattern": ".js$",
-    "excludePattern": "(node_modules/|docs)"
+    "exclude": ["./lib/property_definers"]
   },
   "opts": {
     "encoding": "utf8",
@@ -34,6 +34,10 @@
       "name": "Fractale Documentation",
       "logo": "images/logo.svg",
       "navigation": [
+        {
+          "label": "NPM",
+          "href": "https://www.npmjs.com/package/fractale"
+        },
         {
           "label": "Github",
           "href": "https://github.com/JochLAin/fractale"

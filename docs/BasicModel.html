@@ -1,11 +1,9 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     
     <meta charset="utf-8">
-    <title>JSDoc: index.js</title>
+    <title>JSDoc: ModelClass</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -42,10 +40,6 @@
                     <div class="navbar-end">
                     
                         <div class="navbar-item">
-                            <a href="https://www.npmjs.com/package/fractale" target="_blank">NPM</a>
-                        </div>
-                    
-                        <div class="navbar-item">
                             <a href="https://github.com/JochLAin/fractale" target="_blank">Github</a>
                         </div>
                     
@@ -60,103 +54,158 @@
             <div class="column is-3" id="sidebarNav">
                 <div class="sidebar">
                     <nav>
-                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-complex.html">complex</a></li><li><a href="tutorial-composite.html">composite</a></li><li><a href="tutorial-simple.html">simple</a></li></ul><h3>Modules</h3><ul><li><a href="module-Fractale.html">Fractale</a></li></ul><h3>Classes</h3><ul><li><a href="Encyclopedia.html">Encyclopedia</a></li><li><a href="EventListener.html">EventListener</a></li><li><a href="Factory.html">Factory</a></li><li><a href="Library.html">Library</a></li><li><a href="ModelClass.html">ModelClass</a></li></ul></div>
+                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Modules</h3><ul><li><a href="module-Fractale.html">Fractale</a></li></ul><h3>Classes</h3><ul><li><a href="ModelClass.html">ModelClass</a></li><li><a href="EventListener.html">EventListener</a></li><li><a href="Factory.html">Factory</a></li><li><a href="Library.html">Library</a></li></ul></div>
                     </nav>
                 </div>
             </div>
             <div class="column is-9-desktop">
                 <div class="content" id="main-content-wrapper">
                     <header class="page-title">
-                        <p>Source</p>
-                        <h1>index.js</h1>
+                        <p>Class</p>
+                        <h1>ModelClass</h1>
                     </header>
                     
                     
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>
-const {SELF} = require('./constants');
-const factory = require('./factory');
-const library = require('./library');
-const Model = require('./model');
+        <h2><span class="attribs"><span class="type-signature"></span></span>ModelClass<span class="signature">()</span><span class="type-signature"></span></h2>
+        
+    
+</header>
 
-let _ModelClass = Model;
+<article>
+    <div class="container-overview">
+    
+        
+            <div class='vertical-section'>
+                <h3 class="title"><span>Constructor</span></h3>
+                <div class="members">
+                    <div class="member">
 
-/**
- * @exports Fractale
- * @author Jocelyn Faihy &lt;jocelyn@faihy.fr>
- */
-module.exports = {
-    /**
-     * @param {String} SELF - Keyword used for self-referenced model
-     */
-    SELF,
+    
+    <h4 class="name" id="ModelClass">
+        
+        <span class="code-name">
+            new ModelClass<span class="signature">()</span><span class="type-signature"></span>
+        </span>
+    </h4>
+    
 
-    /**
-     * @param {Factory} factory - Factory use to create models
-     */
-    factory,
+    
+    
+    <div class="description">
+        Default base model class
+    </div>
+    
 
-    /**
-     * @param {Library} library - Library that register models
-     */
-    library,
 
-    /**
-     * Proxy to factory create function
-     * @method
-     * @see Factory
-     */
-    create: factory.create.bind(factory),
 
-    /**
-     * Proxy to library all function
-     * @method
-     * @see Library
-     */
-    all: library.all.bind(library),
 
-    /**
-     * Proxy to library get function
-     * @method
-     * @see Library
-     */
-    get: library.get.bind(library),
 
-    /**
-     * Base class that model will inherit
-     * @param ModelClass
-     */
-    set ModelClass(ModelClass) {
-        if (!(ModelClass instanceof Model)) {
-            throw new Error('Your model class must inherit "Fractale.Model" class');
-        }
-        _ModelClass = ModelClass;
-    },
-    get ModelClass() {
-        return _ModelClass;
-    },
 
-    /**
-     * Helper to use options in schema
-     *
-     * @param type
-     * @param options
-     * @returns {{__options: *, __type: *}}
-     * @method
-     */
-    with: (type, options) => ({
-        __type: type,
-        __options: options
-    }),
-};
-</code></pre>
-        </article>
-    </section>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="model.js.html" class="button">View Source</a>
+            <span>
+                <a href="model.js.html">model.js</a>, <a href="model.js.html#line4">line 4</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+                </div>
+            </div>
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 
@@ -168,7 +217,7 @@ module.exports = {
 
 <footer class="footer">
     <div class="content has-text-centered">
-        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.2</a> on Sun May 26 2019 23:06:54 GMT+0100 (GMT+01:00)</p>
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.2</a> on Sun May 26 2019 22:39:35 GMT+0100 (GMT+01:00)</p>
         <p class="sidebar-created-by">
             <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
             <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers</a>

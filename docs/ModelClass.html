@@ -1,11 +1,9 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     
     <meta charset="utf-8">
-    <title>JSDoc: library.js</title>
+    <title>JSDoc: ModelClass</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -67,185 +65,162 @@
             <div class="column is-9-desktop">
                 <div class="content" id="main-content-wrapper">
                     <header class="page-title">
-                        <p>Source</p>
-                        <h1>library.js</h1>
+                        <p>Class</p>
+                        <h1>ModelClass</h1>
                     </header>
                     
                     
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>
-const EventListener = require('./event_listener');
+        <h2><span class="attribs"><span class="type-signature"></span></span>ModelClass<span class="signature">()</span><span class="type-signature"></span></h2>
+        
+    
+</header>
 
-/**
- * Model storage manager
- *
- * @class Library
- * @extends EventListener
- */
-class Library extends EventListener {
-    constructor() {
-        super();
-        this.encyclopedias = [];
-    }
+<article>
+    <div class="container-overview">
+    
+        
+            <div class='vertical-section'>
+                <h3 class="title"><span>Constructor</span></h3>
+                <div class="members">
+                    <div class="member">
 
-    /**
-     * Get all encyclopedias
-     * @param {Boolean} with_virtual - Specify if auto-generated models must be included
-     * @returns {Encyclopedia[]}
-     */
-    all(with_virtual = false) {
-        if (with_virtual) {
-            return this.encyclopedias;
-        }
-        return this.encyclopedias.filter(e => !e.virtual);
-    }
+    
+    <h4 class="name" id="ModelClass">
+        
+        <span class="code-name">
+            new ModelClass<span class="signature">()</span><span class="type-signature"></span>
+        </span>
+    </h4>
+    
 
-    /**
-     * Add new encyclopedia to library
-     * @param {String} name - Model name
-     * @param {Object} schema - Model schema
-     * @param {ModelClass} model - Model class
-     * @param {Boolean} virtual - Specify if is auto-generated class
-     */
-    fill(name, schema, model, virtual) {
-        const encyclopedia = new Encyclopedia(name, schema, model, virtual);
-        this.encyclopedias.push(encyclopedia);
-        this.dispatchEvent('fill', { name });
-    }
+    
+    
+    <div class="description">
+        Default base model class
+    </div>
+    
 
-    /**
-     * Get an encyclopedia by its name
-     * @param {String} name
-     * @returns {Encyclopedia}
-     */
-    get(name) {
-        if (!this.names.includes(name.toLowerCase())) {
-            return false;
-            // throw new Error(`Model with name "${name}" doesn't exists.`);
-        }
-        return this.encyclopedias.find(encyclopedia => encyclopedia.name === name.toLowerCase());
-    }
 
-    /**
-     * Fill library with data serialized
-     * @param {Object} data
-     */
-    read(data) {
-        if (!data || !Array.isArray(data)) {
-            data = [];
-        }
-        this.encyclopedias = data;
-    }
 
-    /**
-     * Get all encyclopedias names
-     * @returns {String[]}
-     */
-    get names() {
-        return this.encyclopedias.map(encyclopedia => encyclopedia.name);
-    }
 
-    // set socket(socket) {
-    //     this._socket = socket;
-    // }
 
-    // get socket() {
-    //     return this._socket;
-    // }
-}
 
-/**
- * Class that store models
- * @class Encyclopedia
- * @param {String} name - Model name
- * @param {Object} schema - Model schema
- * @param {ModelClass} model - Model class
- * @param {Boolean} virtual - Specify if is auto-generated class
- */
-class Encyclopedia extends EventListener {
-    constructor(name, schema, model, virtual) {
-        super();
-        this.name = name.toLowerCase();
-        this.schema = Object(schema);
-        this.model = model;
-        this.virtual = virtual;
-        this.instances = [];
-    }
 
-    /**
-     * Add or update instance
-     * @param {ModelClass} instance - Instance of ModelClass
-     */
-    set(instance) {
-        const index = this.instances.findIndex(i => i.uuid === instance.uuid);
-        if (index &lt; 0) {
-            this._instances.push(instance);
-        } else {
-            this._instances.splice(index, 1, instance);
-        }
-    }
 
-    /**
-     * Get an instance of the model by uuid
-     * @param {String} uuid - Model instance identifier
-     * @returns {ModelClass}
-     */
-    get(uuid) {
-        return this.instances.find(instance => {
-            return instance.uuid === uuid
-        });
-    }
 
-    set name(name) {
-        this._name = name;
-    }
 
-    get name() {
-        return this._name;
-    }
 
-    set schema(schema) {
-        this._schema = schema;
-    }
 
-    get schema() {
-        return this._schema;
-    }
 
-    set model(model) {
-        this._model = model;
-    }
+<dl class="details">
 
-    get model() {
-        return this._model;
-    }
+    
 
-    set virtual(virtual) {
-        this._virtual = virtual;
-    }
+    
 
-    get virtual() {
-        return this._virtual;
-    }
+    
 
-    set instances(instances) {
-        this._instances = instances;
-    }
+    
 
-    get instances() {
-        return this._instances;
-    }
-}
+    
 
-const library =  new Library();
-module.exports = library;</code></pre>
-        </article>
-    </section>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="model.js.html" class="button">View Source</a>
+            <span>
+                <a href="model.js.html">model.js</a>, <a href="model.js.html#line4">line 4</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+                </div>
+            </div>
+        
+    
+    </div>
+
+    
+        <h3 class="subsection-title">Extends</h3>
+
+        
+
+
+    <ul>
+        <li><a href="EventListener.html">EventListener</a></li>
+    </ul>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

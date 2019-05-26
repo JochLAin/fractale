@@ -5,7 +5,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>JSDoc: library.js</title>
+    <title>JSDoc: event_listener.js</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -68,7 +68,7 @@
                 <div class="content" id="main-content-wrapper">
                     <header class="page-title">
                         <p>Source</p>
-                        <h1>library.js</h1>
+                        <h1>event_listener.js</h1>
                     </header>
                     
                     
@@ -78,172 +78,73 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>
-const EventListener = require('./event_listener');
-
-/**
- * Model storage manager
- *
- * @class Library
- * @extends EventListener
+            <pre class="prettyprint source linenums"><code>/**
+ * Enable event listener
+ * @class EventListener
  */
-class Library extends EventListener {
+module.exports = class EventListener {
     constructor() {
-        super();
-        this.encyclopedias = [];
+        this.__events = {};
     }
 
     /**
-     * Get all encyclopedias
-     * @param {Boolean} with_virtual - Specify if auto-generated models must be included
-     * @returns {Encyclopedia[]}
+     * Add an event listener on an event
+     * @param {String} name - Event name
+     * @param {Function} callback - Callback called on event
      */
-    all(with_virtual = false) {
-        if (with_virtual) {
-            return this.encyclopedias;
+    addEventListener(event, callback) {
+        // Check if the callback is not a function
+        if (typeof callback !== 'function') {
+            throw new Error(`The listener callback must be a function, the given type is ${typeof callback}`);
         }
-        return this.encyclopedias.filter(e => !e.virtual);
+        // Check if the event is not a string
+        if (typeof event !== 'string') {
+            throw new Error(`The event name must be a string, the given type is ${typeof event}`);
+        }
+
+        // Create the event if not exists
+        if (this.__events[event] === undefined) {
+            this.__events[event] = {
+                listeners: []
+            }
+        }
+
+        this.__events[event].listeners.push(callback);
     }
 
     /**
-     * Add new encyclopedia to library
-     * @param {String} name - Model name
-     * @param {Object} schema - Model schema
-     * @param {ModelClass} model - Model class
-     * @param {Boolean} virtual - Specify if is auto-generated class
+     * Remove an event listener on an event
+     * @param {String} event - Event name
+     * @param {Function} callback - Callback called on event
+     * @returns {boolean}
      */
-    fill(name, schema, model, virtual) {
-        const encyclopedia = new Encyclopedia(name, schema, model, virtual);
-        this.encyclopedias.push(encyclopedia);
-        this.dispatchEvent('fill', { name });
-    }
-
-    /**
-     * Get an encyclopedia by its name
-     * @param {String} name
-     * @returns {Encyclopedia}
-     */
-    get(name) {
-        if (!this.names.includes(name.toLowerCase())) {
+    removeEventListener(event, callback) {
+        // Check if this event not exists
+        if (this.__events[event] === undefined) {
             return false;
-            // throw new Error(`Model with name "${name}" doesn't exists.`);
         }
-        return this.encyclopedias.find(encyclopedia => encyclopedia.name === name.toLowerCase());
-    }
 
-    /**
-     * Fill library with data serialized
-     * @param {Object} data
-     */
-    read(data) {
-        if (!data || !Array.isArray(data)) {
-            data = [];
-        }
-        this.encyclopedias = data;
-    }
-
-    /**
-     * Get all encyclopedias names
-     * @returns {String[]}
-     */
-    get names() {
-        return this.encyclopedias.map(encyclopedia => encyclopedia.name);
-    }
-
-    // set socket(socket) {
-    //     this._socket = socket;
-    // }
-
-    // get socket() {
-    //     return this._socket;
-    // }
-}
-
-/**
- * Class that store models
- * @class Encyclopedia
- * @param {String} name - Model name
- * @param {Object} schema - Model schema
- * @param {ModelClass} model - Model class
- * @param {Boolean} virtual - Specify if is auto-generated class
- */
-class Encyclopedia extends EventListener {
-    constructor(name, schema, model, virtual) {
-        super();
-        this.name = name.toLowerCase();
-        this.schema = Object(schema);
-        this.model = model;
-        this.virtual = virtual;
-        this.instances = [];
-    }
-
-    /**
-     * Add or update instance
-     * @param {ModelClass} instance - Instance of ModelClass
-     */
-    set(instance) {
-        const index = this.instances.findIndex(i => i.uuid === instance.uuid);
-        if (index &lt; 0) {
-            this._instances.push(instance);
-        } else {
-            this._instances.splice(index, 1, instance);
-        }
-    }
-
-    /**
-     * Get an instance of the model by uuid
-     * @param {String} uuid - Model instance identifier
-     * @returns {ModelClass}
-     */
-    get(uuid) {
-        return this.instances.find(instance => {
-            return instance.uuid === uuid
+        this.__events[event].listeners = this.__events[event].listeners.filter(listener => {
+            return listener.toString() !== callback.toString();
         });
     }
 
-    set name(name) {
-        this._name = name;
+    /**
+     * Dispatch an event
+     * @param {String} event - Event name
+     * @param {Object} details - Parameter send to callback
+     */
+    dispatchEvent(event, details) {
+        // Check if this event not exists
+        if (this.__events[event] === undefined) {
+            return false;
+        }
+        this.__events[event].listeners.forEach((listener) => {
+            listener(details);
+        });
     }
-
-    get name() {
-        return this._name;
-    }
-
-    set schema(schema) {
-        this._schema = schema;
-    }
-
-    get schema() {
-        return this._schema;
-    }
-
-    set model(model) {
-        this._model = model;
-    }
-
-    get model() {
-        return this._model;
-    }
-
-    set virtual(virtual) {
-        this._virtual = virtual;
-    }
-
-    get virtual() {
-        return this._virtual;
-    }
-
-    set instances(instances) {
-        this._instances = instances;
-    }
-
-    get instances() {
-        return this._instances;
-    }
-}
-
-const library =  new Library();
-module.exports = library;</code></pre>
+};
+</code></pre>
         </article>
     </section>
 
