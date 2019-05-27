@@ -17,12 +17,11 @@
   ],
   "author": "Jocelyn Faihy <jocelyn@faihy.fr>",
   "license": "SEE LICENSE IN LICENSE",
+  "homepage": "https://docs.jocelyn.faihy.org/fractale",
   "dependencies": {
-    "minami": "^1.2.3",
     "uuid": "^3.3.2"
   },
   "devDependencies": {
-    "better-docs": "^1.1.6",
     "jsdoc": "^3.6.2"
   }
 }

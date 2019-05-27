@@ -1,10 +1,12 @@
 {
+  "title": "Fractale",
+  "subtitle": "Data modeling",
   "tags": {
     "allowUnknownTags": ["category"],
     "dictionaries": ["jsdoc"]
   },
   "plugins": [
-    "node_modules/better-docs/category"
+    "docs/theme/category"
   ],
   "source": {
     "include": ["./lib"],
@@ -13,12 +15,12 @@
   },
   "opts": {
     "encoding": "utf8",
-    "destination": "docs/",
+    "destination": "docs/public/",
     "readme": "README.md",
-    "template": "node_modules/better-docs",
+    "template": "docs/theme",
     "recurse": true,
     "verbose": true,
-    "tutorials": "./tutorials"
+    "tutorials": "./docs/tutorials"
   },
   "templates": {
     "cleverLinks": false,
@@ -26,9 +28,10 @@
     "default": {
       "staticFiles": {
         "include": [
-          "./tutorials/statics"
+          "./docs/tutorials/statics"
         ]
-      }
+      },
+      "includeDate": false
     },
     "better-docs": {
       "name": "Fractale Documentation",

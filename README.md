@@ -1,10 +1,8 @@
-# Fractale
-
-## Data Modeling
-
 Inspired from [Mongoose](https://mongoosejs.com/docs/guide.html), it allows you to modeling your data to be explicit on data format.
 
 It will test value of each fields and link model between them.
+
+You can found documentation [here](https://docs.faihy.org/fractale).
 
 ## Usage
 

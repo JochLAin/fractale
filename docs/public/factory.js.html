@@ -1,0 +1,229 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>Fractale: factory.js</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Muli:100,400,700|Oswald:300|Inconsolata,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/custom.min.css">
+</head>
+
+<body>
+    <div id="stickyNavbarOverlay"></div>
+    <div class="top-navbar">
+        <div class="container">
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                    
+                    <a href="index.html" style="display: flex;">
+                        <img src="images/logo.svg" alt="logo">
+                        
+                           <h1 class="navbar-item">Fractale Documentation</h1>
+                        
+                    </a>
+                    <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                    
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+                 
+                <div class="navbar-menu">
+                    <div class="navbar-end">
+                    
+                        <div class="navbar-item">
+                            <a href="https://www.npmjs.com/package/fractale" target="_blank">NPM</a>
+                        </div>
+                    
+                        <div class="navbar-item">
+                            <a href="https://github.com/JochLAin/fractale" target="_blank">Github</a>
+                        </div>
+                    
+                    </div>
+                </div>
+                
+            </nav>
+        </div>
+    </div>
+    <div class="container">
+        <div class="columns">
+            <div class="column is-3" id="sidebarNav">
+                <div class="sidebar">
+                    <nav>
+                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-example.html">Examples</a></li></ul><h3>Modules</h3><ul><li><a href="module-Fractale.html">Fractale</a></li></ul><h3>Classes</h3><ul><li><a href="Encyclopedia.html">Encyclopedia</a></li><li><a href="EventListener.html">EventListener</a></li><li><a href="Factory.html">Factory</a></li><li><a href="Library.html">Library</a></li><li><a href="ModelClass.html">ModelClass</a></li></ul></div>
+                    </nav>
+                </div>
+            </div>
+            <div class="column is-9-desktop">
+                <div class="content" id="main-content-wrapper">
+                    <header class="page-title">
+                        <p>Source</p>
+                        <h1>factory.js</h1>
+                    </header>
+                    
+                    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>
+const uuid = require('uuid');
+const library = require('./library');
+
+/**
+ * Create model class
+ * @class Factory
+ */
+class Factory {
+    /**
+     * Check if model name is already used
+     * @param {String} name - Name of the model
+     */
+    static check(name) {
+        if (!name) {
+            throw new Error('You need to pass a name to your model.');
+        }
+        if (library.names.includes(name.toLowerCase())) {
+            throw new Error(`Model with name "${name}" already exists.`);
+        }
+    }
+
+    /**
+     * Create a model class
+     * @param {String} name - Name of the model
+     * @param {ModelClass} parent - Parent from which the schema is inherited
+     * @param {Object} schema - Schema of the model
+     * @param {Boolean} virtual
+     * @returns {ModelClass}
+     */
+    create(name, parent, schema, virtual = false) {
+        Factory.check(name);
+
+        if (typeof parent == 'function') {
+            schema = Object.assign({}, library.get(parent.constructor.name).schema, schema);
+        } else {
+            schema = parent;
+        }
+
+        const ModelClass = require('./index').ModelClass;
+        const Entity = class Model extends ModelClass {
+            constructor(props = {}, parent) {
+                props = Object.assign({},
+                    parent instanceof Model ? parent.serialize() : parent,
+                    props instanceof Model ? props.serialize() : props
+                );
+
+                super(props);
+                this._uuid = props.uuid || uuid.v4();
+
+                for (let key in schema) {
+                    if (key === 'uuid') {
+                        throw new Error('Field "uuid" is automatically set');
+                    }
+                    if (schema.hasOwnProperty(key)) {
+                        const definer = require('./property_definers').get(this, key, schema[key]);
+                        definer.assign(this, key, schema[key]);
+                        definer.define(this, key, schema[key]);
+                        if (props[key]) {
+                            this[key] = props[key];
+                        }
+                    }
+                }
+
+                library.get(name).set(this.serialize());
+                library.dispatchEvent('new', { name, instance: this });
+                // if (library.socket) {
+                //     this.addEventListener('change', () => {
+                //         this.socket.emit(`change`, Object.assign({_name: name}, this.serialize()));
+                //         this.socket.on(`refresh`, (props) => {
+                //             if (props._name === name &amp;&amp; props.uuid === this.uuid) {
+                //                 this.unserialize(props);
+                //             }
+                //         });
+                //         this.socket.emit(`change_${name.toLowerCase()}`, this.serialize());
+                //         this.socket.on(`refresh_${name.toLowerCase()}`, (props) => {
+                //             if (props.uuid === this.uuid) {
+                //                 this.unserialize(props);
+                //             }
+                //         });
+                //     });
+                // }
+            }
+
+            serialize() {
+                let serialized = {uuid: this.uuid};
+                for (let key in schema) {
+                    if (schema.hasOwnProperty(key)) {
+                        if (this[key] instanceof ModelClass) {
+                            serialized[key] = this[key].serialize();
+                        } else {
+                            serialized[key] = this[key];
+                        }
+                    }
+                }
+                return serialized;
+            }
+
+            unserialize(props) {
+                for (let key in schema) {
+                    if (schema.hasOwnProperty(key) &amp;&amp; props[key]) {
+                        this[key] = props[key];
+                    }
+                }
+            }
+
+            get uuid() {
+                return this._uuid;
+            }
+        };
+
+        const model = Object.defineProperty(Entity, 'name', {value: name});
+        library.fill(name, schema, model, !!virtual);
+        return model;
+    }
+}
+
+module.exports = new Factory();
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.2</a></p>
+        <p class="sidebar-created-by">
+            <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers</a>
+        </p>
+    </div>
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/app.min.js"></script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
