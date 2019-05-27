@@ -4,7 +4,7 @@
   "description": "Modeling architecture data",
   "main": "lib/index.js",
   "scripts": {
-    "doc": "npx jsdoc -c jsdoc.json",
+    "docs": "npx jsdoc -c jsdoc.json",
     "test": "node ./tests/index.js"
   },
   "repository": {

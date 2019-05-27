@@ -1,0 +1,8 @@
+{
+  "title": "Examples",
+  "children": {
+    "simple": { "title": "Simple example" },
+    "composite": { "title": "Composite example" },
+    "complex": { "title": "Complex example" }
+  }
+}

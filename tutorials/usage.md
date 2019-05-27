@@ -1,12 +1,4 @@
-# Fractale
-
-## Data Modeling
-
-Inspired from [Mongoose](https://mongoosejs.com/docs/guide.html), it allows you to modeling your data to be explicit on data format.
-
-It will test value of each fields and link model between them.
-
-## Usage
+# Usage
 
 ```javascript
 'use strict';
@@ -110,7 +102,3 @@ console.log(myModel.board(2)); // > 'New value'
 myModel.collection = { key: 'qwerty' };
 console.log(myModel.collection(2).key); // > 'qwerty'
 ```
-
-### Thanks
-
-![Thanks BP](https://media1.giphy.com/media/yoJC2El7xJkYCadlWE/giphy.gif)
