@@ -2,7 +2,7 @@ Inspired from [Mongoose](https://mongoosejs.com/docs/guide.html), it allows you 
 
 It will test value of each fields and link model between them.
 
-You can found documentation [here](https://docs.faihy.org/fractale).
+You can found documentation [here](http://docs.faihy.org/fractale).
 
 ## Usage
 
