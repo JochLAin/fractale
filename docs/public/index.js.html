@@ -136,8 +136,8 @@ module.exports = {
      * @param ModelClass
      */
     set ModelClass(ModelClass) {
-        if (!(ModelClass instanceof Model)) {
-            throw new Error('Your model class must inherit "Fractale.Model" class');
+        if (!(ModelClass.prototype instanceof Model)) {
+            throw new Error('Your model class must inherit "Fractale.ModelClass" class');
         }
         _ModelClass = ModelClass;
     },

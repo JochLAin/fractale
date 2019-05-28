@@ -7,6 +7,7 @@ const cases = [
     require('./cases/inception'),
     require('./cases/collection'),
     require('./cases/self_reference'),
+    require('./cases/form'),
     require('./cases/deep'),
     require('./cases/complex'),
     // require('./cases/huge'),

@@ -93,6 +93,24 @@ module.exports = class EventListener {
     }
 
     /**
+     * Proxy to dispatchEvent method
+     * @method
+     */
+    emit = this.dispatchEvent;
+
+    /**
+     * Proxy to addEventListener method
+     * @method
+     */
+    on = this.addEventListener;
+
+    /**
+     * Proxy to removeEventListener method
+     * @method
+     */
+    off = this.removeEventListener;
+
+    /**
      * Add an event listener on an event
      * @param {String} name - Event name
      * @param {Function} callback - Callback called on event
