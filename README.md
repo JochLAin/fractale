@@ -105,8 +105,22 @@ myModel.board = 'New value';
 console.log(myModel.board(2)); // > 'New value'
 
 // Create new item in collection
-myModel.collection = { key: 'qwerty' };
+myModel.collection = { key: 'qwerty', value: 1 };
 console.log(myModel.collection(2).key); // > 'qwerty'
+
+/* Array methods use */
+myModel.collections.push({ key: 'azertyuiop', value: 2 });
+myModel.collections = myModel.collections.concat([{ key: 'new_key', value: 3 }, { key: 'N3W_K3Y', value: 4 }]);
+console.log(myModel.serialize().collections);
+/*
+> [
+    { key: 'pass', value: 789 },
+    { key: 'bar', value: 456 },
+    { key: 'qwerty', value: 1 },
+    { key: 'new_key', value: 3 },
+    { key: 'N3W_K3Y', value: 4 }
+]
+*/
 ```
 
 ### Thanks

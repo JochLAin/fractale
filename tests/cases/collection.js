@@ -23,11 +23,20 @@ module.exports.run = () => new Promise((resolve) => {
         }]
     });
 
+    library.books.push({
+        title: 'Biorg trinity',
+        readable: true,
+        author: author,
+    });
+
     if (library.books[0].title !== 'Air gear') {
         throw new Error('Error on collection accessor with brace');
     }
     if (library.book(1).title !== 'Tenjo tenge') {
         throw new Error('Error on collection accessor with function singular');
+    }
+    if (library.books[2].title !== 'Biorg trinity') {
+        throw new Error('Error on array methods accessor');
     }
 
     if (!library.serialize()) {
