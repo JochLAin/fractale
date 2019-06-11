@@ -1,9 +1,11 @@
 
-const { Class } = require('./models');
+const { Class } = require('../models');
+module.exports.models = [Class];
 
-module.exports.title = 'Test self-reference model';
+module.exports.title = 'Self-reference model';
+module.exports.tutorialized = true;
 
-module.exports.run = () => new Promise((resolve) => {
+module.exports.resolver = (resolve) => {
     const a = new Class({
         name: 'A',
         variables: [
@@ -54,4 +56,4 @@ module.exports.run = () => new Promise((resolve) => {
     }
 
     resolve();
-});
+};

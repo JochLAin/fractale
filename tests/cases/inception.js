@@ -1,9 +1,11 @@
 
-const { Book } = require('./models');
+const { Book } = require('../models');
+module.exports.models = [Book];
 
-module.exports.title = 'Test inception model';
+module.exports.title = 'Inception model';
+module.exports.tutorialized = true;
 
-module.exports.run = () => new Promise((resolve) => {
+module.exports.resolver = (resolve) => {
     const book = new Book({
         author: {
             firstname: 'Ito',
@@ -35,4 +37,4 @@ module.exports.run = () => new Promise((resolve) => {
         throw new Error('Error on inception serializer');
     }
     resolve();
-});
+};

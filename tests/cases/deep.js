@@ -1,9 +1,11 @@
 
-const { Class, Program } = require('./models');
+const { Class, Program } = require('../models');
+module.exports.models = [Class];
 
-module.exports.title = 'Test deep model';
+module.exports.title = 'Deep model';
+module.exports.tutorialized = true;
 
-module.exports.run = () => new Promise((resolve) => {
+module.exports.resolver = (resolve) => {
     const a = new Class({
         name: 'A',
         variables: [
@@ -58,4 +60,4 @@ module.exports.run = () => new Promise((resolve) => {
     }
 
     resolve();
-});
+};

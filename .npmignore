@@ -1,7 +1,5 @@
 .idea
 docs/
-docs/public/images/
-docs/tutorials/
 .gitignore
 jsdoc.json
 

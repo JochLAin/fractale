@@ -6,7 +6,7 @@
     "dictionaries": ["jsdoc"]
   },
   "plugins": [
-    "docs/theme/category"
+    "docs/theme/plugins/category"
   ],
   "source": {
     "include": ["./lib"],
@@ -25,24 +25,12 @@
   "templates": {
     "cleverLinks": false,
     "monospaceLinks": false,
-    "default": {
-      "staticFiles": {
-        "include": [
-          "./docs/tutorials/statics"
-        ]
-      },
-      "includeDate": false
-    },
-    "better-docs": {
+    "custom": {
       "name": "Fractale Documentation",
       "logo": "images/logo.svg",
       "navigation": [
-        {
-          "label": "NPM",
-          "href": "https://www.npmjs.com/package/fractale"
-        },
-        {
-          "label": "Github",
+        { "label": "NPM", "href": "https://www.npmjs.com/package/fractale" },
+        { "label": "Github",
           "href": "https://github.com/JochLAin/fractale"
         }
       ]

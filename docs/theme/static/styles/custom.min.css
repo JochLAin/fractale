@@ -4,3 +4,7 @@ a {text-decoration: none !important}
 dt.tag-see {display:inline-block}
 dd.tag-see {display:inline-block;margin-left:0}
 dd.tag-see ul {list-style:none;margin-left:5px}
+dt.tag-author {display:inline-block}
+dd.tag-author {display:inline-block;margin-left:0}
+dd.tag-author ul {list-style:none;margin-left:5px}
+[data-toggle="collapse"] { display: block; padding: 5px 10px; }

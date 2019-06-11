@@ -1,9 +1,11 @@
 
-const { Library, Author } = require('./models');
+const { Library, Author } = require('../models');
+module.exports.models = [Library];
 
-module.exports.title = 'Test collection model';
+module.exports.title = 'Collection model';
+module.exports.tutorialized = true;
 
-module.exports.run = () => new Promise((resolve) => {
+module.exports.resolver = (resolve) => {
     const author = new Author({
         firstname: 'Ito',
         lastname: 'Ōgure',
@@ -35,7 +37,7 @@ module.exports.run = () => new Promise((resolve) => {
     if (library.book(1).title !== 'Tenjo tenge') {
         throw new Error('Error on collection accessor with function singular');
     }
-    if (library.books[2].title !== 'Biorg trinity') {
+    if (library.books.last().title !== 'Biorg trinity') {
         throw new Error('Error on array methods accessor');
     }
 
@@ -43,4 +45,4 @@ module.exports.run = () => new Promise((resolve) => {
         throw new Error('Error on collection serializer');
     }
     resolve();
-});
+};

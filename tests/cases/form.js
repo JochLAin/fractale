@@ -1,18 +1,11 @@
 
-const { Library, Author, Book, Chapter, Page } = require('./models');
+const { Author, Book } = require('../models');
+module.exports.models = [Book];
 
-module.exports.title = 'Test form model';
+module.exports.title = 'Form model';
+module.exports.tutorialized = true;
 
-module.exports.run = () => new Promise((resolve) => {
-    // const intro = new Page({
-    //     title: 'Introduction',
-    //     content: 'Lorem ipsum dolores sit amet',
-    // });
-    //
-    // const chapter = new Chapter({
-    //     pages: [intro.uuid],
-    // });
-
+module.exports.resolver = (resolve) => {
     const author = new Author({
         firstname: 'Jocelyn',
         lastname: 'Faihy',
@@ -23,12 +16,14 @@ module.exports.run = () => new Promise((resolve) => {
     const book = new Book({
         author: author.uuid,
         readable: false,
-        title: 'Au-delà de la donnée',
-        // chapters: [chapter],
+        title: 'Au-delà de la donnée'
     });
 
+    if (book.author.firstname !== 'Jocelyn') {
+        throw new Error('Error on form setter');
+    }
     if (!book.serialize()) {
-        throw new Error('Error on collection serializer');
+        throw new Error('Error on form serializer');
     }
     resolve();
-});
+};

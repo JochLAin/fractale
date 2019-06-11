@@ -1,9 +1,11 @@
 
-const { Compound } = require('./models');
+const { Compound } = require('../models');
+module.exports.models = [Compound];
 
-module.exports.title = 'Test metadata model';
+module.exports.title = 'Metadata model';
+module.exports.tutorialized = true;
 
-module.exports.run = () => new Promise((resolve) => {
+module.exports.resolver = (resolve) => {
     const instance = new Compound({
         string: 'Hello world',
         boards: ['Lorem ipsum', 'Dolores sit amet'],
@@ -40,4 +42,4 @@ module.exports.run = () => new Promise((resolve) => {
         throw new Error('Error on metadata serializer');
     }
     resolve();
-});
+};

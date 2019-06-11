@@ -1,9 +1,11 @@
 
-const { Simple } = require('./models');
+const { Simple } = require('../models');
+module.exports.models = [Simple];
 
-module.exports.title = 'Test simple model';
+module.exports.title = 'Simple model';
+module.exports.tutorialized = true;
 
-module.exports.run = () => new Promise((resolve) => {
+module.exports.resolver = (resolve) => {
     const instance = new Simple({
         mixed: 'It\'s dangerous to go alone! Take this.',
         boolean: true,
@@ -27,7 +29,7 @@ module.exports.run = () => new Promise((resolve) => {
     instance.mixed = -1;
     instance.boolean = false;
     instance.number = 42;
-    instance.string = 'Dolores sit amet';
+    instance.string = 'Dolor sit amet';
 
     if (instance.mixed !== -1) {
         throw new Error('Error on simple accessor with type mixed after change');
@@ -38,7 +40,7 @@ module.exports.run = () => new Promise((resolve) => {
     if (instance.number !== 42) {
         throw new Error('Error on simple accessor with type number after change');
     }
-    if (instance.string !== 'Dolores sit amet') {
+    if (instance.string !== 'Dolor sit amet') {
         throw new Error('Error on simple accessor with type string after change');
     }
 
@@ -47,4 +49,4 @@ module.exports.run = () => new Promise((resolve) => {
     }
 
     resolve();
-});
+};

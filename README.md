@@ -2,28 +2,51 @@ Inspired from [Mongoose](https://mongoosejs.com/docs/guide.html), it allows you 
 
 It will test value of each fields and link model between them.
 
-You can found documentation [here](http://docs.faihy.org/fractale).
+# Installation
 
-## Usage
+`npm install -S fractale`
+
+# Documentation
+
+You can found more documentation and examples [here](http://docs.faihy.org/fractale).
+
+# Usage
+
+## Declaration
 
 ```javascript
 'use strict';
 
 const Fractale = require('fractale');
 
-const Model = Fractale.create(
-    'Model', /* Name of your model (required) */
+const KeyValuePair = Fractale.create(
+    'KeyValuePair', /* Name of your model (required) */
     { /* Model's schema */
+        key: String,
+        value: null || undefined,
+    }
+);
+
+/* Complete example */
+const Model = Fractale.create(
+    'Model', 
+    {
         mixed: null || undefined,
         boolean: Boolean,
         number: Number,
         string: String,
         boards: [String],
         metadata: { key: String },
-        collections: [{ key: String, value: null }]
+        collections: [{ key: String, value: null }],
+        inception: KeyValuePair,
+        self: Fractale.SELF,
     }
 );
+```
 
+## Instanciation
+
+```javascript
 const myModel = new Model({
     mixed: 'Great !',
     boolean: true,
@@ -35,6 +58,7 @@ const myModel = new Model({
         { key: 'foo', value: 123 },
         { key: 'bar', value: 456 }
     ],
+    inception: { key: 'key', value: 1 }
 });
 
 console.log(myModel.serialize());
@@ -50,9 +74,14 @@ console.log(myModel.serialize());
         { key: 'foo', value: 123 },
         { key: 'bar', value: 456 }
     ],
+    inception: { key: 'key', value: 1 }
 }
 */
+```
 
+## Modification
+
+```javascript
 console.log(myModel.mixed); // > true
 myModel.mixed = 123;
 console.log(myModel.mixed); // > 123
@@ -83,6 +112,10 @@ myModel.collections[0] = { value: 789 };
 console.log(myModel.collections[0].key); // > 'pass'
 console.log(myModel.collections[0].value); // > 789
 
+console.log(myModel.inception); // > KeyValuePair { key: 'key', value: 1 }
+myModel.inception = new KeyValuePair({ key: 'new_key', value: 'new_value' });
+console.log(myModel.inception); // > KeyValuePair { key: 'new_key', value: 'new_value' }
+
 console.log(myModel.serialize());
 /* 
 > { 
@@ -95,10 +128,15 @@ console.log(myModel.serialize());
     collections: [
         { key: 'pass', value: 789 },
         { key: 'bar', value: 456 }
-    ]
+    ],
+    inception: { key: 'new_key', value: 'new_value' }
 }
 */
+```
 
+## Array helpers
+
+```javascript
 /* Singular use */
 // Create new board
 myModel.board = 'New value';
@@ -123,6 +161,16 @@ console.log(myModel.serialize().collections);
 */
 ```
 
-### Thanks
+# License
+
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/JochLAin/fractale/blob/master/LICENSE) file for details
+
+# Authors
+
+* **Jocelyn Faihy** - *Web developer* - [Jochlain](https://github.com/JochLAin)
+
+See also the list of [contributors](https://github.com/JochLAin/fractale/graphs/contributors) who participated in this project.
+
+# Thanks
 
 ![Thanks BP](https://media1.giphy.com/media/yoJC2El7xJkYCadlWE/giphy.gif)

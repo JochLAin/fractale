@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        
+        <meta charset="utf-8">
+        <title>Fractale: Form model</title>
+
+        <script src="scripts/prettify/prettify.js"></script>
+        <script src="scripts/prettify/lang-css.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <!--[if lt IE 9]>
+        <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css?family=Muli:100,400,700|Oswald:300|Inconsolata,700" rel="stylesheet">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+              integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+        <link type="text/css" rel="stylesheet"
+              href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+        <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+        <link type="text/css" rel="stylesheet" href="styles/custom.min.css">
+    </head>
+
+    <body>
+        <div id="stickyNavbarOverlay"></div>
+        <div class="top-navbar">
+            <div class="container">
+                <nav class="navbar" role="navigation" aria-label="main navigation">
+                    <div class="navbar-brand">
+                        
+                            <a href="index.html" style="display: flex;">
+                                <img src="images/logo.svg" alt="logo">
+                                
+                                    <h1 class="navbar-item">Fractale Documentation</h1>
+                                
+                            </a>
+                        
+                        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                            <span aria-hidden="true"></span>
+                            <span aria-hidden="true"></span>
+                            <span aria-hidden="true"></span>
+                        </a>
+                    </div>
+                    
+                        <div class="navbar-menu">
+                            <div class="navbar-end">
+                                
+                                <div class="navbar-item">
+                                    <a href="https://www.npmjs.com/package/fractale" target="_blank">NPM</a>
+                                </div>
+                                
+                                <div class="navbar-item">
+                                    <a href="https://github.com/JochLAin/fractale" target="_blank">Github</a>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    
+                </nav>
+            </div>
+        </div>
+        <div class="container">
+            <div class="columns">
+                <div class="column is-3" id="sidebarNav">
+                    <div class="sidebar">
+                        <nav>
+                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-collection_model.html">Collection model</a></li><li><a href="tutorial-complex_model.html">Complex model</a></li><li><a href="tutorial-deep_model.html">Deep model</a></li><li><a href="tutorial-form_model.html">Form model</a></li><li><a href="tutorial-inception_model.html">Inception model</a></li><li><a href="tutorial-metadata_model.html">Metadata model</a></li><li><a href="tutorial-self-reference_model.html">Self-reference model</a></li><li><a href="tutorial-simple_model.html">Simple model</a></li></ul><h3>Modules</h3><ul><li><a href="module-Fractale.html">Fractale</a></li></ul><h3>Classes</h3><ul><li><a href="Encyclopedia.html">Encyclopedia</a></li><li><a href="EventListener.html">EventListener</a></li><li><a href="Factory.html">Factory</a></li><li><a href="Library.html">Library</a></li><li><a href="ModelClass.html">ModelClass</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_ModelClass">_ModelClass</a></li></ul></div>
+                        </nav>
+                    </div>
+                </div>
+                <div class="column is-9-desktop">
+                    <div class="content" id="main-content-wrapper">
+                        <header class="page-title">
+                            <p>Tutorial</p>
+                            <h1>Form model</h1>
+                        </header>
+                        <section>
+
+<header>
+    
+</header>
+
+<article>
+    <article class="mb-4">
+<a href="#models" class="border border-1" data-toggle="collapse">Models used for examples</a>
+<div id="models" class="border border-1 collapse">
+<pre class="prettyprint source"><code>const Author = Fractale.create(&quot;Author&quot;, {
+    &quot;firstname&quot;: String,
+    &quot;lastname&quot;: String,
+    &quot;surname&quot;: String,
+    &quot;comment&quot;: String
+});
+
+const Page = Fractale.create(&quot;Page&quot;, {
+    &quot;title&quot;: String,
+    &quot;content&quot;: String
+});
+
+const Chapter = Fractale.create(&quot;Chapter&quot;, {
+    &quot;pages&quot;: [
+        Page
+    ]
+});
+
+const Book = Fractale.create(&quot;Book&quot;, {
+    &quot;author&quot;: Author,
+    &quot;readable&quot;: Boolean,
+    &quot;title&quot;: String,
+    &quot;chapters&quot;: [
+        Chapter
+    ]
+});
+</code></pre>
+</div>
+</article>
+<pre class="prettyprint source"><code>const author = new Author({
+    firstname: 'Jocelyn',
+    lastname: 'Faihy',
+    surname: 'Jochlain',
+    comment: 'Great',
+});
+
+const book = new Book({
+    author: author.uuid,
+    readable: false,
+    title: 'Au-delà de la donnée'
+});
+
+if (book.author.firstname !== 'Jocelyn') {
+    throw new Error('Error on form setter');
+}
+if (!book.serialize()) {
+    throw new Error('Error on form serializer');
+}
+resolve();
+</code></pre>
+</article>
+
+</section>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="footer">
+            <div class="content has-text-centered">
+                <p>
+                    Documentation generated by
+                    <a href="https://github.com/jsdoc3/jsdoc">
+                        JSDoc 3.6.2
+                    </a>
+                </p>
+                <p class="sidebar-created-by">
+                    <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a>
+                    provided with <i class="fas fa-heart"></i> by
+                    <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers</a>
+                </p>
+            </div>
+        </footer>
+        <script> prettyPrint(); </script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="scripts/app.min.js"></script>
+        <script src="scripts/linenumber.js"></script>
+    </body>
+</html>

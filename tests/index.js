@@ -1,7 +1,10 @@
 
 const console = require('./console');
 
-const cases = [
+const Fractale = require('../lib');
+const models = module.exports.models = require('./models');
+
+const cases = module.exports.cases = [
     require('./cases/simple'),
     require('./cases/metadata'),
     require('./cases/inception'),
@@ -10,32 +13,35 @@ const cases = [
     require('./cases/form'),
     require('./cases/deep'),
     require('./cases/complex'),
+    require('./cases/stringify'),
     // require('./cases/huge'),
     // require('./cases/deeper'),
 ];
 
-const chain = Promise.resolve();
+if (require.main === module) {
+    const chain = Promise.resolve();
 
-const loop = async () => {
-    let current = cases.shift();
-    if (current) {
-        console.log(console.colorize(`  > ${current.title}`, 'blue', null, 'bold'));
+    const loop = async () => {
+        let current = cases.shift();
+        if (current) {
+            console.log(console.colorize(`  > ${current.title}`, 'blue', null, 'bold'));
 
-        await current.run().then(() => {
-            console.log('');
-            console.log(console.colorize('\n  Test passed\n', 'white', 'green'));
-            console.log('');
-        }).catch((error) => {
-            console.log('');
-            console.log(console.colorize('\n  Test error\n', 'white', 'red'));
-            console.log('');
-            console.error(error);
-            console.log('');
-            process.exit(1);
-        });
+            await (new Promise(current.resolver)).then(() => {
+                console.log('');
+                console.log(console.colorize('\n  Test passed\n', 'white', 'green'));
+                console.log('');
+            }).catch((error) => {
+                console.log('');
+                console.log(console.colorize('\n  Test error\n', 'white', 'red'));
+                console.log('');
+                console.error(error);
+                console.log('');
+                process.exit(1);
+            });
 
-        return loop();
-    }
-};
+            return loop();
+        }
+    };
 
-chain.then(loop).catch(() => process.exit(1));
+    chain.then(loop).catch(() => process.exit(1));
+}

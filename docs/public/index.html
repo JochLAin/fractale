@@ -1,79 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    
-    <meta charset="utf-8">
-    <title>Fractale: Home</title>
+    <head>
+        
+        <meta charset="utf-8">
+        <title>Fractale: Home</title>
 
-    <script src="scripts/prettify/prettify.js"></script>
-    <script src="scripts/prettify/lang-css.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Muli:100,400,700|Oswald:300|Inconsolata,700" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
-    <link type="text/css" rel="stylesheet" href="styles/app.min.css">
-    <link type="text/css" rel="stylesheet" href="styles/custom.min.css">
-</head>
+        <script src="scripts/prettify/prettify.js"></script>
+        <script src="scripts/prettify/lang-css.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <!--[if lt IE 9]>
+        <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css?family=Muli:100,400,700|Oswald:300|Inconsolata,700" rel="stylesheet">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+              integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+        <link type="text/css" rel="stylesheet"
+              href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+        <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+        <link type="text/css" rel="stylesheet" href="styles/custom.min.css">
+    </head>
 
-<body>
-    <div id="stickyNavbarOverlay"></div>
-    <div class="top-navbar">
+    <body>
+        <div id="stickyNavbarOverlay"></div>
+        <div class="top-navbar">
+            <div class="container">
+                <nav class="navbar" role="navigation" aria-label="main navigation">
+                    <div class="navbar-brand">
+                        
+                            <a href="index.html" style="display: flex;">
+                                <img src="images/logo.svg" alt="logo">
+                                
+                                    <h1 class="navbar-item">Fractale Documentation</h1>
+                                
+                            </a>
+                        
+                        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                            <span aria-hidden="true"></span>
+                            <span aria-hidden="true"></span>
+                            <span aria-hidden="true"></span>
+                        </a>
+                    </div>
+                    
+                        <div class="navbar-menu">
+                            <div class="navbar-end">
+                                
+                                <div class="navbar-item">
+                                    <a href="https://www.npmjs.com/package/fractale" target="_blank">NPM</a>
+                                </div>
+                                
+                                <div class="navbar-item">
+                                    <a href="https://github.com/JochLAin/fractale" target="_blank">Github</a>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    
+                </nav>
+            </div>
+        </div>
         <div class="container">
-            <nav class="navbar" role="navigation" aria-label="main navigation">
-                <div class="navbar-brand">
-                    
-                    <a href="index.html" style="display: flex;">
-                        <img src="images/logo.svg" alt="logo">
-                        
-                           <h1 class="navbar-item">Fractale Documentation</h1>
-                        
-                    </a>
-                    <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-                    
-                        <span aria-hidden="true"></span>
-                        <span aria-hidden="true"></span>
-                        <span aria-hidden="true"></span>
-                    </a>
-                </div>
-                 
-                <div class="navbar-menu">
-                    <div class="navbar-end">
-                    
-                        <div class="navbar-item">
-                            <a href="https://www.npmjs.com/package/fractale" target="_blank">NPM</a>
-                        </div>
-                    
-                        <div class="navbar-item">
-                            <a href="https://github.com/JochLAin/fractale" target="_blank">Github</a>
-                        </div>
-                    
+            <div class="columns">
+                <div class="column is-3" id="sidebarNav">
+                    <div class="sidebar">
+                        <nav>
+                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-collection_model.html">Collection model</a></li><li><a href="tutorial-complex_model.html">Complex model</a></li><li><a href="tutorial-deep_model.html">Deep model</a></li><li><a href="tutorial-form_model.html">Form model</a></li><li><a href="tutorial-inception_model.html">Inception model</a></li><li><a href="tutorial-metadata_model.html">Metadata model</a></li><li><a href="tutorial-self-reference_model.html">Self-reference model</a></li><li><a href="tutorial-simple_model.html">Simple model</a></li></ul><h3>Modules</h3><ul><li><a href="module-Fractale.html">Fractale</a></li></ul><h3>Classes</h3><ul><li><a href="Encyclopedia.html">Encyclopedia</a></li><li><a href="EventListener.html">EventListener</a></li><li><a href="Factory.html">Factory</a></li><li><a href="Library.html">Library</a></li><li><a href="ModelClass.html">ModelClass</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_ModelClass">_ModelClass</a></li></ul></div>
+                        </nav>
                     </div>
                 </div>
-                
-            </nav>
-        </div>
-    </div>
-    <div class="container">
-        <div class="columns">
-            <div class="column is-3" id="sidebarNav">
-                <div class="sidebar">
-                    <nav>
-                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-example.html">Examples</a></li></ul><h3>Modules</h3><ul><li><a href="module-Fractale.html">Fractale</a></li></ul><h3>Classes</h3><ul><li><a href="Encyclopedia.html">Encyclopedia</a></li><li><a href="EventListener.html">EventListener</a></li><li><a href="Factory.html">Factory</a></li><li><a href="Library.html">Library</a></li><li><a href="ModelClass.html">ModelClass</a></li></ul></div>
-                    </nav>
-                </div>
-            </div>
-            <div class="column is-9-desktop">
-                <div class="content" id="main-content-wrapper">
-                    <header class="page-title">
-                        <p>Data modeling</p>
-                        <h1>Fractale</h1>
-                    </header>
-                    
-                    
+                <div class="column is-9-desktop">
+                    <div class="content" id="main-content-wrapper">
+                        <header class="page-title">
+                            <p>Data modeling</p>
+                            <h1>Fractale</h1>
+                        </header>
+                        
 
 
 
@@ -99,26 +101,42 @@
     <section>
         <article><p>Inspired from <a href="https://mongoosejs.com/docs/guide.html">Mongoose</a>, it allows you to modeling your data to be explicit on data format.</p>
 <p>It will test value of each fields and link model between them.</p>
-<p>You can found documentation <a href="http://docs.faihy.org/fractale">here</a>.</p>
-<h2>Usage</h2>
+<h1>Installation</h1>
+<p><code>npm install -S fractale</code></p>
+<h1>Documentation</h1>
+<p>You can found more documentation and examples <a href="http://docs.faihy.org/fractale">here</a>.</p>
+<h1>Usage</h1>
+<h2>Declaration</h2>
 <pre class="prettyprint source lang-javascript"><code>'use strict';
 
 const Fractale = require('fractale');
 
-const Model = Fractale.create(
-    'Model', /* Name of your model (required) */
+const KeyValuePair = Fractale.create(
+    'KeyValuePair', /* Name of your model (required) */
     { /* Model's schema */
+        key: String,
+        value: null || undefined,
+    }
+);
+
+/* Complete example */
+const Model = Fractale.create(
+    'Model', 
+    {
         mixed: null || undefined,
         boolean: Boolean,
         number: Number,
         string: String,
         boards: [String],
         metadata: { key: String },
-        collections: [{ key: String, value: null }]
+        collections: [{ key: String, value: null }],
+        inception: KeyValuePair,
+        self: Fractale.SELF,
     }
 );
-
-const myModel = new Model({
+</code></pre>
+<h2>Instanciation</h2>
+<pre class="prettyprint source lang-javascript"><code>const myModel = new Model({
     mixed: 'Great !',
     boolean: true,
     number: 42,
@@ -129,6 +147,7 @@ const myModel = new Model({
         { key: 'foo', value: 123 },
         { key: 'bar', value: 456 }
     ],
+    inception: { key: 'key', value: 1 }
 });
 
 console.log(myModel.serialize());
@@ -144,10 +163,12 @@ console.log(myModel.serialize());
         { key: 'foo', value: 123 },
         { key: 'bar', value: 456 }
     ],
+    inception: { key: 'key', value: 1 }
 }
 */
-
-console.log(myModel.mixed); // > true
+</code></pre>
+<h2>Modification</h2>
+<pre class="prettyprint source lang-javascript"><code>console.log(myModel.mixed); // > true
 myModel.mixed = 123;
 console.log(myModel.mixed); // > 123
 
@@ -177,6 +198,10 @@ myModel.collections[0] = { value: 789 };
 console.log(myModel.collections[0].key); // > 'pass'
 console.log(myModel.collections[0].value); // > 789
 
+console.log(myModel.inception); // > KeyValuePair { key: 'key', value: 1 }
+myModel.inception = new KeyValuePair({ key: 'new_key', value: 'new_value' });
+console.log(myModel.inception); // > KeyValuePair { key: 'new_key', value: 'new_value' }
+
 console.log(myModel.serialize());
 /* 
 > { 
@@ -189,20 +214,43 @@ console.log(myModel.serialize());
     collections: [
         { key: 'pass', value: 789 },
         { key: 'bar', value: 456 }
-    ]
+    ],
+    inception: { key: 'new_key', value: 'new_value' }
 }
 */
-
-/* Singular use */
+</code></pre>
+<h2>Array helpers</h2>
+<pre class="prettyprint source lang-javascript"><code>/* Singular use */
 // Create new board
 myModel.board = 'New value';
 console.log(myModel.board(2)); // > 'New value'
 
 // Create new item in collection
-myModel.collection = { key: 'qwerty' };
+myModel.collection = { key: 'qwerty', value: 1 };
 console.log(myModel.collection(2).key); // > 'qwerty'
+
+/* Array methods use */
+myModel.collections.push({ key: 'azertyuiop', value: 2 });
+myModel.collections = myModel.collections.concat([{ key: 'new_key', value: 3 }, { key: 'N3W_K3Y', value: 4 }]);
+console.log(myModel.serialize().collections);
+/*
+> [
+    { key: 'pass', value: 789 },
+    { key: 'bar', value: 456 },
+    { key: 'qwerty', value: 1 },
+    { key: 'new_key', value: 3 },
+    { key: 'N3W_K3Y', value: 4 }
+]
+*/
 </code></pre>
-<h3>Thanks</h3>
+<h1>License</h1>
+<p>This project is licensed under the MIT License - see the <a href="https://github.com/JochLAin/fractale/blob/master/LICENSE">LICENSE</a> file for details</p>
+<h1>Authors</h1>
+<ul>
+<li><strong>Jocelyn Faihy</strong> - <em>Web developer</em> - <a href="https://github.com/JochLAin">Jochlain</a></li>
+</ul>
+<p>See also the list of <a href="https://github.com/JochLAin/fractale/graphs/contributors">contributors</a> who participated in this project.</p>
+<h1>Thanks</h1>
 <p><img src="https://media1.giphy.com/media/yoJC2El7xJkYCadlWE/giphy.gif" alt="Thanks BP"></p></article>
     </section>
 
@@ -211,23 +259,28 @@ console.log(myModel.collection(2).key); // > 'qwerty'
 
 
 
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
-<footer class="footer">
-    <div class="content has-text-centered">
-        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.2</a></p>
-        <p class="sidebar-created-by">
-            <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
-            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers</a>
-        </p>
-    </div>
-</footer>
-
-<script> prettyPrint(); </script>
-<script src="scripts/app.min.js"></script>
-<script src="scripts/linenumber.js"> </script>
-</body>
+        <footer class="footer">
+            <div class="content has-text-centered">
+                <p>
+                    Documentation generated by
+                    <a href="https://github.com/jsdoc3/jsdoc">
+                        JSDoc 3.6.2
+                    </a>
+                </p>
+                <p class="sidebar-created-by">
+                    <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a>
+                    provided with <i class="fas fa-heart"></i> by
+                    <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers</a>
+                </p>
+            </div>
+        </footer>
+        <script> prettyPrint(); </script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="scripts/app.min.js"></script>
+        <script src="scripts/linenumber.js"></script>
+    </body>
 </html>

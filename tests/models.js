@@ -1,5 +1,4 @@
-
-const Fractale = require('../../lib');
+const Fractale = require('../lib');
 
 const Simple = module.exports.Simple = Fractale.create('Simple', {
     mixed: null || undefined,
