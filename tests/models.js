@@ -77,13 +77,13 @@ Layer.prototype.pixel = function (x, y) {
 };
 
 const Frame = module.exports.Frame = Fractale.create('Frame', {
-    layers: [{ __type: Layer, __options: { through: ['height', 'width']}}],
+    layers: [Fractale.with(Layer, { through: ['height', 'width']})],
     height: Number,
     width: Number,
 });
 
 const Sprite = module.exports.Sprite = Fractale.create('Sprite', {
-    frames: [{ __type: Frame, __options: { through: ['height', 'width']}}],
+    frames: [Fractale.with(Frame, { through: ['height', 'width']})],
     height: Number,
     width: Number,
 });
