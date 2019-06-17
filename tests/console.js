@@ -35,14 +35,16 @@ const console = Object.assign({}, global.console, {
     },
 
     colorize: (text, color, background, ...decorations) => {
-        if (color) {
+        if (color && console.color[color]) {
             text = console.color[color](text);
         }
-        if (background) {
+        if (background && console.background[background]) {
             text = console.background[background](text);
         }
         for (let index in decorations) {
-            text = console.decoration[decorations[index]](text);
+            if (console.decoration[decorations[index]]) {
+                text = console.decoration[decorations[index]](text);
+            }
         }
 
         return text;

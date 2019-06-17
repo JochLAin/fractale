@@ -30,7 +30,7 @@ const Book = Fractale.create("Book", {
     ]
 });
 
-const Library = Fractale.create("Library", {
+const Index = Fractale.create("Index", {
     "books": [
         Book
     ]
@@ -48,7 +48,7 @@ const author = new Author({
     comment: 'N/A',
 });
 
-const library = new Library({
+const library = new Index({
     books: [{
         title: 'Air gear',
         readable: true,
