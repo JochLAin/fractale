@@ -82,84 +82,120 @@
 </header>
 
 <article>
-    <article class="mb-4">
-<a href="#models" class="border border-1" data-toggle="collapse">Models used for examples</a>
-<div id="models" class="border border-1 collapse">
-<pre class="prettyprint source"><code>const Author = Fractale.create(&quot;Author&quot;, {
-    &quot;firstname&quot;: String,
-    &quot;lastname&quot;: String,
-    &quot;surname&quot;: String,
-    &quot;comment&quot;: String
+    <article class="mb-4"><a href="#models" class="border border-1" data-toggle="collapse">Models used for examples</a><div id="models" class="border border-1 collapse">
+```
+const Author = Fractale.create("Author", {
+    "firstname": String,
+    "lastname": String,
+    "surname": String,
+    "comment": String
 });
-
-const Page = Fractale.create(&quot;Page&quot;, {
-    &quot;title&quot;: String,
-    &quot;content&quot;: String
-});
-
-const Chapter = Fractale.create(&quot;Chapter&quot;, {
-    &quot;pages&quot;: [
-        Page
-    ]
-});
-
-const Book = Fractale.create(&quot;Book&quot;, {
-    &quot;author&quot;: Author,
-    &quot;readable&quot;: Boolean,
-    &quot;title&quot;: String,
-    &quot;chapters&quot;: [
-        Chapter
-    ]
-});
-
-const Library = Fractale.create(&quot;Library&quot;, {
-    &quot;books&quot;: [
-        Book
-    ]
-});
+<p>const Page = Fractale.create(&quot;Page&quot;, {
+&quot;title&quot;: String,
+&quot;content&quot;: String
+});</p>
+<p>const Chapter = Fractale.create(&quot;Chapter&quot;, {
+&quot;pages&quot;: [
+Page
+]
+});</p>
+<p>const Book = Fractale.create(&quot;Book&quot;, {
+&quot;author&quot;: Author,
+&quot;readable&quot;: Boolean,
+&quot;title&quot;: String,
+&quot;chapters&quot;: [
+Chapter
+]
+});</p>
+<p>const Library = Fractale.create(&quot;Library&quot;, {
+&quot;books&quot;: [
+Book
+]
+});</p>
+<pre class="prettyprint source"><code>&lt;/div>&lt;/article>
 </code></pre>
-</div>
-</article>
-<pre class="prettyprint source"><code>const author = new Author({
-    firstname: 'Ito',
-    lastname: 'Ōgure',
-    surname: 'Oh! Great',
-    comment: 'N/A',
-});
-
-const library = new Library({
-    books: [{
-        title: 'Air gear',
-        readable: true,
-        author: author,
-    }, {
-        title: 'Tenjo tenge',
-        readable: true,
-        author: author,
-    }]
-});
-
-library.books.push({
-    title: 'Biorg trinity',
-    readable: true,
-    author: author,
-});
-
-if (library.books[0].title !== 'Air gear') {
-    throw new Error('Error on collection accessor with brace');
+<p>const author = new Author({
+firstname: 'Ito',
+lastname: 'Ōgure',
+surname: 'Oh! Great',
+comment: 'N/A',
+});</p>
+<p>const library = new Library({
+books: [{
+title: 'Air gear',
+readable: true,
+author: author,
+}, {
+title: 'Tenjo tenge',
+readable: true,
+author: author,
+}]
+});</p>
+<p>library.books.push({
+title: 'Biorg trinity',
+readable: true,
+author: author,
+});</p>
+<p>if (library.books[0].title !== 'Air gear') {
+throw new Error('Error on collection accessor with brace');
 }
-if (library.book(1).title !== 'Tenjo tenge') {
-    throw new Error('Error on collection accessor with function singular');
+if (library.props.book(1).title !== 'Tenjo tenge') {
+throw new Error('Error on collection accessor with function singular');
 }
 if (library.books.last().title !== 'Biorg trinity') {
-    throw new Error('Error on array methods accessor');
-}
-
-if (!library.serialize()) {
-    throw new Error('Error on collection serializer');
-}
-resolve();
+throw new Error('Error on array methods accessor');
+}</p>
+<p>if (!library.serialize()) {
+throw new Error('Error on collection serializer');
+}</p>
+<p>resolve(library.serialize());</p>
+<pre class="prettyprint source"><code>### Console
 </code></pre>
+<p>{
+&quot;uuid&quot;: &quot;bf6df605-b169-45ab-96bf-dc0299b30f04&quot;,
+&quot;books&quot;: [
+{
+&quot;uuid&quot;: &quot;b0010385-a8b4-43f7-a67d-960154c46414&quot;,
+&quot;author&quot;: {
+&quot;uuid&quot;: &quot;307ef81f-0a8a-4dc2-8121-86fc3a512fad&quot;,
+&quot;firstname&quot;: &quot;Ito&quot;,
+&quot;lastname&quot;: &quot;Ōgure&quot;,
+&quot;surname&quot;: &quot;Oh! Great&quot;,
+&quot;comment&quot;: &quot;N/A&quot;
+},
+&quot;readable&quot;: true,
+&quot;title&quot;: &quot;Air gear&quot;,
+&quot;chapters&quot;: []
+},
+{
+&quot;uuid&quot;: &quot;2b7d3b33-7cbe-412f-aade-9c978170715f&quot;,
+&quot;author&quot;: {
+&quot;uuid&quot;: &quot;307ef81f-0a8a-4dc2-8121-86fc3a512fad&quot;,
+&quot;firstname&quot;: &quot;Ito&quot;,
+&quot;lastname&quot;: &quot;Ōgure&quot;,
+&quot;surname&quot;: &quot;Oh! Great&quot;,
+&quot;comment&quot;: &quot;N/A&quot;
+},
+&quot;readable&quot;: true,
+&quot;title&quot;: &quot;Tenjo tenge&quot;,
+&quot;chapters&quot;: []
+},
+{
+&quot;uuid&quot;: &quot;a12ce511-3fe0-40f8-b400-80ff2adb21a4&quot;,
+&quot;author&quot;: {
+&quot;uuid&quot;: &quot;307ef81f-0a8a-4dc2-8121-86fc3a512fad&quot;,
+&quot;firstname&quot;: &quot;Ito&quot;,
+&quot;lastname&quot;: &quot;Ōgure&quot;,
+&quot;surname&quot;: &quot;Oh! Great&quot;,
+&quot;comment&quot;: &quot;N/A&quot;
+},
+&quot;readable&quot;: true,
+&quot;title&quot;: &quot;Biorg trinity&quot;,
+&quot;chapters&quot;: []
+}
+]
+}</p>
+<pre class="prettyprint source"><code></code></pre>
 </article>
 
 </section>

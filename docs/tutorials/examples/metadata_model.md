@@ -1,7 +1,4 @@
-<article class="mb-4">
-<a href="#models" class="border border-1" data-toggle="collapse">Models used for examples</a>
-<div id="models" class="border border-1 collapse">
-
+<article class="mb-4"><a href="#models" class="border border-1" data-toggle="collapse">Models used for examples</a><div id="models" class="border border-1 collapse">
 ```
 const Compound = Fractale.create("Compound", {
     "boards": [
@@ -22,10 +19,7 @@ const Compound = Fractale.create("Compound", {
     ]
 });
 ```
-
-</div>
-</article>
-
+</div></article>
 ```
 const instance = new Compound({
     string: 'Hello world',
@@ -51,16 +45,33 @@ if (instance.metadata.key !== 'assign') {
 }
 
 instance.metadata = { data: { key: 'after', value: 'after' } };
-
-if (instance.metadata.key !== 'assign') {
-    throw new Error('Error on metadata accessor with bracket');
-}
-if (instance.metadata.data.key !== 'after') {
+if (instance.metadata.key !== 'assign' || instance.metadata.data.key !== 'after') {
     throw new Error('Error on metadata accessor with bracket');
 }
 
 if (!instance.serialize()) {
     throw new Error('Error on metadata serializer');
 }
-resolve();
+
+resolve(instance.serialize());
+```
+### Console
+```
+{
+    "uuid": "c00d64f4-bde2-422f-a8b1-960ecce59eaf",
+    "boards": [
+        "Lorem ipsum",
+        "Dolores sit amet"
+    ],
+    "metadata": {
+        "uuid": "56fdc666-5871-43dc-a932-05c634481a33",
+        "key": "assign",
+        "data": {
+            "uuid": "fc7791f4-5fcb-46eb-80bb-1c7305ac2c3f",
+            "key": "after",
+            "value": "after"
+        }
+    },
+    "collections": []
+}
 ```

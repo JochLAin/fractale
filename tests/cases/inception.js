@@ -36,5 +36,6 @@ module.exports.resolver = (resolve) => {
     if (!book.serialize()) {
         throw new Error('Error on inception serializer');
     }
-    resolve();
+
+    resolve(book.serialize());
 };

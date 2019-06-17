@@ -82,62 +82,65 @@
 </header>
 
 <article>
-    <article class="mb-4">
-<a href="#models" class="border border-1" data-toggle="collapse">Models used for examples</a>
-<div id="models" class="border border-1 collapse">
-<pre class="prettyprint source"><code>const Simple = Fractale.create(&quot;Simple&quot;, {
-    &quot;mixed&quot;: mixed,
-    &quot;boolean&quot;: Boolean,
-    &quot;number&quot;: Number,
-    &quot;string&quot;: String
+    <article class="mb-4"><a href="#models" class="border border-1" data-toggle="collapse">Models used for examples</a><div id="models" class="border border-1 collapse">
+```
+const Simple = Fractale.create("Simple", {
+    "mixed": mixed,
+    "boolean": Boolean,
+    "number": Number,
+    "string": String
 });
-</code></pre>
-</div>
-</article>
-<pre class="prettyprint source"><code>const instance = new Simple({
+```
+</div></article>
+```
+const instance = new Simple({
     mixed: 'It\'s dangerous to go alone! Take this.',
     boolean: true,
     number: 31,
     string: 'Lorem ipsum'
 });
-
-if (instance.mixed !== 'It\'s dangerous to go alone! Take this.') {
-    throw new Error('Error on simple accessor with type mixed');
+<p>if (instance.mixed !== 'It's dangerous to go alone! Take this.') {
+throw new Error('Error on simple accessor with type mixed');
 }
 if (instance.boolean !== true) {
-    throw new Error('Error on simple accessor with type boolean');
+throw new Error('Error on simple accessor with type boolean');
 }
 if (instance.number !== 31) {
-    throw new Error('Error on simple accessor with type number');
+throw new Error('Error on simple accessor with type number');
 }
 if (instance.string !== 'Lorem ipsum') {
-    throw new Error('Error on simple accessor with type string');
-}
-
-instance.mixed = -1;
+throw new Error('Error on simple accessor with type string');
+}</p>
+<p>instance.mixed = -1;
 instance.boolean = false;
 instance.number = 42;
-instance.string = 'Dolor sit amet';
-
-if (instance.mixed !== -1) {
-    throw new Error('Error on simple accessor with type mixed after change');
+instance.string = 'Dolor sit amet';</p>
+<p>if (instance.mixed !== -1) {
+throw new Error('Error on simple accessor with type mixed after change');
 }
 if (instance.boolean !== false) {
-    throw new Error('Error on simple accessor with type boolean after change');
+throw new Error('Error on simple accessor with type boolean after change');
 }
 if (instance.number !== 42) {
-    throw new Error('Error on simple accessor with type number after change');
+throw new Error('Error on simple accessor with type number after change');
 }
 if (instance.string !== 'Dolor sit amet') {
-    throw new Error('Error on simple accessor with type string after change');
-}
-
-if (!instance.serialize()) {
-    throw new Error('Error on simple serializer');
-}
-
-resolve();
+throw new Error('Error on simple accessor with type string after change');
+}</p>
+<p>if (!instance.serialize()) {
+throw new Error('Error on simple serializer');
+}</p>
+<p>resolve(instance.serialize());</p>
+<pre class="prettyprint source"><code>### Console
 </code></pre>
+<p>{
+&quot;uuid&quot;: &quot;32d736b2-a793-4193-a606-a0bf5bbcefa0&quot;,
+&quot;mixed&quot;: -1,
+&quot;boolean&quot;: false,
+&quot;number&quot;: 42,
+&quot;string&quot;: &quot;Dolor sit amet&quot;
+}</p>
+<pre class="prettyprint source"><code></code></pre>
 </article>
 
 </section>

@@ -34,7 +34,7 @@ if (require.main === module) {
                 console.log('');
                 console.log(console.colorize('\n  Test error\n', 'white', 'red'));
                 console.log('');
-                console.error(error);
+                console.log(error.stack);
                 console.log('');
                 process.exit(1);
             });

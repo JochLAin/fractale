@@ -48,7 +48,7 @@ module.exports.resolver = (resolve) => {
     if (program.uses[0].name !== 'A') {
         throw new Error('Error on deep accessor with brace');
     }
-    if (program.use(1).name !== 'B') {
+    if (program.props.use(1).name !== 'B') {
         throw new Error('Error on deep accessor with function singular');
     }
     if (program.class.inheritance.name !== 'B') {
@@ -59,5 +59,5 @@ module.exports.resolver = (resolve) => {
         throw new Error('Error on deep serialize');
     }
 
-    resolve();
+    resolve(program.serialize());
 };

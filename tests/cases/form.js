@@ -25,5 +25,6 @@ module.exports.resolver = (resolve) => {
     if (!book.serialize()) {
         throw new Error('Error on form serializer');
     }
-    resolve();
+
+    resolve(book.serialize());
 };

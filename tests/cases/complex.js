@@ -50,9 +50,9 @@ module.exports.resolver = (resolve) => {
         },
     });
 
-    game.character = character;
+    game.props.character = character;
 
-    if (game.character(0).move.bottom.frame(0).layer(0).pixel(3) !== '#000333') {
+    if (game.characters[0].move.bottom.frames[0].layers[0].pixel(3) !== '#000333') {
         throw new Error('Error on complex accessor');
     }
 
@@ -60,5 +60,5 @@ module.exports.resolver = (resolve) => {
         throw new Error('Error on simple serialize');
     }
 
-    resolve();
+    resolve(game.serialize());
 };

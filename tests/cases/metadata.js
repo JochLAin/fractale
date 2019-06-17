@@ -30,16 +30,13 @@ module.exports.resolver = (resolve) => {
     }
 
     instance.metadata = { data: { key: 'after', value: 'after' } };
-
-    if (instance.metadata.key !== 'assign') {
-        throw new Error('Error on metadata accessor with bracket');
-    }
-    if (instance.metadata.data.key !== 'after') {
+    if (instance.metadata.key !== 'assign' || instance.metadata.data.key !== 'after') {
         throw new Error('Error on metadata accessor with bracket');
     }
 
     if (!instance.serialize()) {
         throw new Error('Error on metadata serializer');
     }
-    resolve();
+
+    resolve(instance.serialize());
 };

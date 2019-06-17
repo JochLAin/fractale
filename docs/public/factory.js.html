@@ -85,13 +85,11 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>
-const uuid = require('uuid');
 const library = require('./library');
-
-const KEYWORDS = ['props', 'serialize', 'unserialize', 'save', 'update'];
 
 /**
  * Create model class
+ *
  * @class Factory
  * @author Jocelyn Faihy &lt;jocelyn@faihy.fr>
  */
@@ -109,8 +107,13 @@ class Factory {
         }
     }
 
+    static override(props, overrider) {
+        return
+    }
+
     /**
      * Create a model class
+     *
      * @param {String} name - Name of the model
      * @param {ModelClass} parent - Parent from which the schema is inherited
      * @param {Object} schema - Schema of the model
@@ -126,21 +129,19 @@ class Factory {
             schema = parent;
         }
 
-        const Entity = class Model extends require('./index').ModelClass {
+        const Model = require('./index').ModelClass;
+        const Entity = class extends Model {
             constructor(props = {}, overrider) {
-                super(Object.assign({},
+                const params = Object.assign({},
                     overrider instanceof Model ? overrider.serialize(false) : overrider,
                     props instanceof Model ? props.serialize(false) : props
-                ));
-                this._uuid = this.props.uuid || uuid.v4();
+                );
+                super(params);
 
                 const encyclopedia = library.get(name);
                 const schema = encyclopedia.schema;
                 for (let key in schema) {
                     if (schema.hasOwnProperty(key)) {
-                        if (KEYWORDS.includes(key)) {
-                            throw new Error(`The "${key}" key is a protected keyword`);
-                        }
                         if (key === 'uuid') {
                             throw new Error('Field "uuid" is automatically set');
                         }
@@ -148,21 +149,42 @@ class Factory {
                         const definer = require('./property_definers').get(this, key, schema[key]);
                         definer.assign(this, key, schema[key]);
                         definer.define(this, key, schema[key]);
-                        if (this.props[key]) {
-                            this[key] = this.props[key];
+                        if (params[key]) {
+                            this.props[key] = params[key];
                         }
                     }
                 }
 
-                encyclopedia.set(this.serialize(false));
-                this.addEventListener('change', ({ key, value }) => {
-                    encyclopedia.dispatchEvent('update', { instance: this, key, value });
-                    library.dispatchEvent('update', { name, instance: this, key, value });
+                encyclopedia.memory.create(this.serialize(false));
+                this.addEventListener('change', () => {
+                    encyclopedia.memory.update(this.serialize(false));
                 });
+
+                return new Proxy(this, {
+                    get(target, property) {
+                        if (typeof property === 'string' &amp;&amp; Object.keys(schema).includes(property)) {
+                            return target.props[property];
+                        }
+                        return target[property];
+                    },
+                    set(target, property, value) {
+                        if (typeof property === 'string' &amp;&amp; Object.keys(schema).includes(property)) {
+                            return target.props[property] = value;
+                        }
+                        return target[property] = value;
+                    }
+                })
             }
 
-            serialize(populate = true, depth = -1) {
-                const callback = (instance, schema, key, value) => {
+            /**
+             * Serialize schema data
+             *
+             * @param populate
+             * @param depth
+             * @returns {{uuid: *}}
+             */
+            serialize(populate = true, depth = 512) {
+                const single = (instance, schema, key, value) => {
                     if (!value) return value;
                     if (value instanceof require('./index').ModelClass) {
                         if (depth === 0) return value.uuid;
@@ -170,7 +192,6 @@ class Factory {
                             case 'function':
                                 return populate(value);
                             case 'string':
-                                return instance[populate];
                             case 'boolean':
                             default:
                                 return populate ? value.serialize(populate, --depth) : value.uuid;
@@ -184,9 +205,9 @@ class Factory {
                 for (let key in schema) {
                     if (schema.hasOwnProperty(key)) {
                         if (Array.isArray(schema[key])) {
-                            serialized[key] = this[key].map(value => callback(this, schema, key, value));
+                            serialized[key] = this.props[key].map(value => single(this, schema, key, value));
                         } else {
-                            serialized[key] = callback(this, schema, key, this[key]);
+                            serialized[key] = single(this, schema, key, this.props[key]);
                         }
                     }
                 }
@@ -194,23 +215,39 @@ class Factory {
                 return serialized;
             }
 
+            /**
+             * Unserialize schema data
+             *
+             * @param props
+             */
             unserialize(props) {
                 const schema = library.get(name).schema;
+                if (props.uuid) this._uuid = props.uuid;
                 for (let key in schema) {
                     if (schema.hasOwnProperty(key) &amp;&amp; props[key]) {
-                        this[key] = props[key];
+                        this.props[key] = props[key];
                     }
                 }
             }
 
+            get props() {
+                return this._props;
+            }
+
+            set props(props) {
+                this.unserialize(props);
+                return props;
+            }
+
             get uuid() {
+                console
                 return this._uuid;
             }
         };
 
-        const model = Object.defineProperty(Entity, 'name', {value: name});
-        library.fill(name, schema, model, !!virtual);
-        return model;
+        const entity = Object.defineProperty(Entity, 'name', { value: name });
+        library.fill(name, schema, entity, !!virtual);
+        return entity;
     }
 }
 

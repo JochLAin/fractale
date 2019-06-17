@@ -13,8 +13,6 @@ module.exports.resolver = (resolve) => {
         string: 'Lorem ipsum'
     });
 
-    console.log(instance.mixed);
-
     if (instance.mixed !== 'It\'s dangerous to go alone! Take this.') {
         throw new Error('Error on simple accessor with type mixed');
     }
@@ -50,5 +48,5 @@ module.exports.resolver = (resolve) => {
         throw new Error('Error on simple serializer');
     }
 
-    resolve();
+    resolve(instance.serialize());
 };

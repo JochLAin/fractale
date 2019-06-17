@@ -1,7 +1,4 @@
-<article class="mb-4">
-<a href="#models" class="border border-1" data-toggle="collapse">Models used for examples</a>
-<div id="models" class="border border-1 collapse">
-
+<article class="mb-4"><a href="#models" class="border border-1" data-toggle="collapse">Models used for examples</a><div id="models" class="border border-1 collapse">
 ```
 const Simple = Fractale.create("Simple", {
     "mixed": mixed,
@@ -10,10 +7,7 @@ const Simple = Fractale.create("Simple", {
     "string": String
 });
 ```
-
-</div>
-</article>
-
+</div></article>
 ```
 const instance = new Simple({
     mixed: 'It\'s dangerous to go alone! Take this.',
@@ -57,5 +51,15 @@ if (!instance.serialize()) {
     throw new Error('Error on simple serializer');
 }
 
-resolve();
+resolve(instance.serialize());
+```
+### Console
+```
+{
+    "uuid": "32d736b2-a793-4193-a606-a0bf5bbcefa0",
+    "mixed": -1,
+    "boolean": false,
+    "number": 42,
+    "string": "Dolor sit amet"
+}
 ```

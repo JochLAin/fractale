@@ -82,59 +82,67 @@
 </header>
 
 <article>
-    <article class="mb-4">
-<a href="#models" class="border border-1" data-toggle="collapse">Models used for examples</a>
-<div id="models" class="border border-1 collapse">
-<pre class="prettyprint source"><code>const Author = Fractale.create(&quot;Author&quot;, {
-    &quot;firstname&quot;: String,
-    &quot;lastname&quot;: String,
-    &quot;surname&quot;: String,
-    &quot;comment&quot;: String
+    <article class="mb-4"><a href="#models" class="border border-1" data-toggle="collapse">Models used for examples</a><div id="models" class="border border-1 collapse">
+```
+const Author = Fractale.create("Author", {
+    "firstname": String,
+    "lastname": String,
+    "surname": String,
+    "comment": String
 });
-
-const Page = Fractale.create(&quot;Page&quot;, {
-    &quot;title&quot;: String,
-    &quot;content&quot;: String
-});
-
-const Chapter = Fractale.create(&quot;Chapter&quot;, {
-    &quot;pages&quot;: [
-        Page
-    ]
-});
-
-const Book = Fractale.create(&quot;Book&quot;, {
-    &quot;author&quot;: Author,
-    &quot;readable&quot;: Boolean,
-    &quot;title&quot;: String,
-    &quot;chapters&quot;: [
-        Chapter
-    ]
-});
+<p>const Page = Fractale.create(&quot;Page&quot;, {
+&quot;title&quot;: String,
+&quot;content&quot;: String
+});</p>
+<p>const Chapter = Fractale.create(&quot;Chapter&quot;, {
+&quot;pages&quot;: [
+Page
+]
+});</p>
+<p>const Book = Fractale.create(&quot;Book&quot;, {
+&quot;author&quot;: Author,
+&quot;readable&quot;: Boolean,
+&quot;title&quot;: String,
+&quot;chapters&quot;: [
+Chapter
+]
+});</p>
+<pre class="prettyprint source"><code>&lt;/div>&lt;/article>
 </code></pre>
-</div>
-</article>
-<pre class="prettyprint source"><code>const author = new Author({
-    firstname: 'Jocelyn',
-    lastname: 'Faihy',
-    surname: 'Jochlain',
-    comment: 'Great',
-});
-
-const book = new Book({
-    author: author.uuid,
-    readable: false,
-    title: 'Au-delà de la donnée'
-});
-
-if (book.author.firstname !== 'Jocelyn') {
-    throw new Error('Error on form setter');
+<p>const author = new Author({
+firstname: 'Jocelyn',
+lastname: 'Faihy',
+surname: 'Jochlain',
+comment: 'Great',
+});</p>
+<p>const book = new Book({
+author: author.uuid,
+readable: false,
+title: 'Au-delà de la donnée'
+});</p>
+<p>if (book.author.firstname !== 'Jocelyn') {
+throw new Error('Error on form setter');
 }
 if (!book.serialize()) {
-    throw new Error('Error on form serializer');
-}
-resolve();
+throw new Error('Error on form serializer');
+}</p>
+<p>resolve(book.serialize());</p>
+<pre class="prettyprint source"><code>### Console
 </code></pre>
+<p>{
+&quot;uuid&quot;: &quot;c1d66a33-73e6-4b86-a5e1-1e24a33cd6cc&quot;,
+&quot;author&quot;: {
+&quot;uuid&quot;: &quot;8e7ed9c1-5337-4a12-8f6c-f61880e2d81a&quot;,
+&quot;firstname&quot;: &quot;Jocelyn&quot;,
+&quot;lastname&quot;: &quot;Faihy&quot;,
+&quot;surname&quot;: &quot;Jochlain&quot;,
+&quot;comment&quot;: &quot;Great&quot;
+},
+&quot;readable&quot;: null,
+&quot;title&quot;: &quot;Au-delà de la donnée&quot;,
+&quot;chapters&quot;: []
+}</p>
+<pre class="prettyprint source"><code></code></pre>
 </article>
 
 </section>

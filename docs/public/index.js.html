@@ -86,7 +86,7 @@
         <article>
             <pre class="prettyprint source linenums"><code>
 const Model = require('./model');
-const { SELF } = require('./constants');
+const { SELF, TYPE_KEY, OPTIONS_KEY } = require('./constants');
 
 /**
  * Base class that model will inherit
@@ -104,9 +104,13 @@ let _ModelClass = Model;
  */
 module.exports = new (class Fractale {
     constructor() {
+        this.OPTIONS_KEY = OPTIONS_KEY;
         this.SELF = SELF;
+        this.TYPE_KEY = TYPE_KEY;
+
         this.factory = require('./factory');
         this.library = require('./library');
+        this.memory = require('./memory');
 
         Object.defineProperty(this, 'ModelClass', {
             get() {
@@ -138,7 +142,7 @@ module.exports = new (class Fractale {
      */
     get(name) {
         const encyclopedia = this.library.get(name);
-        return encyclopedia &amp;&amp; encyclopedia.model;
+        return encyclopedia &amp;&amp; encyclopedia.entity;
     }
 
     /**
@@ -146,14 +150,13 @@ module.exports = new (class Fractale {
      *
      * @param {undefined|null|Boolean|Number|String|ModelClass|Array|Object} type - Property type
      * @param {Object} options - Options pass to type
-     * @returns {{__type: *, __options: *}}
      */
     with(type, options) {
         return {
-            __type: type,
-            __options: options
+            [TYPE_KEY]: type,
+            [OPTIONS_KEY]: options
         };
-    };
+    }
 
     stringify(Model, ...args) {
         const dependencies = {};
@@ -207,7 +210,8 @@ module.exports = new (class Fractale {
         return [].concat(stringify(Model), Object.values(dependencies).reverse()).reverse().join("\n\n");
     }
 })();
-</code></pre>
+
+module.exports.BaseModelClass = Model;</code></pre>
         </article>
     </section>
 

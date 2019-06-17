@@ -72,7 +72,7 @@ const Layer = module.exports.Layer = Fractale.create('Layer', {
     height: Number,
     width: Number,
 });
-Layer.prototype.pixel = function (x, y) {
+Layer.prototype.pixel = function (x = 0, y = 0) {
     return this.pixels[y * this.width + x];
 };
 

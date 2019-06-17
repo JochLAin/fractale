@@ -1,7 +1,4 @@
-<article class="mb-4">
-<a href="#models" class="border border-1" data-toggle="collapse">Models used for examples</a>
-<div id="models" class="border border-1 collapse">
-
+<article class="mb-4"><a href="#models" class="border border-1" data-toggle="collapse">Models used for examples</a><div id="models" class="border border-1 collapse">
 ```
 const Author = Fractale.create("Author", {
     "firstname": String,
@@ -36,10 +33,7 @@ const Library = Fractale.create("Library", {
     ]
 });
 ```
-
-</div>
-</article>
-
+</div></article>
 ```
 const author = new Author({
     firstname: 'Ito',
@@ -69,7 +63,7 @@ library.books.push({
 if (library.books[0].title !== 'Air gear') {
     throw new Error('Error on collection accessor with brace');
 }
-if (library.book(1).title !== 'Tenjo tenge') {
+if (library.props.book(1).title !== 'Tenjo tenge') {
     throw new Error('Error on collection accessor with function singular');
 }
 if (library.books.last().title !== 'Biorg trinity') {
@@ -79,5 +73,53 @@ if (library.books.last().title !== 'Biorg trinity') {
 if (!library.serialize()) {
     throw new Error('Error on collection serializer');
 }
-resolve();
+
+resolve(library.serialize());
+```
+### Console
+```
+{
+    "uuid": "bf6df605-b169-45ab-96bf-dc0299b30f04",
+    "books": [
+        {
+            "uuid": "b0010385-a8b4-43f7-a67d-960154c46414",
+            "author": {
+                "uuid": "307ef81f-0a8a-4dc2-8121-86fc3a512fad",
+                "firstname": "Ito",
+                "lastname": "Ōgure",
+                "surname": "Oh! Great",
+                "comment": "N/A"
+            },
+            "readable": true,
+            "title": "Air gear",
+            "chapters": []
+        },
+        {
+            "uuid": "2b7d3b33-7cbe-412f-aade-9c978170715f",
+            "author": {
+                "uuid": "307ef81f-0a8a-4dc2-8121-86fc3a512fad",
+                "firstname": "Ito",
+                "lastname": "Ōgure",
+                "surname": "Oh! Great",
+                "comment": "N/A"
+            },
+            "readable": true,
+            "title": "Tenjo tenge",
+            "chapters": []
+        },
+        {
+            "uuid": "a12ce511-3fe0-40f8-b400-80ff2adb21a4",
+            "author": {
+                "uuid": "307ef81f-0a8a-4dc2-8121-86fc3a512fad",
+                "firstname": "Ito",
+                "lastname": "Ōgure",
+                "surname": "Oh! Great",
+                "comment": "N/A"
+            },
+            "readable": true,
+            "title": "Biorg trinity",
+            "chapters": []
+        }
+    ]
+}
 ```

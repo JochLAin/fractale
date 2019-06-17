@@ -34,7 +34,7 @@ module.exports.resolver = (resolve) => {
     if (library.books[0].title !== 'Air gear') {
         throw new Error('Error on collection accessor with brace');
     }
-    if (library.book(1).title !== 'Tenjo tenge') {
+    if (library.props.book(1).title !== 'Tenjo tenge') {
         throw new Error('Error on collection accessor with function singular');
     }
     if (library.books.last().title !== 'Biorg trinity') {
@@ -44,5 +44,6 @@ module.exports.resolver = (resolve) => {
     if (!library.serialize()) {
         throw new Error('Error on collection serializer');
     }
-    resolve();
+
+    resolve(library.serialize());
 };

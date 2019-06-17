@@ -1,9 +1,11 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
         
         <meta charset="utf-8">
-        <title>Fractale: Inception model</title>
+        <title>Fractale: library/index.js</title>
 
         <script src="scripts/prettify/prettify.js"></script>
         <script src="scripts/prettify/lang-css.js"></script>
@@ -72,89 +74,87 @@
                 <div class="column is-9-desktop">
                     <div class="content" id="main-content-wrapper">
                         <header class="page-title">
-                            <p>Tutorial</p>
-                            <h1>Inception model</h1>
+                            <p>Source</p>
+                            <h1>library/index.js</h1>
                         </header>
-                        <section>
+                        
 
-<header>
+
+
     
-</header>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>
+const EventListener = require('../event_listener');
+const Encyclopedia = require('./encyclopedia');
 
-<article>
-    <article class="mb-4"><a href="#models" class="border border-1" data-toggle="collapse">Models used for examples</a><div id="models" class="border border-1 collapse">
-```
-const Author = Fractale.create("Author", {
-    "firstname": String,
-    "lastname": String,
-    "surname": String,
-    "comment": String
-});
-<p>const Page = Fractale.create(&quot;Page&quot;, {
-&quot;title&quot;: String,
-&quot;content&quot;: String
-});</p>
-<p>const Chapter = Fractale.create(&quot;Chapter&quot;, {
-&quot;pages&quot;: [
-Page
-]
-});</p>
-<p>const Book = Fractale.create(&quot;Book&quot;, {
-&quot;author&quot;: Author,
-&quot;readable&quot;: Boolean,
-&quot;title&quot;: String,
-&quot;chapters&quot;: [
-Chapter
-]
-});</p>
-<pre class="prettyprint source"><code>&lt;/div>&lt;/article>
-</code></pre>
-<p>const book = new Book({
-author: {
-firstname: 'Ito',
-lastname: 'Ōgure',
-surname: 'Oh! Great',
-comment: 'N/A',
-},
-title: 'Air gear',
-readable: true,
-});</p>
-<p>if (book.author.comment !== 'N/A') {
-throw new Error('Error on deep getter with dot');
-}</p>
-<p>const author = book.author;
-author.comment = 'I love this author';
-book.author = author;
-if (book.author.comment !== 'I love this author') {
-throw new Error('Error on inception deep setter with dot');
-}</p>
-<p>book.author.comment = 'N/A';
-if (book.author.comment !== 'N/A') {
-throw new Error('Error on deep setter with dot');
-}</p>
-<p>if (!book.serialize()) {
-throw new Error('Error on inception serializer');
-}</p>
-<p>resolve(book.serialize());</p>
-<pre class="prettyprint source"><code>### Console
-</code></pre>
-<p>{
-&quot;uuid&quot;: &quot;771cca93-5de5-4e81-9624-6975ec73ddd4&quot;,
-&quot;author&quot;: {
-&quot;uuid&quot;: &quot;83d78f78-4be9-454c-98d9-31b7de2f4cd0&quot;,
-&quot;firstname&quot;: &quot;Ito&quot;,
-&quot;lastname&quot;: &quot;Ōgure&quot;,
-&quot;surname&quot;: &quot;Oh! Great&quot;,
-&quot;comment&quot;: &quot;N/A&quot;
-},
-&quot;readable&quot;: true,
-&quot;title&quot;: &quot;Air gear&quot;,
-&quot;chapters&quot;: []
-}</p>
-<pre class="prettyprint source"><code></code></pre>
-</article>
+/**
+ * Model storage manager
+ *
+ * @class Library
+ * @extends EventListener
+ *
+ * @author Jocelyn Faihy &lt;jocelyn@faihy.fr>
+ */
+class Library extends EventListener {
+    constructor() {
+        super();
+        this.encyclopedias = [];
+    }
 
-</section>
+    /**
+     * Get all encyclopedias
+     * @param {Boolean} with_virtual - Specify if auto-generated models must be included
+     * @returns {Encyclopedia[]}
+     */
+    all(with_virtual = false) {
+        if (with_virtual) {
+            return this.encyclopedias;
+        }
+        return this.encyclopedias.filter(e => !e.virtual);
+    }
+
+    /**
+     * Add new encyclopedia to library
+     * @param {String} name - Model name
+     * @param {Object} schema - Model schema
+     * @param {ModelClass} entity - Model class
+     * @param {Boolean} virtual - Specify if is auto-generated class
+     */
+    fill(name, schema, entity, virtual) {
+        const encyclopedia = new Encyclopedia(this, name, schema, entity, virtual);
+        this.encyclopedias.push(encyclopedia);
+        this.dispatchEvent('fill', { name });
+    }
+
+    /**
+     * Get an encyclopedia by its name
+     * @param {String} name
+     * @returns {Encyclopedia}
+     */
+    get(name) {
+        if (!this.names.includes(name.toLowerCase())) {
+            return false;
+            // throw new Error(`Model with name "${name}" doesn't exists.`);
+        }
+        return this.encyclopedias.find(encyclopedia => encyclopedia.name === name.toLowerCase());
+    }
+
+    /**
+     * Get all encyclopedias names
+     * @returns {String[]}
+     */
+    get names() {
+        return this.encyclopedias.map(encyclopedia => encyclopedia.name);
+    }
+}
+
+module.exports = new Library();</code></pre>
+        </article>
+    </section>
+
+
+
 
                     </div>
                 </div>

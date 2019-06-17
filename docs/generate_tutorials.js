@@ -4,56 +4,79 @@ const fs = require('fs');
 const path = require('path');
 
 const Fractale = require('../lib');
-const { cases } = require('../tests');
-const keys = [];
 
-for (let index in cases) {
-    const test = cases[index];
-    if (!test.resolver) continue;
-    if (!test.tutorialized) continue;
+const KEY_CODE = `\n\`\`\`\n`;
 
-    const dependencies = `<article class="mb-4">
-<a href="#models" class="border border-1" data-toggle="collapse">Models used for examples</a>
-<div id="models" class="border border-1 collapse">
+class Program {
+    run() {
+        const promises = require('../tests').cases.filter(test => {
+            if (!test.resolver) return;
+            if (!test.tutorialized) return;
+            return true;
+        }).map(test => {
+            const name = test.title.replace(/ /g, '_').toLowerCase();
+            return new Promise(test.resolver).then(result => {
+                fs.writeFile(
+                    path.resolve(__dirname, `tutorials/examples/${name}.md`),
+                    this.getContent(test.models, test.resolver.toString(), result),
+                    (error) => {
+                        if (error) throw error;
+                        console.log(`Write "${test.title}" tutorial successfully`);
+                    }
+                );
 
-\`\`\`
-${test.models.map(Model => Fractale.stringify(Model, null, 4))}
-\`\`\`
+                return { name, title: test.title };
+            });
+        });
 
-</div>
-</article>`;
+        Promise.all(promises).then((values) => {
+            fs.writeFileSync(path.resolve(__dirname, 'tutorials/tutorials.json'), JSON.stringify({
+                examples: {
+                    title: "Examples",
+                    children: values.reduce((accu, { name, title }) => {
+                        return Object.assign({}, accu, {
+                            [name]: { title }
+                        });
+                    }, {})
+                }
+            }));
+        }).catch(error => {
+            throw error;
+        });
+    }
 
-    const name = test.title.replace(/ /g, '_').toLowerCase();
-    const resolver = test.resolver.toString();
-    const code = resolver
-        .slice(resolver.indexOf('{') +1, resolver.lastIndexOf('}'))
-        .split('\n')
-        .map(line => {
-            return line
-                .replace(/    /g, '\t')
-                .replace(/^\t/g, '')
-                .replace(/\t/g, '    ')
-                ;
-        })
-        .join('\n')
-        .trim()
-    ;
+    cleanCode(code) {
+        return code
+            .slice(code.indexOf('{') +1, code.lastIndexOf('}'))
+            .split('\n')
+            .map(line => {
+                return line
+                    .replace(/    /g, '\t')
+                    .replace(/^\t/g, '')
+                    .replace(/\t/g, '    ')
+                    ;
+            })
+            .join('\n')
+            .trim()
+            ;
+    };
 
-    const content = `\`\`\`\n${code}\n\`\`\``;
-    const body = dependencies + '\n\n' + content;
-    fs.writeFileSync(path.resolve(__dirname, `tutorials/examples/${name}.md`), body.trim());
+    getContent(models, code, results) {
+        let content = `<article class="mb-4">`;
+        content += `<a href="#models" class="border border-1" data-toggle="collapse">Models used for examples</a>`;
+        content += `<div id="models" class="border border-1 collapse">`;
+        content += `${KEY_CODE}${models.map(Model => Fractale.stringify(Model, null, 4))}${KEY_CODE}`;
+        content += `</div>`;
+        content += `</article>`;
+        content += `${KEY_CODE}${this.cleanCode(code.toString())}${KEY_CODE}`;
+        content += `### Console`;
+        content += `${KEY_CODE}${JSON.stringify(results, null, 4)}${KEY_CODE}`;
 
-    console.log(`Write "${test.title}" tutorial successfully`);
-    keys.push({ name, title: test.title });
+        return content.trim();
+    };
 }
 
-fs.writeFileSync(path.resolve(__dirname, 'tutorials/tutorials.json'), JSON.stringify({
-    examples: {
-        title: "Examples",
-        children: keys.reduce((accu, item) => {
-            return Object.assign({}, accu, {
-                [`${item.name}`]: { title: item.title }
-            });
-        }, {})
-    }
-}));
+if (require.main === module) {
+    const program = new Program;
+    program.run();
+}

@@ -55,5 +55,5 @@ module.exports.resolver = (resolve) => {
         throw new Error('Error on self-reference serialize');
     }
 
-    resolve();
+    resolve(c.serialize());
 };
