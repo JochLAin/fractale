@@ -8,6 +8,22 @@ const Fractale = require('../lib');
 const KEY_CODE = `\n\n\`\`\`\n\n`;
 
 class Program {
+    static cleanCode(code) {
+        return code
+            .slice(code.indexOf('{') +1, code.lastIndexOf('}'))
+            .split('\n')
+            .map(line => {
+                return line
+                    .replace(/    /g, '\t')
+                    .replace(/^\t/g, '')
+                    .replace(/\t/g, '    ')
+                    ;
+            })
+            .join('\n')
+            .trim()
+        ;
+    }
+
     run() {
         const promises = require('../tests').cases.filter(test => {
             if (!test.resolver) return;
@@ -44,22 +60,6 @@ class Program {
             throw error;
         });
     }
-
-    cleanCode(code) {
-        return code
-            .slice(code.indexOf('{') +1, code.lastIndexOf('}'))
-            .split('\n')
-            .map(line => {
-                return line
-                    .replace(/    /g, '\t')
-                    .replace(/^\t/g, '')
-                    .replace(/\t/g, '    ')
-                    ;
-            })
-            .join('\n')
-            .trim()
-            ;
-    };
 
     getContent(models, code, results) {
         let content = `<article class="mb-4">`;
