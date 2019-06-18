@@ -1,14 +1,20 @@
 <article class="mb-4"><a href="#models" class="border border-1" data-toggle="collapse">Models used for examples</a><div id="models" class="border border-1 collapse">
+
 ```
+
 const Simple = Fractale.create("Simple", {
     "mixed": mixed,
     "boolean": Boolean,
     "number": Number,
     "string": String
 });
+
 ```
+
 </div></article>
+
 ```
+
 const instance = new Simple({
     mixed: 'It\'s dangerous to go alone! Take this.',
     boolean: true,
@@ -52,14 +58,19 @@ if (!instance.serialize()) {
 }
 
 resolve(instance.serialize());
+
 ```
+
 ### Console
+
 ```
+
 {
-    "uuid": "32d736b2-a793-4193-a606-a0bf5bbcefa0",
+    "uuid": "1ab542c5-d90b-4a01-a88f-854dc6237ddf",
     "mixed": -1,
     "boolean": false,
     "number": 42,
     "string": "Dolor sit amet"
 }
+
 ```

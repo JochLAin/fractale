@@ -5,7 +5,7 @@ const path = require('path');
 
 const Fractale = require('../lib');
 
-const KEY_CODE = `\n\`\`\`\n`;
+const KEY_CODE = `\n\n\`\`\`\n\n`;
 
 class Program {
     run() {
@@ -69,7 +69,7 @@ class Program {
         content += `</div>`;
         content += `</article>`;
         content += `${KEY_CODE}${this.cleanCode(code.toString())}${KEY_CODE}`;
-        content += `### Console`;
+        content += `### Results`;
         content += `${KEY_CODE}${JSON.stringify(results, null, 4)}${KEY_CODE}`;
 
         return content.trim();

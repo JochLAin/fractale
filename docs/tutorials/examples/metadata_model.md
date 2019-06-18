@@ -1,5 +1,7 @@
 <article class="mb-4"><a href="#models" class="border border-1" data-toggle="collapse">Models used for examples</a><div id="models" class="border border-1 collapse">
+
 ```
+
 const Compound = Fractale.create("Compound", {
     "boards": [
         String
@@ -18,9 +20,13 @@ const Compound = Fractale.create("Compound", {
         }
     ]
 });
+
 ```
+
 </div></article>
+
 ```
+
 const instance = new Compound({
     string: 'Hello world',
     boards: ['Lorem ipsum', 'Dolores sit amet'],
@@ -54,24 +60,29 @@ if (!instance.serialize()) {
 }
 
 resolve(instance.serialize());
+
 ```
+
 ### Console
+
 ```
+
 {
-    "uuid": "c00d64f4-bde2-422f-a8b1-960ecce59eaf",
+    "uuid": "361d74df-d28b-4be0-aeba-690c7bbe3f81",
     "boards": [
         "Lorem ipsum",
         "Dolores sit amet"
     ],
     "metadata": {
-        "uuid": "56fdc666-5871-43dc-a932-05c634481a33",
+        "uuid": "3b54ace6-27dd-415c-b648-38d8d164d7a4",
         "key": "assign",
         "data": {
-            "uuid": "fc7791f4-5fcb-46eb-80bb-1c7305ac2c3f",
+            "uuid": "b8e39c67-b4b3-4818-be8f-ba4ffdfabbf7",
             "key": "after",
             "value": "after"
         }
     },
     "collections": []
 }
+
 ```

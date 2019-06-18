@@ -1,5 +1,7 @@
 <article class="mb-4"><a href="#models" class="border border-1" data-toggle="collapse">Models used for examples</a><div id="models" class="border border-1 collapse">
+
 ```
+
 const Variable = Fractale.create("Variable", {
     "name": String,
     "value": mixed,
@@ -34,9 +36,13 @@ const Class = Fractale.create("Class", {
         Method
     ]
 });
+
 ```
+
 </div></article>
+
 ```
+
 const a = new Class({
     name: 'A',
     variables: [
@@ -91,40 +97,44 @@ if (!program.serialize()) {
 }
 
 resolve(program.serialize());
+
 ```
+
 ### Console
+
 ```
+
 {
-    "uuid": "d577da86-c1b4-416f-b4dd-4b426728b638",
+    "uuid": "179c4843-22d0-4ad6-a14c-160cc9175b6e",
     "uses": [
         {
-            "uuid": "f3acf91d-96dd-4c70-96ec-734006ae30ca",
+            "uuid": "6ace85bf-3de6-4115-bb73-e73cfb76e452",
             "name": "A",
             "inheritance": null,
             "variables": {
-                "uuid": "824fef1d-1c32-47e1-b7dd-1c5030ca22fe",
+                "uuid": "a6b94b9a-ebd5-4ac2-88fb-7db99ffafa36",
                 "name": null,
                 "static": null,
                 "scope": null
             },
             "methods": [
                 {
-                    "uuid": "6fd4b360-a4a6-4f64-afb7-e22b28e48be3",
+                    "uuid": "bc46c2f8-ad21-476d-a661-97107a4a9bca",
                     "signature": {
-                        "uuid": "8a3145dc-f02a-4175-96b3-a7b595856331",
+                        "uuid": "339dfdaf-e64b-4d34-8e78-d7da60331657",
                         "name": "getA",
                         "properties": []
                     },
                     "body": null
                 },
                 {
-                    "uuid": "24e43e27-a63d-4c71-b7d3-4dae077b7bca",
+                    "uuid": "8583de27-c738-4c5a-905d-a9ad4ab85ea8",
                     "signature": {
-                        "uuid": "7582e694-db49-4651-be3c-cbdabc30a91f",
+                        "uuid": "c452c6ae-bc77-4ce6-b52b-802a5f689817",
                         "name": "setA",
                         "properties": [
                             {
-                                "uuid": "7b881298-1cb6-48cc-9d5b-7da0dc7e6b74",
+                                "uuid": "9776f471-e468-4ef9-a0fb-3ff557f8b2cc",
                                 "name": "a",
                                 "static": null,
                                 "scope": null
@@ -136,33 +146,33 @@ resolve(program.serialize());
             ]
         },
         {
-            "uuid": "c27f7e0b-f628-410e-b936-fa8d9b712022",
+            "uuid": "e18191a8-1def-423c-a617-62d640f0f712",
             "name": "B",
             "inheritance": null,
             "variables": {
-                "uuid": "383de238-545b-4148-8cd9-87b2addc761b",
+                "uuid": "b1f45ebe-dd7d-487e-aadb-665116d1da46",
                 "name": null,
                 "static": null,
                 "scope": null
             },
             "methods": [
                 {
-                    "uuid": "e57e59b8-892c-4ab2-9a8e-da0560065ada",
+                    "uuid": "592f8aa1-05d1-4be2-b303-d8142e7cec99",
                     "signature": {
-                        "uuid": "3d4afa7e-6a1d-46f3-b98a-595cbcc93eb8",
+                        "uuid": "b0629fc8-ecbf-40c0-8b54-61187b3c550d",
                         "name": "getB",
                         "properties": []
                     },
                     "body": null
                 },
                 {
-                    "uuid": "b0a7cd8c-89d3-4fba-b57b-55d8ce4f4c71",
+                    "uuid": "2dd5b726-cece-42ca-a590-33d82b17f480",
                     "signature": {
-                        "uuid": "d37b292e-dc05-4792-8de3-45f0f0c80de3",
+                        "uuid": "8e287a9b-9322-4243-b684-b28214e63346",
                         "name": "setB",
                         "properties": [
                             {
-                                "uuid": "08956620-cdae-4ae2-adcc-1a7160c36799",
+                                "uuid": "9daed994-0623-48e9-9535-383231248043",
                                 "name": "b",
                                 "static": null,
                                 "scope": null
@@ -175,36 +185,36 @@ resolve(program.serialize());
         }
     ],
     "class": {
-        "uuid": "ca12bdfd-c846-4108-baf9-d21307f6c022",
+        "uuid": "cdcaf259-db57-4a98-bf88-443463382cd9",
         "name": "C",
         "inheritance": {
-            "uuid": "c27f7e0b-f628-410e-b936-fa8d9b712022",
+            "uuid": "e18191a8-1def-423c-a617-62d640f0f712",
             "name": "B",
             "inheritance": null,
             "variables": {
-                "uuid": "383de238-545b-4148-8cd9-87b2addc761b",
+                "uuid": "b1f45ebe-dd7d-487e-aadb-665116d1da46",
                 "name": null,
                 "static": null,
                 "scope": null
             },
             "methods": [
                 {
-                    "uuid": "e57e59b8-892c-4ab2-9a8e-da0560065ada",
+                    "uuid": "592f8aa1-05d1-4be2-b303-d8142e7cec99",
                     "signature": {
-                        "uuid": "3d4afa7e-6a1d-46f3-b98a-595cbcc93eb8",
+                        "uuid": "b0629fc8-ecbf-40c0-8b54-61187b3c550d",
                         "name": "getB",
                         "properties": []
                     },
                     "body": null
                 },
                 {
-                    "uuid": "b0a7cd8c-89d3-4fba-b57b-55d8ce4f4c71",
+                    "uuid": "2dd5b726-cece-42ca-a590-33d82b17f480",
                     "signature": {
-                        "uuid": "d37b292e-dc05-4792-8de3-45f0f0c80de3",
+                        "uuid": "8e287a9b-9322-4243-b684-b28214e63346",
                         "name": "setB",
                         "properties": [
                             {
-                                "uuid": "08956620-cdae-4ae2-adcc-1a7160c36799",
+                                "uuid": "9daed994-0623-48e9-9535-383231248043",
                                 "name": "b",
                                 "static": null,
                                 "scope": null
@@ -216,29 +226,29 @@ resolve(program.serialize());
             ]
         },
         "variables": {
-            "uuid": "37402edb-8d63-43f7-ad72-611992310923",
+            "uuid": "8e6f44ee-5eb1-4f82-9389-49839363e21c",
             "name": null,
             "static": null,
             "scope": null
         },
         "methods": [
             {
-                "uuid": "d7a8a346-57d8-4337-8532-bcf1ff239de6",
+                "uuid": "582f4183-a918-4203-a2ce-ffaacdc8fbc6",
                 "signature": {
-                    "uuid": "b6fa18a4-ad23-4b1d-b1f5-1414a647035f",
+                    "uuid": "5421a361-7cda-4337-b92c-0ff21dad22fe",
                     "name": "getC",
                     "properties": []
                 },
                 "body": null
             },
             {
-                "uuid": "d62f8b3f-54a4-4d20-91d1-c125ad9621f1",
+                "uuid": "2fec758f-d2f7-4dc0-bc5e-6512fe006999",
                 "signature": {
-                    "uuid": "ed210616-6388-4ee7-8b83-250e4f5d8e96",
+                    "uuid": "4323bf4e-bbd4-423d-acc4-f78d70bcd0c9",
                     "name": "setC",
                     "properties": [
                         {
-                            "uuid": "e1615726-f15a-408f-9a9a-736e02122362",
+                            "uuid": "d5af2189-15c6-4552-870f-1e267426b1f7",
                             "name": "c",
                             "static": null,
                             "scope": null
@@ -250,4 +260,5 @@ resolve(program.serialize());
         ]
     }
 }
+
 ```

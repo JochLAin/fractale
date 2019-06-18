@@ -83,248 +83,261 @@
 
 <article>
     <article class="mb-4"><a href="#models" class="border border-1" data-toggle="collapse">Models used for examples</a><div id="models" class="border border-1 collapse">
-```
-const Variable = Fractale.create("Variable", {
-    "name": String,
-    "value": mixed,
-    "static": Boolean,
-    "scope": {
-        "$$__FractaleModel_TYPE_KEY": String,
-        "$$__FractaleModel_OPTIONS_KEY": {
-            "values": [
-                "private",
-                "protected",
-                "public"
+<pre class="prettyprint source"><code>
+const Variable = Fractale.create(&quot;Variable&quot;, {
+    &quot;name&quot;: String,
+    &quot;value&quot;: mixed,
+    &quot;static&quot;: Boolean,
+    &quot;scope&quot;: {
+        &quot;$$__FractaleModel_TYPE_KEY&quot;: String,
+        &quot;$$__FractaleModel_OPTIONS_KEY&quot;: {
+            &quot;values&quot;: [
+                &quot;private&quot;,
+                &quot;protected&quot;,
+                &quot;public&quot;
             ]
         }
     }
 });
-<p>const Method = Fractale.create(&quot;Method&quot;, {
-&quot;signature&quot;: {
-&quot;name&quot;: String,
-&quot;properties&quot;: [
-Variable
-]
-},
-&quot;body&quot;: String
-});</p>
-<p>const Class = Fractale.create(&quot;Class&quot;, {
-&quot;name&quot;: String,
-&quot;inheritance&quot;: Fractale.SELF,
-&quot;variables&quot;: Variable,
-&quot;methods&quot;: [
-Method
-]
-});</p>
-<pre class="prettyprint source"><code>&lt;/div>&lt;/article>
+
+const Method = Fractale.create(&quot;Method&quot;, {
+    &quot;signature&quot;: {
+        &quot;name&quot;: String,
+        &quot;properties&quot;: [
+            Variable
+        ]
+    },
+    &quot;body&quot;: String
+});
+
+const Class = Fractale.create(&quot;Class&quot;, {
+    &quot;name&quot;: String,
+    &quot;inheritance&quot;: Fractale.SELF,
+    &quot;variables&quot;: Variable,
+    &quot;methods&quot;: [
+        Method
+    ]
+});
+
 </code></pre>
-<p>const a = new Class({
-name: 'A',
-variables: [
-{name: 'a', value: 0},
-],
-methods: [
-{signature: {name: 'getA'}},
-{signature: {name: 'setA', properties: [{name: 'a'}]}}
-]
-});</p>
-<p>const b = new Class({
-name: 'B',
-variables: [
-{name: 'b', value: 0},
-],
-methods: [
-{signature: {name: 'getB'}},
-{signature: {name: 'setB', properties: [{name: 'b'}]}}
-]
-});</p>
-<p>const c = new Class({
-name: 'C',
-inheritance: b,
-variables: [
-{name: 'c', value: 0},
-],
-methods: [
-{signature: {name: 'getC'}},
-{signature: {name: 'setC', properties: [{name: 'c'}]}}
-]
-});</p>
-<p>const program = new Program({
-uses: [a, b],
-class: c
-});</p>
-<p>if (program.uses[0].name !== 'A') {
-throw new Error('Error on deep accessor with brace');
+</div></article>
+<pre class="prettyprint source"><code>
+const a = new Class({
+    name: 'A',
+    variables: [
+        {name: 'a', value: 0},
+    ],
+    methods: [
+        {signature: {name: 'getA'}},
+        {signature: {name: 'setA', properties: [{name: 'a'}]}}
+    ]
+});
+
+const b = new Class({
+    name: 'B',
+    variables: [
+        {name: 'b', value: 0},
+    ],
+    methods: [
+        {signature: {name: 'getB'}},
+        {signature: {name: 'setB', properties: [{name: 'b'}]}}
+    ]
+});
+
+const c = new Class({
+    name: 'C',
+    inheritance: b,
+    variables: [
+        {name: 'c', value: 0},
+    ],
+    methods: [
+        {signature: {name: 'getC'}},
+        {signature: {name: 'setC', properties: [{name: 'c'}]}}
+    ]
+});
+
+const program = new Program({
+    uses: [a, b],
+    class: c
+});
+
+if (program.uses[0].name !== 'A') {
+    throw new Error('Error on deep accessor with brace');
 }
 if (program.props.use(1).name !== 'B') {
-throw new Error('Error on deep accessor with function singular');
+    throw new Error('Error on deep accessor with function singular');
 }
 if (program.class.inheritance.name !== 'B') {
-throw new Error('Error on deep accessor');
-}</p>
-<p>if (!program.serialize()) {
-throw new Error('Error on deep serialize');
-}</p>
-<p>resolve(program.serialize());</p>
-<pre class="prettyprint source"><code>### Console
+    throw new Error('Error on deep accessor');
+}
+
+if (!program.serialize()) {
+    throw new Error('Error on deep serialize');
+}
+
+resolve(program.serialize());
+
 </code></pre>
-<p>{
-&quot;uuid&quot;: &quot;d577da86-c1b4-416f-b4dd-4b426728b638&quot;,
-&quot;uses&quot;: [
+<h3>Console</h3>
+<pre class="prettyprint source"><code>
 {
-&quot;uuid&quot;: &quot;f3acf91d-96dd-4c70-96ec-734006ae30ca&quot;,
-&quot;name&quot;: &quot;A&quot;,
-&quot;inheritance&quot;: null,
-&quot;variables&quot;: {
-&quot;uuid&quot;: &quot;824fef1d-1c32-47e1-b7dd-1c5030ca22fe&quot;,
-&quot;name&quot;: null,
-&quot;static&quot;: null,
-&quot;scope&quot;: null
-},
-&quot;methods&quot;: [
-{
-&quot;uuid&quot;: &quot;6fd4b360-a4a6-4f64-afb7-e22b28e48be3&quot;,
-&quot;signature&quot;: {
-&quot;uuid&quot;: &quot;8a3145dc-f02a-4175-96b3-a7b595856331&quot;,
-&quot;name&quot;: &quot;getA&quot;,
-&quot;properties&quot;: []
-},
-&quot;body&quot;: null
-},
-{
-&quot;uuid&quot;: &quot;24e43e27-a63d-4c71-b7d3-4dae077b7bca&quot;,
-&quot;signature&quot;: {
-&quot;uuid&quot;: &quot;7582e694-db49-4651-be3c-cbdabc30a91f&quot;,
-&quot;name&quot;: &quot;setA&quot;,
-&quot;properties&quot;: [
-{
-&quot;uuid&quot;: &quot;7b881298-1cb6-48cc-9d5b-7da0dc7e6b74&quot;,
-&quot;name&quot;: &quot;a&quot;,
-&quot;static&quot;: null,
-&quot;scope&quot;: null
+    &quot;uuid&quot;: &quot;179c4843-22d0-4ad6-a14c-160cc9175b6e&quot;,
+    &quot;uses&quot;: [
+        {
+            &quot;uuid&quot;: &quot;6ace85bf-3de6-4115-bb73-e73cfb76e452&quot;,
+            &quot;name&quot;: &quot;A&quot;,
+            &quot;inheritance&quot;: null,
+            &quot;variables&quot;: {
+                &quot;uuid&quot;: &quot;a6b94b9a-ebd5-4ac2-88fb-7db99ffafa36&quot;,
+                &quot;name&quot;: null,
+                &quot;static&quot;: null,
+                &quot;scope&quot;: null
+            },
+            &quot;methods&quot;: [
+                {
+                    &quot;uuid&quot;: &quot;bc46c2f8-ad21-476d-a661-97107a4a9bca&quot;,
+                    &quot;signature&quot;: {
+                        &quot;uuid&quot;: &quot;339dfdaf-e64b-4d34-8e78-d7da60331657&quot;,
+                        &quot;name&quot;: &quot;getA&quot;,
+                        &quot;properties&quot;: []
+                    },
+                    &quot;body&quot;: null
+                },
+                {
+                    &quot;uuid&quot;: &quot;8583de27-c738-4c5a-905d-a9ad4ab85ea8&quot;,
+                    &quot;signature&quot;: {
+                        &quot;uuid&quot;: &quot;c452c6ae-bc77-4ce6-b52b-802a5f689817&quot;,
+                        &quot;name&quot;: &quot;setA&quot;,
+                        &quot;properties&quot;: [
+                            {
+                                &quot;uuid&quot;: &quot;9776f471-e468-4ef9-a0fb-3ff557f8b2cc&quot;,
+                                &quot;name&quot;: &quot;a&quot;,
+                                &quot;static&quot;: null,
+                                &quot;scope&quot;: null
+                            }
+                        ]
+                    },
+                    &quot;body&quot;: null
+                }
+            ]
+        },
+        {
+            &quot;uuid&quot;: &quot;e18191a8-1def-423c-a617-62d640f0f712&quot;,
+            &quot;name&quot;: &quot;B&quot;,
+            &quot;inheritance&quot;: null,
+            &quot;variables&quot;: {
+                &quot;uuid&quot;: &quot;b1f45ebe-dd7d-487e-aadb-665116d1da46&quot;,
+                &quot;name&quot;: null,
+                &quot;static&quot;: null,
+                &quot;scope&quot;: null
+            },
+            &quot;methods&quot;: [
+                {
+                    &quot;uuid&quot;: &quot;592f8aa1-05d1-4be2-b303-d8142e7cec99&quot;,
+                    &quot;signature&quot;: {
+                        &quot;uuid&quot;: &quot;b0629fc8-ecbf-40c0-8b54-61187b3c550d&quot;,
+                        &quot;name&quot;: &quot;getB&quot;,
+                        &quot;properties&quot;: []
+                    },
+                    &quot;body&quot;: null
+                },
+                {
+                    &quot;uuid&quot;: &quot;2dd5b726-cece-42ca-a590-33d82b17f480&quot;,
+                    &quot;signature&quot;: {
+                        &quot;uuid&quot;: &quot;8e287a9b-9322-4243-b684-b28214e63346&quot;,
+                        &quot;name&quot;: &quot;setB&quot;,
+                        &quot;properties&quot;: [
+                            {
+                                &quot;uuid&quot;: &quot;9daed994-0623-48e9-9535-383231248043&quot;,
+                                &quot;name&quot;: &quot;b&quot;,
+                                &quot;static&quot;: null,
+                                &quot;scope&quot;: null
+                            }
+                        ]
+                    },
+                    &quot;body&quot;: null
+                }
+            ]
+        }
+    ],
+    &quot;class&quot;: {
+        &quot;uuid&quot;: &quot;cdcaf259-db57-4a98-bf88-443463382cd9&quot;,
+        &quot;name&quot;: &quot;C&quot;,
+        &quot;inheritance&quot;: {
+            &quot;uuid&quot;: &quot;e18191a8-1def-423c-a617-62d640f0f712&quot;,
+            &quot;name&quot;: &quot;B&quot;,
+            &quot;inheritance&quot;: null,
+            &quot;variables&quot;: {
+                &quot;uuid&quot;: &quot;b1f45ebe-dd7d-487e-aadb-665116d1da46&quot;,
+                &quot;name&quot;: null,
+                &quot;static&quot;: null,
+                &quot;scope&quot;: null
+            },
+            &quot;methods&quot;: [
+                {
+                    &quot;uuid&quot;: &quot;592f8aa1-05d1-4be2-b303-d8142e7cec99&quot;,
+                    &quot;signature&quot;: {
+                        &quot;uuid&quot;: &quot;b0629fc8-ecbf-40c0-8b54-61187b3c550d&quot;,
+                        &quot;name&quot;: &quot;getB&quot;,
+                        &quot;properties&quot;: []
+                    },
+                    &quot;body&quot;: null
+                },
+                {
+                    &quot;uuid&quot;: &quot;2dd5b726-cece-42ca-a590-33d82b17f480&quot;,
+                    &quot;signature&quot;: {
+                        &quot;uuid&quot;: &quot;8e287a9b-9322-4243-b684-b28214e63346&quot;,
+                        &quot;name&quot;: &quot;setB&quot;,
+                        &quot;properties&quot;: [
+                            {
+                                &quot;uuid&quot;: &quot;9daed994-0623-48e9-9535-383231248043&quot;,
+                                &quot;name&quot;: &quot;b&quot;,
+                                &quot;static&quot;: null,
+                                &quot;scope&quot;: null
+                            }
+                        ]
+                    },
+                    &quot;body&quot;: null
+                }
+            ]
+        },
+        &quot;variables&quot;: {
+            &quot;uuid&quot;: &quot;8e6f44ee-5eb1-4f82-9389-49839363e21c&quot;,
+            &quot;name&quot;: null,
+            &quot;static&quot;: null,
+            &quot;scope&quot;: null
+        },
+        &quot;methods&quot;: [
+            {
+                &quot;uuid&quot;: &quot;582f4183-a918-4203-a2ce-ffaacdc8fbc6&quot;,
+                &quot;signature&quot;: {
+                    &quot;uuid&quot;: &quot;5421a361-7cda-4337-b92c-0ff21dad22fe&quot;,
+                    &quot;name&quot;: &quot;getC&quot;,
+                    &quot;properties&quot;: []
+                },
+                &quot;body&quot;: null
+            },
+            {
+                &quot;uuid&quot;: &quot;2fec758f-d2f7-4dc0-bc5e-6512fe006999&quot;,
+                &quot;signature&quot;: {
+                    &quot;uuid&quot;: &quot;4323bf4e-bbd4-423d-acc4-f78d70bcd0c9&quot;,
+                    &quot;name&quot;: &quot;setC&quot;,
+                    &quot;properties&quot;: [
+                        {
+                            &quot;uuid&quot;: &quot;d5af2189-15c6-4552-870f-1e267426b1f7&quot;,
+                            &quot;name&quot;: &quot;c&quot;,
+                            &quot;static&quot;: null,
+                            &quot;scope&quot;: null
+                        }
+                    ]
+                },
+                &quot;body&quot;: null
+            }
+        ]
+    }
 }
-]
-},
-&quot;body&quot;: null
-}
-]
-},
-{
-&quot;uuid&quot;: &quot;c27f7e0b-f628-410e-b936-fa8d9b712022&quot;,
-&quot;name&quot;: &quot;B&quot;,
-&quot;inheritance&quot;: null,
-&quot;variables&quot;: {
-&quot;uuid&quot;: &quot;383de238-545b-4148-8cd9-87b2addc761b&quot;,
-&quot;name&quot;: null,
-&quot;static&quot;: null,
-&quot;scope&quot;: null
-},
-&quot;methods&quot;: [
-{
-&quot;uuid&quot;: &quot;e57e59b8-892c-4ab2-9a8e-da0560065ada&quot;,
-&quot;signature&quot;: {
-&quot;uuid&quot;: &quot;3d4afa7e-6a1d-46f3-b98a-595cbcc93eb8&quot;,
-&quot;name&quot;: &quot;getB&quot;,
-&quot;properties&quot;: []
-},
-&quot;body&quot;: null
-},
-{
-&quot;uuid&quot;: &quot;b0a7cd8c-89d3-4fba-b57b-55d8ce4f4c71&quot;,
-&quot;signature&quot;: {
-&quot;uuid&quot;: &quot;d37b292e-dc05-4792-8de3-45f0f0c80de3&quot;,
-&quot;name&quot;: &quot;setB&quot;,
-&quot;properties&quot;: [
-{
-&quot;uuid&quot;: &quot;08956620-cdae-4ae2-adcc-1a7160c36799&quot;,
-&quot;name&quot;: &quot;b&quot;,
-&quot;static&quot;: null,
-&quot;scope&quot;: null
-}
-]
-},
-&quot;body&quot;: null
-}
-]
-}
-],
-&quot;class&quot;: {
-&quot;uuid&quot;: &quot;ca12bdfd-c846-4108-baf9-d21307f6c022&quot;,
-&quot;name&quot;: &quot;C&quot;,
-&quot;inheritance&quot;: {
-&quot;uuid&quot;: &quot;c27f7e0b-f628-410e-b936-fa8d9b712022&quot;,
-&quot;name&quot;: &quot;B&quot;,
-&quot;inheritance&quot;: null,
-&quot;variables&quot;: {
-&quot;uuid&quot;: &quot;383de238-545b-4148-8cd9-87b2addc761b&quot;,
-&quot;name&quot;: null,
-&quot;static&quot;: null,
-&quot;scope&quot;: null
-},
-&quot;methods&quot;: [
-{
-&quot;uuid&quot;: &quot;e57e59b8-892c-4ab2-9a8e-da0560065ada&quot;,
-&quot;signature&quot;: {
-&quot;uuid&quot;: &quot;3d4afa7e-6a1d-46f3-b98a-595cbcc93eb8&quot;,
-&quot;name&quot;: &quot;getB&quot;,
-&quot;properties&quot;: []
-},
-&quot;body&quot;: null
-},
-{
-&quot;uuid&quot;: &quot;b0a7cd8c-89d3-4fba-b57b-55d8ce4f4c71&quot;,
-&quot;signature&quot;: {
-&quot;uuid&quot;: &quot;d37b292e-dc05-4792-8de3-45f0f0c80de3&quot;,
-&quot;name&quot;: &quot;setB&quot;,
-&quot;properties&quot;: [
-{
-&quot;uuid&quot;: &quot;08956620-cdae-4ae2-adcc-1a7160c36799&quot;,
-&quot;name&quot;: &quot;b&quot;,
-&quot;static&quot;: null,
-&quot;scope&quot;: null
-}
-]
-},
-&quot;body&quot;: null
-}
-]
-},
-&quot;variables&quot;: {
-&quot;uuid&quot;: &quot;37402edb-8d63-43f7-ad72-611992310923&quot;,
-&quot;name&quot;: null,
-&quot;static&quot;: null,
-&quot;scope&quot;: null
-},
-&quot;methods&quot;: [
-{
-&quot;uuid&quot;: &quot;d7a8a346-57d8-4337-8532-bcf1ff239de6&quot;,
-&quot;signature&quot;: {
-&quot;uuid&quot;: &quot;b6fa18a4-ad23-4b1d-b1f5-1414a647035f&quot;,
-&quot;name&quot;: &quot;getC&quot;,
-&quot;properties&quot;: []
-},
-&quot;body&quot;: null
-},
-{
-&quot;uuid&quot;: &quot;d62f8b3f-54a4-4d20-91d1-c125ad9621f1&quot;,
-&quot;signature&quot;: {
-&quot;uuid&quot;: &quot;ed210616-6388-4ee7-8b83-250e4f5d8e96&quot;,
-&quot;name&quot;: &quot;setC&quot;,
-&quot;properties&quot;: [
-{
-&quot;uuid&quot;: &quot;e1615726-f15a-408f-9a9a-736e02122362&quot;,
-&quot;name&quot;: &quot;c&quot;,
-&quot;static&quot;: null,
-&quot;scope&quot;: null
-}
-]
-},
-&quot;body&quot;: null
-}
-]
-}
-}</p>
-<pre class="prettyprint source"><code></code></pre>
+
+</code></pre>
 </article>
 
 </section>

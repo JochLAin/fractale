@@ -83,201 +83,213 @@
 
 <article>
     <article class="mb-4"><a href="#models" class="border border-1" data-toggle="collapse">Models used for examples</a><div id="models" class="border border-1 collapse">
-```
-const Variable = Fractale.create("Variable", {
-    "name": String,
-    "value": mixed,
-    "static": Boolean,
-    "scope": {
-        "$$__FractaleModel_TYPE_KEY": String,
-        "$$__FractaleModel_OPTIONS_KEY": {
-            "values": [
-                "private",
-                "protected",
-                "public"
+<pre class="prettyprint source"><code>
+const Variable = Fractale.create(&quot;Variable&quot;, {
+    &quot;name&quot;: String,
+    &quot;value&quot;: mixed,
+    &quot;static&quot;: Boolean,
+    &quot;scope&quot;: {
+        &quot;$$__FractaleModel_TYPE_KEY&quot;: String,
+        &quot;$$__FractaleModel_OPTIONS_KEY&quot;: {
+            &quot;values&quot;: [
+                &quot;private&quot;,
+                &quot;protected&quot;,
+                &quot;public&quot;
             ]
         }
     }
 });
-<p>const Method = Fractale.create(&quot;Method&quot;, {
-&quot;signature&quot;: {
-&quot;name&quot;: String,
-&quot;properties&quot;: [
-Variable
-]
-},
-&quot;body&quot;: String
-});</p>
-<p>const Class = Fractale.create(&quot;Class&quot;, {
-&quot;name&quot;: String,
-&quot;inheritance&quot;: Fractale.SELF,
-&quot;variables&quot;: Variable,
-&quot;methods&quot;: [
-Method
-]
-});</p>
-<pre class="prettyprint source"><code>&lt;/div>&lt;/article>
+
+const Method = Fractale.create(&quot;Method&quot;, {
+    &quot;signature&quot;: {
+        &quot;name&quot;: String,
+        &quot;properties&quot;: [
+            Variable
+        ]
+    },
+    &quot;body&quot;: String
+});
+
+const Class = Fractale.create(&quot;Class&quot;, {
+    &quot;name&quot;: String,
+    &quot;inheritance&quot;: Fractale.SELF,
+    &quot;variables&quot;: Variable,
+    &quot;methods&quot;: [
+        Method
+    ]
+});
+
 </code></pre>
-<p>const a = new Class({
-name: 'A',
-variables: [
-{name: 'a', value: 0},
-],
-methods: [
-{signature: {name: 'getA'}},
-{signature: {name: 'setA', properties: [{name: 'a'}]}}
-]
-});</p>
-<p>const b = new Class({
-name: 'B',
-inheritance: a,
-variables: [
-{name: 'b', value: 0},
-],
-methods: [
-{signature: {name: 'getB'}},
-{signature: {name: 'setB', properties: [{name: 'b'}]}}
-]
-});</p>
-<p>const c = new Class({
-name: 'C',
-inheritance: b,
-variables: [
-{name: 'c', value: 0},
-],
-methods: [
-{signature: {name: 'getC'}},
-{signature: {name: 'setC', properties: [{name: 'c'}]}}
-]
-});</p>
-<p>if (c.inheritance.name !== 'B') {
-throw new Error('Error on self-reference accessor');
+</div></article>
+<pre class="prettyprint source"><code>
+const a = new Class({
+    name: 'A',
+    variables: [
+        {name: 'a', value: 0},
+    ],
+    methods: [
+        {signature: {name: 'getA'}},
+        {signature: {name: 'setA', properties: [{name: 'a'}]}}
+    ]
+});
+
+const b = new Class({
+    name: 'B',
+    inheritance: a,
+    variables: [
+        {name: 'b', value: 0},
+    ],
+    methods: [
+        {signature: {name: 'getB'}},
+        {signature: {name: 'setB', properties: [{name: 'b'}]}}
+    ]
+});
+
+const c = new Class({
+    name: 'C',
+    inheritance: b,
+    variables: [
+        {name: 'c', value: 0},
+    ],
+    methods: [
+        {signature: {name: 'getC'}},
+        {signature: {name: 'setC', properties: [{name: 'c'}]}}
+    ]
+});
+
+if (c.inheritance.name !== 'B') {
+    throw new Error('Error on self-reference accessor');
 }
 if (c.inheritance.inheritance.name !== 'A') {
-throw new Error('Error on double self-reference accessor');
+    throw new Error('Error on double self-reference accessor');
 }
 if (c.inheritance.inheritance.inheritance) {
-throw new Error('Error infinite self-reference accessor');
-}</p>
-<p>if (!c.serialize()) {
-throw new Error('Error on self-reference serialize');
-}</p>
-<p>resolve(c.serialize());</p>
-<pre class="prettyprint source"><code>### Console
+    throw new Error('Error infinite self-reference accessor');
+}
+
+if (!c.serialize()) {
+    throw new Error('Error on self-reference serialize');
+}
+
+resolve(c.serialize());
+
 </code></pre>
-<p>{
-&quot;uuid&quot;: &quot;c078422d-dbf7-459b-a93a-088a29f13778&quot;,
-&quot;name&quot;: &quot;C&quot;,
-&quot;inheritance&quot;: {
-&quot;uuid&quot;: &quot;ecb10dea-6cfa-46e2-aa9b-085a818368d8&quot;,
-&quot;name&quot;: &quot;B&quot;,
-&quot;inheritance&quot;: {
-&quot;uuid&quot;: &quot;2b9b5b9c-75ff-4a90-a28e-e869847e111b&quot;,
-&quot;name&quot;: &quot;A&quot;,
-&quot;inheritance&quot;: null,
-&quot;variables&quot;: {
-&quot;uuid&quot;: &quot;735e04af-ac9f-4320-ab19-8ecf18394468&quot;,
-&quot;name&quot;: null,
-&quot;static&quot;: null,
-&quot;scope&quot;: null
-},
-&quot;methods&quot;: [
+<h3>Console</h3>
+<pre class="prettyprint source"><code>
 {
-&quot;uuid&quot;: &quot;5080f0e9-e337-4b34-a3d9-8e23ba50860b&quot;,
-&quot;signature&quot;: {
-&quot;uuid&quot;: &quot;d178b14f-49ce-4a03-85a6-ad7d52de1a60&quot;,
-&quot;name&quot;: &quot;getA&quot;,
-&quot;properties&quot;: []
-},
-&quot;body&quot;: null
-},
-{
-&quot;uuid&quot;: &quot;aedd5d05-67b7-4182-a8e9-7ec704c2a69b&quot;,
-&quot;signature&quot;: {
-&quot;uuid&quot;: &quot;ff1fb48c-e382-4caf-a972-72401b9f4271&quot;,
-&quot;name&quot;: &quot;setA&quot;,
-&quot;properties&quot;: [
-{
-&quot;uuid&quot;: &quot;2aca9558-455e-4039-b2c9-bbb348425cc2&quot;,
-&quot;name&quot;: &quot;a&quot;,
-&quot;static&quot;: null,
-&quot;scope&quot;: null
+    &quot;uuid&quot;: &quot;6a01d26f-a89a-4e0f-afef-be313e950a9a&quot;,
+    &quot;name&quot;: &quot;C&quot;,
+    &quot;inheritance&quot;: {
+        &quot;uuid&quot;: &quot;eb76e0ee-fcbe-4631-8a6e-412c1ec3c603&quot;,
+        &quot;name&quot;: &quot;B&quot;,
+        &quot;inheritance&quot;: {
+            &quot;uuid&quot;: &quot;2453811b-2e6b-431c-9db7-b3c2720709c2&quot;,
+            &quot;name&quot;: &quot;A&quot;,
+            &quot;inheritance&quot;: null,
+            &quot;variables&quot;: {
+                &quot;uuid&quot;: &quot;e2366094-811c-4d65-bce9-533357fc9271&quot;,
+                &quot;name&quot;: null,
+                &quot;static&quot;: null,
+                &quot;scope&quot;: null
+            },
+            &quot;methods&quot;: [
+                {
+                    &quot;uuid&quot;: &quot;84098e01-1d35-42c7-8e0c-e875f5679126&quot;,
+                    &quot;signature&quot;: {
+                        &quot;uuid&quot;: &quot;25fde708-cdcb-4a5e-9854-d0662177c4a6&quot;,
+                        &quot;name&quot;: &quot;getA&quot;,
+                        &quot;properties&quot;: []
+                    },
+                    &quot;body&quot;: null
+                },
+                {
+                    &quot;uuid&quot;: &quot;f51747cf-1018-49d1-a1d6-678516edf3fc&quot;,
+                    &quot;signature&quot;: {
+                        &quot;uuid&quot;: &quot;b269be64-ee53-469d-8cbf-e2fa219b6370&quot;,
+                        &quot;name&quot;: &quot;setA&quot;,
+                        &quot;properties&quot;: [
+                            {
+                                &quot;uuid&quot;: &quot;7c7f2ae7-d5dd-4350-a836-c17159dc4305&quot;,
+                                &quot;name&quot;: &quot;a&quot;,
+                                &quot;static&quot;: null,
+                                &quot;scope&quot;: null
+                            }
+                        ]
+                    },
+                    &quot;body&quot;: null
+                }
+            ]
+        },
+        &quot;variables&quot;: {
+            &quot;uuid&quot;: &quot;6c1ac2b8-3269-453a-98a3-03bdc37f18f1&quot;,
+            &quot;name&quot;: null,
+            &quot;static&quot;: null,
+            &quot;scope&quot;: null
+        },
+        &quot;methods&quot;: [
+            {
+                &quot;uuid&quot;: &quot;2374acad-116c-42cd-9df7-8fd162c269aa&quot;,
+                &quot;signature&quot;: {
+                    &quot;uuid&quot;: &quot;0a34cd12-c47c-4e8e-9e51-2c7dcb34fcb4&quot;,
+                    &quot;name&quot;: &quot;getB&quot;,
+                    &quot;properties&quot;: []
+                },
+                &quot;body&quot;: null
+            },
+            {
+                &quot;uuid&quot;: &quot;a34d0776-4c67-4b99-9a2f-3492b346678a&quot;,
+                &quot;signature&quot;: {
+                    &quot;uuid&quot;: &quot;395d1001-3a82-474d-9fee-a6507d73f905&quot;,
+                    &quot;name&quot;: &quot;setB&quot;,
+                    &quot;properties&quot;: [
+                        {
+                            &quot;uuid&quot;: &quot;390a2a42-d6f8-4597-948f-6daf4bce335b&quot;,
+                            &quot;name&quot;: &quot;b&quot;,
+                            &quot;static&quot;: null,
+                            &quot;scope&quot;: null
+                        }
+                    ]
+                },
+                &quot;body&quot;: null
+            }
+        ]
+    },
+    &quot;variables&quot;: {
+        &quot;uuid&quot;: &quot;a876f819-d55c-43c2-8aa4-38cc34919fa9&quot;,
+        &quot;name&quot;: null,
+        &quot;static&quot;: null,
+        &quot;scope&quot;: null
+    },
+    &quot;methods&quot;: [
+        {
+            &quot;uuid&quot;: &quot;3f919ca1-ce30-4ba5-88d3-aa5461da4361&quot;,
+            &quot;signature&quot;: {
+                &quot;uuid&quot;: &quot;56c60669-9217-4cd7-bf95-a2376e9b6530&quot;,
+                &quot;name&quot;: &quot;getC&quot;,
+                &quot;properties&quot;: []
+            },
+            &quot;body&quot;: null
+        },
+        {
+            &quot;uuid&quot;: &quot;6107ba32-2b60-46f5-8060-e9216679a321&quot;,
+            &quot;signature&quot;: {
+                &quot;uuid&quot;: &quot;f1ba27cd-a450-4b24-bcda-b2b102065ec0&quot;,
+                &quot;name&quot;: &quot;setC&quot;,
+                &quot;properties&quot;: [
+                    {
+                        &quot;uuid&quot;: &quot;bd76851b-efe7-4cb0-90a5-03fee9bd1cbf&quot;,
+                        &quot;name&quot;: &quot;c&quot;,
+                        &quot;static&quot;: null,
+                        &quot;scope&quot;: null
+                    }
+                ]
+            },
+            &quot;body&quot;: null
+        }
+    ]
 }
-]
-},
-&quot;body&quot;: null
-}
-]
-},
-&quot;variables&quot;: {
-&quot;uuid&quot;: &quot;2dee6fec-aaf2-45bf-81f8-bbbc94aef0cb&quot;,
-&quot;name&quot;: null,
-&quot;static&quot;: null,
-&quot;scope&quot;: null
-},
-&quot;methods&quot;: [
-{
-&quot;uuid&quot;: &quot;3ac86a5a-9c02-4746-a365-19a665d6cf63&quot;,
-&quot;signature&quot;: {
-&quot;uuid&quot;: &quot;097d41e3-c09c-4efe-a8d7-5ead836ed3b6&quot;,
-&quot;name&quot;: &quot;getB&quot;,
-&quot;properties&quot;: []
-},
-&quot;body&quot;: null
-},
-{
-&quot;uuid&quot;: &quot;ab6a59a9-7bda-4f82-bd3d-53fc9ba243a9&quot;,
-&quot;signature&quot;: {
-&quot;uuid&quot;: &quot;f42868bd-1b6f-441e-83ee-97210477af69&quot;,
-&quot;name&quot;: &quot;setB&quot;,
-&quot;properties&quot;: [
-{
-&quot;uuid&quot;: &quot;f53aaf22-9e42-4067-8aa3-c3ae38747d4a&quot;,
-&quot;name&quot;: &quot;b&quot;,
-&quot;static&quot;: null,
-&quot;scope&quot;: null
-}
-]
-},
-&quot;body&quot;: null
-}
-]
-},
-&quot;variables&quot;: {
-&quot;uuid&quot;: &quot;47875393-98ab-48ca-927f-afe5214a4a6b&quot;,
-&quot;name&quot;: null,
-&quot;static&quot;: null,
-&quot;scope&quot;: null
-},
-&quot;methods&quot;: [
-{
-&quot;uuid&quot;: &quot;ad8d8760-fe32-4e7e-a85e-594a87e71efd&quot;,
-&quot;signature&quot;: {
-&quot;uuid&quot;: &quot;3f9f778b-7889-433a-a863-f66f4c169aef&quot;,
-&quot;name&quot;: &quot;getC&quot;,
-&quot;properties&quot;: []
-},
-&quot;body&quot;: null
-},
-{
-&quot;uuid&quot;: &quot;77a9c353-4137-445f-ae38-e6cc6c8298a9&quot;,
-&quot;signature&quot;: {
-&quot;uuid&quot;: &quot;75787111-d0b1-419a-a0d5-3488c4fbd16b&quot;,
-&quot;name&quot;: &quot;setC&quot;,
-&quot;properties&quot;: [
-{
-&quot;uuid&quot;: &quot;84031f06-7ea0-4bda-82b8-2e205c438af3&quot;,
-&quot;name&quot;: &quot;c&quot;,
-&quot;static&quot;: null,
-&quot;scope&quot;: null
-}
-]
-},
-&quot;body&quot;: null
-}
-]
-}</p>
-<pre class="prettyprint source"><code></code></pre>
+
+</code></pre>
 </article>
 
 </section>

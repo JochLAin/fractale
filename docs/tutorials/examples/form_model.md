@@ -1,5 +1,7 @@
 <article class="mb-4"><a href="#models" class="border border-1" data-toggle="collapse">Models used for examples</a><div id="models" class="border border-1 collapse">
+
 ```
+
 const Author = Fractale.create("Author", {
     "firstname": String,
     "lastname": String,
@@ -26,9 +28,13 @@ const Book = Fractale.create("Book", {
         Chapter
     ]
 });
+
 ```
+
 </div></article>
+
 ```
+
 const author = new Author({
     firstname: 'Jocelyn',
     lastname: 'Faihy',
@@ -50,13 +56,17 @@ if (!book.serialize()) {
 }
 
 resolve(book.serialize());
+
 ```
+
 ### Console
+
 ```
+
 {
-    "uuid": "c1d66a33-73e6-4b86-a5e1-1e24a33cd6cc",
+    "uuid": "8303c573-6d23-4241-8462-e0c2fd2daa6b",
     "author": {
-        "uuid": "8e7ed9c1-5337-4a12-8f6c-f61880e2d81a",
+        "uuid": "f98c26a1-8307-44c8-8ff2-bc7b43586962",
         "firstname": "Jocelyn",
         "lastname": "Faihy",
         "surname": "Jochlain",
@@ -66,4 +76,5 @@ resolve(book.serialize());
     "title": "Au-delà de la donnée",
     "chapters": []
 }
+
 ```

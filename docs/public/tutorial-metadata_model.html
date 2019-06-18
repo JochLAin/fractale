@@ -83,74 +83,85 @@
 
 <article>
     <article class="mb-4"><a href="#models" class="border border-1" data-toggle="collapse">Models used for examples</a><div id="models" class="border border-1 collapse">
-```
-const Compound = Fractale.create("Compound", {
-    "boards": [
+<pre class="prettyprint source"><code>
+const Compound = Fractale.create(&quot;Compound&quot;, {
+    &quot;boards&quot;: [
         String
     ],
-    "metadata": {
-        "key": String,
-        "data": {
-            "key": String,
-            "value": mixed
+    &quot;metadata&quot;: {
+        &quot;key&quot;: String,
+        &quot;data&quot;: {
+            &quot;key&quot;: String,
+            &quot;value&quot;: mixed
         }
     },
-    "collections": [
+    &quot;collections&quot;: [
         {
-            "key": String,
-            "value": String
+            &quot;key&quot;: String,
+            &quot;value&quot;: String
         }
     ]
 });
-```
+
+</code></pre>
 </div></article>
-```
+<pre class="prettyprint source"><code>
 const instance = new Compound({
     string: 'Hello world',
     boards: ['Lorem ipsum', 'Dolores sit amet'],
     metadata: { key: 'Foo', data: { key: 'Bar', value: 12 }}
 });
-<p>const metadata = instance.metadata;
-metadata.key = 'decomposition';</p>
-<p>if (instance.metadata.key !== 'decomposition') {
-throw new Error('Error on metadata accessor with decomposition');
-}</p>
-<p>instance.metadata.key = 'dot';
-if (instance.metadata.key !== 'dot') {
-throw new Error('Error on metadata accessor with dot');
-}</p>
-<p>instance.metadata = { key: 'assign' };
-if (instance.metadata.key !== 'assign') {
-throw new Error('Error on metadata accessor with assign');
-}</p>
-<p>instance.metadata = { data: { key: 'after', value: 'after' } };
-if (instance.metadata.key !== 'assign' || instance.metadata.data.key !== 'after') {
-throw new Error('Error on metadata accessor with bracket');
-}</p>
-<p>if (!instance.serialize()) {
-throw new Error('Error on metadata serializer');
-}</p>
-<p>resolve(instance.serialize());</p>
-<pre class="prettyprint source"><code>### Console
-</code></pre>
-<p>{
-&quot;uuid&quot;: &quot;c00d64f4-bde2-422f-a8b1-960ecce59eaf&quot;,
-&quot;boards&quot;: [
-&quot;Lorem ipsum&quot;,
-&quot;Dolores sit amet&quot;
-],
-&quot;metadata&quot;: {
-&quot;uuid&quot;: &quot;56fdc666-5871-43dc-a932-05c634481a33&quot;,
-&quot;key&quot;: &quot;assign&quot;,
-&quot;data&quot;: {
-&quot;uuid&quot;: &quot;fc7791f4-5fcb-46eb-80bb-1c7305ac2c3f&quot;,
-&quot;key&quot;: &quot;after&quot;,
-&quot;value&quot;: &quot;after&quot;
+
+const metadata = instance.metadata;
+metadata.key = 'decomposition';
+
+if (instance.metadata.key !== 'decomposition') {
+    throw new Error('Error on metadata accessor with decomposition');
 }
-},
-&quot;collections&quot;: []
-}</p>
-<pre class="prettyprint source"><code></code></pre>
+
+instance.metadata.key = 'dot';
+if (instance.metadata.key !== 'dot') {
+    throw new Error('Error on metadata accessor with dot');
+}
+
+instance.metadata = { key: 'assign' };
+if (instance.metadata.key !== 'assign') {
+    throw new Error('Error on metadata accessor with assign');
+}
+
+instance.metadata = { data: { key: 'after', value: 'after' } };
+if (instance.metadata.key !== 'assign' || instance.metadata.data.key !== 'after') {
+    throw new Error('Error on metadata accessor with bracket');
+}
+
+if (!instance.serialize()) {
+    throw new Error('Error on metadata serializer');
+}
+
+resolve(instance.serialize());
+
+</code></pre>
+<h3>Console</h3>
+<pre class="prettyprint source"><code>
+{
+    &quot;uuid&quot;: &quot;361d74df-d28b-4be0-aeba-690c7bbe3f81&quot;,
+    &quot;boards&quot;: [
+        &quot;Lorem ipsum&quot;,
+        &quot;Dolores sit amet&quot;
+    ],
+    &quot;metadata&quot;: {
+        &quot;uuid&quot;: &quot;3b54ace6-27dd-415c-b648-38d8d164d7a4&quot;,
+        &quot;key&quot;: &quot;assign&quot;,
+        &quot;data&quot;: {
+            &quot;uuid&quot;: &quot;b8e39c67-b4b3-4818-be8f-ba4ffdfabbf7&quot;,
+            &quot;key&quot;: &quot;after&quot;,
+            &quot;value&quot;: &quot;after&quot;
+        }
+    },
+    &quot;collections&quot;: []
+}
+
+</code></pre>
 </article>
 
 </section>

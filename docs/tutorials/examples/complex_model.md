@@ -1,5 +1,7 @@
 <article class="mb-4"><a href="#models" class="border border-1" data-toggle="collapse">Models used for examples</a><div id="models" class="border border-1 collapse">
+
 ```
+
 const Layer = Fractale.create("Layer", {
     "pixels": [
         String
@@ -67,9 +69,13 @@ const Game = Fractale.create("Game", {
         Character
     ]
 });
+
 ```
+
 </div></article>
+
 ```
+
 const PIXELS = [
     '#000000', '#000111', '#000222', '#000333', '#000444', '#000555', '#000666', '#000777', '#000888', '#000999',
     '#111000', '#111111', '#111222', '#111333', '#111444', '#111555', '#111666', '#111777', '#111888', '#111999',
@@ -125,29 +131,33 @@ if (!game.serialize()) {
 }
 
 resolve(game.serialize());
+
 ```
+
 ### Console
+
 ```
+
 {
-    "uuid": "cf48e659-da19-4d6d-8b45-6e90342378ad",
+    "uuid": "3794e748-effe-489f-8dd6-6136480db90c",
     "name": "The ultimate game",
     "type": null,
     "characters": [
         {
-            "uuid": "fc440b89-0af3-45d9-9528-8ece5a9f5b63",
+            "uuid": "0e8925f2-5391-4914-a776-37cf94c58939",
             "name": "Toto",
             "preview": null,
             "dashes": [],
             "stand": {
-                "uuid": "f4e90322-7ce3-48a2-b4f6-95f1c72f695a",
+                "uuid": "d4ea2c2b-311f-41c7-b404-6083e4f59946",
                 "bottom": {
-                    "uuid": "7cff6286-86bc-4612-816a-df882fab2166",
+                    "uuid": "7cd8baf2-daea-418c-a8ec-da00011cd94b",
                     "frames": [
                         {
-                            "uuid": "a3e2c2f5-9b0d-428c-ad78-0f6748084b3d",
+                            "uuid": "548255ff-9ecc-45c1-bfc6-1f6ccf105e1b",
                             "layers": [
                                 {
-                                    "uuid": "c735e535-3c3b-4a61-868e-f9b1f7e70071",
+                                    "uuid": "d888b7ad-9c3f-4d3f-89a1-773c25926a9a",
                                     "pixels": [
                                         "#000000",
                                         "#000111",
@@ -254,7 +264,7 @@ resolve(game.serialize());
                                     "width": 10
                                 },
                                 {
-                                    "uuid": "e047de2a-c9d5-4959-94d8-ca40fa2d3eeb",
+                                    "uuid": "4a9b6a4f-e032-4bf0-b131-2b2fa2fd0f15",
                                     "pixels": [
                                         "#000000",
                                         "#000111",
@@ -369,13 +379,13 @@ resolve(game.serialize());
                     "width": 10
                 },
                 "left": {
-                    "uuid": "895764c4-ed69-47cc-af43-8b057aaa0783",
+                    "uuid": "996beeda-d564-4aef-8491-210fc017562e",
                     "frames": [
                         {
-                            "uuid": "6d9b9d46-b827-475c-9abc-74fe861c7794",
+                            "uuid": "96318810-b669-464b-857b-170f598eb61f",
                             "layers": [
                                 {
-                                    "uuid": "67e94371-afb1-4d25-9891-d4418b9480fb",
+                                    "uuid": "38c55885-2427-42c0-afce-7f110553d0f3",
                                     "pixels": [
                                         "#000000",
                                         "#000111",
@@ -482,7 +492,7 @@ resolve(game.serialize());
                                     "width": 10
                                 },
                                 {
-                                    "uuid": "16d27466-f5ab-49c1-a11b-68f78f10b6f8",
+                                    "uuid": "251679d5-5a01-431e-8a3d-beca75594bc7",
                                     "pixels": [
                                         "#000000",
                                         "#000111",
@@ -597,13 +607,13 @@ resolve(game.serialize());
                     "width": 10
                 },
                 "right": {
-                    "uuid": "b2805725-3088-4500-9090-87c69cb95c13",
+                    "uuid": "8471eff4-eccf-416f-a6c7-b8add03a99db",
                     "frames": [
                         {
-                            "uuid": "111b2d9c-6158-4c5e-9fda-26e33db4fde2",
+                            "uuid": "c6328217-27c3-4a7a-a1fc-ae087f61dda2",
                             "layers": [
                                 {
-                                    "uuid": "68048456-46e6-43c1-9a8d-d9109106e485",
+                                    "uuid": "154b62a3-d9d9-4dd7-abfe-1c4fef24c014",
                                     "pixels": [
                                         "#000000",
                                         "#000111",
@@ -710,7 +720,7 @@ resolve(game.serialize());
                                     "width": 10
                                 },
                                 {
-                                    "uuid": "5413217f-53e9-4f1b-81ab-3f97df42b5a1",
+                                    "uuid": "fbe06b4b-a8b6-4ddd-96e0-5910f6ed1659",
                                     "pixels": [
                                         "#000000",
                                         "#000111",
@@ -825,13 +835,13 @@ resolve(game.serialize());
                     "width": 10
                 },
                 "top": {
-                    "uuid": "688ff07d-1c6c-47d5-bf45-564a80a94775",
+                    "uuid": "08d3c56a-9172-4b8b-9f0a-21927f8b7bd9",
                     "frames": [
                         {
-                            "uuid": "756121ba-8401-445c-93fa-b9c722a72e26",
+                            "uuid": "08fe9873-4d14-4a8a-a38a-da35a4e2ba5d",
                             "layers": [
                                 {
-                                    "uuid": "c6154e21-3c26-4a48-a44b-0609e57dc0fd",
+                                    "uuid": "fedac74d-abe3-4da6-a93b-b6d134e8d3b1",
                                     "pixels": [
                                         "#000000",
                                         "#000111",
@@ -938,7 +948,7 @@ resolve(game.serialize());
                                     "width": 10
                                 },
                                 {
-                                    "uuid": "4a0ee26b-bea5-4ede-9dee-77ca6bc53eca",
+                                    "uuid": "d883192d-203c-447b-bc9b-7d5f96ca673a",
                                     "pixels": [
                                         "#000000",
                                         "#000111",
@@ -1054,15 +1064,15 @@ resolve(game.serialize());
                 }
             },
             "move": {
-                "uuid": "1980d7ce-98da-4eaa-bde5-8a0afb054dfb",
+                "uuid": "8d53e759-96d2-4af3-b5dc-51c0bb643c01",
                 "bottom": {
-                    "uuid": "85b276b2-4f2d-4313-9679-bf6cef363026",
+                    "uuid": "ac6f4e72-a8a5-46bf-bd20-b5f69baae33f",
                     "frames": [
                         {
-                            "uuid": "5ace132b-d5ee-4d70-8c55-0fdc1ba0495c",
+                            "uuid": "a36db0d9-9a5a-4b5e-a624-c519a24cc134",
                             "layers": [
                                 {
-                                    "uuid": "3d5492ae-0765-423a-b842-01b8c51e8374",
+                                    "uuid": "24fdeb0c-6cf9-427e-aea9-89b468155d62",
                                     "pixels": [
                                         "#000000",
                                         "#000111",
@@ -1169,7 +1179,7 @@ resolve(game.serialize());
                                     "width": 10
                                 },
                                 {
-                                    "uuid": "03643cd3-0e35-43e7-8fa7-3ce07f632495",
+                                    "uuid": "2c90c9e6-ced3-4283-9aec-9da9d8adf8e1",
                                     "pixels": [
                                         "#000000",
                                         "#000111",
@@ -1284,13 +1294,13 @@ resolve(game.serialize());
                     "width": 10
                 },
                 "left": {
-                    "uuid": "18ef8a67-34e9-49f7-aefa-5d8ee53a56f6",
+                    "uuid": "7ffd5480-e479-4a32-bce7-bc2f59a2c1a2",
                     "frames": [
                         {
-                            "uuid": "47dbcaf2-82e0-4850-a6c8-2b967f74b5e6",
+                            "uuid": "1b188bee-3dd2-4981-9998-b360582e9881",
                             "layers": [
                                 {
-                                    "uuid": "1585609f-8d90-4d06-b240-fa3c06364ebb",
+                                    "uuid": "a104a9e7-d0dd-4b60-9dd0-2e9dd3da5151",
                                     "pixels": [
                                         "#000000",
                                         "#000111",
@@ -1397,7 +1407,7 @@ resolve(game.serialize());
                                     "width": 10
                                 },
                                 {
-                                    "uuid": "42f5f2f7-d336-4dfb-9375-656de3f47695",
+                                    "uuid": "8a935d1a-1936-4622-8f71-e030e8197084",
                                     "pixels": [
                                         "#000000",
                                         "#000111",
@@ -1512,13 +1522,13 @@ resolve(game.serialize());
                     "width": 10
                 },
                 "right": {
-                    "uuid": "76868d28-b768-4634-a3dc-e9655e3349dc",
+                    "uuid": "03bf3fa1-22e9-4080-9764-b193c8402f71",
                     "frames": [
                         {
-                            "uuid": "008219e9-16d9-4d3c-a751-f6254d6b625a",
+                            "uuid": "97d6eeec-dcc8-47d4-824f-45e573df56b6",
                             "layers": [
                                 {
-                                    "uuid": "54730b05-f09d-474d-9a00-879cfe6ffb98",
+                                    "uuid": "f6628645-a140-4fcd-b0a8-bb2704126c61",
                                     "pixels": [
                                         "#000000",
                                         "#000111",
@@ -1625,7 +1635,7 @@ resolve(game.serialize());
                                     "width": 10
                                 },
                                 {
-                                    "uuid": "1a4d38c9-71ae-4145-9710-bf592b28386a",
+                                    "uuid": "84fa1877-6157-43c6-81a5-31b3774407a8",
                                     "pixels": [
                                         "#000000",
                                         "#000111",
@@ -1740,13 +1750,13 @@ resolve(game.serialize());
                     "width": 10
                 },
                 "top": {
-                    "uuid": "497d90af-10eb-4b42-a33e-f6c4db24e876",
+                    "uuid": "e534b0ac-efbc-4062-86ac-49381b62cd67",
                     "frames": [
                         {
-                            "uuid": "493463c9-c2fa-44cc-ae9c-67eb9daf04c8",
+                            "uuid": "de7e42c2-4de1-40b7-8ac7-60ff29e231d0",
                             "layers": [
                                 {
-                                    "uuid": "3e363700-dccf-414a-933e-4b5332ece871",
+                                    "uuid": "90851be2-ffa4-476a-83e3-8f150fe85490",
                                     "pixels": [
                                         "#000000",
                                         "#000111",
@@ -1853,7 +1863,7 @@ resolve(game.serialize());
                                     "width": 10
                                 },
                                 {
-                                    "uuid": "a8595c3e-a324-4077-be60-5e4adc5d0d74",
+                                    "uuid": "6548ac7a-c75c-479a-9308-99f9e7f3ae40",
                                     "pixels": [
                                         "#000000",
                                         "#000111",
@@ -1971,4 +1981,5 @@ resolve(game.serialize());
         }
     ]
 }
+
 ```

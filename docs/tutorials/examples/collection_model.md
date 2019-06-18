@@ -1,5 +1,7 @@
 <article class="mb-4"><a href="#models" class="border border-1" data-toggle="collapse">Models used for examples</a><div id="models" class="border border-1 collapse">
+
 ```
+
 const Author = Fractale.create("Author", {
     "firstname": String,
     "lastname": String,
@@ -32,9 +34,13 @@ const Library = Fractale.create("Library", {
         Book
     ]
 });
+
 ```
+
 </div></article>
+
 ```
+
 const author = new Author({
     firstname: 'Ito',
     lastname: 'Ōgure',
@@ -75,16 +81,20 @@ if (!library.serialize()) {
 }
 
 resolve(library.serialize());
+
 ```
+
 ### Console
+
 ```
+
 {
-    "uuid": "bf6df605-b169-45ab-96bf-dc0299b30f04",
+    "uuid": "1c58fd3a-a671-453d-a4fb-26b47303faaf",
     "books": [
         {
-            "uuid": "b0010385-a8b4-43f7-a67d-960154c46414",
+            "uuid": "21431a86-3541-477b-aed9-653e24c76b59",
             "author": {
-                "uuid": "307ef81f-0a8a-4dc2-8121-86fc3a512fad",
+                "uuid": "1e5be136-1232-4e7c-85c6-25659f68dabd",
                 "firstname": "Ito",
                 "lastname": "Ōgure",
                 "surname": "Oh! Great",
@@ -95,9 +105,9 @@ resolve(library.serialize());
             "chapters": []
         },
         {
-            "uuid": "2b7d3b33-7cbe-412f-aade-9c978170715f",
+            "uuid": "072d13b9-ccd5-418b-b2cf-02c850833253",
             "author": {
-                "uuid": "307ef81f-0a8a-4dc2-8121-86fc3a512fad",
+                "uuid": "1e5be136-1232-4e7c-85c6-25659f68dabd",
                 "firstname": "Ito",
                 "lastname": "Ōgure",
                 "surname": "Oh! Great",
@@ -108,9 +118,9 @@ resolve(library.serialize());
             "chapters": []
         },
         {
-            "uuid": "a12ce511-3fe0-40f8-b400-80ff2adb21a4",
+            "uuid": "8f2a310e-871c-4bdf-bce5-f44dbcabb16b",
             "author": {
-                "uuid": "307ef81f-0a8a-4dc2-8121-86fc3a512fad",
+                "uuid": "1e5be136-1232-4e7c-85c6-25659f68dabd",
                 "firstname": "Ito",
                 "lastname": "Ōgure",
                 "surname": "Oh! Great",
@@ -122,4 +132,5 @@ resolve(library.serialize());
         }
     ]
 }
+
 ```
