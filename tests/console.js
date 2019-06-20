@@ -31,7 +31,7 @@ const console = Object.assign({}, global.console, {
         dim: (text) => `\x1b[2m${text}${reset}`,
         hidden: (text) => `\x1b[8m${text}${reset}`,
         reverse: (text) => `\x1b[7m${text}${reset}`,
-        underscore: (text) => `\x1b[4m${text}${reset}`,
+        underline: (text) => `\x1b[4m${text}${reset}`,
     },
 
     colorize: (text, color, background, ...decorations) => {
