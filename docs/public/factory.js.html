@@ -155,9 +155,14 @@ class Factory {
                     }
                 }
 
-                encyclopedia.memory.create(this.serialize(false));
-                this.addEventListener('change', () => {
-                    encyclopedia.memory.update(this.serialize(false));
+                encyclopedia.memory.load(this.serialize(false));
+                if (!params.uuid) {
+                    encyclopedia.memory.create(this.serialize(false));
+                }
+                this.addEventListener('change', ({ value, previous }) => {
+                    if (value !== previous) {
+                        encyclopedia.memory.update(this.serialize(false));
+                    }
                 });
 
                 return new Proxy(this, {
@@ -205,7 +210,9 @@ class Factory {
                 for (let key in schema) {
                     if (schema.hasOwnProperty(key)) {
                         if (Array.isArray(schema[key])) {
-                            serialized[key] = this.props[key].map(value => single(this, schema, key, value));
+                            serialized[key] = this.props[key].map(value => {
+                                return single(this, schema, key, value)
+                            });
                         } else {
                             serialized[key] = single(this, schema, key, this.props[key]);
                         }

@@ -70,14 +70,14 @@ resolve(book.serialize());
 
 ```
 
-### Console
+### Results
 
 ```
 
 {
-    "uuid": "f9032552-f672-4e68-8db4-0a04d15f46fa",
+    "uuid": "bff5cde4-9fc9-4bca-bfa1-e9a92165e97a",
     "author": {
-        "uuid": "33e0f6c5-a1a3-415b-842b-790905bb0cb6",
+        "uuid": "d16bfd8a-1096-4ecc-a2a2-b9b0032d5c35",
         "firstname": "Ito",
         "lastname": "Ōgure",
         "surname": "Oh! Great",

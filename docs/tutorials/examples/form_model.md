@@ -59,14 +59,14 @@ resolve(book.serialize());
 
 ```
 
-### Console
+### Results
 
 ```
 
 {
-    "uuid": "8303c573-6d23-4241-8462-e0c2fd2daa6b",
+    "uuid": "9daf5689-7d3a-4bb2-a40a-255408bdf79f",
     "author": {
-        "uuid": "f98c26a1-8307-44c8-8ff2-bc7b43586962",
+        "uuid": "6312351b-1fb9-431a-a8c0-592d4a22df5f",
         "firstname": "Jocelyn",
         "lastname": "Faihy",
         "surname": "Jochlain",

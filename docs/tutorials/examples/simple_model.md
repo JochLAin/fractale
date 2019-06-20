@@ -61,12 +61,12 @@ resolve(instance.serialize());
 
 ```
 
-### Console
+### Results
 
 ```
 
 {
-    "uuid": "1ab542c5-d90b-4a01-a88f-854dc6237ddf",
+    "uuid": "f8352061-f0a2-446f-8aea-e98e82df096b",
     "mixed": -1,
     "boolean": false,
     "number": 42,

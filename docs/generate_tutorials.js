@@ -68,7 +68,7 @@ class Program {
         content += `${KEY_CODE}${models.map(Model => Fractale.stringify(Model, null, 4))}${KEY_CODE}`;
         content += `</div>`;
         content += `</article>`;
-        content += `${KEY_CODE}${this.cleanCode(code.toString())}${KEY_CODE}`;
+        content += `${KEY_CODE}${Program.cleanCode(code.toString())}${KEY_CODE}`;
         content += `### Results`;
         content += `${KEY_CODE}${JSON.stringify(results, null, 4)}${KEY_CODE}`;
 

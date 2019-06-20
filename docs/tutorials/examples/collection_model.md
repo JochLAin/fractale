@@ -84,17 +84,17 @@ resolve(library.serialize());
 
 ```
 
-### Console
+### Results
 
 ```
 
 {
-    "uuid": "1c58fd3a-a671-453d-a4fb-26b47303faaf",
+    "uuid": "50779260-03d2-4815-b034-f7fe29ac6779",
     "books": [
         {
-            "uuid": "21431a86-3541-477b-aed9-653e24c76b59",
+            "uuid": "c1b4c5c2-4d92-48e2-880c-7418b08600cd",
             "author": {
-                "uuid": "1e5be136-1232-4e7c-85c6-25659f68dabd",
+                "uuid": "d4d2f43e-f6cc-4e62-950f-1b8dea68dbb1",
                 "firstname": "Ito",
                 "lastname": "Ōgure",
                 "surname": "Oh! Great",
@@ -105,9 +105,9 @@ resolve(library.serialize());
             "chapters": []
         },
         {
-            "uuid": "072d13b9-ccd5-418b-b2cf-02c850833253",
+            "uuid": "be9a1ef3-2c48-48a2-83fb-90c7a4a590be",
             "author": {
-                "uuid": "1e5be136-1232-4e7c-85c6-25659f68dabd",
+                "uuid": "d4d2f43e-f6cc-4e62-950f-1b8dea68dbb1",
                 "firstname": "Ito",
                 "lastname": "Ōgure",
                 "surname": "Oh! Great",
@@ -118,9 +118,9 @@ resolve(library.serialize());
             "chapters": []
         },
         {
-            "uuid": "8f2a310e-871c-4bdf-bce5-f44dbcabb16b",
+            "uuid": "5f843c33-eaa6-4602-9429-0ebfc7defbbe",
             "author": {
-                "uuid": "1e5be136-1232-4e7c-85c6-25659f68dabd",
+                "uuid": "d4d2f43e-f6cc-4e62-950f-1b8dea68dbb1",
                 "firstname": "Ito",
                 "lastname": "Ōgure",
                 "surname": "Oh! Great",

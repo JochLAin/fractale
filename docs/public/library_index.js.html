@@ -137,7 +137,7 @@ class Library extends EventListener {
             return false;
             // throw new Error(`Model with name "${name}" doesn't exists.`);
         }
-        return this.encyclopedias.find(encyclopedia => encyclopedia.name === name.toLowerCase());
+        return this.encyclopedias.find(encyclopedia => encyclopedia.slug === name.toLowerCase());
     }
 
     /**
@@ -145,7 +145,7 @@ class Library extends EventListener {
      * @returns {String[]}
      */
     get names() {
-        return this.encyclopedias.map(encyclopedia => encyclopedia.name);
+        return this.encyclopedias.map(encyclopedia => encyclopedia.slug);
     }
 }
 
