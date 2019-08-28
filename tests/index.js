@@ -1,7 +1,4 @@
-
 const console = require('./console');
-
-const Fractale = require('../lib');
 const models = module.exports.models = require('./models');
 
 const cases = module.exports.cases = [

@@ -45,5 +45,16 @@ module.exports.resolver = (resolve) => {
         throw new Error('Error on collection serializer');
     }
 
+    //*
+    const timeout = setTimeout(() => {
+        throw new Error('Error on change collection item property');
+    }, 1000);
+    library.addEventListener('change', () => {
+        clearTimeout(timeout);
+        resolve(library.serialize());
+    });
+    library.books[0].title = 'Bakemonogatari';
+    /*/
     resolve(library.serialize());
+    //*/
 };

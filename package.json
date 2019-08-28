@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "docs": "node ./docs/generate_tutorials.js && npx jsdoc -c jsdoc.json",
-    "test": "node ./tests/index.js"
+    "test": "LOG_LEVEL=debug node ./tests/index.js"
   },
   "repository": {
     "type": "git",
