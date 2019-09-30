@@ -8,7 +8,7 @@ module.exports.tutorialized = true;
 module.exports.resolver = (resolve) => {
     const instance = new Simple({
         mixed: 'It\'s dangerous to go alone! Take this.',
-        boolean: true,
+        boolean: false,
         number: 31,
         string: 'Lorem ipsum'
     });
@@ -16,7 +16,7 @@ module.exports.resolver = (resolve) => {
     if (instance.mixed !== 'It\'s dangerous to go alone! Take this.') {
         throw new Error('Error on simple accessor with type mixed');
     }
-    if (instance.boolean !== true) {
+    if (instance.boolean !== false) {
         throw new Error('Error on simple accessor with type boolean');
     }
     if (instance.number !== 31) {
@@ -27,14 +27,14 @@ module.exports.resolver = (resolve) => {
     }
 
     instance.mixed = -1;
-    instance.boolean = false;
+    instance.boolean = true;
     instance.number = 42;
     instance.string = 'Dolor sit amet';
 
     if (instance.mixed !== -1) {
         throw new Error('Error on simple accessor with type mixed after change');
     }
-    if (instance.boolean !== false) {
+    if (instance.boolean !== true) {
         throw new Error('Error on simple accessor with type boolean after change');
     }
     if (instance.number !== 42) {
