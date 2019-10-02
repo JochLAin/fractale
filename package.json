@@ -1,6 +1,6 @@
 {
   "name": "fractale",
-  "version": "1.5.14",
+  "version": "1.5.15",
   "description": "Modeling architecture data",
   "main": "lib/index.js",
   "scripts": {
