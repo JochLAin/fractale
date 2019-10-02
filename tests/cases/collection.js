@@ -20,18 +20,31 @@ module.exports.resolver = (resolve) => {
             author: author,
         }, {
             title: 'Tenjo tenge',
-            readable: true,
+            readable: false,
             author: author,
         }]
     });
 
+    const timeout = setTimeout(() => {
+        throw new Error('Error on change collection item property');
+    }, 1000);
+
+    let counter = 0;
+    library.addEventListener('change', () => {
+        if (++counter >= 2) {
+            clearTimeout(timeout);
+            resolve(library.serialize());
+        }
+    });
+
+    library.books[0].title = 'Bakemonogatari';
     library.books.push({
         title: 'Biorg trinity',
-        readable: true,
+        readable: false,
         author: author,
     });
 
-    if (library.books[0].title !== 'Air gear') {
+    if (library.books[0].title !== 'Bakemonogatari') {
         throw new Error('Error on collection accessor with brace');
     }
     if (library.props.book(1).title !== 'Tenjo tenge') {
@@ -41,21 +54,19 @@ module.exports.resolver = (resolve) => {
         throw new Error('Error on array methods accessor');
     }
 
+    if (library.books.map(book => book.title).join(', ') !== 'Bakemonogatari, Tenjo tenge, Biorg trinity') {
+        throw new Error('Error on array method map accessor');
+    }
+
+    if (library.books.filter(book => book.readable).map(book => book.title).join(', ') !== 'Bakemonogatari') {
+        throw new Error('Error on array method filter accessor');
+    }
+
+    if (library.books.reduce((accu, book) => `${accu} ${book.title}`, '').trim() !== 'Bakemonogatari Tenjo tenge Biorg trinity') {
+        throw new Error('Error on array method reduce accessor');
+    }
+
     if (!library.serialize()) {
         throw new Error('Error on collection serializer');
     }
-
-    const timeout = setTimeout(() => {
-        throw new Error('Error on change collection item property');
-    }, 1000);
-
-    let counter = 0;
-    library.addEventListener('change', () => {
-        if (++counter >= 4) {
-            clearTimeout(timeout);
-            resolve(library.serialize());
-        }
-    });
-    library.books[0].title = 'Bakemonogatari';
-    library.books.map(book => book.readable = false);
 };
