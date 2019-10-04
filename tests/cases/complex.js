@@ -50,8 +50,7 @@ module.exports.resolver = (resolve) => {
         },
     });
 
-    game.props.character = character;
-
+    game.character = character;
     if (game.characters[0].move.bottom.frames[0].layers[0].pixel(3) !== '#000333') {
         throw new Error('Error on complex accessor');
     }

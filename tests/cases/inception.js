@@ -17,6 +17,9 @@ module.exports.resolver = (resolve) => {
         readable: true,
     });
 
+    // console.log(book);
+    // console.log(book.author);
+    // console.log(book.author.comment);
     if (book.author.comment !== 'N/A') {
         throw new Error('Error on deep getter with dot');
     }

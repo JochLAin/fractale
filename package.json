@@ -19,10 +19,11 @@
   "license": "SEE LICENSE IN LICENSE",
   "homepage": "https://docs.jocelyn.faihy.org/fractale",
   "dependencies": {
-    "uuid": "^3.3.2"
+    "crieur": "^1.0.1",
+    "uuid": "^3.3.3"
   },
   "devDependencies": {
-    "jsdoc": "^3.6.2",
+    "jsdoc": "^3.6.3",
     "lodash": ">=4.17.13"
   }
 }

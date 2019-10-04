@@ -1,8 +1,10 @@
+const logger = require('crieur');
 const console = require('./console');
-const models = module.exports.models = require('./models');
+module.exports.models = require('./models');
 
 const cases = module.exports.cases = [
     require('./cases/simple'),
+    require('./cases/inheritance'),
     require('./cases/metadata'),
     require('./cases/inception'),
     require('./cases/collection'),
@@ -31,7 +33,7 @@ if (require.main === module) {
                 console.log('');
                 console.log(console.colorize('\n  Test error\n', 'white', 'red'));
                 console.log('');
-                console.log(error.stack);
+                logger.error(error);
                 console.log('');
                 process.exit(1);
             });

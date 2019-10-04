@@ -13,6 +13,20 @@ const Compound = module.exports.Compound = Fractale.create('Compound', Simple, {
     collections: [{ key: String, value: String }],
 });
 
+const Child = module.exports.Child = Fractale.create('Child', {
+    value: String,
+});
+Child.prototype.toUpperCase = function () {
+    return this.value.toUpperCase();
+};
+Child.prototype.toLowerCase = function () {
+    return this.value.toLowerCase();
+};
+
+const Parent = module.exports.Parent = Fractale.create('Parent', Child, {
+    children: [Child],
+});
+
 const Page = module.exports.Page = Fractale.create('Page', {
     title: String,
     content: String,
