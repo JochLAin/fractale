@@ -14,6 +14,14 @@ module.exports.resolver = (resolve) => {
         ]
     });
 
+    if (instance.sayHelloTo(0) !== 'Hello world') {
+        throw new Error('Error on parent method call');
+    }
+
+    if (instance.sayHelloTo(1) !== 'Hello you') {
+        throw new Error('Error on parent method call');
+    }
+
     if (instance.toUpperCase() !== 'HELLO') {
         throw new Error('Error on method inheritance');
     }

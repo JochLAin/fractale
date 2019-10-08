@@ -1,5 +1,5 @@
 
-const { Compound } = require('../models');
+const { Compound, Simple } = require('../models');
 module.exports.models = [Compound];
 
 module.exports.title = 'Metadata model';
@@ -11,6 +11,10 @@ module.exports.resolver = (resolve) => {
         boards: ['Lorem ipsum', 'Dolores sit amet'],
         metadata: { key: 'Foo', data: { key: 'Bar', value: 12 }}
     });
+
+    if (instance.metadata.key !== 'Foo') {
+        throw new Error('Error on metadata accessor');
+    }
 
     const metadata = instance.metadata;
     metadata.key = 'decomposition';

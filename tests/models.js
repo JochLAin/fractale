@@ -17,15 +17,18 @@ const Child = module.exports.Child = Fractale.create('Child', {
     value: String,
 });
 Child.prototype.toUpperCase = function () {
-    return this.value.toUpperCase();
+    return this.props.value.toUpperCase();
 };
 Child.prototype.toLowerCase = function () {
-    return this.value.toLowerCase();
+    return this.props.value.toLowerCase();
 };
 
 const Parent = module.exports.Parent = Fractale.create('Parent', Child, {
     children: [Child],
 });
+Parent.prototype.sayHelloTo = function (index) {
+    return `${this.value} ${this.children[index].value}`;
+};
 
 const Page = module.exports.Page = Fractale.create('Page', {
     title: String,
@@ -87,7 +90,7 @@ const Layer = module.exports.Layer = Fractale.create('Layer', {
     width: Number,
 });
 Layer.prototype.pixel = function (x = 0, y = 0) {
-    return this.pixels[y * this.width + x];
+    return this.props.pixels[y * this.props.width + x];
 };
 
 const Frame = module.exports.Frame = Fractale.create('Frame', {
