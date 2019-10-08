@@ -17,10 +17,10 @@ const Child = module.exports.Child = Fractale.create('Child', {
     value: String,
 });
 Child.prototype.toUpperCase = function () {
-    return this.props.value.toUpperCase();
+    return this.value.toUpperCase();
 };
 Child.prototype.toLowerCase = function () {
-    return this.props.value.toLowerCase();
+    return this.value.toLowerCase();
 };
 
 const Parent = module.exports.Parent = Fractale.create('Parent', Child, {
