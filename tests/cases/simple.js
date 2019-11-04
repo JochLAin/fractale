@@ -25,6 +25,9 @@ module.exports.resolver = (resolve) => {
     if (instance.string !== 'Lorem ipsum') {
         throw new Error('Error on simple accessor with type string');
     }
+    if (instance.items.length !== 0) {
+        throw new Error('Error on simple accessor with type array');
+    }
 
     instance.mixed = -1;
     instance.boolean = true;

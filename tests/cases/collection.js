@@ -47,9 +47,6 @@ module.exports.resolver = (resolve) => {
     if (library.books[0].title !== 'Bakemonogatari') {
         throw new Error('Error on collection accessor with brace');
     }
-    if (library.props.book(1).title !== 'Tenjo tenge') {
-        throw new Error('Error on collection accessor with function singular');
-    }
     if (library.books.last().title !== 'Biorg trinity') {
         throw new Error('Error on array methods accessor');
     }

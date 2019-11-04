@@ -1,6 +1,4 @@
 const logger = require('crieur');
-const Table = require('cli-table');
-const { library } = require('../lib');
 module.exports.models = require('./models');
 
 const cases = module.exports.cases = [
