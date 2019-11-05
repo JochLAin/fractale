@@ -49,10 +49,10 @@ module.exports.resolver = (resolve) => {
     if (library.books[0].title !== 'Bakemonogatari') {
         throw new Error('Error on collection accessor with brace');
     }
-    if (library.books.first().title !== 'Bakemonogatari') {
+    if (library.books.first.title !== 'Bakemonogatari') {
         throw new Error('Error on array method first accessor');
     }
-    if (library.books.last().title !== 'Biorg trinity') {
+    if (library.books.last.title !== 'Biorg trinity') {
         throw new Error('Error on array method last accessor');
     }
 
