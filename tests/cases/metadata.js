@@ -38,7 +38,6 @@ module.exports.resolver = (resolve) => {
         throw new Error('Error on metadata accessor with bracket');
     }
 
-    console.log(instance.serialize(false));
     if (!instance.serialize()) {
         throw new Error('Error on metadata serializer');
     }

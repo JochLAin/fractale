@@ -75,7 +75,6 @@ module.exports.resolver = (resolve) => {
         throw new Error('Error on array method remove accessor');
     }
 
-    console.log(library.serialize(false));
     if (!library.serialize()) {
         throw new Error('Error on collection serializer');
     }
