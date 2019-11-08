@@ -26,23 +26,7 @@ const loop = async () => {
         }).catch((error) => {
             logger.error('Test failed !', { block: true });
             logger.error(error);
-
-            // library.names.map((slug) => {
-            //     const encyclopedia = library.get(slug);
-            //     logger.debug(` * ${encyclopedia.name}\n`);
-            //
-            //     const table = new Table({ head: ['uuid'].concat(Object.keys(encyclopedia.schema)), style: { head: ['blue'] } });
-            //     for (const index in encyclopedia.memory.data) {
-            //         const item = encyclopedia.memory.data[index];
-            //         const line = Object.keys(encyclopedia.schema).reduce((accu, key) => {
-            //             return accu.concat(Array.isArray(item[key]) ? item[key].join(', ') : item[key]);
-            //         }, [item.uuid]);
-            //         table.push(line);
-            //     }
-            //     console.log(table.toString(), '\n');
-            // });
-
-            process.exit(1);
+            process.exit(0);
         });
 
         return loop();

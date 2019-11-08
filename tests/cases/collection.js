@@ -1,5 +1,7 @@
 
 const { Author, Book, Library } = require('../models');
+const Model = require('../../lib/model');
+
 module.exports.models = [Library];
 
 module.exports.title = 'Collection model';
