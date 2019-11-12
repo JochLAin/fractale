@@ -50,7 +50,7 @@ module.exports.resolver = (resolve) => {
         },
     });
 
-    game.character = character;
+    game.characters.push(character);
     if (game.characters[0].move.bottom.frames[0].layers[0].pixel(3) !== '#000333') {
         throw new Error('Error on huge accessor');
     }

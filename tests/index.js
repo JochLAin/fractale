@@ -5,18 +5,18 @@ if (process.env.LOG_LEVEL) {
 }
 
 const cases = module.exports.cases = [
-    // require('./cases/error'),
-    // require('./cases/simple'),
-    // require('./cases/metadata'),
-    // require('./cases/inheritance'),
-    // require('./cases/inception'),
-    // require('./cases/collection'),
-    // require('./cases/self_reference'),
-    // require('./cases/form'),
+    require('./cases/error'),
+    require('./cases/simple'),
+    require('./cases/metadata'),
+    require('./cases/inheritance'),
+    require('./cases/inception'),
+    require('./cases/collection'),
+    require('./cases/self_reference'),
+    require('./cases/form'),
     require('./cases/complex'),
-    // require('./cases/deep'),
-    // require('./cases/huge'),
-    // require('./cases/stringify'),
+    require('./cases/deep'),
+    require('./cases/huge'),
+    require('./cases/stringify'),
 ];
 
 const chain = Promise.resolve();

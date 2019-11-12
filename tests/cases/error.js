@@ -2,8 +2,8 @@
 const { Author, Book, Library } = require('../models');
 module.exports.models = [Library];
 
-module.exports.title = 'Simple model';
-module.exports.tutorialized = true;
+module.exports.title = 'Error tests';
+module.exports.tutorialized = false;
 
 class DetailedError extends Error {
     constructor(message, detail, ...props) {
@@ -52,7 +52,7 @@ module.exports.resolver = (resolve) => {
             throw new DetailedError('Incorrect type error', `  Expected: IncorrectTypeError\n  Receive: ${error.name}`);
         }
         if (error.message !== `Expecting "Library.books" to be array of Book || uuid || null but get 'number'`) {
-            throw new DetailedError(`Error on error message for incorrect simple type`, `  Expected: Expecting "Library.books" to be array of Book || uuid || null but get 'number'\n  Receive: ${error.message}`);
+            throw new DetailedError(`Error on error message for incorrect model type`, `  Expected: Expecting "Library.books" to be array of Book || uuid || null but get 'number'\n  Receive: ${error.message}`);
         }
     }
 
