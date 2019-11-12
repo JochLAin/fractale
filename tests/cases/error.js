@@ -1,6 +1,6 @@
 
-const { Simple } = require('../models');
-module.exports.models = [Simple];
+const { Author, Book, Library } = require('../models');
+module.exports.models = [Library];
 
 module.exports.title = 'Simple model';
 module.exports.tutorialized = true;
@@ -13,23 +13,48 @@ class DetailedError extends Error {
 }
 
 module.exports.resolver = (resolve) => {
-    const instance = new Simple({
-        mixed: 'It\'s dangerous to go alone! Take this.',
-        boolean: false,
-        number: 31,
-        string: 'Lorem ipsum'
+    const author = new Author({
+        firstname: 'Ito',
+        lastname: 'Ōgure',
+        surname: 'Oh! Great',
+        comment: 'N/A',
+    });
+
+    const book = new Book({
+        title: 'Air gear',
+        readable: true,
+        author: author,
+    });
+
+    const library = new Library({
+        books: [book, {
+            title: 'Tenjo tenge',
+            readable: false,
+            author: author,
+        }]
     });
 
     try {
-        instance.string = 69;
+        book.title = 69;
     } catch (error) {
         if (error.name !== 'IncorrectTypeError') {
-            throw new Error('Incorrect type error');
+            throw new DetailedError('Incorrect type error', `  Expected: IncorrectTypeError\n  Receive: ${error.name}`);
         }
-        if (error.message !== `Expecting "Simple.string" to be string || null but get 'number'`) {
-            throw new DetailedError(`Error on error message for incorrect simple type`, `  Expected: Expecting "Simple.string" to be string || null but get 'number'\n  Receive: ${error.message}`);
+        if (error.message !== `Expecting "Book.title" to be string || null but get 'number'`) {
+            throw new DetailedError(`Error on error message for incorrect simple type`, `  Expected: Expecting "Book.title" to be string || null but get 'number'\n  Receive: ${error.message}`);
         }
     }
 
-    resolve(instance.serialize());
+    try {
+        library.books = [12];
+    } catch (error) {
+        if (error.name !== 'IncorrectTypeError') {
+            throw new DetailedError('Incorrect type error', `  Expected: IncorrectTypeError\n  Receive: ${error.name}`);
+        }
+        if (error.message !== `Expecting "Library.books" to be array of Book || uuid || null but get 'number'`) {
+            throw new DetailedError(`Error on error message for incorrect simple type`, `  Expected: Expecting "Library.books" to be array of Book || uuid || null but get 'number'\n  Receive: ${error.message}`);
+        }
+    }
+
+    resolve(library.serialize());
 };
