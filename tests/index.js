@@ -2,6 +2,7 @@ const logger = require('crieur');
 module.exports.models = require('./models');
 
 const cases = module.exports.cases = [
+    require('./cases/error'),
     require('./cases/simple'),
     require('./cases/metadata'),
     require('./cases/inheritance'),
