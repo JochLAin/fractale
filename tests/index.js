@@ -11,7 +11,7 @@ const cases = module.exports.cases = [
     require('./cases/self_reference'),
     require('./cases/form'),
     require('./cases/deep'),
-    require('./cases/complex'),
+    require('./cases/huge'),
     require('./cases/stringify'),
 ];
 

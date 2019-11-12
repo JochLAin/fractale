@@ -1,5 +1,5 @@
 
-const { Class, Program } = require('../models');
+const { Class, Program, Variable } = require('../models');
 module.exports.models = [Class];
 
 module.exports.title = 'Deep model';
@@ -8,50 +8,48 @@ module.exports.tutorialized = true;
 module.exports.resolver = (resolve) => {
     const a = new Class({
         name: 'A',
-        variables: [
-            {name: 'a', value: 0},
-        ],
+        properties: [{ name: 'a', value: 0 }],
         methods: [
-            {signature: {name: 'getA'}},
-            {signature: {name: 'setA', properties: [{name: 'a'}]}}
+            { signature: { name: 'getA' }},
+            { signature: { name: 'setA', variables: [{ name: 'a' }] }}
         ]
     });
 
     const b = new Class({
         name: 'B',
-        variables: [
-            {name: 'b', value: 0},
+        properties: [
+            { name: 'b', value: 0 },
         ],
         methods: [
-            {signature: {name: 'getB'}},
-            {signature: {name: 'setB', properties: [{name: 'b'}]}}
+            { signature: { name: 'getB' }},
+            { signature: { name: 'setB', variables: [{ name: 'b' }] }}
         ]
     });
 
     const c = new Class({
+        uses: [a, b],
         name: 'C',
         inheritance: b,
-        variables: [
-            {name: 'c', value: 0},
+        properties: [
+            { name: 'c', value: 0 },
         ],
         methods: [
-            {signature: {name: 'getC'}},
-            {signature: {name: 'setC', properties: [{name: 'c'}]}}
+            { signature: { name: 'getC' }},
+            { signature: { name: 'setC', variables: [{ name: 'c' }] }}
         ]
     });
 
     const program = new Program({
-        uses: [a, b],
-        class: c
+        classes: [a,b,c],
     });
 
-    if (program.uses[0].name !== 'A') {
+    if (a.properties[0].name !== 'a') {
+        throw new Error('Error on deep accessor variable name');
+    }
+    if (c.uses[0].name !== 'A') {
         throw new Error('Error on deep accessor with brace');
     }
-    if (program.use(1).name !== 'B') {
-        throw new Error('Error on deep accessor with function singular');
-    }
-    if (program.class.inheritance.name !== 'B') {
+    if (c.inheritance.name !== 'B') {
         throw new Error('Error on deep accessor');
     }
 

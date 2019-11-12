@@ -68,21 +68,21 @@ const Variable = module.exports.Variable = Fractale.create('Variable', {
 const Method = module.exports.Method = Fractale.create('Method', {
     signature: {
         name: String,
-        properties: [Variable]
+        variables: [Variable]
     },
     body: String,
 });
 
 const Class = module.exports.Class = Fractale.create('Class', {
+    uses: [Fractale.SELF],
     name: String,
     inheritance: Fractale.SELF,
-    variables: Variable,
+    properties: [Variable],
     methods: [Method]
 });
 
 const Program = module.exports.Program = Fractale.create('Program', {
-    uses: [Class],
-    class: Class
+    classes: [Class],
 });
 
 const Layer = module.exports.Layer = Fractale.create('Layer', {
