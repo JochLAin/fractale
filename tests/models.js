@@ -14,9 +14,10 @@ const Compound = module.exports.Compound = Fractale.create('Compound', Simple, {
     collections: [{ key: String, value: String }],
 });
 
-const Child = module.exports.Child = Fractale.create('Child', {
+const ChildSchema = Fractale.createSchema({
     value: String,
 });
+const Child = module.exports.Child = Fractale.create('Child', ChildSchema);
 Child.prototype.toUpperCase = function () {
     return this.value.toUpperCase();
 };
@@ -25,7 +26,7 @@ Child.prototype.toLowerCase = function () {
 };
 
 const Parent = module.exports.Parent = Fractale.create('Parent', Child, {
-    children: [Child],
+    children: Fractale.with([Child], { mappedBy: 'parent' }),
 });
 Parent.prototype.sayHelloTo = function (index) {
     return `${this.value} ${this.children[index].value}`;
