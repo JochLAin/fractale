@@ -252,8 +252,8 @@ const Simple = Fractale.create('Simple', {
 
 # Dependencies
 
-Fractale use [uuid](https://www.npmjs.com/package/uuid) to generate a unique id for model instances.
-Fractale use [moment.js](https://momentjs.com/docs/) for date validation.
+- Usage of [uuid](https://www.npmjs.com/package/uuid) to generate a unique id for model instances.
+- Usage of [moment.js](https://momentjs.com/docs/) for date validation.
 
 # License
 
