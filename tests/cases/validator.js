@@ -94,11 +94,11 @@ module.exports.resolver = (resolve) => {
     }
 
     try {
-        new Example_Validator({ date: '2021-01-01' });
+        new Example_Validator({ date: '3023-01-01' });
         throw new DetailedError('Error on validator date');
     } catch (error) {
         if (error instanceof DetailedError) throw error;
-        const message = /^Expected value between 2016-12-31T23:00:00.000Z and ([a-zA-Z0-9\.\-: ]+), got "2021-01-01"$/;
+        const message = /^Expected value between 2016-12-31T23:00:00.000Z and ([a-zA-Z0-9\.\-: ]+), got "3023-01-01"$/;
         if (!error.message.match(message)) {
             throw new DetailedError('Invalid validator message', `Expected: ${message.toString()}\nGot: ${error.message}`);
         }
