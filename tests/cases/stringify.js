@@ -27,8 +27,8 @@ module.exports.resolver = (resolve) => {
         throw new DetailedError('Error on method stringify method', `Expected: ${METHOD}\nGot: ${method}`);
     }
 
-    const classe = Fractale.stringify(Class);
-    const CLASS = `const Class = Fractale.create("Class", {uses:[Fractale.SELF],name:String,inheritance:Fractale.SELF,properties:[Variable],methods:[Method]});`;
+    const classe = Fractale.stringify(Class, { dependencies: true });
+    const CLASS = `const Variable = Fractale.create("Variable", {name:String,value:undefined,static:Boolean,scope:String});\n\nconst Method = Fractale.create("Method", {signature:{name:String,variables:[Variable]},body:String});\n\nconst Class = Fractale.create("Class", {uses:[Fractale.SELF],name:String,inheritance:Fractale.SELF,properties:[Variable],methods:[Method]});`;
     if (classe !== CLASS) {
         throw new DetailedError('Error on class stringify method', `Expected: ${CLASS}\nGot: ${classe}`);
     }
