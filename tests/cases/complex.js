@@ -76,8 +76,8 @@ const Configuration = Fractale.create('Configuration', {
 module.exports.resolver = (resolve) => {
     const instance = new Configuration({
         "uuid": "d2b499d1-d796-42f0-b896-7816c7634366",
-        "passwd": null,
-        "salt": null,
+        "passwd": undefined,
+        "salt": undefined,
         "projects": [{
             "uuid": "bd88f577-6ceb-4cae-92af-04e89e578a59",
             "title": "Project 1",

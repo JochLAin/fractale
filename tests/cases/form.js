@@ -1,4 +1,4 @@
-
+const { DetailedError } = require('../error');
 const { Author, Book } = require('../models');
 module.exports.models = [Book];
 
@@ -20,8 +20,9 @@ module.exports.resolver = (resolve) => {
     });
 
     if (book.author.firstname !== 'Jocelyn') {
-        throw new Error('Error on form setter');
+        throw new DetailedError('Error on form setter', `Expected "Jocelyn" got "${book.author.firstname}"`);
     }
+
     if (!book.serialize()) {
         throw new Error('Error on form serializer');
     }

@@ -1,9 +1,7 @@
-
+const { DetailedError } = require('../error');
 const { Author, Book, Library } = require('../models');
-const Model = require('../../lib/model');
 
 module.exports.models = [Library];
-
 module.exports.title = 'Collection model';
 module.exports.tutorialized = true;
 
@@ -29,31 +27,33 @@ module.exports.resolver = (resolve) => {
         }]
     });
 
-    const timeout = setTimeout(() => {
-        throw new Error('Error on change collection item property');
-    }, 1000);
+    if (library.books[0].title !== 'Air gear') {
+        throw new DetailedError('Error on collection accessor with brace', `Expected "Air gear" got "${library.books[0].title}"`);
+    }
+    if (library.books[1].title !== 'Tenjo tenge') {
+        throw new DetailedError('Error on collection accessor with brace', `Expected "Tenjo tenge" got "${library.books[1].title}"`);
+    }
 
-    let counter = 0;
-    library.addEventListener('change', () => {
-        if (++counter >= 2) {
-            clearTimeout(timeout);
-            resolve(library.serialize());
-        }
-    });
-
+    let changed = false;
+    library.addEventListener('change', () => changed = true);
     library.books[0].title = 'Bakemonogatari';
-    library.books.push({
-        title: 'Biorg trinity',
-        readable: false,
-        author: author,
-    });
 
+    if (!changed) {
+        throw new Error('Error on collection change event');
+    }
     if (library.books[0].title !== 'Bakemonogatari') {
         throw new Error('Error on collection accessor with brace');
     }
     if (library.books.first.title !== 'Bakemonogatari') {
         throw new Error('Error on array method first accessor');
     }
+
+    library.books.push({
+        title: 'Biorg trinity',
+        readable: false,
+        author: author,
+    });
+
     if (library.books.last.title !== 'Biorg trinity') {
         throw new Error('Error on array method last accessor');
     }
@@ -78,4 +78,6 @@ module.exports.resolver = (resolve) => {
     if (!library.serialize()) {
         throw new Error('Error on collection serializer');
     }
+
+    resolve(library.serialize());
 };

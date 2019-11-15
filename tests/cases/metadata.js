@@ -1,5 +1,5 @@
-
-const { Compound, Simple } = require('../models');
+const { DetailedError } = require('../error');
+const { Compound } = require('../models');
 module.exports.models = [Compound];
 
 module.exports.title = 'Metadata model';
@@ -13,29 +13,38 @@ module.exports.resolver = (resolve) => {
     });
 
     if (instance.metadata.key !== 'Foo') {
-        throw new Error('Error on metadata accessor');
+        throw new DetailedError('Error on metadata accessor', `Expected "Foo" got "${instance.metadata.key}"`);
     }
 
     const metadata = instance.metadata;
     metadata.key = 'decomposition';
 
     if (instance.metadata.key !== 'decomposition') {
-        throw new Error('Error on metadata accessor with decomposition');
+        throw new DetailedError('Error on metadata accessor with decomposition', `Expected "decomposition" got "${instance.metadata.key}"`);
     }
 
     instance.metadata.key = 'dot';
     if (instance.metadata.key !== 'dot') {
-        throw new Error('Error on metadata accessor with dot');
+        throw new DetailedError('Error on metadata accessor with dot', `Expected "dot" got "${instance.metadata.key}"`);
     }
 
     instance.metadata = { key: 'assign' };
     if (instance.metadata.key !== 'assign') {
-        throw new Error('Error on metadata accessor with assign');
+        throw new DetailedError('Error on metadata accessor with assign', `Expected "assign" got "${instance.metadata.key}"`);
+    }
+    if (instance.metadata.data.key !== 'Bar') {
+        throw new DetailedError('Error on metadata accessor with assign', `Expected "Bar" got "${instance.metadata.data.key}"`);
     }
 
-    instance.metadata = { data: { key: 'after', value: 'after' } };
-    if (instance.metadata.key !== 'assign' || instance.metadata.data.key !== 'after') {
-        throw new Error('Error on metadata accessor with bracket');
+    instance.metadata = { data: { key: 'after' } };
+    if (instance.metadata.key !== 'assign') {
+        throw new DetailedError('Error on metadata accessor with bracket', `Expected "assign" got "${instance.metadata.key}"`);
+    }
+    if (instance.metadata.data.key !== 'after') {
+        throw new DetailedError('Error on metadata accessor with bracket', `Expected "after" got "${instance.metadata.data.key}"`);
+    }
+    if (instance.metadata.data.value !== 12) {
+        throw new DetailedError('Error on metadata accessor with bracket', `Expected "12" got "${instance.metadata.data.value}"`);
     }
 
     if (!instance.serialize()) {

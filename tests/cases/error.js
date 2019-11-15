@@ -1,16 +1,10 @@
-
+const logger = require('crieur');
+const { DetailedError } = require('../error');
 const { Author, Book, Library } = require('../models');
 module.exports.models = [Library];
 
 module.exports.title = 'Error tests';
 module.exports.tutorialized = false;
-
-class DetailedError extends Error {
-    constructor(message, detail, ...props) {
-        super(message, ...props);
-        this.detail = detail;
-    }
-}
 
 module.exports.resolver = (resolve) => {
     const author = new Author({
@@ -37,22 +31,18 @@ module.exports.resolver = (resolve) => {
     try {
         book.title = 69;
     } catch (error) {
-        if (error.name !== 'IncorrectTypeError') {
-            throw new DetailedError('Incorrect type error', `  Expected: IncorrectTypeError\n  Receive: ${error.name}`);
-        }
-        if (error.message !== `Expecting "Book.title" to be string || null but get 'number'`) {
-            throw new DetailedError(`Error on error message for incorrect simple type`, `  Expected: Expecting "Book.title" to be string || null but get 'number'\n  Receive: ${error.message}`);
+        if (error.name !== 'IncorrectTypeError') throw error;
+        if (error.message !== `Expecting "Book.title" to be string || undefined but get 'number'`) {
+            throw new DetailedError(`Error on error message for incorrect simple type`, `Expected: Expecting "Book.title" to be string || undefined but get 'number'\n     got: ${error.message}`);
         }
     }
 
     try {
         library.books = [12];
     } catch (error) {
-        if (error.name !== 'IncorrectTypeError') {
-            throw new DetailedError('Incorrect type error', `  Expected: IncorrectTypeError\n  Receive: ${error.name}`);
-        }
-        if (error.message !== `Expecting "Library.books" to be array of Book || uuid || null but get 'number'`) {
-            throw new DetailedError(`Error on error message for incorrect model type`, `  Expected: Expecting "Library.books" to be array of Book || uuid || null but get 'number'\n  Receive: ${error.message}`);
+        if (error.name !== 'IncorrectTypeError') throw error;
+        if (error.message !== `Expecting "Library.books" to be array of Book || uuid || undefined but get 'number'`) {
+            throw new DetailedError(`Error on error message for incorrect model type`, `Expected: Expecting "Library.books" to be array of Book || uuid || undefined but get 'number'\n     got: ${error.message}`);
         }
     }
 

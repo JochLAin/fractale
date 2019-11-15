@@ -19,39 +19,59 @@ module.exports.resolver = (resolve) => {
         '#999000', '#999111', '#999222', '#999333', '#999444', '#999555', '#999666', '#999777', '#999888', '#999999',
     ];
 
-    const sprite = {
+    const SPRITE = {
         height: 10,
         width: 10,
         frames: [{
             layers: [
+                { pixels: PIXELS },
+                { pixels: PIXELS },
+                { pixels: PIXELS },
+                { pixels: PIXELS },
                 { pixels: PIXELS },
                 { pixels: PIXELS }
             ]
         }]
     };
 
-    const game = new Game({
-        name: 'The ultimate game'
-    });
-
-    const character = new Character({
+    const CHARACTER = {
         name: 'Toto',
         move: {
-            bottom: sprite,
-            left: sprite,
-            right: sprite,
-            top: sprite,
+            bottom: SPRITE,
+            left: SPRITE,
+            right: SPRITE,
+            top: SPRITE,
         },
         stand: {
-            bottom: sprite,
-            left: sprite,
-            right: sprite,
-            top: sprite,
+            bottom: SPRITE,
+            left: SPRITE,
+            right: SPRITE,
+            top: SPRITE,
         },
+    };
+
+    const game = new Game({
+        name: 'The ultimate game',
+        characters: [
+            CHARACTER,
+            CHARACTER,
+            CHARACTER,
+            CHARACTER,
+            CHARACTER,
+            CHARACTER,
+            CHARACTER,
+            CHARACTER,
+            CHARACTER,
+            CHARACTER,
+            CHARACTER,
+            CHARACTER
+        ]
     });
 
-    game.characters.push(character);
-    if (game.characters[0].move.bottom.frames[0].layers[0].pixel(3) !== '#000333') {
+    const character = game.characters[0];
+    const frame = character.move.bottom.frames[0];
+    const layer = frame.layers[0];
+    if (layer.pixel(3) !== '#000333') {
         throw new Error('Error on huge accessor');
     }
 
