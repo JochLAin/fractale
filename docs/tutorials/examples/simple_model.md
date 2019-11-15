@@ -67,7 +67,7 @@ resolve(instance.serialize());
 ```
 
 {
-    "uuid": "e68e3c87-02e1-4ec2-b350-301fab0afe77",
+    "uuid": "0fc81856-e661-4299-ada7-e20bfd9b4125",
     "mixed": -1,
     "boolean": true,
     "number": 42,

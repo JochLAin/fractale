@@ -75,9 +75,9 @@ resolve(book.serialize());
 ```
 
 {
-    "uuid": "ae2bc69e-b023-4a88-90dd-cb1610998b07",
+    "uuid": "5840d342-31fa-4a61-b2d1-08fe977a28fe",
     "author": {
-        "uuid": "07b32ae2-3c7e-444f-8801-783b7350b06e",
+        "uuid": "86a733d3-921b-4058-94e6-b0bd5f0ba8d1",
         "firstname": "Ito",
         "lastname": "Ōgure",
         "surname": "Oh! Great",

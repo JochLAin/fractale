@@ -65,9 +65,9 @@ resolve(book.serialize());
 ```
 
 {
-    "uuid": "3e10a1e5-4c56-40c2-9a93-0b7c1ebb6b62",
+    "uuid": "7004d9ce-04d9-4cfa-94cb-b6923bc1c65b",
     "author": {
-        "uuid": "3d0fd015-c40b-44aa-8b83-e4dc4c3b5e86",
+        "uuid": "a38be47d-4dfe-42f8-8809-50213413342c",
         "firstname": "Jocelyn",
         "lastname": "Faihy",
         "surname": "Jochlain",

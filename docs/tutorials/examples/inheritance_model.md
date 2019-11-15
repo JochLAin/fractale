@@ -53,7 +53,7 @@ resolve(instance.serialize());
 ```
 
 {
-    "uuid": "4b47fdf0-cd95-4cb7-a03d-3079b4a1bc07",
+    "uuid": "24996afd-a230-487a-8624-4486c45539bd",
     "value": "Hello",
     "children": [
         {
@@ -65,7 +65,7 @@ resolve(instance.serialize());
                     ]
                 }
             },
-            "_uuid": "580fff0c-ccbc-45b1-b48e-b0104230605b",
+            "_uuid": "3a50ecdd-59e2-4632-82fc-8ac96ebc1689",
             "_props": {
                 "_value": "world"
             }
@@ -79,7 +79,7 @@ resolve(instance.serialize());
                     ]
                 }
             },
-            "_uuid": "54d54f0e-e35e-46df-8a11-7149cb7cef21",
+            "_uuid": "2a887e06-c8a1-4b7e-b1d8-621a92e1c829",
             "_props": {
                 "_value": "you"
             }

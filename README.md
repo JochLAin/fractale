@@ -27,7 +27,7 @@ const KeyValuePair = Fractale.create(
     }
 );
 
-/* Complete example */
+/* More complete example */
 const Model = Fractale.create(
     'Model', 
     {
@@ -35,13 +35,29 @@ const Model = Fractale.create(
         boolean: Boolean,
         number: Number,
         string: String,
+        date: Date,
         boards: [String],
         metadata: { key: String },
-        collections: [{ key: String, value: null }],
+        collection: [{ key: String, value: null }],
         inception: KeyValuePair,
-        self: Fractale.SELF,
+        self: Fractale.SELF, // the Model itself
     }
 );
+
+/* Full example */
+const Full = Fractale.create(
+    'Full',
+    Model, // Full inherit Model
+    {
+        declareAfter: Fractale.from('After'),
+        withOption: Fractale.with(String, { validator: { in: ['Foo','Bar'] } }),
+    }
+);
+
+const After = Fractale.create('After', {
+    start: Date,
+    end: Date,
+});
 ```
 
 ## Instanciation
@@ -61,8 +77,7 @@ const myModel = new Model({
     inception: { key: 'key', value: 1 }
 });
 
-console.log(myModel.serialize());
-/* 
+console.log(myModel.serialize()); /* 
 > { 
     mixed: 'Great !',
     boolean: true,
@@ -75,8 +90,19 @@ console.log(myModel.serialize());
         { key: 'bar', value: 456 }
     ],
     inception: { key: 'key', value: 1 }
-}
-*/
+} */
+
+/* Copy props to another instance */
+// Method 1
+const myFull1 = new Full(myModel);
+
+// Method 2
+const myFull2 = new Full();
+myFull2.deserialize(myModel);
+
+// Method 3
+const serialized = myModel.serialize();
+const myFull3 = new Full(serialized);
 ```
 
 ## Modification
@@ -116,8 +142,7 @@ console.log(myModel.inception); // > KeyValuePair { key: 'key', value: 1 }
 myModel.inception = new KeyValuePair({ key: 'new_key', value: 'new_value' });
 console.log(myModel.inception); // > KeyValuePair { key: 'new_key', value: 'new_value' }
 
-console.log(myModel.serialize());
-/* 
+console.log(myModel.serialize()); /* 
 > { 
     mixed: 123,
     boolean: false,
@@ -130,8 +155,7 @@ console.log(myModel.serialize());
         { key: 'bar', value: 456 }
     ],
     inception: { key: 'new_key', value: 'new_value' }
-}
-*/
+} */
 ```
 
 ## Array helpers
@@ -140,17 +164,96 @@ console.log(myModel.serialize());
 /* Array methods use */
 myModel.collections.push({ key: 'azertyuiop', value: 2 });
 myModel.collections = myModel.collections.concat([{ key: 'new_key', value: 3 }, { key: 'N3W_K3Y', value: 4 }]);
-console.log(myModel.serialize().collections);
-/*
+console.log(myModel.serialize().collections); /*
 > [
     { key: 'pass', value: 789 },
     { key: 'bar', value: 456 },
     { key: 'qwerty', value: 1 },
     { key: 'new_key', value: 3 },
     { key: 'N3W_K3Y', value: 4 }
-]
-*/
+] */
 ```
+
+## Options
+
+### Global options
+
+```javascript
+'use strict';
+
+const Fractale = require('fractale');
+
+Fractale.setOptions({
+    moment: true, // Specify to fractale to transform date to moment instance. Default: false
+});
+```
+
+### Field options
+
+```javascript
+'use strict';
+
+const Fractale = require('fractale');
+
+const Child = Fractale.create('Child', {
+    mixed: undefined,
+    boolean: Boolean,
+    number: Number,
+    string: String,
+});
+
+const Parent = Fractale.create('Parent', Child, {
+    parent: Fractale.with(Fractale.SELF, {
+        // Pass number of parent to number of great-parent
+        through: ['number'],
+    }),
+    children: [
+        Fractale.with(Child, {
+            // Pass number of parent to mixed of child
+            // Pass string of parent to string of child
+            through: { number: 'mixed', string: 'string' },
+        })      
+    ],
+});
+```
+
+### Field validators
+
+```javascript
+'use strict';
+
+const Fractale = require('fractale');
+
+const Simple = Fractale.create('Simple', {
+    anyway: Fractale.with(undefined, {
+        validator: (value) => value !== 'Yolo'
+    }),
+    mixed: Fractale.with(undefined, {
+        validator: {
+            in: ['foo', 'bar', 42]
+        }
+    }),
+    numeric: Fractale.with(Number || Date, {
+        validator: {
+            gt: 17,
+            gte: 18,
+            lt: 51,
+            lte: 50,
+            between: [18, 50]
+        }
+    }),
+    string: Fractale.with(String, {
+        validator: {
+            like: /bar$/
+        }
+    }),
+});
+```
+
+# Dependencies
+
+Fractale use [uuid](https://www.npmjs.com/package/uuid) to generate a unique id for model instances.
+Fractale use [moment.js](https://momentjs.com/docs/) for date validation.
 
 # License
 

@@ -142,7 +142,7 @@ resolve(game.serialize());
 ```
 
 {
-    "uuid": "b4f89947-af93-48a2-aec1-cb5654fdbd14",
+    "uuid": "df43d906-0ac6-405f-af48-d76e878abc55",
     "name": "The ultimate game",
     "characters": [
         {
@@ -154,12 +154,12 @@ resolve(game.serialize());
                     ]
                 }
             },
-            "_uuid": "10b770bd-93f7-4d2f-acb5-b5c983af38bf",
+            "_uuid": "1b2e9e9e-8485-485d-a441-7e62652b4ac7",
             "_props": {
                 "_name": "Toto",
                 "_dashes": [],
-                "_stand": "fc9a75cd-835c-46a3-b17f-c1936af97dc4",
-                "_move": "fb7274ae-e8d0-4fbc-b736-76a91c395f16"
+                "_stand": "2b876300-7f63-43e1-a139-7debddbd5856",
+                "_move": "dbb678dc-2a59-4461-ac86-cc54ee4a6bce"
             }
         },
         {
@@ -171,12 +171,12 @@ resolve(game.serialize());
                     ]
                 }
             },
-            "_uuid": "00cd83a9-b3d0-4e66-88cf-e180a5da15af",
+            "_uuid": "d7f772f2-303e-42d4-9fe6-eae839ea503e",
             "_props": {
                 "_name": "Toto",
                 "_dashes": [],
-                "_stand": "adfc3a55-7924-48af-9c61-977ed40e82d9",
-                "_move": "70481998-86af-4860-9c67-515bbfabab4c"
+                "_stand": "c82635f0-5b91-44d2-b2bf-586385b9a837",
+                "_move": "edab5e3c-4fb4-4bc0-99f4-e920d9b93b34"
             }
         },
         {
@@ -188,12 +188,12 @@ resolve(game.serialize());
                     ]
                 }
             },
-            "_uuid": "c238321c-dd44-4b92-bab6-86e4ed17a3be",
+            "_uuid": "50d1cca8-16a3-4c04-90c6-e05da2d4ca6b",
             "_props": {
                 "_name": "Toto",
                 "_dashes": [],
-                "_stand": "3c60a942-98a2-4e53-abf9-604637bd644e",
-                "_move": "fa72098a-34cb-4861-980e-059bb3b35abc"
+                "_stand": "78c208cc-0974-46d5-98bc-fe1ca80a03e5",
+                "_move": "b9394f84-9f0a-49de-8e5f-63428692e5fe"
             }
         },
         {
@@ -205,12 +205,12 @@ resolve(game.serialize());
                     ]
                 }
             },
-            "_uuid": "c2c0967f-f933-466d-99b2-39c744f6e04c",
+            "_uuid": "82b8d50d-ddfa-4621-af90-8791e59edfff",
             "_props": {
                 "_name": "Toto",
                 "_dashes": [],
-                "_stand": "f1954fcf-d0fc-49b7-a122-1afd6a32a4a5",
-                "_move": "4983b5f8-36ad-454e-a84a-de43659691b1"
+                "_stand": "aed39b45-ca7d-49f6-adb3-7bf491cb7844",
+                "_move": "07a3962d-13f8-4d71-b659-ef8eef5da2ac"
             }
         },
         {
@@ -222,12 +222,12 @@ resolve(game.serialize());
                     ]
                 }
             },
-            "_uuid": "d50b5c65-60ff-450d-9264-3bf35c4c28d5",
+            "_uuid": "5ad01490-a4fa-419c-8ed0-44e00f2ee5a8",
             "_props": {
                 "_name": "Toto",
                 "_dashes": [],
-                "_stand": "0eadca95-3ea8-4062-b8b5-f64663608d4d",
-                "_move": "d46a2174-2b30-4aa8-9ff9-80a9bc08da87"
+                "_stand": "52bb061d-547f-45a7-86a9-7ff40cfd7f7d",
+                "_move": "d607ca8d-dcb5-48a7-827a-7dce22073ec0"
             }
         },
         {
@@ -239,12 +239,12 @@ resolve(game.serialize());
                     ]
                 }
             },
-            "_uuid": "f1d2ae79-681d-419b-8390-7ebe1da14c3c",
+            "_uuid": "47d42ca6-beba-4bd0-bf72-1bd5e6f43467",
             "_props": {
                 "_name": "Toto",
                 "_dashes": [],
-                "_stand": "88b5b31e-dc31-4a51-94d5-ceea7f32014a",
-                "_move": "646319eb-0b7f-4635-b9f5-964b3774904f"
+                "_stand": "bbb14fab-d744-4621-ada2-d400048dd79b",
+                "_move": "e4c95679-c358-421e-a2e2-891f5653f55e"
             }
         },
         {
@@ -256,12 +256,12 @@ resolve(game.serialize());
                     ]
                 }
             },
-            "_uuid": "e23c6172-a422-4d7e-952f-7a7b63a6c424",
+            "_uuid": "722deeb2-4234-45fa-96f7-b7b4010e49c7",
             "_props": {
                 "_name": "Toto",
                 "_dashes": [],
-                "_stand": "a61c3962-cce9-4dbe-9bbb-d840ec4cab4d",
-                "_move": "dcf8adea-2cb5-4112-8eb7-4eb505e21066"
+                "_stand": "074576f5-345e-4f4b-a4e9-94c46d5088ed",
+                "_move": "50e96443-c473-4f66-a4c2-4abd43a5d1bc"
             }
         },
         {
@@ -273,12 +273,12 @@ resolve(game.serialize());
                     ]
                 }
             },
-            "_uuid": "dc769d49-1365-4dbc-9249-214643d743ce",
+            "_uuid": "5bc549a6-440b-496c-8c62-a02955bd7bd6",
             "_props": {
                 "_name": "Toto",
                 "_dashes": [],
-                "_stand": "5f90b1fb-e1f5-4bcc-9bed-fe7b452c9649",
-                "_move": "647401d3-983d-4b11-a63f-956dfa550767"
+                "_stand": "8cda655c-f4fa-48e3-8ca7-7eabe010b581",
+                "_move": "3660c8d8-ccc5-4111-8498-d35a8baa3cb2"
             }
         },
         {
@@ -290,12 +290,12 @@ resolve(game.serialize());
                     ]
                 }
             },
-            "_uuid": "a15f8219-65a4-43b5-8f45-cf977506a025",
+            "_uuid": "1d5223a6-5985-4d16-b613-1ff1067f5e39",
             "_props": {
                 "_name": "Toto",
                 "_dashes": [],
-                "_stand": "4bb2da31-c9f3-4cc5-bb5b-b4adaff53230",
-                "_move": "5c42ee8e-293d-48b1-9201-143dc0bcd1ad"
+                "_stand": "5f8d5df4-1d09-4483-a215-a2bfa26ebca4",
+                "_move": "f65ca350-44c7-4efc-8c0f-14c329b613e2"
             }
         },
         {
@@ -307,12 +307,12 @@ resolve(game.serialize());
                     ]
                 }
             },
-            "_uuid": "f06a7c34-ec27-42d3-a59d-2271ac3cce68",
+            "_uuid": "452018e5-2e55-41b7-81c8-e08086935ada",
             "_props": {
                 "_name": "Toto",
                 "_dashes": [],
-                "_stand": "71b30088-a429-442b-8270-a5ae533b4365",
-                "_move": "f4b889e6-ea5c-4be0-9daf-e03d9253dd58"
+                "_stand": "0046219e-3540-45c1-b5c4-d5240d5a4ab9",
+                "_move": "d10d0d23-f04e-43e9-9ca7-906e37ec387f"
             }
         },
         {
@@ -324,12 +324,12 @@ resolve(game.serialize());
                     ]
                 }
             },
-            "_uuid": "379a3217-f5ae-4e54-92e2-d21533797831",
+            "_uuid": "131b80f9-7ad8-4381-b421-c0cd9deec1da",
             "_props": {
                 "_name": "Toto",
                 "_dashes": [],
-                "_stand": "dc89d420-12b2-48bf-b7ca-f175bd2829ba",
-                "_move": "880505a1-ad04-497f-bfb5-811667c56d62"
+                "_stand": "ff16ec26-90cb-4a66-996a-4602dcb4ea98",
+                "_move": "5b6d48f6-e961-465d-b754-5cdd42daf9de"
             }
         },
         {
@@ -341,12 +341,12 @@ resolve(game.serialize());
                     ]
                 }
             },
-            "_uuid": "684aff3b-f723-412e-9f07-d424369d2fe6",
+            "_uuid": "438efc24-7539-498b-9a9d-033e76dd92fa",
             "_props": {
                 "_name": "Toto",
                 "_dashes": [],
-                "_stand": "7d1920dd-7693-4094-8114-d13e9162324b",
-                "_move": "53d8c8ba-6faf-4ddc-91ca-8bce72f57959"
+                "_stand": "09caaf8e-e274-40ac-8daa-ff9151ca70e6",
+                "_move": "34253e35-738b-44e5-a17b-ee5b3bd45edd"
             }
         }
     ]

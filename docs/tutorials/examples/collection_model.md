@@ -123,7 +123,7 @@ resolve(library.serialize());
 ```
 
 {
-    "uuid": "dd233bc1-2564-4283-98f6-dfed641ce8b6",
+    "uuid": "8aa7abed-9a3b-4ec6-a1b8-e5c04a98ca8f",
     "books": [
         {
             "__events": {
@@ -134,9 +134,9 @@ resolve(library.serialize());
                     ]
                 }
             },
-            "_uuid": "6892c392-1873-42af-b942-3d1058f5c393",
+            "_uuid": "988948c9-a590-4bcb-b963-5cfbdefce5cd",
             "_props": {
-                "_author": "9103dfe9-9f7b-4bf4-8661-466d558768bc",
+                "_author": "f15c042a-f81b-4194-b8dd-80fccb76c456",
                 "_title": "Tenjo tenge",
                 "_chapters": []
             }
@@ -150,9 +150,9 @@ resolve(library.serialize());
                     ]
                 }
             },
-            "_uuid": "bb50d61d-81c7-4b59-839f-9d85c927b7b9",
+            "_uuid": "42e77493-dce7-40c1-888f-50a211ff691f",
             "_props": {
-                "_author": "9103dfe9-9f7b-4bf4-8661-466d558768bc",
+                "_author": "f15c042a-f81b-4194-b8dd-80fccb76c456",
                 "_title": "Biorg trinity",
                 "_chapters": []
             }

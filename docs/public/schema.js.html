@@ -225,7 +225,9 @@ class Field {
     }
 
     setOptions(options = {}) {
-        Object.assign(this.options, options);
+        Object.assign(this.options, options, {
+            validator: Object.assign({}, this.options.validator, options.validator),
+        });
     }
 
     toJSON() {

@@ -105,6 +105,7 @@ const Model = require('./model');
 class Fractale {
     constructor() {
         this.create = factory.createModel.bind(factory);
+        this.options = {};
         this.get = library.get.bind(library);
         this.from = name => () => this.get(name);
         this.validate = factory.constructor.validate.bind(factory);
@@ -126,6 +127,22 @@ class Fractale {
 
         const deps = Model.getDependencies(model);
         return [].concat(Model.stringify(model, space), Object.values(deps).reverse().map(model => Model.stringify(model, space))).reverse().join("\n\n");
+    }
+
+    getOption(name) {
+        return this.options[name];
+    }
+
+    setOption(name, value) {
+        this.options[name] = value;
+    }
+
+    setOptions(options = {}) {
+        for (const key in options) {
+            if (options.hasOwnProperty(key)) {
+                this.setOption(key, options[key]);
+            }
+        }
     }
 }
 

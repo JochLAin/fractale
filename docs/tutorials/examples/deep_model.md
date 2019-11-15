@@ -99,7 +99,7 @@ resolve(program.serialize());
 ```
 
 {
-    "uuid": "e834b16b-33ea-4b0e-a202-7c9239010057",
+    "uuid": "0734a97a-756c-4fc9-a25b-efa732384261",
     "classes": [
         {
             "__events": {
@@ -110,16 +110,16 @@ resolve(program.serialize());
                     ]
                 }
             },
-            "_uuid": "c3d4ca12-b407-4d67-9f51-a2417bc77180",
+            "_uuid": "e1756276-ed42-4e74-85a4-25ecf46887a1",
             "_props": {
                 "_uses": [],
                 "_name": "A",
                 "_properties": [
-                    "c5a5c997-3b57-47f9-ab90-36593256a522"
+                    "eea1a434-635c-4f0a-819e-a438cabaecbc"
                 ],
                 "_methods": [
-                    "78a231da-0c05-4adc-976e-d6b4bc362989",
-                    "477238c0-d014-4626-81fa-e32e04f8494a"
+                    "9d65bba0-26cd-49e0-9116-5467c1c42b72",
+                    "223c7ec8-620d-47cb-b8dd-3d232ba077e4"
                 ]
             }
         },
@@ -132,16 +132,16 @@ resolve(program.serialize());
                     ]
                 }
             },
-            "_uuid": "dec298f0-3e08-4667-808a-6af0b61eb97c",
+            "_uuid": "6204f13f-67b2-4e4b-af0a-5f92467dded3",
             "_props": {
                 "_uses": [],
                 "_name": "B",
                 "_properties": [
-                    "ff60f8db-504e-4316-9e52-fc88e86d20bf"
+                    "79e20e17-fabf-40e2-a12d-4b2e72908cba"
                 ],
                 "_methods": [
-                    "cf02afd7-a8ea-4768-aaaf-61ceeb2d5c80",
-                    "50eded8c-c329-4ef0-ba9d-bb9bd9e05517"
+                    "356ea5c0-6a85-4c17-b671-47bd09797d33",
+                    "456b3957-3418-4dcf-8fc8-eebb3dc4635c"
                 ]
             }
         },
@@ -154,20 +154,20 @@ resolve(program.serialize());
                     ]
                 }
             },
-            "_uuid": "77fb7f48-f034-42bd-b9ff-18db05cfa962",
+            "_uuid": "493da48e-b1cc-44ef-ab90-118b9206a690",
             "_props": {
                 "_uses": [
-                    "c3d4ca12-b407-4d67-9f51-a2417bc77180",
-                    "dec298f0-3e08-4667-808a-6af0b61eb97c"
+                    "e1756276-ed42-4e74-85a4-25ecf46887a1",
+                    "6204f13f-67b2-4e4b-af0a-5f92467dded3"
                 ],
                 "_name": "C",
-                "_inheritance": "dec298f0-3e08-4667-808a-6af0b61eb97c",
+                "_inheritance": "6204f13f-67b2-4e4b-af0a-5f92467dded3",
                 "_properties": [
-                    "19d70480-9301-4a63-a2ef-68e42f5127fc"
+                    "77e81ae5-7be5-457f-9fab-3474dc1528ba"
                 ],
                 "_methods": [
-                    "20976cff-5e10-424f-a366-1fb8401f3425",
-                    "cd6e9b84-0c98-48b5-8548-3a36da9be6ac"
+                    "d902438d-b562-4e4d-ac26-6c0fb50d490f",
+                    "5d9d4051-0e4b-4caf-9da9-153144c18448"
                 ]
             }
         }

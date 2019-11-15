@@ -81,17 +81,17 @@ resolve(instance.serialize());
 ```
 
 {
-    "uuid": "9a617f00-79ed-42fa-8a76-3e5aa76ed2d3",
+    "uuid": "39e943d5-29cf-40f5-b630-99521ab577f4",
     "string": "Hello world",
     "boards": [
         "Lorem ipsum",
         "Dolores sit amet"
     ],
     "metadata": {
-        "uuid": "5f53ede9-6c90-4e25-83f6-1e9db1043e4d",
+        "uuid": "d8caed09-c2a2-4b02-beab-75424f1660d4",
         "key": "assign",
         "data": {
-            "uuid": "32e0937a-e4a6-4ad2-a9b1-24865248bcc3",
+            "uuid": "dbb746b6-9bb8-45b0-b20f-3ec4a0b47d73",
             "key": "after",
             "value": 12
         }
