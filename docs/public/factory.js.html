@@ -67,7 +67,7 @@
                 <div class="column is-3" id="sidebarNav">
                     <div class="sidebar">
                         <nav>
-                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-collection_model.html">Collection model</a></li><li><a href="tutorial-complex_model.html">Complex model</a></li><li><a href="tutorial-deep_model.html">Deep model</a></li><li><a href="tutorial-form_model.html">Form model</a></li><li><a href="tutorial-inception_model.html">Inception model</a></li><li><a href="tutorial-metadata_model.html">Metadata model</a></li><li><a href="tutorial-self-reference_model.html">Self-reference model</a></li><li><a href="tutorial-simple_model.html">Simple model</a></li></ul><h3>Modules</h3><ul><li><a href="module-Fractale.html">Fractale</a></li></ul><h3>Classes</h3><ul><li><a href="Encyclopedia.html">Encyclopedia</a></li><li><a href="EventListener.html">EventListener</a></li><li><a href="Factory.html">Factory</a></li><li><a href="Library.html">Library</a></li><li><a href="ModelClass.html">ModelClass</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_ModelClass">_ModelClass</a></li></ul></div>
+                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-collection_model.html">Collection model</a></li><li><a href="tutorial-complex_model.html">complex_model</a></li><li><a href="tutorial-deep_model.html">Deep model</a></li><li><a href="tutorial-form_model.html">Form model</a></li><li><a href="tutorial-huge_model.html">Huge model</a></li><li><a href="tutorial-inception_model.html">Inception model</a></li><li><a href="tutorial-inheritance_model.html">Inheritance model</a></li><li><a href="tutorial-metadata_model.html">Metadata model</a></li><li><a href="tutorial-self-reference_model.html">Self-reference model</a></li><li><a href="tutorial-simple_model.html">Simple model</a></li></ul><h3>Classes</h3><ul><li><a href="EventListener.html">EventListener</a></li><li><a href="Factory.html">Factory</a></li><li><a href="Fractale.html">Fractale</a></li><li><a href="Library.html">Library</a></li><li><a href="Model.html">Model</a></li><li><a href="Schema.html">Schema</a></li></ul></div>
                         </nav>
                     </div>
                 </div>
@@ -84,8 +84,12 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>
+            <pre class="prettyprint source linenums"><code>const logger = require('crieur');
 const library = require('./library');
+const PropertyDefiner = require('./property_definers');
+const Schema = require('./schema');
+const memory = require('./memory');
+let Model = require('./model');
 
 /**
  * Create model class
@@ -98,165 +102,128 @@ class Factory {
      * Check if model name is already used
      * @param {String} name - Name of the model
      */
-    static check(name) {
-        if (!name) {
-            throw new Error('You need to pass a name to your model.');
-        }
-        if (library.names.includes(name.toLowerCase())) {
-            throw new Error(`Model with name "${name}" already exists.`);
-        }
+    static validate(name) {
+        return !library.names.includes(name.toLowerCase());
     }
 
-    static override(props, overrider) {
-        return
+    createSchema(name, props, parent) {
+        if (props instanceof Schema) {
+            if (props.parent === parent) {
+                return props;
+            }
+        }
+        return new Schema(name, props, parent);
     }
 
     /**
      * Create a model class
      *
      * @param {String} name - Name of the model
-     * @param {ModelClass} parent - Parent from which the schema is inherited
+     * @param {String|Model} parent - Parent from which the schema is inherited
      * @param {Object} schema - Schema of the model
-     * @param {Boolean} virtual
-     * @returns {ModelClass}
+     * @param {Object} options
+     * @returns {Model}
      */
-    create(name, parent, schema, virtual = false) {
-        Factory.check(name);
-
-        if (typeof parent == 'function') {
-            schema = Object.assign({}, library.get(parent.constructor.name).schema, schema);
-        } else {
-            schema = parent;
+    createModel(name, parent, schema = {}, options = {}) {
+        if (!name) {
+            throw new Error('You need to pass a name to your model.');
+        }
+        if (!Factory.validate(name)) {
+            throw new Error(`Model with name "${name}" already exists.`);
         }
 
-        const Model = require('./index').ModelClass;
-        const Entity = class extends Model {
-            constructor(props = {}, overrider) {
-                const params = Object.assign({},
-                    overrider instanceof Model ? overrider.serialize(false) : overrider,
-                    props instanceof Model ? props.serialize(false) : props
-                );
-                super(params);
-
-                const encyclopedia = library.get(name);
-                const schema = encyclopedia.schema;
-                for (let key in schema) {
-                    if (schema.hasOwnProperty(key)) {
-                        if (key === 'uuid') {
-                            throw new Error('Field "uuid" is automatically set');
-                        }
-
-                        const definer = require('./property_definers').get(this, key, schema[key]);
-                        definer.assign(this, key, schema[key]);
-                        definer.define(this, key, schema[key]);
-                        if (params[key]) {
-                            this.props[key] = params[key];
-                        }
-                    }
-                }
-
-                encyclopedia.memory.load(this.serialize(false));
-                if (!params.uuid) {
-                    encyclopedia.memory.create(this.serialize(false));
-                }
-                this.addEventListener('change', ({ value, previous }) => {
-                    if (value !== previous) {
-                        encyclopedia.memory.update(this.serialize(false));
-                    }
-                });
-
-                return new Proxy(this, {
-                    get(target, property) {
-                        if (typeof property === 'string' &amp;&amp; Object.keys(schema).includes(property)) {
-                            return target.props[property];
-                        }
-                        return target[property];
-                    },
-                    set(target, property, value) {
-                        if (typeof property === 'string' &amp;&amp; Object.keys(schema).includes(property)) {
-                            return target.props[property] = value;
-                        }
-                        return target[property] = value;
-                    }
-                })
+        let model = this.Model;
+        if (typeof parent === 'string') {
+            model = library.get(parent);
+            schema = this.createSchema(name, schema, model.schema);
+        } else if (parent instanceof Function) {
+            if (parent.prototype instanceof Model) {
+                model = library.get(parent.name);
+                schema = this.createSchema(name, schema, parent.schema);
             }
+        } else {
+            options = schema;
+            schema = this.createSchema(name, parent);
+        }
 
-            /**
-             * Serialize schema data
-             *
-             * @param populate
-             * @param depth
-             * @returns {{uuid: *}}
-             */
-            serialize(populate = true, depth = 512) {
-                const single = (instance, schema, key, value) => {
-                    if (!value) return value;
-                    if (value instanceof require('./index').ModelClass) {
-                        if (depth === 0) return value.uuid;
-                        switch (typeof populate) {
-                            case 'function':
-                                return populate(value);
-                            case 'string':
-                            case 'boolean':
-                            default:
-                                return populate ? value.serialize(populate, --depth) : value.uuid;
-                        }
-                    }
-                    return value;
-                };
+        const entity = createEntityClass(name, model, schema);
+        Object.defineProperty(entity, 'entity', { value: entity });
+        Object.defineProperty(entity, 'name', { value: name });
+        Object.defineProperty(entity, 'slug', { value: name.toLowerCase() });
+        Object.defineProperty(entity, 'schema', { value: schema });
+        Object.defineProperty(entity, 'virtual', { value: !!options.virtual });
 
-                const schema = library.get(name).schema;
-                let serialized = { uuid: this.uuid };
-                for (let key in schema) {
-                    if (schema.hasOwnProperty(key)) {
-                        if (Array.isArray(schema[key])) {
-                            serialized[key] = this.props[key].map(value => {
-                                return single(this, schema, key, value)
-                            });
-                        } else {
-                            serialized[key] = single(this, schema, key, this.props[key]);
-                        }
-                    }
-                }
+        const proxy = createProxyEntityClass(entity);
+        Object.defineProperty(entity, 'proxy', { value: proxy });
 
-                return serialized;
-            }
+        const table = memory.createTable(entity);
+        Object.defineProperty(entity, 'memory', { value: table });
 
-            /**
-             * Unserialize schema data
-             *
-             * @param props
-             */
-            unserialize(props) {
-                const schema = library.get(name).schema;
-                if (props.uuid) this._uuid = props.uuid;
-                for (let key in schema) {
-                    if (schema.hasOwnProperty(key) &amp;&amp; props[key]) {
-                        this.props[key] = props[key];
-                    }
-                }
-            }
+        library.add(entity);
+        return proxy;
+    }
 
-            get props() {
-                return this._props;
-            }
+    get Model() {
+        return Model;
+    }
 
-            set props(props) {
-                this.unserialize(props);
-                return props;
-            }
-
-            get uuid() {
-                console
-                return this._uuid;
-            }
-        };
-
-        const entity = Object.defineProperty(Entity, 'name', { value: name });
-        library.fill(name, schema, entity, !!virtual);
-        return entity;
+    set Model(_Model) {
+        if (!(_Model === Model || _Model.prototype instanceof require('./model'))) {
+            throw new Error('Your model class must inherit "Fractale.Model" class');
+        }
+        Model = _Model;
     }
 }
+
+const createEntityClass = (name, Parent, schema) => {
+    return class Entity extends Parent {
+        constructor(props = {}) {
+            const params = props instanceof Model ? props.serialize(false) : props;
+            super(params);
+
+            this.serialize = PropertyDefiner.serialize.bind(null, this);
+            this.deserialize = PropertyDefiner.deserialize.bind(null, this);
+
+            PropertyDefiner.define(this, schema, params);
+        }
+    };
+};
+
+const createProxyEntityClass = (model) => {
+    return new Proxy(model, {
+        construct(target, args) {
+            const entity = new target(...args);
+
+            const memory = entity.constructor.memory;
+            memory.load(entity.serialize(false));
+            entity.addEventListener('change', ({ value, previous }) => {
+                if (value !== previous) {
+                    memory.update(entity.serialize(false));
+                }
+            });
+
+            return new Proxy(entity, {
+                has(target, property) {
+                    return model.schema.keys.includes(property);
+                },
+                get(target, property) {
+                    if (typeof property === 'string' &amp;&amp; model.schema.keys.includes(property)) {
+                        return target.props[property];
+                    }
+                    return target[property];
+                },
+                set(target, property, value) {
+                    if (typeof property === 'string' &amp;&amp; model.schema.keys.includes(property)) {
+                        target.props[property] = value;
+                        return true;
+                    }
+                    target[property] = value;
+                    return true;
+                },
+            });
+        }
+    });
+};
 
 module.exports = new Factory();
 </code></pre>
@@ -275,7 +242,7 @@ module.exports = new Factory();
                 <p>
                     Documentation generated by
                     <a href="https://github.com/jsdoc3/jsdoc">
-                        JSDoc 3.6.2
+                        JSDoc 3.6.3
                     </a>
                 </p>
                 <p class="sidebar-created-by">

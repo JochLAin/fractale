@@ -3,36 +3,32 @@
 ```
 
 const Variable = Fractale.create("Variable", {
-    "name": String,
-    "value": mixed,
-    "static": Boolean,
-    "scope": {
-        "$$__FractaleModel_TYPE_KEY": String,
-        "$$__FractaleModel_OPTIONS_KEY": {
-            "values": [
-                "private",
-                "protected",
-                "public"
-            ]
-        }
-    }
+    name: String,
+    value: undefined,
+    static: Boolean,
+    scope: String
 });
 
 const Method = Fractale.create("Method", {
-    "signature": {
-        "name": String,
-        "properties": [
+    signature: {
+        name: String,
+        variables: [
             Variable
         ]
     },
-    "body": String
+    body: String
 });
 
 const Class = Fractale.create("Class", {
-    "name": String,
-    "inheritance": Fractale.SELF,
-    "variables": Variable,
-    "methods": [
+    uses: [
+        Fractale.SELF
+    ],
+    name: String,
+    inheritance: Fractale.SELF,
+    properties: [
+        Variable
+    ],
+    methods: [
         Method
     ]
 });
@@ -43,41 +39,43 @@ const Class = Fractale.create("Class", {
 
 ```
 
+const _a = new Variable({ name: 'a', value: 0 });
 const a = new Class({
     name: 'A',
-    variables: [
-        {name: 'a', value: 0},
-    ],
+    properties: [_a],
     methods: [
-        {signature: {name: 'getA'}},
-        {signature: {name: 'setA', properties: [{name: 'a'}]}}
+        { signature: { name: 'getA' }},
+        { signature: { name: 'setA', variables: [{ name: 'a' }] }}
     ]
 });
 
 const b = new Class({
     name: 'B',
     inheritance: a,
-    variables: [
-        {name: 'b', value: 0},
+    properties: [
+        { name: 'b', value: 0 },
     ],
     methods: [
-        {signature: {name: 'getB'}},
-        {signature: {name: 'setB', properties: [{name: 'b'}]}}
+        { signature: { name: 'getB' }},
+        { signature: { name: 'setB', variables: [{ name: 'b' }] }}
     ]
 });
 
 const c = new Class({
     name: 'C',
     inheritance: b,
-    variables: [
-        {name: 'c', value: 0},
+    properties: [
+        { name: 'c', value: 0 },
     ],
     methods: [
-        {signature: {name: 'getC'}},
-        {signature: {name: 'setC', properties: [{name: 'c'}]}}
+        { signature: { name: 'getC' }},
+        { signature: { name: 'setC', variables: [{ name: 'c' }] }}
     ]
 });
 
+if (a.properties[0].name !== 'a') {
+    throw new Error('Error on deep accessor variable name');
+}
 if (c.inheritance.name !== 'B') {
     throw new Error('Error on self-reference accessor');
 }
@@ -101,114 +99,155 @@ resolve(c.serialize());
 ```
 
 {
-    "uuid": "cf10a429-a79b-4318-90ab-00b0b9c08606",
+    "uuid": "ee37d84f-c637-4341-be32-f140e4452f4e",
+    "uses": [],
     "name": "C",
     "inheritance": {
-        "uuid": "b9db9ca4-9073-4905-9f6c-69abb569962e",
+        "uuid": "75b1ca18-9030-49d4-b74a-614e6367f841",
+        "uses": [],
         "name": "B",
         "inheritance": {
-            "uuid": "f8b9aec3-192b-4d3a-a4b8-398e29837432",
+            "uuid": "594793c2-969c-4e31-a9f7-0e2ed8473794",
+            "uses": [],
             "name": "A",
-            "inheritance": null,
-            "variables": {
-                "uuid": "f7bc96ca-1b12-408b-89d4-39362a5e0319",
-                "name": null,
-                "static": null,
-                "scope": null
-            },
+            "properties": [
+                {
+                    "__events": {
+                        "change": {
+                            "listeners": [
+                                null,
+                                null
+                            ]
+                        }
+                    },
+                    "_uuid": "4dfa5045-6917-47d6-bbdc-a4ba9f130fd5",
+                    "_props": {
+                        "_name": "a"
+                    }
+                }
+            ],
             "methods": [
                 {
-                    "uuid": "0acd46f8-ccc3-4bae-9f22-46d414033848",
-                    "signature": {
-                        "uuid": "fe3fae11-d06d-47c2-874c-49bcb73429fd",
-                        "name": "getA",
-                        "properties": []
+                    "__events": {
+                        "change": {
+                            "listeners": [
+                                null,
+                                null
+                            ]
+                        }
                     },
-                    "body": null
+                    "_uuid": "90c2ed01-0aad-428f-a7b5-c80358cb09e6",
+                    "_props": {
+                        "_signature": "8637513d-9400-45f7-9fcf-6c5fc99b9125"
+                    }
                 },
                 {
-                    "uuid": "8265200a-6746-4e03-aa3f-58f09fe83678",
-                    "signature": {
-                        "uuid": "ec0914cb-f34e-4d8a-94a8-d523327689ad",
-                        "name": "setA",
-                        "properties": [
-                            {
-                                "uuid": "1d332b3b-94de-41fd-961d-9686f328bfe3",
-                                "name": "a",
-                                "static": null,
-                                "scope": null
-                            }
-                        ]
+                    "__events": {
+                        "change": {
+                            "listeners": [
+                                null,
+                                null
+                            ]
+                        }
                     },
-                    "body": null
+                    "_uuid": "a4795c3c-6678-4ace-bc14-88f2fed9c86a",
+                    "_props": {
+                        "_signature": "925cc8f4-25e4-492c-9654-8247927fe1d9"
+                    }
                 }
             ]
         },
-        "variables": {
-            "uuid": "05762e8b-0b64-4170-99e4-0b8e0629fb14",
-            "name": null,
-            "static": null,
-            "scope": null
-        },
+        "properties": [
+            {
+                "__events": {
+                    "change": {
+                        "listeners": [
+                            null,
+                            null
+                        ]
+                    }
+                },
+                "_uuid": "4a71bbe4-3a84-4ddb-bd10-bfb33cd47088",
+                "_props": {
+                    "_name": "b"
+                }
+            }
+        ],
         "methods": [
             {
-                "uuid": "587560ac-aca9-4d10-8f1f-7a3dac6a6db3",
-                "signature": {
-                    "uuid": "d227d270-c2c2-401e-bb98-c3297886c01f",
-                    "name": "getB",
-                    "properties": []
+                "__events": {
+                    "change": {
+                        "listeners": [
+                            null,
+                            null
+                        ]
+                    }
                 },
-                "body": null
+                "_uuid": "bc18cafe-65d5-45f8-937e-38299c7d7826",
+                "_props": {
+                    "_signature": "e2838d29-d88a-4e57-a33e-ff33d4ed496e"
+                }
             },
             {
-                "uuid": "38502c84-4a9f-4e23-9b05-60f9b94b464e",
-                "signature": {
-                    "uuid": "800befcb-5b31-4c15-abe9-4e4afcaa67af",
-                    "name": "setB",
-                    "properties": [
-                        {
-                            "uuid": "d384acb9-7ad7-4bf3-b015-95d23577796c",
-                            "name": "b",
-                            "static": null,
-                            "scope": null
-                        }
-                    ]
+                "__events": {
+                    "change": {
+                        "listeners": [
+                            null,
+                            null
+                        ]
+                    }
                 },
-                "body": null
+                "_uuid": "1fedc96f-6ecb-4768-938b-7438d7c0e87e",
+                "_props": {
+                    "_signature": "1d594764-17ec-49e0-bc34-a6281e775d6e"
+                }
             }
         ]
     },
-    "variables": {
-        "uuid": "56a734fc-b6b0-453f-8431-326c5fa0a397",
-        "name": null,
-        "static": null,
-        "scope": null
-    },
+    "properties": [
+        {
+            "__events": {
+                "change": {
+                    "listeners": [
+                        null,
+                        null
+                    ]
+                }
+            },
+            "_uuid": "06ea8923-6646-4cb0-a3e4-80a6cc1d613a",
+            "_props": {
+                "_name": "c"
+            }
+        }
+    ],
     "methods": [
         {
-            "uuid": "be18f0fd-2c37-4a1a-8ca5-f09844721afa",
-            "signature": {
-                "uuid": "6ca73e6a-0658-4c33-801c-f3f77082edc6",
-                "name": "getC",
-                "properties": []
+            "__events": {
+                "change": {
+                    "listeners": [
+                        null,
+                        null
+                    ]
+                }
             },
-            "body": null
+            "_uuid": "5e85cac5-7f33-4657-8c53-ba64afbe946e",
+            "_props": {
+                "_signature": "aa1220dd-783d-462f-a3c1-d022cbb50a1b"
+            }
         },
         {
-            "uuid": "cfacdeae-839f-47a0-b4f6-2ead93280cad",
-            "signature": {
-                "uuid": "50af20ad-b2d9-418b-b982-5c541465f139",
-                "name": "setC",
-                "properties": [
-                    {
-                        "uuid": "cae5cd1e-3adf-47c3-a79d-b4b5b2fa9a2a",
-                        "name": "c",
-                        "static": null,
-                        "scope": null
-                    }
-                ]
+            "__events": {
+                "change": {
+                    "listeners": [
+                        null,
+                        null
+                    ]
+                }
             },
-            "body": null
+            "_uuid": "3611ac23-5794-41a4-90ab-9f14a23a3d90",
+            "_props": {
+                "_signature": "8bed472b-544c-413d-a075-f0399f941ebb"
+            }
         }
     ]
 }

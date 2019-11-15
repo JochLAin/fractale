@@ -2,21 +2,21 @@
 
 ```
 
-const Compound = Fractale.create("Compound", {
-    "boards": [
+const Compound = Fractale.create("Compound", Simple, {
+    boards: [
         String
     ],
-    "metadata": {
-        "key": String,
-        "data": {
-            "key": String,
-            "value": mixed
+    metadata: {
+        key: String,
+        data: {
+            key: String,
+            value: undefined
         }
     },
-    "collections": [
+    collections: [
         {
-            "key": String,
-            "value": String
+            key: String,
+            value: String
         }
     ]
 });
@@ -33,26 +33,39 @@ const instance = new Compound({
     metadata: { key: 'Foo', data: { key: 'Bar', value: 12 }}
 });
 
+if (instance.metadata.key !== 'Foo') {
+    throw new DetailedError('Error on metadata accessor', `Expected "Foo" got "${instance.metadata.key}"`);
+}
+
 const metadata = instance.metadata;
 metadata.key = 'decomposition';
 
 if (instance.metadata.key !== 'decomposition') {
-    throw new Error('Error on metadata accessor with decomposition');
+    throw new DetailedError('Error on metadata accessor with decomposition', `Expected "decomposition" got "${instance.metadata.key}"`);
 }
 
 instance.metadata.key = 'dot';
 if (instance.metadata.key !== 'dot') {
-    throw new Error('Error on metadata accessor with dot');
+    throw new DetailedError('Error on metadata accessor with dot', `Expected "dot" got "${instance.metadata.key}"`);
 }
 
 instance.metadata = { key: 'assign' };
 if (instance.metadata.key !== 'assign') {
-    throw new Error('Error on metadata accessor with assign');
+    throw new DetailedError('Error on metadata accessor with assign', `Expected "assign" got "${instance.metadata.key}"`);
+}
+if (instance.metadata.data.key !== 'Bar') {
+    throw new DetailedError('Error on metadata accessor with assign', `Expected "Bar" got "${instance.metadata.data.key}"`);
 }
 
-instance.metadata = { data: { key: 'after', value: 'after' } };
-if (instance.metadata.key !== 'assign' || instance.metadata.data.key !== 'after') {
-    throw new Error('Error on metadata accessor with bracket');
+instance.metadata = { data: { key: 'after' } };
+if (instance.metadata.key !== 'assign') {
+    throw new DetailedError('Error on metadata accessor with bracket', `Expected "assign" got "${instance.metadata.key}"`);
+}
+if (instance.metadata.data.key !== 'after') {
+    throw new DetailedError('Error on metadata accessor with bracket', `Expected "after" got "${instance.metadata.data.key}"`);
+}
+if (instance.metadata.data.value !== 12) {
+    throw new DetailedError('Error on metadata accessor with bracket', `Expected "12" got "${instance.metadata.data.value}"`);
 }
 
 if (!instance.serialize()) {
@@ -68,18 +81,19 @@ resolve(instance.serialize());
 ```
 
 {
-    "uuid": "33fac384-bae4-4b39-8501-b0e85f19b775",
+    "uuid": "9a617f00-79ed-42fa-8a76-3e5aa76ed2d3",
+    "string": "Hello world",
     "boards": [
         "Lorem ipsum",
         "Dolores sit amet"
     ],
     "metadata": {
-        "uuid": "7d329da3-8da6-4e78-9f1c-432d95b3e334",
+        "uuid": "5f53ede9-6c90-4e25-83f6-1e9db1043e4d",
         "key": "assign",
         "data": {
-            "uuid": "67ba6156-aae7-483b-a2ca-fb405549caec",
+            "uuid": "32e0937a-e4a6-4ad2-a9b1-24865248bcc3",
             "key": "after",
-            "value": "after"
+            "value": 12
         }
     },
     "collections": []

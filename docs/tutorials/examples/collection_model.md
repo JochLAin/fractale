@@ -2,35 +2,35 @@
 
 ```
 
-const Author = Fractale.create("Author", {
-    "firstname": String,
-    "lastname": String,
-    "surname": String,
-    "comment": String
-});
-
-const Page = Fractale.create("Page", {
-    "title": String,
-    "content": String
-});
-
-const Chapter = Fractale.create("Chapter", {
-    "pages": [
-        Page
-    ]
-});
-
 const Book = Fractale.create("Book", {
-    "author": Author,
-    "readable": Boolean,
-    "title": String,
-    "chapters": [
+    author: Author,
+    readable: Boolean,
+    title: String,
+    chapters: [
         Chapter
     ]
 });
 
+const Author = Fractale.create("Author", {
+    firstname: String,
+    lastname: String,
+    surname: String,
+    comment: String
+});
+
+const Chapter = Fractale.create("Chapter", {
+    pages: [
+        Page
+    ]
+});
+
+const Page = Fractale.create("Page", {
+    title: String,
+    content: String
+});
+
 const Library = Fractale.create("Library", {
-    "books": [
+    books: [
         Book
     ]
 });
@@ -48,32 +48,66 @@ const author = new Author({
     comment: 'N/A',
 });
 
-const library = new Library({
-    books: [{
-        title: 'Air gear',
-        readable: true,
-        author: author,
-    }, {
-        title: 'Tenjo tenge',
-        readable: true,
-        author: author,
-    }]
-});
-
-library.books.push({
-    title: 'Biorg trinity',
+const book = new Book({
+    title: 'Air gear',
     readable: true,
     author: author,
 });
 
+const library = new Library({
+    books: [book, {
+        title: 'Tenjo tenge',
+        readable: false,
+        author: author,
+    }]
+});
+
 if (library.books[0].title !== 'Air gear') {
+    throw new DetailedError('Error on collection accessor with brace', `Expected "Air gear" got "${library.books[0].title}"`);
+}
+if (library.books[1].title !== 'Tenjo tenge') {
+    throw new DetailedError('Error on collection accessor with brace', `Expected "Tenjo tenge" got "${library.books[1].title}"`);
+}
+
+let changed = false;
+library.addEventListener('change', () => changed = true);
+library.books[0].title = 'Bakemonogatari';
+
+if (!changed) {
+    throw new Error('Error on collection change event');
+}
+if (library.books[0].title !== 'Bakemonogatari') {
     throw new Error('Error on collection accessor with brace');
 }
-if (library.props.book(1).title !== 'Tenjo tenge') {
-    throw new Error('Error on collection accessor with function singular');
+if (library.books.first.title !== 'Bakemonogatari') {
+    throw new Error('Error on array method first accessor');
 }
-if (library.books.last().title !== 'Biorg trinity') {
-    throw new Error('Error on array methods accessor');
+
+library.books.push({
+    title: 'Biorg trinity',
+    readable: false,
+    author: author,
+});
+
+if (library.books.last.title !== 'Biorg trinity') {
+    throw new Error('Error on array method last accessor');
+}
+
+if (library.books.map(book => book.title).join(', ') !== 'Bakemonogatari, Tenjo tenge, Biorg trinity') {
+    throw new Error('Error on array method map accessor');
+}
+
+if (library.books.filter(book => book.readable).map(book => book.title).join(', ') !== 'Bakemonogatari') {
+    throw new Error('Error on array method filter accessor');
+}
+
+if (library.books.reduce((accu, book) => `${accu} ${book.title}`, '').trim() !== 'Bakemonogatari Tenjo tenge Biorg trinity') {
+    throw new Error('Error on array method reduce accessor');
+}
+
+library.books.remove(book);
+if (library.books.length !== 2) {
+    throw new Error('Error on array method remove accessor');
 }
 
 if (!library.serialize()) {
@@ -89,46 +123,39 @@ resolve(library.serialize());
 ```
 
 {
-    "uuid": "50779260-03d2-4815-b034-f7fe29ac6779",
+    "uuid": "dd233bc1-2564-4283-98f6-dfed641ce8b6",
     "books": [
         {
-            "uuid": "c1b4c5c2-4d92-48e2-880c-7418b08600cd",
-            "author": {
-                "uuid": "d4d2f43e-f6cc-4e62-950f-1b8dea68dbb1",
-                "firstname": "Ito",
-                "lastname": "Ōgure",
-                "surname": "Oh! Great",
-                "comment": "N/A"
+            "__events": {
+                "change": {
+                    "listeners": [
+                        null,
+                        null
+                    ]
+                }
             },
-            "readable": true,
-            "title": "Air gear",
-            "chapters": []
+            "_uuid": "6892c392-1873-42af-b942-3d1058f5c393",
+            "_props": {
+                "_author": "9103dfe9-9f7b-4bf4-8661-466d558768bc",
+                "_title": "Tenjo tenge",
+                "_chapters": []
+            }
         },
         {
-            "uuid": "be9a1ef3-2c48-48a2-83fb-90c7a4a590be",
-            "author": {
-                "uuid": "d4d2f43e-f6cc-4e62-950f-1b8dea68dbb1",
-                "firstname": "Ito",
-                "lastname": "Ōgure",
-                "surname": "Oh! Great",
-                "comment": "N/A"
+            "__events": {
+                "change": {
+                    "listeners": [
+                        null,
+                        null
+                    ]
+                }
             },
-            "readable": true,
-            "title": "Tenjo tenge",
-            "chapters": []
-        },
-        {
-            "uuid": "5f843c33-eaa6-4602-9429-0ebfc7defbbe",
-            "author": {
-                "uuid": "d4d2f43e-f6cc-4e62-950f-1b8dea68dbb1",
-                "firstname": "Ito",
-                "lastname": "Ōgure",
-                "surname": "Oh! Great",
-                "comment": "N/A"
-            },
-            "readable": true,
-            "title": "Biorg trinity",
-            "chapters": []
+            "_uuid": "bb50d61d-81c7-4b59-839f-9d85c927b7b9",
+            "_props": {
+                "_author": "9103dfe9-9f7b-4bf4-8661-466d558768bc",
+                "_title": "Biorg trinity",
+                "_chapters": []
+            }
         }
     ]
 }

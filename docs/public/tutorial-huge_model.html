@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        
+        <meta charset="utf-8">
+        <title>Fractale: Huge model</title>
+
+        <script src="scripts/prettify/prettify.js"></script>
+        <script src="scripts/prettify/lang-css.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <!--[if lt IE 9]>
+        <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css?family=Muli:100,400,700|Oswald:300|Inconsolata,700" rel="stylesheet">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+              integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+        <link type="text/css" rel="stylesheet"
+              href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+        <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+        <link type="text/css" rel="stylesheet" href="styles/custom.min.css">
+    </head>
+
+    <body>
+        <div id="stickyNavbarOverlay"></div>
+        <div class="top-navbar">
+            <div class="container">
+                <nav class="navbar" role="navigation" aria-label="main navigation">
+                    <div class="navbar-brand">
+                        
+                            <a href="index.html" style="display: flex;">
+                                <img src="images/logo.svg" alt="logo">
+                                
+                                    <h1 class="navbar-item">Fractale Documentation</h1>
+                                
+                            </a>
+                        
+                        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                            <span aria-hidden="true"></span>
+                            <span aria-hidden="true"></span>
+                            <span aria-hidden="true"></span>
+                        </a>
+                    </div>
+                    
+                        <div class="navbar-menu">
+                            <div class="navbar-end">
+                                
+                                <div class="navbar-item">
+                                    <a href="https://www.npmjs.com/package/fractale" target="_blank">NPM</a>
+                                </div>
+                                
+                                <div class="navbar-item">
+                                    <a href="https://github.com/JochLAin/fractale" target="_blank">Github</a>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    
+                </nav>
+            </div>
+        </div>
+        <div class="container">
+            <div class="columns">
+                <div class="column is-3" id="sidebarNav">
+                    <div class="sidebar">
+                        <nav>
+                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-collection_model.html">Collection model</a></li><li><a href="tutorial-complex_model.html">complex_model</a></li><li><a href="tutorial-deep_model.html">Deep model</a></li><li><a href="tutorial-form_model.html">Form model</a></li><li><a href="tutorial-huge_model.html">Huge model</a></li><li><a href="tutorial-inception_model.html">Inception model</a></li><li><a href="tutorial-inheritance_model.html">Inheritance model</a></li><li><a href="tutorial-metadata_model.html">Metadata model</a></li><li><a href="tutorial-self-reference_model.html">Self-reference model</a></li><li><a href="tutorial-simple_model.html">Simple model</a></li></ul><h3>Classes</h3><ul><li><a href="EventListener.html">EventListener</a></li><li><a href="Factory.html">Factory</a></li><li><a href="Fractale.html">Fractale</a></li><li><a href="Library.html">Library</a></li><li><a href="Model.html">Model</a></li><li><a href="Schema.html">Schema</a></li></ul></div>
+                        </nav>
+                    </div>
+                </div>
+                <div class="column is-9-desktop">
+                    <div class="content" id="main-content-wrapper">
+                        <header class="page-title">
+                            <p>Tutorial</p>
+                            <h1>Huge model</h1>
+                        </header>
+                        <section>
+
+<header>
+    
+</header>
+
+<article>
+    <article class="mb-4"><a href="#models" class="border border-1" data-toggle="collapse">Models used for examples</a><div id="models" class="border border-1 collapse">
+<pre class="prettyprint source"><code>
+const Character = Fractale.create(&quot;Character&quot;, {
+    name: String,
+    preview: Sprite,
+    dashes: [
+        Sprite
+    ],
+    stand: {
+        bottom: Sprite,
+        left: Sprite,
+        right: Sprite,
+        top: Sprite
+    },
+    move: {
+        bottom: Sprite,
+        left: Sprite,
+        right: Sprite,
+        top: Sprite
+    }
+});
+
+const Sprite = Fractale.create(&quot;Sprite&quot;, {
+    frames: [
+        Frame
+    ],
+    height: Number,
+    width: Number
+});
+
+const Frame = Fractale.create(&quot;Frame&quot;, {
+    layers: [
+        Layer
+    ],
+    height: Number,
+    width: Number
+});
+
+const Layer = Fractale.create(&quot;Layer&quot;, {
+    pixels: [
+        String
+    ],
+    height: Number,
+    width: Number
+});
+
+const Game = Fractale.create(&quot;Game&quot;, {
+    name: String,
+    type: String,
+    characters: [
+        Character
+    ]
+});
+
+</code></pre>
+</div></article>
+<pre class="prettyprint source"><code>
+const PIXELS = [
+    '#000000', '#000111', '#000222', '#000333', '#000444', '#000555', '#000666', '#000777', '#000888', '#000999',
+    '#111000', '#111111', '#111222', '#111333', '#111444', '#111555', '#111666', '#111777', '#111888', '#111999',
+    '#222000', '#222111', '#222222', '#222333', '#222444', '#222555', '#222666', '#222777', '#222888', '#222999',
+    '#333000', '#333111', '#333222', '#333333', '#333444', '#333555', '#333666', '#333777', '#333888', '#333999',
+    '#444000', '#444111', '#444222', '#444333', '#444444', '#444555', '#444666', '#444777', '#444888', '#444999',
+    '#555000', '#555111', '#555222', '#555333', '#555444', '#555555', '#555666', '#555777', '#555888', '#555999',
+    '#666000', '#666111', '#666222', '#666333', '#666444', '#666555', '#666666', '#666777', '#666888', '#666999',
+    '#777000', '#777111', '#777222', '#777333', '#777444', '#777555', '#777666', '#777777', '#777888', '#777999',
+    '#888000', '#888111', '#888222', '#888333', '#888444', '#888555', '#888666', '#888777', '#888888', '#888999',
+    '#999000', '#999111', '#999222', '#999333', '#999444', '#999555', '#999666', '#999777', '#999888', '#999999',
+];
+
+const SPRITE = {
+    height: 10,
+    width: 10,
+    frames: [{
+        layers: [
+            { pixels: PIXELS },
+            { pixels: PIXELS },
+            { pixels: PIXELS },
+            { pixels: PIXELS },
+            { pixels: PIXELS },
+            { pixels: PIXELS }
+        ]
+    }]
+};
+
+const CHARACTER = {
+    name: 'Toto',
+    move: {
+        bottom: SPRITE,
+        left: SPRITE,
+        right: SPRITE,
+        top: SPRITE,
+    },
+    stand: {
+        bottom: SPRITE,
+        left: SPRITE,
+        right: SPRITE,
+        top: SPRITE,
+    },
+};
+
+const game = new Game({
+    name: 'The ultimate game',
+    characters: [
+        CHARACTER,
+        CHARACTER,
+        CHARACTER,
+        CHARACTER,
+        CHARACTER,
+        CHARACTER,
+        CHARACTER,
+        CHARACTER,
+        CHARACTER,
+        CHARACTER,
+        CHARACTER,
+        CHARACTER
+    ]
+});
+
+const character = game.characters[0];
+const frame = character.move.bottom.frames[0];
+const layer = frame.layers[0];
+if (layer.pixel(3) !== '#000333') {
+    throw new Error('Error on huge accessor');
+}
+
+if (!game.serialize()) {
+    throw new Error('Error on huge serialize');
+}
+
+resolve(game.serialize());
+
+</code></pre>
+<h3>Results</h3>
+<pre class="prettyprint source"><code>
+{
+    &quot;uuid&quot;: &quot;b4f89947-af93-48a2-aec1-cb5654fdbd14&quot;,
+    &quot;name&quot;: &quot;The ultimate game&quot;,
+    &quot;characters&quot;: [
+        {
+            &quot;__events&quot;: {
+                &quot;change&quot;: {
+                    &quot;listeners&quot;: [
+                        null,
+                        null
+                    ]
+                }
+            },
+            &quot;_uuid&quot;: &quot;10b770bd-93f7-4d2f-acb5-b5c983af38bf&quot;,
+            &quot;_props&quot;: {
+                &quot;_name&quot;: &quot;Toto&quot;,
+                &quot;_dashes&quot;: [],
+                &quot;_stand&quot;: &quot;fc9a75cd-835c-46a3-b17f-c1936af97dc4&quot;,
+                &quot;_move&quot;: &quot;fb7274ae-e8d0-4fbc-b736-76a91c395f16&quot;
+            }
+        },
+        {
+            &quot;__events&quot;: {
+                &quot;change&quot;: {
+                    &quot;listeners&quot;: [
+                        null,
+                        null
+                    ]
+                }
+            },
+            &quot;_uuid&quot;: &quot;00cd83a9-b3d0-4e66-88cf-e180a5da15af&quot;,
+            &quot;_props&quot;: {
+                &quot;_name&quot;: &quot;Toto&quot;,
+                &quot;_dashes&quot;: [],
+                &quot;_stand&quot;: &quot;adfc3a55-7924-48af-9c61-977ed40e82d9&quot;,
+                &quot;_move&quot;: &quot;70481998-86af-4860-9c67-515bbfabab4c&quot;
+            }
+        },
+        {
+            &quot;__events&quot;: {
+                &quot;change&quot;: {
+                    &quot;listeners&quot;: [
+                        null,
+                        null
+                    ]
+                }
+            },
+            &quot;_uuid&quot;: &quot;c238321c-dd44-4b92-bab6-86e4ed17a3be&quot;,
+            &quot;_props&quot;: {
+                &quot;_name&quot;: &quot;Toto&quot;,
+                &quot;_dashes&quot;: [],
+                &quot;_stand&quot;: &quot;3c60a942-98a2-4e53-abf9-604637bd644e&quot;,
+                &quot;_move&quot;: &quot;fa72098a-34cb-4861-980e-059bb3b35abc&quot;
+            }
+        },
+        {
+            &quot;__events&quot;: {
+                &quot;change&quot;: {
+                    &quot;listeners&quot;: [
+                        null,
+                        null
+                    ]
+                }
+            },
+            &quot;_uuid&quot;: &quot;c2c0967f-f933-466d-99b2-39c744f6e04c&quot;,
+            &quot;_props&quot;: {
+                &quot;_name&quot;: &quot;Toto&quot;,
+                &quot;_dashes&quot;: [],
+                &quot;_stand&quot;: &quot;f1954fcf-d0fc-49b7-a122-1afd6a32a4a5&quot;,
+                &quot;_move&quot;: &quot;4983b5f8-36ad-454e-a84a-de43659691b1&quot;
+            }
+        },
+        {
+            &quot;__events&quot;: {
+                &quot;change&quot;: {
+                    &quot;listeners&quot;: [
+                        null,
+                        null
+                    ]
+                }
+            },
+            &quot;_uuid&quot;: &quot;d50b5c65-60ff-450d-9264-3bf35c4c28d5&quot;,
+            &quot;_props&quot;: {
+                &quot;_name&quot;: &quot;Toto&quot;,
+                &quot;_dashes&quot;: [],
+                &quot;_stand&quot;: &quot;0eadca95-3ea8-4062-b8b5-f64663608d4d&quot;,
+                &quot;_move&quot;: &quot;d46a2174-2b30-4aa8-9ff9-80a9bc08da87&quot;
+            }
+        },
+        {
+            &quot;__events&quot;: {
+                &quot;change&quot;: {
+                    &quot;listeners&quot;: [
+                        null,
+                        null
+                    ]
+                }
+            },
+            &quot;_uuid&quot;: &quot;f1d2ae79-681d-419b-8390-7ebe1da14c3c&quot;,
+            &quot;_props&quot;: {
+                &quot;_name&quot;: &quot;Toto&quot;,
+                &quot;_dashes&quot;: [],
+                &quot;_stand&quot;: &quot;88b5b31e-dc31-4a51-94d5-ceea7f32014a&quot;,
+                &quot;_move&quot;: &quot;646319eb-0b7f-4635-b9f5-964b3774904f&quot;
+            }
+        },
+        {
+            &quot;__events&quot;: {
+                &quot;change&quot;: {
+                    &quot;listeners&quot;: [
+                        null,
+                        null
+                    ]
+                }
+            },
+            &quot;_uuid&quot;: &quot;e23c6172-a422-4d7e-952f-7a7b63a6c424&quot;,
+            &quot;_props&quot;: {
+                &quot;_name&quot;: &quot;Toto&quot;,
+                &quot;_dashes&quot;: [],
+                &quot;_stand&quot;: &quot;a61c3962-cce9-4dbe-9bbb-d840ec4cab4d&quot;,
+                &quot;_move&quot;: &quot;dcf8adea-2cb5-4112-8eb7-4eb505e21066&quot;
+            }
+        },
+        {
+            &quot;__events&quot;: {
+                &quot;change&quot;: {
+                    &quot;listeners&quot;: [
+                        null,
+                        null
+                    ]
+                }
+            },
+            &quot;_uuid&quot;: &quot;dc769d49-1365-4dbc-9249-214643d743ce&quot;,
+            &quot;_props&quot;: {
+                &quot;_name&quot;: &quot;Toto&quot;,
+                &quot;_dashes&quot;: [],
+                &quot;_stand&quot;: &quot;5f90b1fb-e1f5-4bcc-9bed-fe7b452c9649&quot;,
+                &quot;_move&quot;: &quot;647401d3-983d-4b11-a63f-956dfa550767&quot;
+            }
+        },
+        {
+            &quot;__events&quot;: {
+                &quot;change&quot;: {
+                    &quot;listeners&quot;: [
+                        null,
+                        null
+                    ]
+                }
+            },
+            &quot;_uuid&quot;: &quot;a15f8219-65a4-43b5-8f45-cf977506a025&quot;,
+            &quot;_props&quot;: {
+                &quot;_name&quot;: &quot;Toto&quot;,
+                &quot;_dashes&quot;: [],
+                &quot;_stand&quot;: &quot;4bb2da31-c9f3-4cc5-bb5b-b4adaff53230&quot;,
+                &quot;_move&quot;: &quot;5c42ee8e-293d-48b1-9201-143dc0bcd1ad&quot;
+            }
+        },
+        {
+            &quot;__events&quot;: {
+                &quot;change&quot;: {
+                    &quot;listeners&quot;: [
+                        null,
+                        null
+                    ]
+                }
+            },
+            &quot;_uuid&quot;: &quot;f06a7c34-ec27-42d3-a59d-2271ac3cce68&quot;,
+            &quot;_props&quot;: {
+                &quot;_name&quot;: &quot;Toto&quot;,
+                &quot;_dashes&quot;: [],
+                &quot;_stand&quot;: &quot;71b30088-a429-442b-8270-a5ae533b4365&quot;,
+                &quot;_move&quot;: &quot;f4b889e6-ea5c-4be0-9daf-e03d9253dd58&quot;
+            }
+        },
+        {
+            &quot;__events&quot;: {
+                &quot;change&quot;: {
+                    &quot;listeners&quot;: [
+                        null,
+                        null
+                    ]
+                }
+            },
+            &quot;_uuid&quot;: &quot;379a3217-f5ae-4e54-92e2-d21533797831&quot;,
+            &quot;_props&quot;: {
+                &quot;_name&quot;: &quot;Toto&quot;,
+                &quot;_dashes&quot;: [],
+                &quot;_stand&quot;: &quot;dc89d420-12b2-48bf-b7ca-f175bd2829ba&quot;,
+                &quot;_move&quot;: &quot;880505a1-ad04-497f-bfb5-811667c56d62&quot;
+            }
+        },
+        {
+            &quot;__events&quot;: {
+                &quot;change&quot;: {
+                    &quot;listeners&quot;: [
+                        null,
+                        null
+                    ]
+                }
+            },
+            &quot;_uuid&quot;: &quot;684aff3b-f723-412e-9f07-d424369d2fe6&quot;,
+            &quot;_props&quot;: {
+                &quot;_name&quot;: &quot;Toto&quot;,
+                &quot;_dashes&quot;: [],
+                &quot;_stand&quot;: &quot;7d1920dd-7693-4094-8114-d13e9162324b&quot;,
+                &quot;_move&quot;: &quot;53d8c8ba-6faf-4ddc-91ca-8bce72f57959&quot;
+            }
+        }
+    ]
+}
+
+</code></pre>
+</article>
+
+</section>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="footer">
+            <div class="content has-text-centered">
+                <p>
+                    Documentation generated by
+                    <a href="https://github.com/jsdoc3/jsdoc">
+                        JSDoc 3.6.3
+                    </a>
+                </p>
+                <p class="sidebar-created-by">
+                    <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a>
+                    provided with <i class="fas fa-heart"></i> by
+                    <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers</a>
+                </p>
+            </div>
+        </footer>
+        <script> prettyPrint(); </script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="scripts/app.min.js"></script>
+        <script src="scripts/linenumber.js"></script>
+    </body>
+</html>

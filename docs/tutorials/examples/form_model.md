@@ -3,28 +3,28 @@
 ```
 
 const Author = Fractale.create("Author", {
-    "firstname": String,
-    "lastname": String,
-    "surname": String,
-    "comment": String
-});
-
-const Page = Fractale.create("Page", {
-    "title": String,
-    "content": String
+    firstname: String,
+    lastname: String,
+    surname: String,
+    comment: String
 });
 
 const Chapter = Fractale.create("Chapter", {
-    "pages": [
+    pages: [
         Page
     ]
 });
 
+const Page = Fractale.create("Page", {
+    title: String,
+    content: String
+});
+
 const Book = Fractale.create("Book", {
-    "author": Author,
-    "readable": Boolean,
-    "title": String,
-    "chapters": [
+    author: Author,
+    readable: Boolean,
+    title: String,
+    chapters: [
         Chapter
     ]
 });
@@ -49,8 +49,9 @@ const book = new Book({
 });
 
 if (book.author.firstname !== 'Jocelyn') {
-    throw new Error('Error on form setter');
+    throw new DetailedError('Error on form setter', `Expected "Jocelyn" got "${book.author.firstname}"`);
 }
+
 if (!book.serialize()) {
     throw new Error('Error on form serializer');
 }
@@ -64,15 +65,14 @@ resolve(book.serialize());
 ```
 
 {
-    "uuid": "9daf5689-7d3a-4bb2-a40a-255408bdf79f",
+    "uuid": "3e10a1e5-4c56-40c2-9a93-0b7c1ebb6b62",
     "author": {
-        "uuid": "6312351b-1fb9-431a-a8c0-592d4a22df5f",
+        "uuid": "3d0fd015-c40b-44aa-8b83-e4dc4c3b5e86",
         "firstname": "Jocelyn",
         "lastname": "Faihy",
         "surname": "Jochlain",
         "comment": "Great"
     },
-    "readable": null,
     "title": "Au-delà de la donnée",
     "chapters": []
 }

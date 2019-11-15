@@ -3,7 +3,7 @@
     <head>
         
         <meta charset="utf-8">
-        <title>Fractale: Metadata model</title>
+        <title>Fractale: Fractale</title>
 
         <script src="scripts/prettify/prettify.js"></script>
         <script src="scripts/prettify/lang-css.js"></script>
@@ -72,113 +72,309 @@
                 <div class="column is-9-desktop">
                     <div class="content" id="main-content-wrapper">
                         <header class="page-title">
-                            <p>Tutorial</p>
-                            <h1>Metadata model</h1>
+                            <p>Class</p>
+                            <h1>Fractale</h1>
                         </header>
-                        <section>
+                        
+
+
+
+
+<section>
 
 <header>
     
+        
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
 </header>
 
 <article>
-    <article class="mb-4"><a href="#models" class="border border-1" data-toggle="collapse">Models used for examples</a><div id="models" class="border border-1 collapse">
-<pre class="prettyprint source"><code>
-const Compound = Fractale.create(&quot;Compound&quot;, Simple, {
-    boards: [
-        String
-    ],
-    metadata: {
-        key: String,
-        data: {
-            key: String,
-            value: undefined
-        }
-    },
-    collections: [
-        {
-            key: String,
-            value: String
-        }
-    ]
-});
+    <div class="container-overview">
+    
+        
+            <div class='vertical-section'>
+                <h3 class="title"><span>Constructor</span></h3>
+                <div class="members">
+                    <div class="member">
 
-</code></pre>
-</div></article>
-<pre class="prettyprint source"><code>
-const instance = new Compound({
-    string: 'Hello world',
-    boards: ['Lorem ipsum', 'Dolores sit amet'],
-    metadata: { key: 'Foo', data: { key: 'Bar', value: 12 }}
-});
+    
+    <h4 class="name" id="Fractale">
+        
+        <span class="code-name">
+            new Fractale<span class="signature">(SELF, factory, library, memory, Model)</span><span class="type-signature"></span>
+        </span>
+    </h4>
+    
 
-if (instance.metadata.key !== 'Foo') {
-    throw new DetailedError('Error on metadata accessor', `Expected &quot;Foo&quot; got &quot;${instance.metadata.key}&quot;`);
-}
+    
+    
+    <div class="description">
+        Module endpoint
+    </div>
+    
 
-const metadata = instance.metadata;
-metadata.key = 'decomposition';
 
-if (instance.metadata.key !== 'decomposition') {
-    throw new DetailedError('Error on metadata accessor with decomposition', `Expected &quot;decomposition&quot; got &quot;${instance.metadata.key}&quot;`);
-}
 
-instance.metadata.key = 'dot';
-if (instance.metadata.key !== 'dot') {
-    throw new DetailedError('Error on metadata accessor with dot', `Expected &quot;dot&quot; got &quot;${instance.metadata.key}&quot;`);
-}
 
-instance.metadata = { key: 'assign' };
-if (instance.metadata.key !== 'assign') {
-    throw new DetailedError('Error on metadata accessor with assign', `Expected &quot;assign&quot; got &quot;${instance.metadata.key}&quot;`);
-}
-if (instance.metadata.data.key !== 'Bar') {
-    throw new DetailedError('Error on metadata accessor with assign', `Expected &quot;Bar&quot; got &quot;${instance.metadata.data.key}&quot;`);
-}
 
-instance.metadata = { data: { key: 'after' } };
-if (instance.metadata.key !== 'assign') {
-    throw new DetailedError('Error on metadata accessor with bracket', `Expected &quot;assign&quot; got &quot;${instance.metadata.key}&quot;`);
-}
-if (instance.metadata.data.key !== 'after') {
-    throw new DetailedError('Error on metadata accessor with bracket', `Expected &quot;after&quot; got &quot;${instance.metadata.data.key}&quot;`);
-}
-if (instance.metadata.data.value !== 12) {
-    throw new DetailedError('Error on metadata accessor with bracket', `Expected &quot;12&quot; got &quot;${instance.metadata.data.value}&quot;`);
-}
 
-if (!instance.serialize()) {
-    throw new Error('Error on metadata serializer');
-}
 
-resolve(instance.serialize());
 
-</code></pre>
-<h3>Results</h3>
-<pre class="prettyprint source"><code>
-{
-    &quot;uuid&quot;: &quot;9a617f00-79ed-42fa-8a76-3e5aa76ed2d3&quot;,
-    &quot;string&quot;: &quot;Hello world&quot;,
-    &quot;boards&quot;: [
-        &quot;Lorem ipsum&quot;,
-        &quot;Dolores sit amet&quot;
-    ],
-    &quot;metadata&quot;: {
-        &quot;uuid&quot;: &quot;5f53ede9-6c90-4e25-83f6-1e9db1043e4d&quot;,
-        &quot;key&quot;: &quot;assign&quot;,
-        &quot;data&quot;: {
-            &quot;uuid&quot;: &quot;32e0937a-e4a6-4ad2-a9b1-24865248bcc3&quot;,
-            &quot;key&quot;: &quot;after&quot;,
-            &quot;value&quot;: 12
-        }
-    },
-    &quot;collections&quot;: []
-}
 
-</code></pre>
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>SELF</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">String</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Keyword used for self-referenced model</td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>factory</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type"><a href="Factory.html">Factory</a></span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Factory that create models</td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>library</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type"><a href="Library.html">Library</a></span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Library that register models</td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>memory</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">Memory</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Memory that register model instances</td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>Model</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type"><a href="Model.html">Model</a></span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Base class for models</td>
+</tr>
+
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:jocelyn@faihy.fr">Jocelyn Faihy</a></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="index.js.html" class="button">View Source</a>
+            <span>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line7">line 7</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+                </div>
+            </div>
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
 </article>
 
 </section>
+
+
+
 
                     </div>
                 </div>

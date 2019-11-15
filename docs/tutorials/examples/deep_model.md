@@ -3,36 +3,32 @@
 ```
 
 const Variable = Fractale.create("Variable", {
-    "name": String,
-    "value": mixed,
-    "static": Boolean,
-    "scope": {
-        "$$__FractaleModel_TYPE_KEY": String,
-        "$$__FractaleModel_OPTIONS_KEY": {
-            "values": [
-                "private",
-                "protected",
-                "public"
-            ]
-        }
-    }
+    name: String,
+    value: undefined,
+    static: Boolean,
+    scope: String
 });
 
 const Method = Fractale.create("Method", {
-    "signature": {
-        "name": String,
-        "properties": [
+    signature: {
+        name: String,
+        variables: [
             Variable
         ]
     },
-    "body": String
+    body: String
 });
 
 const Class = Fractale.create("Class", {
-    "name": String,
-    "inheritance": Fractale.SELF,
-    "variables": Variable,
-    "methods": [
+    uses: [
+        Fractale.SELF
+    ],
+    name: String,
+    inheritance: Fractale.SELF,
+    properties: [
+        Variable
+    ],
+    methods: [
         Method
     ]
 });
@@ -45,50 +41,48 @@ const Class = Fractale.create("Class", {
 
 const a = new Class({
     name: 'A',
-    variables: [
-        {name: 'a', value: 0},
-    ],
+    properties: [{ name: 'a', value: 0 }],
     methods: [
-        {signature: {name: 'getA'}},
-        {signature: {name: 'setA', properties: [{name: 'a'}]}}
+        { signature: { name: 'getA' }},
+        { signature: { name: 'setA', variables: [{ name: 'a' }] }}
     ]
 });
 
 const b = new Class({
     name: 'B',
-    variables: [
-        {name: 'b', value: 0},
+    properties: [
+        { name: 'b', value: 0 },
     ],
     methods: [
-        {signature: {name: 'getB'}},
-        {signature: {name: 'setB', properties: [{name: 'b'}]}}
+        { signature: { name: 'getB' }},
+        { signature: { name: 'setB', variables: [{ name: 'b' }] }}
     ]
 });
 
 const c = new Class({
+    uses: [a, b],
     name: 'C',
     inheritance: b,
-    variables: [
-        {name: 'c', value: 0},
+    properties: [
+        { name: 'c', value: 0 },
     ],
     methods: [
-        {signature: {name: 'getC'}},
-        {signature: {name: 'setC', properties: [{name: 'c'}]}}
+        { signature: { name: 'getC' }},
+        { signature: { name: 'setC', variables: [{ name: 'c' }] }}
     ]
 });
 
 const program = new Program({
-    uses: [a, b],
-    class: c
+    classes: [a,b,c],
 });
 
-if (program.uses[0].name !== 'A') {
+if (a.properties[0].name !== 'a') {
+    throw new Error('Error on deep accessor variable name');
+}
+if (c.uses[0].name !== 'A') {
     throw new Error('Error on deep accessor with brace');
 }
-if (program.props.use(1).name !== 'B') {
-    throw new Error('Error on deep accessor with function singular');
-}
-if (program.class.inheritance.name !== 'B') {
+if (c.inheritance.name !== 'B') {
     throw new Error('Error on deep accessor');
 }
 
@@ -105,160 +99,79 @@ resolve(program.serialize());
 ```
 
 {
-    "uuid": "01e6b9f7-d566-4728-9cf7-05fec0158cd7",
-    "uses": [
+    "uuid": "e834b16b-33ea-4b0e-a202-7c9239010057",
+    "classes": [
         {
-            "uuid": "691516f6-dbbd-4809-9f17-90f1d0b79e77",
-            "name": "A",
-            "inheritance": null,
-            "variables": {
-                "uuid": "14a863c5-c351-4079-9adc-7f735a48d72c",
-                "name": null,
-                "static": null,
-                "scope": null
-            },
-            "methods": [
-                {
-                    "uuid": "702fa199-7a03-474d-bd2f-b7a0ded0306a",
-                    "signature": {
-                        "uuid": "b702c2ad-1983-4114-8f30-43f6f9cdc4e4",
-                        "name": "getA",
-                        "properties": []
-                    },
-                    "body": null
-                },
-                {
-                    "uuid": "6d59f202-f727-47d8-8469-3231dc17e0cd",
-                    "signature": {
-                        "uuid": "75e25129-8249-4ff0-a934-f660e78c83ca",
-                        "name": "setA",
-                        "properties": [
-                            {
-                                "uuid": "64ae12d1-a965-4ae3-9f74-1e2468b137f2",
-                                "name": "a",
-                                "static": null,
-                                "scope": null
-                            }
-                        ]
-                    },
-                    "body": null
-                }
-            ]
-        },
-        {
-            "uuid": "442ec332-cb3a-4c77-b7a4-9df1d9137cb9",
-            "name": "B",
-            "inheritance": null,
-            "variables": {
-                "uuid": "ef2106b3-62fd-4b46-903b-988da311c1f0",
-                "name": null,
-                "static": null,
-                "scope": null
-            },
-            "methods": [
-                {
-                    "uuid": "e0d70149-1106-4723-ad0b-76502aa5e656",
-                    "signature": {
-                        "uuid": "3ea354d7-f960-4f0b-8d40-bd543242e13e",
-                        "name": "getB",
-                        "properties": []
-                    },
-                    "body": null
-                },
-                {
-                    "uuid": "15647350-c82e-4dd6-a50c-aa3abf1434f1",
-                    "signature": {
-                        "uuid": "c8d2db5a-5da9-4f2a-b9e6-c9e085def82e",
-                        "name": "setB",
-                        "properties": [
-                            {
-                                "uuid": "17b82443-3385-40eb-b551-be4dd9e9da3f",
-                                "name": "b",
-                                "static": null,
-                                "scope": null
-                            }
-                        ]
-                    },
-                    "body": null
-                }
-            ]
-        }
-    ],
-    "class": {
-        "uuid": "78f2dcf2-58dd-43f3-a846-9c7a87cf59e0",
-        "name": "C",
-        "inheritance": {
-            "uuid": "442ec332-cb3a-4c77-b7a4-9df1d9137cb9",
-            "name": "B",
-            "inheritance": null,
-            "variables": {
-                "uuid": "ef2106b3-62fd-4b46-903b-988da311c1f0",
-                "name": null,
-                "static": null,
-                "scope": null
-            },
-            "methods": [
-                {
-                    "uuid": "e0d70149-1106-4723-ad0b-76502aa5e656",
-                    "signature": {
-                        "uuid": "3ea354d7-f960-4f0b-8d40-bd543242e13e",
-                        "name": "getB",
-                        "properties": []
-                    },
-                    "body": null
-                },
-                {
-                    "uuid": "15647350-c82e-4dd6-a50c-aa3abf1434f1",
-                    "signature": {
-                        "uuid": "c8d2db5a-5da9-4f2a-b9e6-c9e085def82e",
-                        "name": "setB",
-                        "properties": [
-                            {
-                                "uuid": "17b82443-3385-40eb-b551-be4dd9e9da3f",
-                                "name": "b",
-                                "static": null,
-                                "scope": null
-                            }
-                        ]
-                    },
-                    "body": null
-                }
-            ]
-        },
-        "variables": {
-            "uuid": "c0d61383-1e16-4263-b3f3-2d2a6ae3f2e2",
-            "name": null,
-            "static": null,
-            "scope": null
-        },
-        "methods": [
-            {
-                "uuid": "7cf7d961-dbac-4344-9293-e665e9c6bc72",
-                "signature": {
-                    "uuid": "aaefd528-d057-4c0d-a87d-a474bade205b",
-                    "name": "getC",
-                    "properties": []
-                },
-                "body": null
-            },
-            {
-                "uuid": "8ad17083-e9f4-4877-9738-643d9c2d0544",
-                "signature": {
-                    "uuid": "cd3497f4-494e-4eff-a81a-70d95c5a5dec",
-                    "name": "setC",
-                    "properties": [
-                        {
-                            "uuid": "e88f29d8-88de-4659-9209-9b21845fcd89",
-                            "name": "c",
-                            "static": null,
-                            "scope": null
-                        }
+            "__events": {
+                "change": {
+                    "listeners": [
+                        null,
+                        null
                     ]
-                },
-                "body": null
+                }
+            },
+            "_uuid": "c3d4ca12-b407-4d67-9f51-a2417bc77180",
+            "_props": {
+                "_uses": [],
+                "_name": "A",
+                "_properties": [
+                    "c5a5c997-3b57-47f9-ab90-36593256a522"
+                ],
+                "_methods": [
+                    "78a231da-0c05-4adc-976e-d6b4bc362989",
+                    "477238c0-d014-4626-81fa-e32e04f8494a"
+                ]
             }
-        ]
-    }
+        },
+        {
+            "__events": {
+                "change": {
+                    "listeners": [
+                        null,
+                        null
+                    ]
+                }
+            },
+            "_uuid": "dec298f0-3e08-4667-808a-6af0b61eb97c",
+            "_props": {
+                "_uses": [],
+                "_name": "B",
+                "_properties": [
+                    "ff60f8db-504e-4316-9e52-fc88e86d20bf"
+                ],
+                "_methods": [
+                    "cf02afd7-a8ea-4768-aaaf-61ceeb2d5c80",
+                    "50eded8c-c329-4ef0-ba9d-bb9bd9e05517"
+                ]
+            }
+        },
+        {
+            "__events": {
+                "change": {
+                    "listeners": [
+                        null,
+                        null
+                    ]
+                }
+            },
+            "_uuid": "77fb7f48-f034-42bd-b9ff-18db05cfa962",
+            "_props": {
+                "_uses": [
+                    "c3d4ca12-b407-4d67-9f51-a2417bc77180",
+                    "dec298f0-3e08-4667-808a-6af0b61eb97c"
+                ],
+                "_name": "C",
+                "_inheritance": "dec298f0-3e08-4667-808a-6af0b61eb97c",
+                "_properties": [
+                    "19d70480-9301-4a63-a2ef-68e42f5127fc"
+                ],
+                "_methods": [
+                    "20976cff-5e10-424f-a366-1fb8401f3425",
+                    "cd6e9b84-0c98-48b5-8548-3a36da9be6ac"
+                ]
+            }
+        }
+    ]
 }
 
 ```

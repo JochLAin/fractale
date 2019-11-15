@@ -65,7 +65,7 @@
                 <div class="column is-3" id="sidebarNav">
                     <div class="sidebar">
                         <nav>
-                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-collection_model.html">Collection model</a></li><li><a href="tutorial-complex_model.html">Complex model</a></li><li><a href="tutorial-deep_model.html">Deep model</a></li><li><a href="tutorial-form_model.html">Form model</a></li><li><a href="tutorial-inception_model.html">Inception model</a></li><li><a href="tutorial-metadata_model.html">Metadata model</a></li><li><a href="tutorial-self-reference_model.html">Self-reference model</a></li><li><a href="tutorial-simple_model.html">Simple model</a></li></ul><h3>Modules</h3><ul><li><a href="module-Fractale.html">Fractale</a></li></ul><h3>Classes</h3><ul><li><a href="Encyclopedia.html">Encyclopedia</a></li><li><a href="EventListener.html">EventListener</a></li><li><a href="Factory.html">Factory</a></li><li><a href="Library.html">Library</a></li><li><a href="ModelClass.html">ModelClass</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_ModelClass">_ModelClass</a></li></ul></div>
+                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-collection_model.html">Collection model</a></li><li><a href="tutorial-complex_model.html">complex_model</a></li><li><a href="tutorial-deep_model.html">Deep model</a></li><li><a href="tutorial-form_model.html">Form model</a></li><li><a href="tutorial-huge_model.html">Huge model</a></li><li><a href="tutorial-inception_model.html">Inception model</a></li><li><a href="tutorial-inheritance_model.html">Inheritance model</a></li><li><a href="tutorial-metadata_model.html">Metadata model</a></li><li><a href="tutorial-self-reference_model.html">Self-reference model</a></li><li><a href="tutorial-simple_model.html">Simple model</a></li></ul><h3>Classes</h3><ul><li><a href="EventListener.html">EventListener</a></li><li><a href="Factory.html">Factory</a></li><li><a href="Fractale.html">Fractale</a></li><li><a href="Library.html">Library</a></li><li><a href="Model.html">Model</a></li><li><a href="Schema.html">Schema</a></li></ul></div>
                         </nav>
                     </div>
                 </div>
@@ -180,7 +180,7 @@
         <p class="tag-source">
             <a href="factory.js.html" class="button">View Source</a>
             <span>
-                <a href="factory.js.html">factory.js</a>, <a href="factory.js.html#line4">line 4</a>
+                <a href="factory.js.html">factory.js</a>, <a href="factory.js.html#line8">line 8</a>
             </span>
         </p>
     
@@ -222,14 +222,14 @@
                 <div class="member">
 
     
-    <h4 class="name" id=".check">
+    <h4 class="name" id=".validate">
         
             
                 <span class='tag'>static</span>
             
         
         <span class="code-name">
-            check<span class="signature">(name)</span><span class="type-signature"></span>
+            validate<span class="signature">(name)</span><span class="type-signature"></span>
         </span>
     </h4>
     
@@ -338,7 +338,7 @@
         <p class="tag-source">
             <a href="factory.js.html" class="button">View Source</a>
             <span>
-                <a href="factory.js.html">factory.js</a>, <a href="factory.js.html#line15">line 15</a>
+                <a href="factory.js.html">factory.js</a>, <a href="factory.js.html#line19">line 19</a>
             </span>
         </p>
     
@@ -368,10 +368,10 @@
                 <div class="member">
 
     
-    <h4 class="name" id="create">
+    <h4 class="name" id="createModel">
         
         <span class="code-name">
-            create<span class="signature">(name, parent, schema, virtual)</span><span class="type-signature"> &rarr; {<a href="ModelClass.html">ModelClass</a>}</span>
+            createModel<span class="signature">(name, parent, schema, options)</span><span class="type-signature"> &rarr; {<a href="Model.html">Model</a>}</span>
         </span>
     </h4>
     
@@ -406,8 +406,6 @@
         
 
         
-        <th>Default</th>
-        
 
         <th class="last">Description</th>
     </tr>
@@ -434,10 +432,6 @@
   
 
   
-      <td class="default">
-      
-      </td>
-  
 
   <td class="description last">Name of the model</td>
 </tr>
@@ -454,7 +448,10 @@
   <td class="type">
   
       
-<span class="param-type"><a href="ModelClass.html">ModelClass</a></span>
+<span class="param-type">String</span>
+|
+
+<span class="param-type"><a href="Model.html">Model</a></span>
 
 
   
@@ -462,10 +459,6 @@
 
   
 
-  
-      <td class="default">
-      
-      </td>
   
 
   <td class="description last">Parent from which the schema is inherited</td>
@@ -492,10 +485,6 @@
   
 
   
-      <td class="default">
-      
-      </td>
-  
 
   <td class="description last">Schema of the model</td>
 </tr>
@@ -506,13 +495,13 @@
         
 <tr class="deep-level-0">
   
-      <td class="name"><code>virtual</code></td>
+      <td class="name"><code>options</code></td>
   
 
   <td class="type">
   
       
-<span class="param-type">Boolean</span>
+<span class="param-type">Object</span>
 
 
   
@@ -520,12 +509,6 @@
 
   
 
-  
-      <td class="default">
-      
-          false
-      
-      </td>
   
 
   <td class="description last"></td>
@@ -575,7 +558,7 @@
         <p class="tag-source">
             <a href="factory.js.html" class="button">View Source</a>
             <span>
-                <a href="factory.js.html">factory.js</a>, <a href="factory.js.html#line37">line 37</a>
+                <a href="factory.js.html">factory.js</a>, <a href="factory.js.html#line41">line 41</a>
             </span>
         </p>
     
@@ -625,7 +608,7 @@
                 <p>
                     Documentation generated by
                     <a href="https://github.com/jsdoc3/jsdoc">
-                        JSDoc 3.6.2
+                        JSDoc 3.6.3
                     </a>
                 </p>
                 <p class="sidebar-created-by">

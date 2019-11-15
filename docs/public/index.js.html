@@ -67,7 +67,7 @@
                 <div class="column is-3" id="sidebarNav">
                     <div class="sidebar">
                         <nav>
-                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-collection_model.html">Collection model</a></li><li><a href="tutorial-complex_model.html">Complex model</a></li><li><a href="tutorial-deep_model.html">Deep model</a></li><li><a href="tutorial-form_model.html">Form model</a></li><li><a href="tutorial-inception_model.html">Inception model</a></li><li><a href="tutorial-metadata_model.html">Metadata model</a></li><li><a href="tutorial-self-reference_model.html">Self-reference model</a></li><li><a href="tutorial-simple_model.html">Simple model</a></li></ul><h3>Modules</h3><ul><li><a href="module-Fractale.html">Fractale</a></li></ul><h3>Classes</h3><ul><li><a href="Encyclopedia.html">Encyclopedia</a></li><li><a href="EventListener.html">EventListener</a></li><li><a href="Factory.html">Factory</a></li><li><a href="Library.html">Library</a></li><li><a href="ModelClass.html">ModelClass</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_ModelClass">_ModelClass</a></li></ul></div>
+                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-collection_model.html">Collection model</a></li><li><a href="tutorial-complex_model.html">complex_model</a></li><li><a href="tutorial-deep_model.html">Deep model</a></li><li><a href="tutorial-form_model.html">Form model</a></li><li><a href="tutorial-huge_model.html">Huge model</a></li><li><a href="tutorial-inception_model.html">Inception model</a></li><li><a href="tutorial-inheritance_model.html">Inheritance model</a></li><li><a href="tutorial-metadata_model.html">Metadata model</a></li><li><a href="tutorial-self-reference_model.html">Self-reference model</a></li><li><a href="tutorial-simple_model.html">Simple model</a></li></ul><h3>Classes</h3><ul><li><a href="EventListener.html">EventListener</a></li><li><a href="Factory.html">Factory</a></li><li><a href="Fractale.html">Fractale</a></li><li><a href="Library.html">Library</a></li><li><a href="Model.html">Model</a></li><li><a href="Schema.html">Schema</a></li></ul></div>
                         </nav>
                     </div>
                 </div>
@@ -84,134 +84,57 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>
+            <pre class="prettyprint source linenums"><code>const CONSTANTS = require('./constants');
+const factory = require('./factory');
+const library = require('./library');
+const memory = require('./memory');
 const Model = require('./model');
-const { SELF, TYPE_KEY, OPTIONS_KEY } = require('./constants');
 
 /**
- * Base class that model will inherit
- */
-let _ModelClass = Model;
-
-/**
- * @exports Fractale
+ * Module endpoint
+ *
+ * @class Fractale
  * @param {String} SELF - Keyword used for self-referenced model
- * @param {Factory} factory - Factory use to create models
+ * @param {Factory} factory - Factory that create models
  * @param {Library} library - Library that register models
- * @param {ModelClass} ModelClass - Base class for models
+ * @param {Memory} memory - Memory that register model instances
+ * @param {Model} Model - Base class for models
  *
  * @author Jocelyn Faihy &lt;jocelyn@faihy.fr>
  */
-module.exports = new (class Fractale {
+class Fractale {
     constructor() {
-        this.OPTIONS_KEY = OPTIONS_KEY;
-        this.SELF = SELF;
-        this.TYPE_KEY = TYPE_KEY;
+        this.create = factory.createModel.bind(factory);
+        this.get = library.get.bind(library);
+        this.from = name => () => this.get(name);
+        this.validate = factory.constructor.validate.bind(factory);
+        this.with = (type, options) => ({ [CONSTANTS.TYPE_KEY]: type, [CONSTANTS.OPTIONS_KEY]: options });
 
-        this.factory = require('./factory');
-        this.library = require('./library');
-        this.memory = require('./memory');
-
-        Object.defineProperty(this, 'ModelClass', {
+        Object.defineProperty(this, 'Model', {
             get() {
-                return _ModelClass;
+                return factory.Model;
             },
-            set(ModelClass) {
-                if (!(ModelClass.prototype instanceof Model)) {
-                    throw new Error('Your model class must inherit "Fractale.ModelClass" class');
-                }
-                _ModelClass = ModelClass;
+            set(Model) {
+                return factory.Model = Model;
             }
         });
     }
 
-    /**
-     * Proxy to factory create function
-     * @method
-     * @see Factory
-     */
-    create() {
-        return this.factory.create.apply(this.factory, arguments)
+    stringify(model, options = {}) {
+        const { space, dependencies } = options;
+        if (!dependencies) return Model.stringify(model, space);
+
+        const deps = Model.getDependencies(model);
+        return [].concat(Model.stringify(model, space), Object.values(deps).reverse().map(model => Model.stringify(model, space))).reverse().join("\n\n");
     }
+}
 
-    /**
-     * Proxy to library to get a model by its name
-     * @method
-     * @see Library
-     * @see Encyclopedia
-     */
-    get(name) {
-        const encyclopedia = this.library.get(name);
-        return encyclopedia &amp;&amp; encyclopedia.entity;
-    }
-
-    /**
-     * Helper to use options in schema
-     *
-     * @param {undefined|null|Boolean|Number|String|ModelClass|Array|Object} type - Property type
-     * @param {Object} options - Options pass to type
-     */
-    with(type, options) {
-        return {
-            [TYPE_KEY]: type,
-            [OPTIONS_KEY]: options
-        };
-    }
-
-    stringify(Model, ...args) {
-        const dependencies = {};
-
-        const single = (value) => {
-            switch (value) {
-                case null: return "{{mixed}}";
-                case undefined: return "{{mixed}}";
-                case Boolean: return "{{Boolean}}";
-                case Number: return "{{Number}}";
-                case String: return "{{String}}";
-                case SELF: return "{{Fractale.SELF}}";
-                default:
-                    if (value.prototype instanceof _ModelClass) {
-                        if (!dependencies[value.name]) {
-                            Object.assign(dependencies, {
-                                [value.name]: stringify(value),
-                            });
-                        }
-                        return `{{${value.name}}}`;
-                    }
-                    if (typeof value == 'object') {
-                        if (Array.isArray(value)) {
-                            return value.map((item) => single(item));
-                        }
-                        return loop(value);
-                    }
-                    return value;
-            }
-        };
-
-        const loop = (Model) => {
-            let schema = Model;
-            if (Model.prototype instanceof _ModelClass) {
-                const encyclopedia = this.library.get(Model.name);
-                schema = encyclopedia.schema;
-            }
-
-            return Object.keys(schema).reduce((accu, key) => {
-                return Object.assign({}, accu, {
-                    [key]: single(schema[key])
-                });
-            }, {});
-        };
-
-        const stringify = (Model) => {
-            const schema = JSON.stringify(loop(Model), ...args).replace(/"{{/g, '').replace(/}}"/g, '');
-            return `const ${Model.name} = Fractale.create("${Model.name}", ${schema});`;
-        };
-
-        return [].concat(stringify(Model), Object.values(dependencies).reverse()).reverse().join("\n\n");
-    }
-})();
-
-module.exports.BaseModelClass = Model;</code></pre>
+module.exports = new Fractale();
+module.exports.SELF = CONSTANTS.SELF;
+module.exports.factory = factory;
+module.exports.library = library;
+module.exports.memory = memory;
+</code></pre>
         </article>
     </section>
 
@@ -227,7 +150,7 @@ module.exports.BaseModelClass = Model;</code></pre>
                 <p>
                     Documentation generated by
                     <a href="https://github.com/jsdoc3/jsdoc">
-                        JSDoc 3.6.2
+                        JSDoc 3.6.3
                     </a>
                 </p>
                 <p class="sidebar-created-by">

@@ -2,7 +2,6 @@
 
 const fs = require('fs');
 const path = require('path');
-
 const Fractale = require('../lib');
 
 const KEY_CODE = `\n\n\`\`\`\n\n`;
@@ -65,7 +64,7 @@ class Program {
         let content = `<article class="mb-4">`;
         content += `<a href="#models" class="border border-1" data-toggle="collapse">Models used for examples</a>`;
         content += `<div id="models" class="border border-1 collapse">`;
-        content += `${KEY_CODE}${models.map(Model => Fractale.stringify(Model, null, 4))}${KEY_CODE}`;
+        content += `${KEY_CODE}${models.map(Model => Fractale.stringify(Model, { space: 4, dependencies: true }))}${KEY_CODE}`;
         content += `</div>`;
         content += `</article>`;
         content += `${KEY_CODE}${Program.cleanCode(code.toString())}${KEY_CODE}`;

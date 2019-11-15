@@ -65,7 +65,7 @@
                 <div class="column is-3" id="sidebarNav">
                     <div class="sidebar">
                         <nav>
-                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-collection_model.html">Collection model</a></li><li><a href="tutorial-complex_model.html">Complex model</a></li><li><a href="tutorial-deep_model.html">Deep model</a></li><li><a href="tutorial-form_model.html">Form model</a></li><li><a href="tutorial-inception_model.html">Inception model</a></li><li><a href="tutorial-metadata_model.html">Metadata model</a></li><li><a href="tutorial-self-reference_model.html">Self-reference model</a></li><li><a href="tutorial-simple_model.html">Simple model</a></li></ul><h3>Modules</h3><ul><li><a href="module-Fractale.html">Fractale</a></li></ul><h3>Classes</h3><ul><li><a href="Encyclopedia.html">Encyclopedia</a></li><li><a href="EventListener.html">EventListener</a></li><li><a href="Factory.html">Factory</a></li><li><a href="Library.html">Library</a></li><li><a href="ModelClass.html">ModelClass</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_ModelClass">_ModelClass</a></li></ul></div>
+                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-collection_model.html">Collection model</a></li><li><a href="tutorial-complex_model.html">complex_model</a></li><li><a href="tutorial-deep_model.html">Deep model</a></li><li><a href="tutorial-form_model.html">Form model</a></li><li><a href="tutorial-huge_model.html">Huge model</a></li><li><a href="tutorial-inception_model.html">Inception model</a></li><li><a href="tutorial-inheritance_model.html">Inheritance model</a></li><li><a href="tutorial-metadata_model.html">Metadata model</a></li><li><a href="tutorial-self-reference_model.html">Self-reference model</a></li><li><a href="tutorial-simple_model.html">Simple model</a></li></ul><h3>Classes</h3><ul><li><a href="EventListener.html">EventListener</a></li><li><a href="Factory.html">Factory</a></li><li><a href="Fractale.html">Fractale</a></li><li><a href="Library.html">Library</a></li><li><a href="Model.html">Model</a></li><li><a href="Schema.html">Schema</a></li></ul></div>
                         </nav>
                     </div>
                 </div>
@@ -85,36 +85,32 @@
     <article class="mb-4"><a href="#models" class="border border-1" data-toggle="collapse">Models used for examples</a><div id="models" class="border border-1 collapse">
 <pre class="prettyprint source"><code>
 const Variable = Fractale.create(&quot;Variable&quot;, {
-    &quot;name&quot;: String,
-    &quot;value&quot;: mixed,
-    &quot;static&quot;: Boolean,
-    &quot;scope&quot;: {
-        &quot;$$__FractaleModel_TYPE_KEY&quot;: String,
-        &quot;$$__FractaleModel_OPTIONS_KEY&quot;: {
-            &quot;values&quot;: [
-                &quot;private&quot;,
-                &quot;protected&quot;,
-                &quot;public&quot;
-            ]
-        }
-    }
+    name: String,
+    value: undefined,
+    static: Boolean,
+    scope: String
 });
 
 const Method = Fractale.create(&quot;Method&quot;, {
-    &quot;signature&quot;: {
-        &quot;name&quot;: String,
-        &quot;properties&quot;: [
+    signature: {
+        name: String,
+        variables: [
             Variable
         ]
     },
-    &quot;body&quot;: String
+    body: String
 });
 
 const Class = Fractale.create(&quot;Class&quot;, {
-    &quot;name&quot;: String,
-    &quot;inheritance&quot;: Fractale.SELF,
-    &quot;variables&quot;: Variable,
-    &quot;methods&quot;: [
+    uses: [
+        Fractale.SELF
+    ],
+    name: String,
+    inheritance: Fractale.SELF,
+    properties: [
+        Variable
+    ],
+    methods: [
         Method
     ]
 });
@@ -124,50 +120,48 @@ const Class = Fractale.create(&quot;Class&quot;, {
 <pre class="prettyprint source"><code>
 const a = new Class({
     name: 'A',
-    variables: [
-        {name: 'a', value: 0},
-    ],
+    properties: [{ name: 'a', value: 0 }],
     methods: [
-        {signature: {name: 'getA'}},
-        {signature: {name: 'setA', properties: [{name: 'a'}]}}
+        { signature: { name: 'getA' }},
+        { signature: { name: 'setA', variables: [{ name: 'a' }] }}
     ]
 });
 
 const b = new Class({
     name: 'B',
-    variables: [
-        {name: 'b', value: 0},
+    properties: [
+        { name: 'b', value: 0 },
     ],
     methods: [
-        {signature: {name: 'getB'}},
-        {signature: {name: 'setB', properties: [{name: 'b'}]}}
+        { signature: { name: 'getB' }},
+        { signature: { name: 'setB', variables: [{ name: 'b' }] }}
     ]
 });
 
 const c = new Class({
+    uses: [a, b],
     name: 'C',
     inheritance: b,
-    variables: [
-        {name: 'c', value: 0},
+    properties: [
+        { name: 'c', value: 0 },
     ],
     methods: [
-        {signature: {name: 'getC'}},
-        {signature: {name: 'setC', properties: [{name: 'c'}]}}
+        { signature: { name: 'getC' }},
+        { signature: { name: 'setC', variables: [{ name: 'c' }] }}
     ]
 });
 
 const program = new Program({
-    uses: [a, b],
-    class: c
+    classes: [a,b,c],
 });
 
-if (program.uses[0].name !== 'A') {
+if (a.properties[0].name !== 'a') {
+    throw new Error('Error on deep accessor variable name');
+}
+if (c.uses[0].name !== 'A') {
     throw new Error('Error on deep accessor with brace');
 }
-if (program.props.use(1).name !== 'B') {
-    throw new Error('Error on deep accessor with function singular');
-}
-if (program.class.inheritance.name !== 'B') {
+if (c.inheritance.name !== 'B') {
     throw new Error('Error on deep accessor');
 }
 
@@ -181,160 +175,79 @@ resolve(program.serialize());
 <h3>Results</h3>
 <pre class="prettyprint source"><code>
 {
-    &quot;uuid&quot;: &quot;01e6b9f7-d566-4728-9cf7-05fec0158cd7&quot;,
-    &quot;uses&quot;: [
+    &quot;uuid&quot;: &quot;e834b16b-33ea-4b0e-a202-7c9239010057&quot;,
+    &quot;classes&quot;: [
         {
-            &quot;uuid&quot;: &quot;691516f6-dbbd-4809-9f17-90f1d0b79e77&quot;,
-            &quot;name&quot;: &quot;A&quot;,
-            &quot;inheritance&quot;: null,
-            &quot;variables&quot;: {
-                &quot;uuid&quot;: &quot;14a863c5-c351-4079-9adc-7f735a48d72c&quot;,
-                &quot;name&quot;: null,
-                &quot;static&quot;: null,
-                &quot;scope&quot;: null
-            },
-            &quot;methods&quot;: [
-                {
-                    &quot;uuid&quot;: &quot;702fa199-7a03-474d-bd2f-b7a0ded0306a&quot;,
-                    &quot;signature&quot;: {
-                        &quot;uuid&quot;: &quot;b702c2ad-1983-4114-8f30-43f6f9cdc4e4&quot;,
-                        &quot;name&quot;: &quot;getA&quot;,
-                        &quot;properties&quot;: []
-                    },
-                    &quot;body&quot;: null
-                },
-                {
-                    &quot;uuid&quot;: &quot;6d59f202-f727-47d8-8469-3231dc17e0cd&quot;,
-                    &quot;signature&quot;: {
-                        &quot;uuid&quot;: &quot;75e25129-8249-4ff0-a934-f660e78c83ca&quot;,
-                        &quot;name&quot;: &quot;setA&quot;,
-                        &quot;properties&quot;: [
-                            {
-                                &quot;uuid&quot;: &quot;64ae12d1-a965-4ae3-9f74-1e2468b137f2&quot;,
-                                &quot;name&quot;: &quot;a&quot;,
-                                &quot;static&quot;: null,
-                                &quot;scope&quot;: null
-                            }
-                        ]
-                    },
-                    &quot;body&quot;: null
-                }
-            ]
-        },
-        {
-            &quot;uuid&quot;: &quot;442ec332-cb3a-4c77-b7a4-9df1d9137cb9&quot;,
-            &quot;name&quot;: &quot;B&quot;,
-            &quot;inheritance&quot;: null,
-            &quot;variables&quot;: {
-                &quot;uuid&quot;: &quot;ef2106b3-62fd-4b46-903b-988da311c1f0&quot;,
-                &quot;name&quot;: null,
-                &quot;static&quot;: null,
-                &quot;scope&quot;: null
-            },
-            &quot;methods&quot;: [
-                {
-                    &quot;uuid&quot;: &quot;e0d70149-1106-4723-ad0b-76502aa5e656&quot;,
-                    &quot;signature&quot;: {
-                        &quot;uuid&quot;: &quot;3ea354d7-f960-4f0b-8d40-bd543242e13e&quot;,
-                        &quot;name&quot;: &quot;getB&quot;,
-                        &quot;properties&quot;: []
-                    },
-                    &quot;body&quot;: null
-                },
-                {
-                    &quot;uuid&quot;: &quot;15647350-c82e-4dd6-a50c-aa3abf1434f1&quot;,
-                    &quot;signature&quot;: {
-                        &quot;uuid&quot;: &quot;c8d2db5a-5da9-4f2a-b9e6-c9e085def82e&quot;,
-                        &quot;name&quot;: &quot;setB&quot;,
-                        &quot;properties&quot;: [
-                            {
-                                &quot;uuid&quot;: &quot;17b82443-3385-40eb-b551-be4dd9e9da3f&quot;,
-                                &quot;name&quot;: &quot;b&quot;,
-                                &quot;static&quot;: null,
-                                &quot;scope&quot;: null
-                            }
-                        ]
-                    },
-                    &quot;body&quot;: null
-                }
-            ]
-        }
-    ],
-    &quot;class&quot;: {
-        &quot;uuid&quot;: &quot;78f2dcf2-58dd-43f3-a846-9c7a87cf59e0&quot;,
-        &quot;name&quot;: &quot;C&quot;,
-        &quot;inheritance&quot;: {
-            &quot;uuid&quot;: &quot;442ec332-cb3a-4c77-b7a4-9df1d9137cb9&quot;,
-            &quot;name&quot;: &quot;B&quot;,
-            &quot;inheritance&quot;: null,
-            &quot;variables&quot;: {
-                &quot;uuid&quot;: &quot;ef2106b3-62fd-4b46-903b-988da311c1f0&quot;,
-                &quot;name&quot;: null,
-                &quot;static&quot;: null,
-                &quot;scope&quot;: null
-            },
-            &quot;methods&quot;: [
-                {
-                    &quot;uuid&quot;: &quot;e0d70149-1106-4723-ad0b-76502aa5e656&quot;,
-                    &quot;signature&quot;: {
-                        &quot;uuid&quot;: &quot;3ea354d7-f960-4f0b-8d40-bd543242e13e&quot;,
-                        &quot;name&quot;: &quot;getB&quot;,
-                        &quot;properties&quot;: []
-                    },
-                    &quot;body&quot;: null
-                },
-                {
-                    &quot;uuid&quot;: &quot;15647350-c82e-4dd6-a50c-aa3abf1434f1&quot;,
-                    &quot;signature&quot;: {
-                        &quot;uuid&quot;: &quot;c8d2db5a-5da9-4f2a-b9e6-c9e085def82e&quot;,
-                        &quot;name&quot;: &quot;setB&quot;,
-                        &quot;properties&quot;: [
-                            {
-                                &quot;uuid&quot;: &quot;17b82443-3385-40eb-b551-be4dd9e9da3f&quot;,
-                                &quot;name&quot;: &quot;b&quot;,
-                                &quot;static&quot;: null,
-                                &quot;scope&quot;: null
-                            }
-                        ]
-                    },
-                    &quot;body&quot;: null
-                }
-            ]
-        },
-        &quot;variables&quot;: {
-            &quot;uuid&quot;: &quot;c0d61383-1e16-4263-b3f3-2d2a6ae3f2e2&quot;,
-            &quot;name&quot;: null,
-            &quot;static&quot;: null,
-            &quot;scope&quot;: null
-        },
-        &quot;methods&quot;: [
-            {
-                &quot;uuid&quot;: &quot;7cf7d961-dbac-4344-9293-e665e9c6bc72&quot;,
-                &quot;signature&quot;: {
-                    &quot;uuid&quot;: &quot;aaefd528-d057-4c0d-a87d-a474bade205b&quot;,
-                    &quot;name&quot;: &quot;getC&quot;,
-                    &quot;properties&quot;: []
-                },
-                &quot;body&quot;: null
-            },
-            {
-                &quot;uuid&quot;: &quot;8ad17083-e9f4-4877-9738-643d9c2d0544&quot;,
-                &quot;signature&quot;: {
-                    &quot;uuid&quot;: &quot;cd3497f4-494e-4eff-a81a-70d95c5a5dec&quot;,
-                    &quot;name&quot;: &quot;setC&quot;,
-                    &quot;properties&quot;: [
-                        {
-                            &quot;uuid&quot;: &quot;e88f29d8-88de-4659-9209-9b21845fcd89&quot;,
-                            &quot;name&quot;: &quot;c&quot;,
-                            &quot;static&quot;: null,
-                            &quot;scope&quot;: null
-                        }
+            &quot;__events&quot;: {
+                &quot;change&quot;: {
+                    &quot;listeners&quot;: [
+                        null,
+                        null
                     ]
-                },
-                &quot;body&quot;: null
+                }
+            },
+            &quot;_uuid&quot;: &quot;c3d4ca12-b407-4d67-9f51-a2417bc77180&quot;,
+            &quot;_props&quot;: {
+                &quot;_uses&quot;: [],
+                &quot;_name&quot;: &quot;A&quot;,
+                &quot;_properties&quot;: [
+                    &quot;c5a5c997-3b57-47f9-ab90-36593256a522&quot;
+                ],
+                &quot;_methods&quot;: [
+                    &quot;78a231da-0c05-4adc-976e-d6b4bc362989&quot;,
+                    &quot;477238c0-d014-4626-81fa-e32e04f8494a&quot;
+                ]
             }
-        ]
-    }
+        },
+        {
+            &quot;__events&quot;: {
+                &quot;change&quot;: {
+                    &quot;listeners&quot;: [
+                        null,
+                        null
+                    ]
+                }
+            },
+            &quot;_uuid&quot;: &quot;dec298f0-3e08-4667-808a-6af0b61eb97c&quot;,
+            &quot;_props&quot;: {
+                &quot;_uses&quot;: [],
+                &quot;_name&quot;: &quot;B&quot;,
+                &quot;_properties&quot;: [
+                    &quot;ff60f8db-504e-4316-9e52-fc88e86d20bf&quot;
+                ],
+                &quot;_methods&quot;: [
+                    &quot;cf02afd7-a8ea-4768-aaaf-61ceeb2d5c80&quot;,
+                    &quot;50eded8c-c329-4ef0-ba9d-bb9bd9e05517&quot;
+                ]
+            }
+        },
+        {
+            &quot;__events&quot;: {
+                &quot;change&quot;: {
+                    &quot;listeners&quot;: [
+                        null,
+                        null
+                    ]
+                }
+            },
+            &quot;_uuid&quot;: &quot;77fb7f48-f034-42bd-b9ff-18db05cfa962&quot;,
+            &quot;_props&quot;: {
+                &quot;_uses&quot;: [
+                    &quot;c3d4ca12-b407-4d67-9f51-a2417bc77180&quot;,
+                    &quot;dec298f0-3e08-4667-808a-6af0b61eb97c&quot;
+                ],
+                &quot;_name&quot;: &quot;C&quot;,
+                &quot;_inheritance&quot;: &quot;dec298f0-3e08-4667-808a-6af0b61eb97c&quot;,
+                &quot;_properties&quot;: [
+                    &quot;19d70480-9301-4a63-a2ef-68e42f5127fc&quot;
+                ],
+                &quot;_methods&quot;: [
+                    &quot;20976cff-5e10-424f-a366-1fb8401f3425&quot;,
+                    &quot;cd6e9b84-0c98-48b5-8548-3a36da9be6ac&quot;
+                ]
+            }
+        }
+    ]
 }
 
 </code></pre>
@@ -351,7 +264,7 @@ resolve(program.serialize());
                 <p>
                     Documentation generated by
                     <a href="https://github.com/jsdoc3/jsdoc">
-                        JSDoc 3.6.2
+                        JSDoc 3.6.3
                     </a>
                 </p>
                 <p class="sidebar-created-by">

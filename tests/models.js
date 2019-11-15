@@ -5,6 +5,7 @@ const Simple = module.exports.Simple = Fractale.create('Simple', {
     boolean: Boolean,
     number: Number,
     string: String,
+    date: Date,
 });
 
 const Compound = module.exports.Compound = Fractale.create('Compound', Simple, {

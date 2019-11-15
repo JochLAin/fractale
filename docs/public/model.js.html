@@ -67,7 +67,7 @@
                 <div class="column is-3" id="sidebarNav">
                     <div class="sidebar">
                         <nav>
-                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-collection_model.html">Collection model</a></li><li><a href="tutorial-complex_model.html">Complex model</a></li><li><a href="tutorial-deep_model.html">Deep model</a></li><li><a href="tutorial-form_model.html">Form model</a></li><li><a href="tutorial-inception_model.html">Inception model</a></li><li><a href="tutorial-metadata_model.html">Metadata model</a></li><li><a href="tutorial-self-reference_model.html">Self-reference model</a></li><li><a href="tutorial-simple_model.html">Simple model</a></li></ul><h3>Modules</h3><ul><li><a href="module-Fractale.html">Fractale</a></li></ul><h3>Classes</h3><ul><li><a href="Encyclopedia.html">Encyclopedia</a></li><li><a href="EventListener.html">EventListener</a></li><li><a href="Factory.html">Factory</a></li><li><a href="Library.html">Library</a></li><li><a href="ModelClass.html">ModelClass</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_ModelClass">_ModelClass</a></li></ul></div>
+                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-collection_model.html">Collection model</a></li><li><a href="tutorial-complex_model.html">complex_model</a></li><li><a href="tutorial-deep_model.html">Deep model</a></li><li><a href="tutorial-form_model.html">Form model</a></li><li><a href="tutorial-huge_model.html">Huge model</a></li><li><a href="tutorial-inception_model.html">Inception model</a></li><li><a href="tutorial-inheritance_model.html">Inheritance model</a></li><li><a href="tutorial-metadata_model.html">Metadata model</a></li><li><a href="tutorial-self-reference_model.html">Self-reference model</a></li><li><a href="tutorial-simple_model.html">Simple model</a></li></ul><h3>Classes</h3><ul><li><a href="EventListener.html">EventListener</a></li><li><a href="Factory.html">Factory</a></li><li><a href="Fractale.html">Fractale</a></li><li><a href="Library.html">Library</a></li><li><a href="Model.html">Model</a></li><li><a href="Schema.html">Schema</a></li></ul></div>
                         </nav>
                     </div>
                 </div>
@@ -84,21 +84,75 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>
-const uuid = require('uuid');
+            <pre class="prettyprint source linenums"><code>const uuid = require('uuid');
 const EventListener = require('./event_listener');
+const { FIELD_TYPE_ARRAY, FIELD_TYPE_MIXED, FIELD_TYPE_BOOLEAN, FIELD_TYPE_NUMBER, FIELD_TYPE_STRING, FIELD_TYPE_DATE, FIELD_TYPE_MODEL } = require('./constants');
 
 /**
  * Default base model class
- * @class ModelClass
+ * @class Model
  * @extends EventListener
  * @author Jocelyn Faihy &lt;jocelyn@faihy.fr>
  */
-module.exports = class ModelClass extends EventListener {
+module.exports = class Model extends EventListener {
     constructor(props) {
         super();
         this._uuid = props.uuid || uuid.v4();
         this._props = {};
+    }
+
+    get props() {
+        return this._props;
+    }
+
+    set props(props) {
+        this.deserialize(props);
+        return props;
+    }
+
+    get uuid() {
+        return this._uuid;
+    }
+
+    static getDependencies(model, dependencies = {}) {
+        const closure = (accu, field) => {
+            if (field.type === FIELD_TYPE_ARRAY) {
+                return closure(accu, field.options.subfield);
+            }
+            if (field.type !== FIELD_TYPE_MODEL) return accu;
+            if (field.value.name === field.schema.name) return accu;
+            if (field.value.virtual) return accu;
+            if (accu[field.value.name]) return accu;
+            Object.assign(accu, { [field.value.name]: field.value });
+            Object.assign(accu, Model.getDependencies(field.value, accu));
+            return accu;
+        };
+        return model.schema.fields.reduce(closure, dependencies);
+    }
+
+    static stringify(model, space) {
+        const parent = model.schema.parent;
+        const replacer = (key, value) => {
+            switch (value) {
+                case FIELD_TYPE_MIXED:
+                    return 'undefined';
+                case FIELD_TYPE_BOOLEAN:
+                    return 'Boolean';
+                case FIELD_TYPE_NUMBER:
+                    return 'Number';
+                case FIELD_TYPE_STRING:
+                    return 'String';
+                case FIELD_TYPE_DATE:
+                    return 'Date';
+            }
+            return value || 'undefined';
+        };
+        const schema = JSON.stringify(model.schema, replacer, space).replace(/("([a-zA-Z0-9\-_.]+)":?)/g, (match, content, value) => {
+            if (!content.match(/:$/)) return value;
+            if (value.match(/^[a-zA-Z0-9]+$/)) return `${value}:`;
+            return content;
+        });
+        return `const ${model.name} = Fractale.create("${model.name}", ${parent ? `${parent.name}, ` : ''}${schema});`;
     }
 };
 </code></pre>
@@ -117,7 +171,7 @@ module.exports = class ModelClass extends EventListener {
                 <p>
                     Documentation generated by
                     <a href="https://github.com/jsdoc3/jsdoc">
-                        JSDoc 3.6.2
+                        JSDoc 3.6.3
                     </a>
                 </p>
                 <p class="sidebar-created-by">

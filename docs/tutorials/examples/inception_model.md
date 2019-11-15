@@ -3,28 +3,28 @@
 ```
 
 const Author = Fractale.create("Author", {
-    "firstname": String,
-    "lastname": String,
-    "surname": String,
-    "comment": String
-});
-
-const Page = Fractale.create("Page", {
-    "title": String,
-    "content": String
+    firstname: String,
+    lastname: String,
+    surname: String,
+    comment: String
 });
 
 const Chapter = Fractale.create("Chapter", {
-    "pages": [
+    pages: [
         Page
     ]
 });
 
+const Page = Fractale.create("Page", {
+    title: String,
+    content: String
+});
+
 const Book = Fractale.create("Book", {
-    "author": Author,
-    "readable": Boolean,
-    "title": String,
-    "chapters": [
+    author: Author,
+    readable: Boolean,
+    title: String,
+    chapters: [
         Chapter
     ]
 });
@@ -75,9 +75,9 @@ resolve(book.serialize());
 ```
 
 {
-    "uuid": "bff5cde4-9fc9-4bca-bfa1-e9a92165e97a",
+    "uuid": "ae2bc69e-b023-4a88-90dd-cb1610998b07",
     "author": {
-        "uuid": "d16bfd8a-1096-4ecc-a2a2-b9b0032d5c35",
+        "uuid": "07b32ae2-3c7e-444f-8801-783b7350b06e",
         "firstname": "Ito",
         "lastname": "Ōgure",
         "surname": "Oh! Great",

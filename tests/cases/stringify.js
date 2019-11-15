@@ -9,7 +9,7 @@ module.exports.tutorialized = false;
 module.exports.resolver = (resolve) => {
 
     const simple = Fractale.stringify(Simple);
-    const SIMPLE = `const Simple = Fractale.create("Simple", {mixed:undefined,boolean:Boolean,number:Number,string:String});`;
+    const SIMPLE = `const Simple = Fractale.create("Simple", {mixed:undefined,boolean:Boolean,number:Number,string:String,date:Date});`;
     if (simple !== SIMPLE) {
         throw new DetailedError('Error on simple stringify method', `Expected: ${SIMPLE}\nGot: ${simple}`);
     }
