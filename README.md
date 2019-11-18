@@ -94,15 +94,12 @@ console.log(myModel.serialize()); /*
 
 /* Copy props to another instance */
 // Method 1
-const myFull1 = new Full(myModel);
+const myFull = Full.from(myModel);
 
 // Method 2
-const myFull2 = new Full();
-myFull2.deserialize(myModel);
-
-// Method 3
 const serialized = myModel.serialize();
-const myFull3 = new Full(serialized);
+delete serialized.uuid;
+const myFullClone = new Full(serialized);
 ```
 
 ## Modification
