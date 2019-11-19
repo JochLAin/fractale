@@ -1,6 +1,8 @@
-{
+'use strict';
+
+module.exports = {
   "title": "Fractale",
-  "subtitle": "Data modeling",
+  "subtitle": "Javascript data modeling",
   "tags": {
     "allowUnknownTags": ["category"],
     "dictionaries": ["jsdoc"]

@@ -1,81 +1,100 @@
 'use strict';
 
-const fs = require('fs');
+const logger = require('crieur');
 const path = require('path');
 const Fractale = require('../lib');
+const Test = require('../tests');
+const fs = require('./filesystem');
 
-const KEY_CODE = `\n\n\`\`\`\n\n`;
+const KEY_CODE_JAVASCRIPT = `\n\n\`\`\`javascript\n`;
+const KEY_CODE_JSON = `\n\n\`\`\`json\n`;
+const KEY_CODE = `\n\`\`\`\n\n`;
 
-class Program {
-    static cleanCode(code) {
-        return code
-            .slice(code.indexOf('{') +1, code.lastIndexOf('}'))
-            .split('\n')
-            .map(line => {
-                return line
-                    .replace(/    /g, '\t')
-                    .replace(/^\t/g, '')
-                    .replace(/\t/g, '    ')
-                    ;
-            })
-            .join('\n')
-            .trim()
-        ;
-    }
+module.exports.clean = (code) => {
+    return code
+        .slice(code.indexOf('{') +1, code.lastIndexOf('}'))
+        .split('\n')
+        .map(line => {
+            return line
+                .replace(/    /g, '\t')
+                .replace(/^\t/g, '')
+                .replace(/\t/g, '    ')
+                ;
+        })
+        .join('\n')
+        .trim()
+    ;
+};
 
-    run() {
-        const promises = require('../tests').cases.filter(test => {
+module.exports.format = (test, results) => {
+    let content = `<article class="mb-4">`;
+    content += `<a href="#models" class="border border-1" data-toggle="collapse">Models used for examples</a>`;
+    content += `<div id="models" class="border border-1 collapse">`;
+    content += `${KEY_CODE_JAVASCRIPT}${test.models.map(model => Fractale.stringify(model, { space: 4, dependencies: true }))}${KEY_CODE}`;
+    content += `</div>`;
+    content += `</article>`;
+    content += `${KEY_CODE_JAVASCRIPT}${module.exports.clean(test.resolver.toString())}${KEY_CODE}`;
+    content += `### Results`;
+    content += `${KEY_CODE_JSON}${JSON.stringify(results, null, 4)}${KEY_CODE}`;
+
+    return content.trim();
+};
+
+module.exports.get = () => {
+    return Test.run().then(() => {
+        return Test.cases.filter(test => {
             if (!test.resolver) return;
             if (!test.tutorialized) return;
             return true;
         }).map(test => {
-            const name = test.title.replace(/ /g, '_').toLowerCase();
             return new Promise(test.resolver).then(result => {
-                fs.writeFile(
-                    path.resolve(__dirname, `tutorials/examples/${name}.md`),
-                    this.getContent(test.models, test.resolver.toString(), result),
-                    (error) => {
-                        if (error) throw error;
-                        console.log(`Write "${test.title}" tutorial successfully`);
-                    }
-                );
-
-                return { name, title: test.title };
+                return Object.assign(test, {
+                    content: module.exports.format(test, result),
+                    path: path.resolve(__dirname, `tutorials/examples/${test.name}.md`)
+                });
             });
         });
+    });
+};
 
-        Promise.all(promises).then((values) => {
-            fs.writeFileSync(path.resolve(__dirname, 'tutorials/tutorials.json'), JSON.stringify({
+module.exports.run = () => {
+    return module.exports.get().then((promises) => {
+        return Promise.all(promises).then((tests) => {
+            // Clean examples folder
+            logger.info('Clean examples folder');
+            fs.remove(path.resolve(__dirname, 'tutorials/examples/*'));
+
+            for (const index in tests) {
+                logger.info(`Write "${tests[index].title}"`);
+                fs.write(tests[index].path, tests[index].content);
+            }
+
+            // Update example list
+            const content = fs.read(path.resolve(__dirname, 'tutorials/tutorials.json')) || {};
+            Object.assign(content, {
                 examples: {
                     title: "Examples",
-                    children: values.reduce((accu, { name, title }) => {
+                    children: tests.reduce((accu, test, index) => {
                         return Object.assign({}, accu, {
-                            [name]: { title }
+                            [test.name]: {
+                                title: `Example ${index}: ${test.title}`,
+                            },
                         });
                     }, {})
                 }
-            }));
-        }).catch(error => {
-            throw error;
+            });
+
+            // Write example list
+            fs.write(path.resolve(__dirname, 'tutorials/tutorials.json'), content);
         });
-    }
-
-    getContent(models, code, results) {
-        let content = `<article class="mb-4">`;
-        content += `<a href="#models" class="border border-1" data-toggle="collapse">Models used for examples</a>`;
-        content += `<div id="models" class="border border-1 collapse">`;
-        content += `${KEY_CODE}${models.map(Model => Fractale.stringify(Model, { space: 4, dependencies: true }))}${KEY_CODE}`;
-        content += `</div>`;
-        content += `</article>`;
-        content += `${KEY_CODE}${Program.cleanCode(code.toString())}${KEY_CODE}`;
-        content += `### Results`;
-        content += `${KEY_CODE}${JSON.stringify(results, null, 4)}${KEY_CODE}`;
-
-        return content.trim();
-    };
-}
+    });
+};
 
 if (require.main === module) {
-    const program = new Program;
-    program.run();
+    module.exports.run().catch(error => {
+        logger.error('Test failed !', { block: true });
+        logger.error(error);
+
+        process.exit(1);
+    });
 }

@@ -1,1 +1,6 @@
-{"examples":{"title":"Examples","children":{"simple_model":{"title":"Simple model"},"metadata_model":{"title":"Metadata model"},"inception_model":{"title":"Inception model"},"collection_model":{"title":"Collection model"},"self-reference_model":{"title":"Self-reference model"},"inheritance_model":{"title":"Inheritance model"},"form_model":{"title":"Form model"},"deep_model":{"title":"Deep model"},"huge_model":{"title":"Huge model"}}}}
+{
+    "examples": {
+        "title": "Examples",
+        "children": {}
+    }
+}
