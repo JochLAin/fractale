@@ -3,6 +3,7 @@ const { Simple } = require('../models');
 
 module.exports.models = [Simple];
 module.exports.title = 'Simple model';
+module.exports.name = 'simple_model';
 module.exports.tutorialized = true;
 
 module.exports.resolver = (resolve) => {

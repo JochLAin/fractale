@@ -3,6 +3,7 @@ const { Parent, Child } = require('../models');
 module.exports.models = [Parent, Child];
 
 module.exports.title = 'Inheritance model';
+module.exports.name = 'inheritance_model';
 module.exports.tutorialized = true;
 
 module.exports.resolver = (resolve) => {

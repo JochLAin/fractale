@@ -3,6 +3,7 @@ const { Compound } = require('../models');
 module.exports.models = [Compound];
 
 module.exports.title = 'Metadata model';
+module.exports.name = 'metadata_model';
 module.exports.tutorialized = true;
 
 module.exports.resolver = (resolve) => {

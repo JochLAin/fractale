@@ -1,9 +1,9 @@
 const { DetailedError } = require('../error');
 const Fractale = require('../../lib');
-const { TYPE_KEY, OPTIONS_KEY } = require('../../lib/constants');
 const { Simple, Compound, Method, Class } = require('../models');
 
-module.exports.title = 'Stringify model';
+module.exports.title = 'Stringify test';
+module.exports.name = 'stringify_test';
 module.exports.tutorialized = false;
 
 module.exports.resolver = (resolve) => {

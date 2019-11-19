@@ -3,7 +3,8 @@ const { Game, Character } = require('../models');
 module.exports.models = [Game];
 
 module.exports.title = 'Huge model';
-module.exports.tutorialized = true;
+module.exports.name = 'huge_model';
+module.exports.tutorialized = false;
 
 module.exports.resolver = (resolve) => {
     const PIXELS = [

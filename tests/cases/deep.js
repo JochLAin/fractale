@@ -3,7 +3,8 @@ const { Class, Program, Variable } = require('../models');
 module.exports.models = [Class];
 
 module.exports.title = 'Deep model';
-module.exports.tutorialized = true;
+module.exports.name = 'deep_model';
+module.exports.tutorialized = false;
 
 module.exports.resolver = (resolve) => {
     const a = new Class({

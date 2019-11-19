@@ -3,6 +3,7 @@ const { Author, Book, Library } = require('../models');
 
 module.exports.models = [Library];
 module.exports.title = 'Collection model';
+module.exports.name = 'collection_model';
 module.exports.tutorialized = true;
 
 module.exports.resolver = (resolve) => {

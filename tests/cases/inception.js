@@ -3,6 +3,7 @@ const { Book } = require('../models');
 module.exports.models = [Book];
 
 module.exports.title = 'Inception model';
+module.exports.name = 'inception_model';
 module.exports.tutorialized = true;
 
 module.exports.resolver = (resolve) => {

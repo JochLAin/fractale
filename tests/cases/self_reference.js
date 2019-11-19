@@ -2,6 +2,7 @@ const { Class, Variable } = require('../models');
 module.exports.models = [Class];
 
 module.exports.title = 'Self-reference model';
+module.exports.name = 'reference_model';
 module.exports.tutorialized = true;
 
 module.exports.resolver = (resolve) => {

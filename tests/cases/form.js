@@ -2,7 +2,8 @@ const { DetailedError } = require('../error');
 const { Author, Book } = require('../models');
 module.exports.models = [Book];
 
-module.exports.title = 'Form model';
+module.exports.title = 'Form usage';
+module.exports.name = 'form_model';
 module.exports.tutorialized = true;
 
 module.exports.resolver = (resolve) => {
@@ -15,8 +16,8 @@ module.exports.resolver = (resolve) => {
 
     const book = new Book({
         author: author.uuid,
+        title: 'Au-delà de la donnée',
         readable: false,
-        title: 'Au-delà de la donnée'
     });
 
     if (book.author.firstname !== 'Jocelyn') {

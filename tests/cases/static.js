@@ -2,7 +2,8 @@ const { DetailedError } = require('../error');
 const { Book } = require('../models');
 module.exports.models = [Book];
 
-module.exports.title = 'Static method';
+module.exports.title = 'Static method test';
+module.exports.name = 'static_test';
 module.exports.tutorialized = false;
 
 module.exports.resolver = (resolve) => {
