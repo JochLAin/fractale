@@ -50,6 +50,9 @@ instance.metadata = { key: 'assign' };
 if (instance.metadata.key !== 'assign') {
     throw new DetailedError('Error on metadata accessor with assign', `Expected "assign" got "${instance.metadata.key}"`);
 }
+if (!instance.metadata.data) {
+    throw new DetailedError('Error on metadata accessor with assign', `Expected "<uuid>" got "${instance.metadata.data}"`);
+}
 if (instance.metadata.data.key !== 'Bar') {
     throw new DetailedError('Error on metadata accessor with assign', `Expected "Bar" got "${instance.metadata.data.key}"`);
 }
@@ -76,17 +79,17 @@ resolve(instance.serialize());
 
 ```json
 {
-    "uuid": "dd6c49c3-b176-4a51-986b-cc35ac15a7a0",
+    "uuid": "c52b3e23-124e-48ba-bb92-e94e1336c83c",
     "string": "Hello world",
     "boards": [
         "Lorem ipsum",
         "Dolores sit amet"
     ],
     "metadata": {
-        "uuid": "e53d1514-90ce-4bce-af02-a6a0dc2ba4f7",
+        "uuid": "9c29ef6d-a835-47b4-ab88-f22e0e1bb390",
         "key": "assign",
         "data": {
-            "uuid": "3c9ced74-44fd-4d5f-9fe5-26e5b40e7f0a",
+            "uuid": "fa786ad2-9a33-4bef-b1a9-8bbc906543a3",
             "key": "after",
             "value": 12
         }

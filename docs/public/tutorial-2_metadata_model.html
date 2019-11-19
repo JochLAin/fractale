@@ -127,6 +127,9 @@ instance.metadata = { key: 'assign' };
 if (instance.metadata.key !== 'assign') {
     throw new DetailedError('Error on metadata accessor with assign', `Expected &quot;assign&quot; got &quot;${instance.metadata.key}&quot;`);
 }
+if (!instance.metadata.data) {
+    throw new DetailedError('Error on metadata accessor with assign', `Expected &quot;&lt;uuid>&quot; got &quot;${instance.metadata.data}&quot;`);
+}
 if (instance.metadata.data.key !== 'Bar') {
     throw new DetailedError('Error on metadata accessor with assign', `Expected &quot;Bar&quot; got &quot;${instance.metadata.data.key}&quot;`);
 }
@@ -150,17 +153,17 @@ resolve(instance.serialize());
 </code></pre>
 <h3>Results</h3>
 <pre class="prettyprint source lang-json"><code>{
-    &quot;uuid&quot;: &quot;dd6c49c3-b176-4a51-986b-cc35ac15a7a0&quot;,
+    &quot;uuid&quot;: &quot;c52b3e23-124e-48ba-bb92-e94e1336c83c&quot;,
     &quot;string&quot;: &quot;Hello world&quot;,
     &quot;boards&quot;: [
         &quot;Lorem ipsum&quot;,
         &quot;Dolores sit amet&quot;
     ],
     &quot;metadata&quot;: {
-        &quot;uuid&quot;: &quot;e53d1514-90ce-4bce-af02-a6a0dc2ba4f7&quot;,
+        &quot;uuid&quot;: &quot;9c29ef6d-a835-47b4-ab88-f22e0e1bb390&quot;,
         &quot;key&quot;: &quot;assign&quot;,
         &quot;data&quot;: {
-            &quot;uuid&quot;: &quot;3c9ced74-44fd-4d5f-9fe5-26e5b40e7f0a&quot;,
+            &quot;uuid&quot;: &quot;fa786ad2-9a33-4bef-b1a9-8bbc906543a3&quot;,
             &quot;key&quot;: &quot;after&quot;,
             &quot;value&quot;: 12
         }

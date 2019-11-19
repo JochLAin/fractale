@@ -118,28 +118,20 @@ resolve(library.serialize());
 
 ```json
 {
-    "uuid": "a788276f-fcb4-403b-8319-e1fcde3aeaed",
+    "uuid": "4c8c3c70-4837-4272-a6ce-e2b501a1d979",
     "books": [
         {
-            "uuid": "0bcb1726-9bb4-4951-a558-f6f03c40ce85",
+            "uuid": "19f490cc-8e37-42cc-a6a1-7f8c7c3b23ca",
             "author": {
-                "uuid": "4a7351ab-cf4c-4e29-b9bc-af1912bb0deb",
-                "firstname": "Ito",
-                "lastname": "Ōgure",
-                "surname": "Oh! Great",
-                "comment": "N/A"
+                "uuid": "1d38e9a0-1a4e-47da-9a30-509cca144e76"
             },
             "title": "Tenjo tenge",
             "chapters": []
         },
         {
-            "uuid": "02b806c9-38c2-4783-96c4-84c45c853827",
+            "uuid": "5609f95f-df84-4be4-852b-76bb4d6a8290",
             "author": {
-                "uuid": "4a7351ab-cf4c-4e29-b9bc-af1912bb0deb",
-                "firstname": "Ito",
-                "lastname": "Ōgure",
-                "surname": "Oh! Great",
-                "comment": "N/A"
+                "uuid": "4053e5b3-a043-459d-9e8e-3f9d98affc5d"
             },
             "title": "Biorg trinity",
             "chapters": []

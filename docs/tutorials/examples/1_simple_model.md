@@ -62,7 +62,7 @@ resolve(instance.serialize());
 
 ```json
 {
-    "uuid": "5219782e-b7a0-4967-8ad4-6cf6dcde4d5e",
+    "uuid": "ecb21744-f690-4980-be17-83c8f7597ae5",
     "mixed": -1,
     "boolean": true,
     "number": 42,

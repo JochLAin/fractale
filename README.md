@@ -10,6 +10,14 @@ It will test value of each fields and link model between them.
 
 You can found more documentation and examples [here](http://docs.faihy.org/fractale).
 
+# Performance
+
+From a  :
+- Creation from a JSON file (1.03Go) : **~7.777s** => __137.33Mo/s__
+- Read of an atom : **~10.087s**
+
+For more information see 
+
 # Usage
 
 ## Declaration

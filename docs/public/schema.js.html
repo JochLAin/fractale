@@ -127,6 +127,10 @@ class Schema {
         return this.parse(field, type);
     }
 
+    get(key) {
+        return this.fields.find(field => field.key === key);
+    }
+
     parse(field, type, options = {}) {
         const Model = models.get();
         const _typeof = typeof type;

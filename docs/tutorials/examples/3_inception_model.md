@@ -70,9 +70,9 @@ resolve(book.serialize());
 
 ```json
 {
-    "uuid": "90e3b33a-cfd2-44e8-88bb-50b1a8869e30",
+    "uuid": "68dbec0b-7f08-4a5f-b48b-02bcee19c549",
     "author": {
-        "uuid": "90de3045-303d-45cd-970f-0988d178185e",
+        "uuid": "fc680712-5ac1-4ab9-8a15-dad82072c2e5",
         "firstname": "Ito",
         "lastname": "Ōgure",
         "surname": "Oh! Great",

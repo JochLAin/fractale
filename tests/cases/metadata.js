@@ -33,6 +33,9 @@ module.exports.resolver = (resolve) => {
     if (instance.metadata.key !== 'assign') {
         throw new DetailedError('Error on metadata accessor with assign', `Expected "assign" got "${instance.metadata.key}"`);
     }
+    if (!instance.metadata.data) {
+        throw new DetailedError('Error on metadata accessor with assign', `Expected "<uuid>" got "${instance.metadata.data}"`);
+    }
     if (instance.metadata.data.key !== 'Bar') {
         throw new DetailedError('Error on metadata accessor with assign', `Expected "Bar" got "${instance.metadata.data.key}"`);
     }

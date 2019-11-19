@@ -48,15 +48,15 @@ resolve(instance.serialize());
 
 ```json
 {
-    "uuid": "40f90132-472e-4741-b861-cc31aa64250f",
+    "uuid": "ac99b6ec-60f3-4893-b1f3-8438aec33711",
     "value": "Hello",
     "children": [
         {
-            "uuid": "f5969cf3-3e8b-4daf-87fa-22b6a50ab255",
+            "uuid": "08401d24-c817-44d2-9d41-98465dd7c2b0",
             "value": "world"
         },
         {
-            "uuid": "774f0b4a-9ef8-4a21-b75f-7527561d1557",
+            "uuid": "ef15e624-df53-4681-9d43-439976d39e7f",
             "value": "you"
         }
     ]

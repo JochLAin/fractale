@@ -94,40 +94,40 @@ resolve(c.serialize());
 
 ```json
 {
-    "uuid": "3ca11bb4-be51-4b90-945d-59785fa1dbd7",
+    "uuid": "02c8ef36-c7a9-490d-b8dc-c5e63dccd09f",
     "uses": [],
     "name": "C",
     "inheritance": {
-        "uuid": "70dd5e32-078f-4b03-82de-a81ebba9cebe",
+        "uuid": "77e9ad4a-0fcd-4701-a018-73b726d0bf10",
         "uses": [],
         "name": "B",
         "inheritance": {
-            "uuid": "8e3d81db-5b96-45d4-a5fe-f03f48a5dd91",
+            "uuid": "3f52aaa8-24c8-4d20-82a0-969265fa994d",
             "uses": [],
             "name": "A",
             "properties": [
                 {
-                    "uuid": "27cfe111-02c9-4e8d-abc3-e7a2d536e0cb",
+                    "uuid": "d28c2bfe-4377-4aac-95c4-0155805db107",
                     "name": "a"
                 }
             ],
             "methods": [
                 {
-                    "uuid": "df399907-ac8e-4adf-bea9-96b82a5b395d",
+                    "uuid": "990b4e8f-afda-43f7-b38b-8857513840af",
                     "signature": {
-                        "uuid": "aec7b95f-8235-4e9b-bd73-3cde67747a8b",
+                        "uuid": "647abb0a-a4cd-4432-ac7a-79a86796df6e",
                         "name": "getA",
                         "variables": []
                     }
                 },
                 {
-                    "uuid": "a6fabfee-8005-4e68-afbd-770ad5035008",
+                    "uuid": "0f4f46c2-ef14-4bbb-8f5c-d47106d25c35",
                     "signature": {
-                        "uuid": "2f37039b-d04a-4b2e-b0c2-0f6dbb2d2ad3",
+                        "uuid": "3c159030-5751-40fe-9a54-85b2a94c494d",
                         "name": "setA",
                         "variables": [
                             {
-                                "uuid": "aa790b11-71a7-4310-8f5f-83f40b0ad152",
+                                "uuid": "3e966d77-287a-47d4-aef5-6ad235d16214",
                                 "name": "a"
                             }
                         ]
@@ -137,27 +137,27 @@ resolve(c.serialize());
         },
         "properties": [
             {
-                "uuid": "d6d551dd-818e-41b0-8b13-cc5c81a13918",
+                "uuid": "521563a9-5d99-4423-9e5a-3f61fdb4face",
                 "name": "b"
             }
         ],
         "methods": [
             {
-                "uuid": "3cedc676-a0cf-4d02-a3b9-3598ebd64767",
+                "uuid": "49954e62-ef99-4970-a4c4-76b68835c458",
                 "signature": {
-                    "uuid": "62264959-8797-4452-a4ec-24cd025b74bc",
+                    "uuid": "4e88a956-5019-4bc5-b723-6a4baa517e56",
                     "name": "getB",
                     "variables": []
                 }
             },
             {
-                "uuid": "9fd17c32-7439-49f1-a381-bdbfac82a1e9",
+                "uuid": "3d0cc617-6baa-45ef-a29c-52dfeea26a15",
                 "signature": {
-                    "uuid": "2b8db5cd-0777-406c-abb0-20b9d9439f44",
+                    "uuid": "98deec4e-c302-4617-abbf-2283e3e15e8a",
                     "name": "setB",
                     "variables": [
                         {
-                            "uuid": "e82386b6-1b19-4334-9b0e-15cbb0d35071",
+                            "uuid": "71ef0419-e48b-409a-8b33-26f6c167a003",
                             "name": "b"
                         }
                     ]
@@ -167,27 +167,27 @@ resolve(c.serialize());
     },
     "properties": [
         {
-            "uuid": "0b1b5e00-7f88-4cae-a5bd-a4c8b28ea916",
+            "uuid": "91fc10ab-5757-4181-99d0-1da0c37822cb",
             "name": "c"
         }
     ],
     "methods": [
         {
-            "uuid": "6d91debf-4138-42f1-b933-b895e4ed298f",
+            "uuid": "cf4220df-ac4d-4976-b9ec-bdc46eb6dc68",
             "signature": {
-                "uuid": "d1cefe2c-362d-4013-ac60-e4b1673fa857",
+                "uuid": "13b8b552-1f41-4311-913e-72e80e7164fe",
                 "name": "getC",
                 "variables": []
             }
         },
         {
-            "uuid": "77060f31-75bd-470d-8c17-0ec0d363664c",
+            "uuid": "49d83296-f5b4-424f-a3dd-7344b569baee",
             "signature": {
-                "uuid": "3db71db5-c049-467a-8a5f-e9d3731eb282",
+                "uuid": "e67aeae0-c40f-4728-8483-360211ab298c",
                 "name": "setC",
                 "variables": [
                     {
-                        "uuid": "c63dbd8f-550d-4129-881f-690c5bb76035",
+                        "uuid": "4a877f4b-908e-4370-b888-e6930d229912",
                         "name": "c"
                     }
                 ]
