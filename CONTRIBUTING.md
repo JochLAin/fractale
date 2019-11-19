@@ -4,5 +4,5 @@
 3. Create a branch with issue id  
    Example: `1-add-option`
 4. Fix bug or add feature
-5. Add test
+5. Write test
 6. Create pull request
