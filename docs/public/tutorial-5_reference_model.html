@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        
+        <meta charset="utf-8">
+        <title>Fractale: Example 5: Self-reference model</title>
+
+        <script src="scripts/prettify/prettify.js"></script>
+        <script src="scripts/prettify/lang-css.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <!--[if lt IE 9]>
+        <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css?family=Muli:100,400,700|Oswald:300|Inconsolata,700" rel="stylesheet">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+              integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+        <link type="text/css" rel="stylesheet"
+              href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+        <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+        <link type="text/css" rel="stylesheet" href="styles/custom.min.css">
+    </head>
+
+    <body>
+        <div id="stickyNavbarOverlay"></div>
+        <div class="top-navbar">
+            <div class="container">
+                <nav class="navbar" role="navigation" aria-label="main navigation">
+                    <div class="navbar-brand">
+                        
+                            <a href="index.html" style="display: flex;">
+                                <img src="images/logo.svg" alt="logo">
+                                
+                                    <h1 class="navbar-item">Fractale Documentation</h1>
+                                
+                            </a>
+                        
+                        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                            <span aria-hidden="true"></span>
+                            <span aria-hidden="true"></span>
+                            <span aria-hidden="true"></span>
+                        </a>
+                    </div>
+                    
+                        <div class="navbar-menu">
+                            <div class="navbar-end">
+                                
+                                <div class="navbar-item">
+                                    <a href="https://www.npmjs.com/package/fractale" target="_blank">NPM</a>
+                                </div>
+                                
+                                <div class="navbar-item">
+                                    <a href="https://github.com/JochLAin/fractale" target="_blank">Github</a>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    
+                </nav>
+            </div>
+        </div>
+        <div class="container">
+            <div class="columns">
+                <div class="column is-3" id="sidebarNav">
+                    <div class="sidebar">
+                        <nav>
+                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-1_simple_model.html">Example 1: Simple model</a></li><li><a href="tutorial-2_metadata_model.html">Example 2: Metadata model</a></li><li><a href="tutorial-3_inception_model.html">Example 3: Inception model</a></li><li><a href="tutorial-4_collection_model.html">Example 4: Collection model</a></li><li><a href="tutorial-5_reference_model.html">Example 5: Self-reference model</a></li><li><a href="tutorial-6_inheritance_model.html">Example 6: Inheritance model</a></li><li><a href="tutorial-7_form_model.html">Example 7: Form usage</a></li></ul><h3>Modules</h3><ul><li><a href="module-Fractale.html">Fractale</a></li></ul><h3>Classes</h3><ul><li><a href="EventListener.html">EventListener</a></li><li><a href="Factory.html">Factory</a></li><li><a href="Library.html">Library</a></li><li><a href="Model.html">Model</a></li><li><a href="Schema.html">Schema</a></li></ul></div>
+                        </nav>
+                    </div>
+                </div>
+                <div class="column is-9-desktop">
+                    <div class="content" id="main-content-wrapper">
+                        <header class="page-title">
+                            <p>Tutorial</p>
+                            <h1>Example 5: Self-reference model</h1>
+                        </header>
+                        <section>
+    <header>
+        
+    </header>
+    <article>
+        <article class="mb-4"><a href="#models" class="border border-1" data-toggle="collapse">Models used for examples</a><div id="models" class="border border-1 collapse">
+<pre class="prettyprint source lang-javascript"><code>const Variable = Fractale.create(&quot;Variable&quot;, {
+    name: String,
+    value: undefined,
+    static: Boolean,
+    scope: String
+});
+
+const Method = Fractale.create(&quot;Method&quot;, {
+    signature: {
+        name: String,
+        variables: [
+            Variable
+        ]
+    },
+    body: String
+});
+
+const Class = Fractale.create(&quot;Class&quot;, {
+    uses: [
+        Fractale.SELF
+    ],
+    name: String,
+    inheritance: Fractale.SELF,
+    properties: [
+        Variable
+    ],
+    methods: [
+        Method
+    ]
+});
+</code></pre>
+</div></article>
+<pre class="prettyprint source lang-javascript"><code>const _a = new Variable({ name: 'a', value: 0 });
+const a = new Class({
+    name: 'A',
+    properties: [_a],
+    methods: [
+        { signature: { name: 'getA' }},
+        { signature: { name: 'setA', variables: [{ name: 'a' }] }}
+    ]
+});
+
+const b = new Class({
+    name: 'B',
+    inheritance: a,
+    properties: [
+        { name: 'b', value: 0 },
+    ],
+    methods: [
+        { signature: { name: 'getB' }},
+        { signature: { name: 'setB', variables: [{ name: 'b' }] }}
+    ]
+});
+
+const c = new Class({
+    name: 'C',
+    inheritance: b,
+    properties: [
+        { name: 'c', value: 0 },
+    ],
+    methods: [
+        { signature: { name: 'getC' }},
+        { signature: { name: 'setC', variables: [{ name: 'c' }] }}
+    ]
+});
+
+if (a.properties[0].name !== 'a') {
+    throw new Error('Error on deep accessor variable name');
+}
+if (c.inheritance.name !== 'B') {
+    throw new Error('Error on self-reference accessor');
+}
+if (c.inheritance.inheritance.name !== 'A') {
+    throw new Error('Error on double self-reference accessor');
+}
+if (c.inheritance.inheritance.inheritance) {
+    throw new Error('Error infinite self-reference accessor');
+}
+
+if (!c.serialize()) {
+    throw new Error('Error on self-reference serialize');
+}
+
+resolve(c.serialize());
+</code></pre>
+<h3>Results</h3>
+<pre class="prettyprint source lang-json"><code>{
+    &quot;uuid&quot;: &quot;3ca11bb4-be51-4b90-945d-59785fa1dbd7&quot;,
+    &quot;uses&quot;: [],
+    &quot;name&quot;: &quot;C&quot;,
+    &quot;inheritance&quot;: {
+        &quot;uuid&quot;: &quot;70dd5e32-078f-4b03-82de-a81ebba9cebe&quot;,
+        &quot;uses&quot;: [],
+        &quot;name&quot;: &quot;B&quot;,
+        &quot;inheritance&quot;: {
+            &quot;uuid&quot;: &quot;8e3d81db-5b96-45d4-a5fe-f03f48a5dd91&quot;,
+            &quot;uses&quot;: [],
+            &quot;name&quot;: &quot;A&quot;,
+            &quot;properties&quot;: [
+                {
+                    &quot;uuid&quot;: &quot;27cfe111-02c9-4e8d-abc3-e7a2d536e0cb&quot;,
+                    &quot;name&quot;: &quot;a&quot;
+                }
+            ],
+            &quot;methods&quot;: [
+                {
+                    &quot;uuid&quot;: &quot;df399907-ac8e-4adf-bea9-96b82a5b395d&quot;,
+                    &quot;signature&quot;: {
+                        &quot;uuid&quot;: &quot;aec7b95f-8235-4e9b-bd73-3cde67747a8b&quot;,
+                        &quot;name&quot;: &quot;getA&quot;,
+                        &quot;variables&quot;: []
+                    }
+                },
+                {
+                    &quot;uuid&quot;: &quot;a6fabfee-8005-4e68-afbd-770ad5035008&quot;,
+                    &quot;signature&quot;: {
+                        &quot;uuid&quot;: &quot;2f37039b-d04a-4b2e-b0c2-0f6dbb2d2ad3&quot;,
+                        &quot;name&quot;: &quot;setA&quot;,
+                        &quot;variables&quot;: [
+                            {
+                                &quot;uuid&quot;: &quot;aa790b11-71a7-4310-8f5f-83f40b0ad152&quot;,
+                                &quot;name&quot;: &quot;a&quot;
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        &quot;properties&quot;: [
+            {
+                &quot;uuid&quot;: &quot;d6d551dd-818e-41b0-8b13-cc5c81a13918&quot;,
+                &quot;name&quot;: &quot;b&quot;
+            }
+        ],
+        &quot;methods&quot;: [
+            {
+                &quot;uuid&quot;: &quot;3cedc676-a0cf-4d02-a3b9-3598ebd64767&quot;,
+                &quot;signature&quot;: {
+                    &quot;uuid&quot;: &quot;62264959-8797-4452-a4ec-24cd025b74bc&quot;,
+                    &quot;name&quot;: &quot;getB&quot;,
+                    &quot;variables&quot;: []
+                }
+            },
+            {
+                &quot;uuid&quot;: &quot;9fd17c32-7439-49f1-a381-bdbfac82a1e9&quot;,
+                &quot;signature&quot;: {
+                    &quot;uuid&quot;: &quot;2b8db5cd-0777-406c-abb0-20b9d9439f44&quot;,
+                    &quot;name&quot;: &quot;setB&quot;,
+                    &quot;variables&quot;: [
+                        {
+                            &quot;uuid&quot;: &quot;e82386b6-1b19-4334-9b0e-15cbb0d35071&quot;,
+                            &quot;name&quot;: &quot;b&quot;
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    &quot;properties&quot;: [
+        {
+            &quot;uuid&quot;: &quot;0b1b5e00-7f88-4cae-a5bd-a4c8b28ea916&quot;,
+            &quot;name&quot;: &quot;c&quot;
+        }
+    ],
+    &quot;methods&quot;: [
+        {
+            &quot;uuid&quot;: &quot;6d91debf-4138-42f1-b933-b895e4ed298f&quot;,
+            &quot;signature&quot;: {
+                &quot;uuid&quot;: &quot;d1cefe2c-362d-4013-ac60-e4b1673fa857&quot;,
+                &quot;name&quot;: &quot;getC&quot;,
+                &quot;variables&quot;: []
+            }
+        },
+        {
+            &quot;uuid&quot;: &quot;77060f31-75bd-470d-8c17-0ec0d363664c&quot;,
+            &quot;signature&quot;: {
+                &quot;uuid&quot;: &quot;3db71db5-c049-467a-8a5f-e9d3731eb282&quot;,
+                &quot;name&quot;: &quot;setC&quot;,
+                &quot;variables&quot;: [
+                    {
+                        &quot;uuid&quot;: &quot;c63dbd8f-550d-4129-881f-690c5bb76035&quot;,
+                        &quot;name&quot;: &quot;c&quot;
+                    }
+                ]
+            }
+        }
+    ]
+}
+</code></pre>
+    </article>
+</section>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="footer">
+            <div class="content has-text-centered">
+                <p>
+                    Documentation generated by
+                    <a href="https://github.com/jsdoc3/jsdoc">
+                        JSDoc 3.6.3
+                    </a>
+                </p>
+                <p class="sidebar-created-by">
+                    <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a>
+                    provided with <i class="fas fa-heart"></i> by
+                    <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers</a>
+                </p>
+            </div>
+        </footer>
+        <script> prettyPrint(); </script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="scripts/app.min.js"></script>
+        <script src="scripts/linenumber.js"></script>
+    </body>
+</html>

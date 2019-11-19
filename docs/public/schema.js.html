@@ -1,0 +1,299 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        
+        <meta charset="utf-8">
+        <title>Fractale: schema.js</title>
+
+        <script src="scripts/prettify/prettify.js"></script>
+        <script src="scripts/prettify/lang-css.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <!--[if lt IE 9]>
+        <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css?family=Muli:100,400,700|Oswald:300|Inconsolata,700" rel="stylesheet">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+              integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+        <link type="text/css" rel="stylesheet"
+              href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+        <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+        <link type="text/css" rel="stylesheet" href="styles/custom.min.css">
+    </head>
+
+    <body>
+        <div id="stickyNavbarOverlay"></div>
+        <div class="top-navbar">
+            <div class="container">
+                <nav class="navbar" role="navigation" aria-label="main navigation">
+                    <div class="navbar-brand">
+                        
+                            <a href="index.html" style="display: flex;">
+                                <img src="images/logo.svg" alt="logo">
+                                
+                                    <h1 class="navbar-item">Fractale Documentation</h1>
+                                
+                            </a>
+                        
+                        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                            <span aria-hidden="true"></span>
+                            <span aria-hidden="true"></span>
+                            <span aria-hidden="true"></span>
+                        </a>
+                    </div>
+                    
+                        <div class="navbar-menu">
+                            <div class="navbar-end">
+                                
+                                <div class="navbar-item">
+                                    <a href="https://www.npmjs.com/package/fractale" target="_blank">NPM</a>
+                                </div>
+                                
+                                <div class="navbar-item">
+                                    <a href="https://github.com/JochLAin/fractale" target="_blank">Github</a>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    
+                </nav>
+            </div>
+        </div>
+        <div class="container">
+            <div class="columns">
+                <div class="column is-3" id="sidebarNav">
+                    <div class="sidebar">
+                        <nav>
+                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-1_simple_model.html">Example 1: Simple model</a></li><li><a href="tutorial-2_metadata_model.html">Example 2: Metadata model</a></li><li><a href="tutorial-3_inception_model.html">Example 3: Inception model</a></li><li><a href="tutorial-4_collection_model.html">Example 4: Collection model</a></li><li><a href="tutorial-5_reference_model.html">Example 5: Self-reference model</a></li><li><a href="tutorial-6_inheritance_model.html">Example 6: Inheritance model</a></li><li><a href="tutorial-7_form_model.html">Example 7: Form usage</a></li></ul><h3>Modules</h3><ul><li><a href="module-Fractale.html">Fractale</a></li></ul><h3>Classes</h3><ul><li><a href="EventListener.html">EventListener</a></li><li><a href="Factory.html">Factory</a></li><li><a href="Library.html">Library</a></li><li><a href="Model.html">Model</a></li><li><a href="Schema.html">Schema</a></li></ul></div>
+                        </nav>
+                    </div>
+                </div>
+                <div class="column is-9-desktop">
+                    <div class="content" id="main-content-wrapper">
+                        <header class="page-title">
+                            <p>Source</p>
+                            <h1>schema.js</h1>
+                        </header>
+                        
+
+
+
+    
+<section>
+    <article>
+        <pre class="prettyprint source linenums"><code>const moment = require('moment');
+const CONSTANTS = require('./constants');
+const library = require('./library');
+const models = require('./model');
+const _ = require('./utils');
+
+/**
+ * Schema class
+ * @class Schema
+ * @author Jocelyn Faihy &lt;jocelyn@faihy.fr>
+ */
+class Schema {
+    static validate(type, _typeof) {
+        const Model = models.get();
+        if (type === undefined || type === null) return true;
+        if (!_typeof) _typeof = typeof type;
+        if (['string', 'number', 'boolean', 'object'].includes(_typeof)) return true;
+        if (_typeof === 'function') {
+            if ([Boolean, Number, String, Date, moment].includes(type)) return true;
+            if (!type.prototype) return true;
+            if (type.prototype instanceof Model || type instanceof Schema) return true;
+        }
+        throw new Error(`Type ${(_typeof === 'function' &amp;&amp; type.name) ? type.name : _typeof} is not processed`);
+    }
+
+    constructor(name, props = {}, parent) {
+        if (props.uuid) {
+            throw new Error('Field "uuid" is automatically set');
+        }
+
+        this.name = name;
+        this._parent = parent;
+        this.fields = Object.entries(props).map(([key, type]) => this.createField(key, type));
+        if (!this._parent) this.values = this.fields;
+        else this.values = [].concat(this._parent.values, this.fields);
+        this.keys = this.values.map(field => field.key);
+    }
+
+    createField(key, type) {
+        const field = new Field(this, key);
+        return this.parse(field, type);
+    }
+
+    parse(field, type, options = {}) {
+        const Model = models.get();
+        const _typeof = typeof type;
+        if (!Schema.validate(type, _typeof)) {
+            throw new Error(`Type ${(_typeof === 'function' &amp;&amp; type.name) ? type.name : _typeof} is not processed`);
+        }
+        if (type === null || type === undefined) {
+            return field.specify(Field.TYPE_MIXED, undefined, options);
+        }
+        switch (_typeof) {
+            case 'boolean':
+                return field.specify(Field.TYPE_BOOLEAN, Boolean, options);
+            case 'number':
+                return field.specify(Field.TYPE_NUMBER, Number, options);
+            case 'string':
+                switch (type.toLowerCase()) {
+                    case 'boolean':
+                        return field.specify(Field.TYPE_BOOLEAN, Boolean, options);
+                    case 'number':
+                        return field.specify(Field.TYPE_NUMBER, Number, options);
+                    case 'string':
+                        return field.specify(Field.TYPE_STRING, String, options);
+                    case CONSTANTS.SELF.toLowerCase():
+                        return field.specify(Field.TYPE_CALLBACK, () => library.get(this.name), options);
+                    default: {
+                        return field.specify(Field.TYPE_STRING, String, options);
+                    }
+                }
+            case 'object':
+                if (type instanceof Date || moment.isMoment(type)) {
+                    return field.specify(Field.TYPE_DATE, Date, options);
+                }
+                if (type.hasOwnProperty(CONSTANTS.TYPE_KEY)) {
+                    Object.assign(options, type[CONSTANTS.OPTIONS_KEY]);
+                    return this.parse(field, type[CONSTANTS.TYPE_KEY], options);
+                }
+                if (Array.isArray(type)) {
+                    Object.assign(options, { subfield: this.createField(field.key, type[0]) });
+                    return field.specify(Field.TYPE_ARRAY, type, options);
+                }
+                /* Auto-generate inter-model class with PascalCase name */
+                const subname = `${this.name}_${_.toPascalCase(field.key)}`;
+                let entity = require('./library').get(subname);
+                if (!entity) entity = require('./factory').createModel(subname, type, { virtual: true });
+                return field.specify(Field.TYPE_MODEL, entity, options);
+            case 'function': {
+                switch (type) {
+                    case Boolean:
+                        return field.specify(Field.TYPE_BOOLEAN, Boolean, options);
+                    case Number:
+                        return field.specify(Field.TYPE_NUMBER, Number, options);
+                    case String:
+                        return field.specify(Field.TYPE_STRING, String, options);
+                    case Date: case moment:
+                        return field.specify(Field.TYPE_DATE, Date, options);
+                    default: {
+                        if (!type.prototype) {
+                            return field.specify(Field.TYPE_CALLBACK, type, options);
+                        } else if (type.prototype instanceof Model) {
+                            return field.specify(Field.TYPE_MODEL, type.entity, options);
+                        }
+                    }
+                }
+            }
+        }
+        throw new Error(`Type ${(_typeof === 'function' &amp;&amp; type.name) ? type.name : _typeof} is not processed`);
+    }
+
+    toJSON() {
+        return this.fields.reduce((accu, field) => {
+            return Object.assign({}, accu, {
+                [field.key]: field
+            });
+        }, {});
+    }
+
+    get parent() {
+        if (!this._parent) return;
+        return library.get(this._parent.name);
+    }
+}
+
+class Field {
+    constructor(schema, key) {
+        this.schema = schema;
+        this.key = key;
+        this.type = undefined;
+        this.value = undefined;
+        this.options = {};
+        this.subfield = undefined;
+    }
+
+    specify(type, value, options) {
+        this.type = type;
+        this.value = value;
+        this.setOptions(options);
+        return this;
+    }
+
+    setOptions(options = {}) {
+        Object.assign(this.options, options, {
+            validator: Object.assign({}, this.options.validator, options.validator),
+        });
+    }
+
+    toJSON() {
+        switch (this.type) {
+            case CONSTANTS.FIELD_TYPE_MIXED:
+            case CONSTANTS.FIELD_TYPE_BOOLEAN:
+            case CONSTANTS.FIELD_TYPE_NUMBER:
+            case CONSTANTS.FIELD_TYPE_STRING:
+            case CONSTANTS.FIELD_TYPE_DATE:
+                return this.type;
+            case CONSTANTS.FIELD_TYPE_MODEL:
+                if (this.value.name === this.schema.name) {
+                    return `Fractale.SELF`;
+                }
+                if (this.value.virtual) {
+                    return this.value.schema.toJSON();
+                }
+                return this.value.name;
+            case CONSTANTS.FIELD_TYPE_ARRAY:
+                return [this.options.subfield];
+        }
+    }
+}
+
+module.exports = Schema;
+Schema.Field = Field;
+Field.TYPE_MIXED = CONSTANTS.FIELD_TYPE_MIXED;
+Field.TYPE_BOOLEAN = CONSTANTS.FIELD_TYPE_BOOLEAN;
+Field.TYPE_STRING = CONSTANTS.FIELD_TYPE_STRING;
+Field.TYPE_NUMBER = CONSTANTS.FIELD_TYPE_NUMBER;
+Field.TYPE_DATE = CONSTANTS.FIELD_TYPE_DATE;
+Field.TYPE_MODEL = CONSTANTS.FIELD_TYPE_MODEL;
+Field.TYPE_ARRAY = CONSTANTS.FIELD_TYPE_ARRAY;
+Field.TYPE_CALLBACK = CONSTANTS.FIELD_TYPE_CALLBACK;
+</code></pre>
+    </article>
+</section>
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="footer">
+            <div class="content has-text-centered">
+                <p>
+                    Documentation generated by
+                    <a href="https://github.com/jsdoc3/jsdoc">
+                        JSDoc 3.6.3
+                    </a>
+                </p>
+                <p class="sidebar-created-by">
+                    <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a>
+                    provided with <i class="fas fa-heart"></i> by
+                    <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers</a>
+                </p>
+            </div>
+        </footer>
+        <script> prettyPrint(); </script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="scripts/app.min.js"></script>
+        <script src="scripts/linenumber.js"></script>
+    </body>
+</html>

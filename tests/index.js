@@ -4,23 +4,26 @@ if (process.env.LOG_LEVEL) {
     logger.level = process.env.LOG_LEVEL;
 }
 
-const chain = Promise.resolve();
-const loop = () => Promise.resolve().then(() => {
-    let current = cases.shift();
-    if (current) {
-        logger.info(`  > ${current.title}`, { bold: true });
-        const promise = new Promise(current.resolver);
-        return promise.then(() => {
-            logger.success('Test passed !', { block: true });
-        }).then(() => {
-            return loop();
-        });
-    }
-});
+module.exports.run = () => {
+    const cases = Array.from(module.exports.cases);
+    const chain = Promise.resolve();
+    const loop = () => Promise.resolve().then(() => {
+        let current = cases.shift();
+        if (current) {
+            logger.info(`  > ${current.title}`, { bold: true });
+            const promise = new Promise(current.resolver);
+            return promise.then(() => {
+                logger.success('Test passed !', { block: true });
+            }).then(() => {
+                return loop();
+            });
+        }
+    });
 
-module.exports.run = () => chain.then(loop);
+    return chain.then(loop);
+};
 module.exports.models = require('./models');
-const cases = module.exports.cases = [
+module.exports.cases = [
     require('./event_listener'),
     require('./cases/error'),
     require('./cases/simple'),

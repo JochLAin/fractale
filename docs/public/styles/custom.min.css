@@ -1,0 +1,10 @@
+a {text-decoration: none !important}
+.columns .column:not(#sidebarNav) div:not(.member) a:not(.button), .columns .column:not(#sidebarNav) div:not(.member) a:active:not(.button), .columns .column:not(#sidebarNav) div:not(.member) a:hover:not(.button), .columns .column:not(#sidebarNav) div:not(.member) a:focus:not(.button), .columns .column:not(#sidebarNav) div:not(.member) a:visited:not(.button) {color: #E6282B}
+.description {margin-bottom: 10px}
+dt.tag-see {display:inline-block}
+dd.tag-see {display:inline-block;margin-left:0}
+dd.tag-see ul {list-style:none;margin-left:5px}
+dt.tag-author {display:inline-block}
+dd.tag-author {display:inline-block;margin-left:0}
+dd.tag-author ul {list-style:none;margin-left:5px}
+[data-toggle="collapse"] { display: block; padding: 5px 10px; }

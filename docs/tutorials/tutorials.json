@@ -1,6 +1,28 @@
 {
     "examples": {
         "title": "Examples",
-        "children": {}
+        "children": {
+            "1_simple_model": {
+                "title": "Example 1: Simple model"
+            },
+            "2_metadata_model": {
+                "title": "Example 2: Metadata model"
+            },
+            "3_inception_model": {
+                "title": "Example 3: Inception model"
+            },
+            "4_collection_model": {
+                "title": "Example 4: Collection model"
+            },
+            "5_reference_model": {
+                "title": "Example 5: Self-reference model"
+            },
+            "6_inheritance_model": {
+                "title": "Example 6: Inheritance model"
+            },
+            "7_form_model": {
+                "title": "Example 7: Form usage"
+            }
+        }
     }
 }

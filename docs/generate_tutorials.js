@@ -46,14 +46,20 @@ module.exports.get = () => {
             if (!test.resolver) return;
             if (!test.tutorialized) return;
             return true;
-        }).map(test => {
+        }).map((test, index) => {
             return new Promise(test.resolver).then(result => {
-                return Object.assign(test, {
-                    content: module.exports.format(test, result),
-                    path: path.resolve(__dirname, `tutorials/examples/${test.name}.md`)
-                });
+                const name = `${index + 1}_${test.name}`;
+                const content = module.exports.format(test, result);
+                const filename = path.resolve(__dirname, `tutorials/examples/${name}.md`);
+                return Object.assign(test, { content, name, filename });
+            }, (error) => {
+                logger.error(error);
+                process.exit(1);
             });
         });
+    }, (error) => {
+        logger.error(error);
+        process.exit(1);
     });
 };
 
@@ -66,7 +72,7 @@ module.exports.run = () => {
 
             for (const index in tests) {
                 logger.info(`Write "${tests[index].title}"`);
-                fs.write(tests[index].path, tests[index].content);
+                fs.write(tests[index].filename, tests[index].content);
             }
 
             // Update example list
@@ -77,7 +83,7 @@ module.exports.run = () => {
                     children: tests.reduce((accu, test, index) => {
                         return Object.assign({}, accu, {
                             [test.name]: {
-                                title: `Example ${index}: ${test.title}`,
+                                title: `Example ${index + 1}: ${test.title}`,
                             },
                         });
                     }, {})
@@ -86,7 +92,13 @@ module.exports.run = () => {
 
             // Write example list
             fs.write(path.resolve(__dirname, 'tutorials/tutorials.json'), content);
+        }, (error) => {
+            logger.error(error);
+            process.exit(1);
         });
+    }, (error) => {
+        logger.error(error);
+        process.exit(1);
     });
 };
 
