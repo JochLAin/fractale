@@ -4,6 +4,7 @@ const { Author, Book, Library } = require('../models');
 module.exports.models = [Library];
 
 module.exports.title = 'Error tests';
+module.exports.name = 'error_test';
 module.exports.tutorialized = false;
 
 module.exports.resolver = (resolve) => {

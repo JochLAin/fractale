@@ -1,6 +1,7 @@
 const Fractale = require('../../lib');
 
 module.exports.title = 'Complex model';
+module.exports.name = 'complex_model';
 module.exports.tutorialized = false;
 
 const Project = Fractale.create('Project', {

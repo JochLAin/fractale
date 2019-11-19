@@ -67,7 +67,7 @@
                 <div class="column is-3" id="sidebarNav">
                     <div class="sidebar">
                         <nav>
-                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-collection_model.html">Collection model</a></li><li><a href="tutorial-complex_model.html">complex_model</a></li><li><a href="tutorial-deep_model.html">Deep model</a></li><li><a href="tutorial-form_model.html">Form model</a></li><li><a href="tutorial-huge_model.html">Huge model</a></li><li><a href="tutorial-inception_model.html">Inception model</a></li><li><a href="tutorial-inheritance_model.html">Inheritance model</a></li><li><a href="tutorial-metadata_model.html">Metadata model</a></li><li><a href="tutorial-self-reference_model.html">Self-reference model</a></li><li><a href="tutorial-simple_model.html">Simple model</a></li></ul><h3>Classes</h3><ul><li><a href="EventListener.html">EventListener</a></li><li><a href="Factory.html">Factory</a></li><li><a href="Fractale.html">Fractale</a></li><li><a href="Library.html">Library</a></li><li><a href="Model.html">Model</a></li><li><a href="Schema.html">Schema</a></li></ul></div>
+                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-1_simple_model.html">Example 1: Simple model</a></li><li><a href="tutorial-2_metadata_model.html">Example 2: Metadata model</a></li><li><a href="tutorial-3_inception_model.html">Example 3: Inception model</a></li><li><a href="tutorial-4_collection_model.html">Example 4: Collection model</a></li><li><a href="tutorial-5_reference_model.html">Example 5: Self-reference model</a></li><li><a href="tutorial-6_inheritance_model.html">Example 6: Inheritance model</a></li><li><a href="tutorial-7_form_model.html">Example 7: Form usage</a></li></ul><h3>Modules</h3><ul><li><a href="module-Fractale.html">Fractale</a></li></ul><h3>Classes</h3><ul><li><a href="EventListener.html">EventListener</a></li><li><a href="Factory.html">Factory</a></li><li><a href="Library.html">Library</a></li><li><a href="Model.html">Model</a></li><li><a href="Schema.html">Schema</a></li></ul></div>
                         </nav>
                     </div>
                 </div>
@@ -82,12 +82,12 @@
 
 
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>const moment = require('moment');
+<section>
+    <article>
+        <pre class="prettyprint source linenums"><code>const moment = require('moment');
 const CONSTANTS = require('./constants');
 const library = require('./library');
-const Model = require('./model');
+const models = require('./model');
 const _ = require('./utils');
 
 /**
@@ -97,6 +97,7 @@ const _ = require('./utils');
  */
 class Schema {
     static validate(type, _typeof) {
+        const Model = models.get();
         if (type === undefined || type === null) return true;
         if (!_typeof) _typeof = typeof type;
         if (['string', 'number', 'boolean', 'object'].includes(_typeof)) return true;
@@ -127,6 +128,7 @@ class Schema {
     }
 
     parse(field, type, options = {}) {
+        const Model = models.get();
         const _typeof = typeof type;
         if (!Schema.validate(type, _typeof)) {
             throw new Error(`Type ${(_typeof === 'function' &amp;&amp; type.name) ? type.name : _typeof} is not processed`);
@@ -157,7 +159,7 @@ class Schema {
                 if (type instanceof Date || moment.isMoment(type)) {
                     return field.specify(Field.TYPE_DATE, Date, options);
                 }
-                if (type[CONSTANTS.TYPE_KEY]) {
+                if (type.hasOwnProperty(CONSTANTS.TYPE_KEY)) {
                     Object.assign(options, type[CONSTANTS.OPTIONS_KEY]);
                     return this.parse(field, type[CONSTANTS.TYPE_KEY], options);
                 }
@@ -263,8 +265,9 @@ Field.TYPE_MODEL = CONSTANTS.FIELD_TYPE_MODEL;
 Field.TYPE_ARRAY = CONSTANTS.FIELD_TYPE_ARRAY;
 Field.TYPE_CALLBACK = CONSTANTS.FIELD_TYPE_CALLBACK;
 </code></pre>
-        </article>
-    </section>
+    </article>
+</section>
+
 
 
 

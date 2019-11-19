@@ -4,7 +4,7 @@ It will test value of each fields and link model between them.
 
 # Installation
 
-`npm install -S fractale`
+`npm install --save fractale`
 
 # Documentation
 
@@ -23,7 +23,7 @@ const KeyValuePair = Fractale.create(
     'KeyValuePair', /* Name of your model (required) */
     { /* Model's schema */
         key: String,
-        value: null || undefined,
+        value: undefined,
     }
 );
 
@@ -31,15 +31,15 @@ const KeyValuePair = Fractale.create(
 const Model = Fractale.create(
     'Model', 
     {
-        mixed: null || undefined,
+        mixed: undefined,
         boolean: Boolean,
         number: Number,
         string: String,
         date: Date,
         boards: [String],
         metadata: { key: String },
-        collection: [{ key: String, value: null }],
         inception: KeyValuePair,
+        collection: [{ key: String, value: null }],
         self: Fractale.SELF, // the Model itself
     }
 );
@@ -63,21 +63,21 @@ const After = Fractale.create('After', {
 ## Instanciation
 
 ```javascript
-const myModel = new Model({
+const instance = new Model({
     mixed: 'Great !',
     boolean: true,
     number: 42,
     string: 'Hello world',
     boards: ['Lorem ipsum', 'dolores sit amet'],
     metadata: { key: 'AZERTYUIOP' },
+    inception: { key: 'key', value: 1 },
     collections: [
         { key: 'foo', value: 123 },
         { key: 'bar', value: 456 }
-    ],
-    inception: { key: 'key', value: 1 }
+    ]
 });
 
-console.log(myModel.serialize()); /* 
+console.log(instance.serialize()); /* 
 > { 
     mixed: 'Great !',
     boolean: true,
@@ -85,61 +85,65 @@ console.log(myModel.serialize()); /*
     string: 'Hello world',
     boards: ['Lorem ipsum', 'dolores sit amet'],
     metadata: { key: 'AZERTYUIOP' },
+    inception: { key: 'key', value: 1 },
     collections: [
         { key: 'foo', value: 123 },
         { key: 'bar', value: 456 }
-    ],
-    inception: { key: 'key', value: 1 }
+    ]
 } */
 
 /* Copy props to another instance */
 // Method 1
-const myFull = Full.from(myModel);
+const full = Full.from(instance);
 
 // Method 2
-const serialized = myModel.serialize();
+const serialized = instance.serialize();
 delete serialized.uuid;
-const myFullClone = new Full(serialized);
+const clone = new Full(serialized);
 ```
 
 ## Modification
 
 ```javascript
-console.log(myModel.mixed); // > true
-myModel.mixed = 123;
-console.log(myModel.mixed); // > 123
+console.log(instance.mixed); // > true
+instance.mixed = 123;
+console.log(instance.mixed); // > 123
 
-console.log(myModel.boolean); // > true
-myModel.boolean = false;
-console.log(myModel.boolean); // > false
+console.log(instance.boolean); // > true
+instance.boolean = false;
+console.log(instance.boolean); // > false
 
-console.log(myModel.number); // > 42
-myModel.number = 12;
-console.log(myModel.number); // > 12
+console.log(instance.number); // > 42
+instance.number = 12;
+console.log(instance.number); // > 12
 
-console.log(myModel.string); // > 'Hello world'
-myModel.string = 'Lorem ipsum';
-console.log(myModel.string); // > 'Lorem ipsum'
+console.log(instance.string); // > 'Hello world'
+instance.string = 'Lorem ipsum';
+console.log(instance.string); // > 'Lorem ipsum'
 
-console.log(myModel.boards[0]); // > 'Lorem ipsum'
-myModel.boards[0] = 'Hello world';
-console.log(myModel.boards[0]); // > 'Hello World'
+console.log(instance.boards[0]); // > 'Lorem ipsum'
+instance.boards[0] = 'Hello world';
+console.log(instance.boards[0]); // > 'Hello World'
 
-console.log(myModel.metadata.key); // > 'AZERTYUIOP' 
-myModel.metadata.key = 'foo';
-console.log(myModel.metadata.key); // > 'foo' 
+console.log(instance.metadata.key); // > 'AZERTYUIOP' 
+instance.metadata.key = 'foo';
+console.log(instance.metadata.key); // > 'foo' 
 
-console.log(myModel.collections[0].key); // > 'foo'
-myModel.collections[0].key = 'pass';
-myModel.collections[0] = { value: 789 };
-console.log(myModel.collections[0].key); // > 'pass'
-console.log(myModel.collections[0].value); // > 789
+console.log(instance.inception); // > KeyValuePair { key: 'key', value: 1 }
+instance.inception = new KeyValuePair({ key: 'new_key', value: 'new_value' });
+console.log(instance.inception); // > KeyValuePair { key: 'new_key', value: 'new_value' }
 
-console.log(myModel.inception); // > KeyValuePair { key: 'key', value: 1 }
-myModel.inception = new KeyValuePair({ key: 'new_key', value: 'new_value' });
-console.log(myModel.inception); // > KeyValuePair { key: 'new_key', value: 'new_value' }
+console.log(instance.inception); // > KeyValuePair { key: 'new_key', value: 'new_value' }
+instance.inception.value = 'updated_value';
+console.log(instance.inception); // > KeyValuePair { key: 'new_key', value: 'updated_value' }
 
-console.log(myModel.serialize()); /* 
+console.log(instance.collections[0].key); // > 'foo'
+instance.collections[0].key = 'pass';
+instance.collections[0] = { value: 789 };
+console.log(instance.collections[0].key); // > 'pass'
+console.log(instance.collections[0].value); // > 789
+
+console.log(instance.serialize()); /* 
 > { 
     mixed: 123,
     boolean: false,
@@ -151,7 +155,7 @@ console.log(myModel.serialize()); /*
         { key: 'pass', value: 789 },
         { key: 'bar', value: 456 }
     ],
-    inception: { key: 'new_key', value: 'new_value' }
+    inception: { key: 'new_key', value: 'updated_value' }
 } */
 ```
 
@@ -159,9 +163,9 @@ console.log(myModel.serialize()); /*
 
 ```javascript
 /* Array methods use */
-myModel.collections.push({ key: 'azertyuiop', value: 2 });
-myModel.collections = myModel.collections.concat([{ key: 'new_key', value: 3 }, { key: 'N3W_K3Y', value: 4 }]);
-console.log(myModel.serialize().collections); /*
+instance.collections.push({ key: 'azertyuiop', value: 2 });
+instance.collections = instance.collections.concat([{ key: 'new_key', value: 3 }, { key: 'N3W_K3Y', value: 4 }]);
+console.log(instance.serialize().collections); /*
 > [
     { key: 'pass', value: 789 },
     { key: 'bar', value: 456 },
@@ -181,7 +185,7 @@ console.log(myModel.serialize().collections); /*
 const Fractale = require('fractale');
 
 Fractale.setOptions({
-    moment: true, // Specify to fractale to transform date to moment instance. Default: false
+    moment: true, // Specify to fractale to transform date to moment instance. Default: true
 });
 ```
 
@@ -223,20 +227,29 @@ const Fractale = require('fractale');
 
 const Simple = Fractale.create('Simple', {
     anyway: Fractale.with(undefined, {
-        validator: (value) => value !== 'Yolo'
+        validator: (value) => value !== 'A value'
     }),
     mixed: Fractale.with(undefined, {
         validator: {
             in: ['foo', 'bar', 42]
         }
     }),
-    numeric: Fractale.with(Number || Date, {
+    number: Fractale.with(Number, {
         validator: {
             gt: 17,
             gte: 18,
             lt: 51,
             lte: 50,
             between: [18, 50]
+        }
+    }),
+    date: Fractale.with(Date, {
+        validator: {
+            gt: '2019-11-17',
+            gte: new Date('2019-11-18'),
+            lte: moment('2019-11-20'),
+            lt: moment(),
+            between: [18] // If one value is between ... and today or today and ...
         }
     }),
     string: Fractale.with(String, {

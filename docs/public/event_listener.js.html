@@ -67,7 +67,7 @@
                 <div class="column is-3" id="sidebarNav">
                     <div class="sidebar">
                         <nav>
-                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-collection_model.html">Collection model</a></li><li><a href="tutorial-complex_model.html">complex_model</a></li><li><a href="tutorial-deep_model.html">Deep model</a></li><li><a href="tutorial-form_model.html">Form model</a></li><li><a href="tutorial-huge_model.html">Huge model</a></li><li><a href="tutorial-inception_model.html">Inception model</a></li><li><a href="tutorial-inheritance_model.html">Inheritance model</a></li><li><a href="tutorial-metadata_model.html">Metadata model</a></li><li><a href="tutorial-self-reference_model.html">Self-reference model</a></li><li><a href="tutorial-simple_model.html">Simple model</a></li></ul><h3>Classes</h3><ul><li><a href="EventListener.html">EventListener</a></li><li><a href="Factory.html">Factory</a></li><li><a href="Fractale.html">Fractale</a></li><li><a href="Library.html">Library</a></li><li><a href="Model.html">Model</a></li><li><a href="Schema.html">Schema</a></li></ul></div>
+                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-1_simple_model.html">Example 1: Simple model</a></li><li><a href="tutorial-2_metadata_model.html">Example 2: Metadata model</a></li><li><a href="tutorial-3_inception_model.html">Example 3: Inception model</a></li><li><a href="tutorial-4_collection_model.html">Example 4: Collection model</a></li><li><a href="tutorial-5_reference_model.html">Example 5: Self-reference model</a></li><li><a href="tutorial-6_inheritance_model.html">Example 6: Inheritance model</a></li><li><a href="tutorial-7_form_model.html">Example 7: Form usage</a></li></ul><h3>Modules</h3><ul><li><a href="module-Fractale.html">Fractale</a></li></ul><h3>Classes</h3><ul><li><a href="EventListener.html">EventListener</a></li><li><a href="Factory.html">Factory</a></li><li><a href="Library.html">Library</a></li><li><a href="Model.html">Model</a></li><li><a href="Schema.html">Schema</a></li></ul></div>
                         </nav>
                     </div>
                 </div>
@@ -82,100 +82,108 @@
 
 
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>/**
+<section>
+    <article>
+        <pre class="prettyprint source linenums"><code>const { EVENTS } = require('./constants');
+
+/**
  * Enable event listener
  * @class EventListener
- * @param {Object} __events - Event map with name as key and array of callback as value
  *
  * @author Jocelyn Faihy &lt;jocelyn@faihy.fr>
  */
 module.exports = class EventListener {
     constructor() {
-        this.__events = {};
+        this[EVENTS] = {};
     }
 
     /**
      * Proxy to dispatchEvent method
+     *
      * @method
      */
-    emit() { return this.dispatchEvent.apply(this, arguments); }
+    emit(...args) { return this.dispatchEvent.apply(this, args); }
 
     /**
      * Proxy to addEventListener method
+     *
      * @method
+     * @throws Error
      */
-    on() { return this.addEventListener.apply(this, arguments); }
+    on(...args) { return this.addEventListener.apply(this, args); }
 
     /**
      * Proxy to removeEventListener method
+     *
      * @method
      */
-    off() { return this.removeEventListener.apply(this, arguments); }
+    off(...args) { return this.removeEventListener.apply(this, args); }
 
     /**
      * Add an event listener on an event
+     *
      * @param {String} name - Event name
      * @param {Function} callback - Callback called on event
+     *
      * @return {undefined}
+     * @throws Error
      */
-    addEventListener(event, callback) {
+    addEventListener(name, callback) {
         // Check if the callback is not a function
         if (typeof callback !== 'function') {
             throw new Error(`The listener callback must be a function, the given type is ${typeof callback}`);
         }
-        // Check if the event is not a string
-        if (typeof event !== 'string') {
-            throw new Error(`The event name must be a string, the given type is ${typeof event}`);
+        // Check if the name is not a string
+        if (typeof name !== 'string') {
+            throw new Error(`The event name must be a string, the given type is ${typeof name}`);
         }
 
         // Create the event if not exists
-        if (this.__events[event] === undefined) {
-            this.__events[event] = {
-                listeners: []
-            }
+        if (this[EVENTS][name] === undefined) {
+            this[EVENTS][name] = [];
         }
-
-        this.__events[event].listeners.push(callback);
+        this[EVENTS][name].push(callback);
     }
 
     /**
      * Remove an event listener on an event
-     * @param {String} event - Event name
+     *
+     * @param {String} name - Event name
      * @param {Function} callback - Callback called on event
-     * @returns {boolean}
+     *
+     * @return {undefined}
      */
-    removeEventListener(event, callback) {
+    removeEventListener(name, callback) {
         // Check if this event not exists
-        if (this.__events[event] === undefined) {
-            return false;
+        if (this[EVENTS][name] === undefined) {
+            return;
         }
 
-        this.__events[event].listeners = this.__events[event].listeners.filter(listener => {
+        this[EVENTS][name] = this[EVENTS][name].filter(listener => {
             return listener.toString() !== callback.toString();
         });
     }
 
     /**
      * Dispatch an event
-     * @param {String} event - Event name
+     *
+     * @param {String} name - Event name
      * @param {Object} details - Parameter send to callback
-     * @return {boolean|undefined}
+     *
+     * @return {undefined}
      */
-    dispatchEvent(event, details) {
+    dispatchEvent(name, details) {
         // Check if this event not exists
-        if (this.__events[event] === undefined) {
-            return false;
-        }
-        this.__events[event].listeners.forEach((listener) => {
+        if (this[EVENTS][name] === undefined) return;
+        this[EVENTS][name].forEach((listener) => {
             listener(details);
         });
     }
 };
 </code></pre>
-        </article>
-    </section>
+    </article>
+</section>
+
 
 
 

@@ -1,10 +1,30 @@
 const logger = require('crieur');
-// module.exports.models = require('./models');
+
 if (process.env.LOG_LEVEL) {
     logger.level = process.env.LOG_LEVEL;
 }
 
-const cases = module.exports.cases = [
+module.exports.run = () => {
+    const cases = Array.from(module.exports.cases);
+    const chain = Promise.resolve();
+    const loop = () => Promise.resolve().then(() => {
+        let current = cases.shift();
+        if (current) {
+            logger.info(`  > ${current.title}`, { bold: true });
+            const promise = new Promise(current.resolver);
+            return promise.then(() => {
+                logger.success('Test passed !', { block: true });
+            }).then(() => {
+                return loop();
+            });
+        }
+    });
+
+    return chain.then(loop);
+};
+module.exports.models = require('./models');
+module.exports.cases = [
+    require('./event_listener'),
     require('./cases/error'),
     require('./cases/simple'),
     require('./cases/validator'),
@@ -21,25 +41,11 @@ const cases = module.exports.cases = [
     require('./cases/stringify'),
 ];
 
-const chain = Promise.resolve();
-const loop = () => Promise.resolve().then(() => {
-    let current = cases.shift();
-    if (current) {
-        logger.info(`  > ${current.title}`, { bold: true });
-        const promise = new Promise(current.resolver);
-        return promise.then(() => {
-            logger.success('Test passed !', { block: true });
-        }).then(() => {
-            return loop();
-        }).catch((error) => {
-            logger.error('Test failed !', { block: true });
-            logger.error(error);
-            process.exit(0);
-        });
-    }
-});
+if (require.main === module) {
+    module.exports.run().catch((error) => {
+        logger.error('Test failed !', { block: true });
+        logger.error(error);
 
-chain.then(loop).catch((error) => {
-    logger.error(error);
-    process.exit(0);
-});
+        process.exit(1);
+    });
+}

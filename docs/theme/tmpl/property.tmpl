@@ -9,25 +9,21 @@
     <?js if (props.hasName) {?>
         <td class="name"><code><?js= prop.name ?></code></td>
     <?js } ?>
-
     <td class="type">
-    <?js if (prop.type && prop.type.names) {?>
-        <?js= self.partial('type.tmpl', prop.type.names) ?>
-    <?js } ?>
+        <?js if (prop.type && prop.type.names) {?>
+            <?js= self.partial('type.tmpl', prop.type.names) ?>
+        <?js } ?>
     </td>
-
     <?js if (props.hasAttributes) {?>
         <td class="attributes">
         <?js if (prop.optional) { ?>
             &lt;optional><br>
         <?js } ?>
-
         <?js if (prop.nullable) { ?>
             &lt;nullable><br>
         <?js } ?>
         </td>
     <?js } ?>
-
     <?js if (props.hasDefault) {?>
         <td class="default">
         <?js if (typeof prop.defaultvalue !== 'undefined') { ?>
@@ -35,20 +31,19 @@
         <?js } ?>
         </td>
     <?js } ?>
-
     <td class="description last"><?js= prop.description ?></td>
 </tr>
 <?js if (prop.subprops) { ?>
-  <?js
-      var self = this;
-      prop.subprops.forEach(function(subprop) {
-          if (!subprop) { return; }
-          var propData = {
-              props: props,
-              prop: subprop,
-              level: level + 1,
-          }
-  ?>
-      <?js= self.partial('property.tmpl', propData) ?>
-  <?js }); ?>
+    <?js
+        var self = this;
+        prop.subprops.forEach(function(subprop) {
+            if (!subprop) { return; }
+            var propData = {
+                props: props,
+                prop: subprop,
+                level: level + 1,
+            }
+    ?>
+        <?js= self.partial('property.tmpl', propData) ?>
+    <?js }); ?>
 <?js } ?>

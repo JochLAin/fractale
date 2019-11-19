@@ -65,7 +65,7 @@
                 <div class="column is-3" id="sidebarNav">
                     <div class="sidebar">
                         <nav>
-                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-collection_model.html">Collection model</a></li><li><a href="tutorial-complex_model.html">complex_model</a></li><li><a href="tutorial-deep_model.html">Deep model</a></li><li><a href="tutorial-form_model.html">Form model</a></li><li><a href="tutorial-huge_model.html">Huge model</a></li><li><a href="tutorial-inception_model.html">Inception model</a></li><li><a href="tutorial-inheritance_model.html">Inheritance model</a></li><li><a href="tutorial-metadata_model.html">Metadata model</a></li><li><a href="tutorial-self-reference_model.html">Self-reference model</a></li><li><a href="tutorial-simple_model.html">Simple model</a></li></ul><h3>Classes</h3><ul><li><a href="EventListener.html">EventListener</a></li><li><a href="Factory.html">Factory</a></li><li><a href="Fractale.html">Fractale</a></li><li><a href="Library.html">Library</a></li><li><a href="Model.html">Model</a></li><li><a href="Schema.html">Schema</a></li></ul></div>
+                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-1_simple_model.html">Example 1: Simple model</a></li><li><a href="tutorial-2_metadata_model.html">Example 2: Metadata model</a></li><li><a href="tutorial-3_inception_model.html">Example 3: Inception model</a></li><li><a href="tutorial-4_collection_model.html">Example 4: Collection model</a></li><li><a href="tutorial-5_reference_model.html">Example 5: Self-reference model</a></li><li><a href="tutorial-6_inheritance_model.html">Example 6: Inheritance model</a></li><li><a href="tutorial-7_form_model.html">Example 7: Form usage</a></li></ul><h3>Modules</h3><ul><li><a href="module-Fractale.html">Fractale</a></li></ul><h3>Classes</h3><ul><li><a href="EventListener.html">EventListener</a></li><li><a href="Factory.html">Factory</a></li><li><a href="Library.html">Library</a></li><li><a href="Model.html">Model</a></li><li><a href="Schema.html">Schema</a></li></ul></div>
                         </nav>
                     </div>
                 </div>
@@ -81,9 +81,7 @@
 
     
 
-
     <h3> </h3>
-
 
 
 
@@ -96,13 +94,11 @@
     
 
 
-
-
     <section>
         <article><p>Inspired from <a href="https://mongoosejs.com/docs/guide.html">Mongoose</a>, it allows you to modeling your data to be explicit on data format.</p>
 <p>It will test value of each fields and link model between them.</p>
 <h1>Installation</h1>
-<p><code>npm install -S fractale</code></p>
+<p><code>npm install --save fractale</code></p>
 <h1>Documentation</h1>
 <p>You can found more documentation and examples <a href="http://docs.faihy.org/fractale">here</a>.</p>
 <h1>Usage</h1>
@@ -115,7 +111,7 @@ const KeyValuePair = Fractale.create(
     'KeyValuePair', /* Name of your model (required) */
     { /* Model's schema */
         key: String,
-        value: null || undefined,
+        value: undefined,
     }
 );
 
@@ -123,15 +119,15 @@ const KeyValuePair = Fractale.create(
 const Model = Fractale.create(
     'Model', 
     {
-        mixed: null || undefined,
+        mixed: undefined,
         boolean: Boolean,
         number: Number,
         string: String,
         date: Date,
         boards: [String],
         metadata: { key: String },
-        collection: [{ key: String, value: null }],
         inception: KeyValuePair,
+        collection: [{ key: String, value: null }],
         self: Fractale.SELF, // the Model itself
     }
 );
@@ -152,21 +148,21 @@ const After = Fractale.create('After', {
 });
 </code></pre>
 <h2>Instanciation</h2>
-<pre class="prettyprint source lang-javascript"><code>const myModel = new Model({
+<pre class="prettyprint source lang-javascript"><code>const instance = new Model({
     mixed: 'Great !',
     boolean: true,
     number: 42,
     string: 'Hello world',
     boards: ['Lorem ipsum', 'dolores sit amet'],
     metadata: { key: 'AZERTYUIOP' },
+    inception: { key: 'key', value: 1 },
     collections: [
         { key: 'foo', value: 123 },
         { key: 'bar', value: 456 }
-    ],
-    inception: { key: 'key', value: 1 }
+    ]
 });
 
-console.log(myModel.serialize()); /* 
+console.log(instance.serialize()); /* 
 > { 
     mixed: 'Great !',
     boolean: true,
@@ -174,61 +170,62 @@ console.log(myModel.serialize()); /*
     string: 'Hello world',
     boards: ['Lorem ipsum', 'dolores sit amet'],
     metadata: { key: 'AZERTYUIOP' },
+    inception: { key: 'key', value: 1 },
     collections: [
         { key: 'foo', value: 123 },
         { key: 'bar', value: 456 }
-    ],
-    inception: { key: 'key', value: 1 }
+    ]
 } */
 
 /* Copy props to another instance */
 // Method 1
-const myFull1 = new Full(myModel);
+const full = Full.from(instance);
 
 // Method 2
-const myFull2 = new Full();
-myFull2.deserialize(myModel);
-
-// Method 3
-const serialized = myModel.serialize();
-const myFull3 = new Full(serialized);
+const serialized = instance.serialize();
+delete serialized.uuid;
+const clone = new Full(serialized);
 </code></pre>
 <h2>Modification</h2>
-<pre class="prettyprint source lang-javascript"><code>console.log(myModel.mixed); // > true
-myModel.mixed = 123;
-console.log(myModel.mixed); // > 123
+<pre class="prettyprint source lang-javascript"><code>console.log(instance.mixed); // > true
+instance.mixed = 123;
+console.log(instance.mixed); // > 123
 
-console.log(myModel.boolean); // > true
-myModel.boolean = false;
-console.log(myModel.boolean); // > false
+console.log(instance.boolean); // > true
+instance.boolean = false;
+console.log(instance.boolean); // > false
 
-console.log(myModel.number); // > 42
-myModel.number = 12;
-console.log(myModel.number); // > 12
+console.log(instance.number); // > 42
+instance.number = 12;
+console.log(instance.number); // > 12
 
-console.log(myModel.string); // > 'Hello world'
-myModel.string = 'Lorem ipsum';
-console.log(myModel.string); // > 'Lorem ipsum'
+console.log(instance.string); // > 'Hello world'
+instance.string = 'Lorem ipsum';
+console.log(instance.string); // > 'Lorem ipsum'
 
-console.log(myModel.boards[0]); // > 'Lorem ipsum'
-myModel.boards[0] = 'Hello world';
-console.log(myModel.boards[0]); // > 'Hello World'
+console.log(instance.boards[0]); // > 'Lorem ipsum'
+instance.boards[0] = 'Hello world';
+console.log(instance.boards[0]); // > 'Hello World'
 
-console.log(myModel.metadata.key); // > 'AZERTYUIOP' 
-myModel.metadata.key = 'foo';
-console.log(myModel.metadata.key); // > 'foo' 
+console.log(instance.metadata.key); // > 'AZERTYUIOP' 
+instance.metadata.key = 'foo';
+console.log(instance.metadata.key); // > 'foo' 
 
-console.log(myModel.collections[0].key); // > 'foo'
-myModel.collections[0].key = 'pass';
-myModel.collections[0] = { value: 789 };
-console.log(myModel.collections[0].key); // > 'pass'
-console.log(myModel.collections[0].value); // > 789
+console.log(instance.inception); // > KeyValuePair { key: 'key', value: 1 }
+instance.inception = new KeyValuePair({ key: 'new_key', value: 'new_value' });
+console.log(instance.inception); // > KeyValuePair { key: 'new_key', value: 'new_value' }
 
-console.log(myModel.inception); // > KeyValuePair { key: 'key', value: 1 }
-myModel.inception = new KeyValuePair({ key: 'new_key', value: 'new_value' });
-console.log(myModel.inception); // > KeyValuePair { key: 'new_key', value: 'new_value' }
+console.log(instance.inception); // > KeyValuePair { key: 'new_key', value: 'new_value' }
+instance.inception.value = 'updated_value';
+console.log(instance.inception); // > KeyValuePair { key: 'new_key', value: 'updated_value' }
 
-console.log(myModel.serialize()); /* 
+console.log(instance.collections[0].key); // > 'foo'
+instance.collections[0].key = 'pass';
+instance.collections[0] = { value: 789 };
+console.log(instance.collections[0].key); // > 'pass'
+console.log(instance.collections[0].value); // > 789
+
+console.log(instance.serialize()); /* 
 > { 
     mixed: 123,
     boolean: false,
@@ -240,14 +237,14 @@ console.log(myModel.serialize()); /*
         { key: 'pass', value: 789 },
         { key: 'bar', value: 456 }
     ],
-    inception: { key: 'new_key', value: 'new_value' }
+    inception: { key: 'new_key', value: 'updated_value' }
 } */
 </code></pre>
 <h2>Array helpers</h2>
 <pre class="prettyprint source lang-javascript"><code>/* Array methods use */
-myModel.collections.push({ key: 'azertyuiop', value: 2 });
-myModel.collections = myModel.collections.concat([{ key: 'new_key', value: 3 }, { key: 'N3W_K3Y', value: 4 }]);
-console.log(myModel.serialize().collections); /*
+instance.collections.push({ key: 'azertyuiop', value: 2 });
+instance.collections = instance.collections.concat([{ key: 'new_key', value: 3 }, { key: 'N3W_K3Y', value: 4 }]);
+console.log(instance.serialize().collections); /*
 > [
     { key: 'pass', value: 789 },
     { key: 'bar', value: 456 },
@@ -263,7 +260,7 @@ console.log(myModel.serialize().collections); /*
 const Fractale = require('fractale');
 
 Fractale.setOptions({
-    moment: true, // Specify to fractale to transform date to moment instance. Default: false
+    moment: true, // Specify to fractale to transform date to moment instance. Default: true
 });
 </code></pre>
 <h3>Field options</h3>
@@ -299,14 +296,14 @@ const Fractale = require('fractale');
 
 const Simple = Fractale.create('Simple', {
     anyway: Fractale.with(undefined, {
-        validator: (value) => value !== 'Yolo'
+        validator: (value) => value !== 'A value'
     }),
     mixed: Fractale.with(undefined, {
         validator: {
             in: ['foo', 'bar', 42]
         }
     }),
-    numeric: Fractale.with(Number || Date, {
+    number: Fractale.with(Number, {
         validator: {
             gt: 17,
             gte: 18,
@@ -315,16 +312,27 @@ const Simple = Fractale.create('Simple', {
             between: [18, 50]
         }
     }),
+    date: Fractale.with(Date, {
+        validator: {
+            gt: '2019-11-17',
+            gte: new Date('2019-11-18'),
+            lte: moment('2019-11-20'),
+            lt: moment(),
+            between: [18] // If one value is between ... and today or today and ...
+        }
+    }),
     string: Fractale.with(String, {
         validator: {
-            like: '%bar'
+            like: /bar$/
         }
     }),
 });
 </code></pre>
 <h1>Dependencies</h1>
-<p>Fractale use <a href="https://www.npmjs.com/package/uuid">uuid</a> to generate a unique id for model instances.
-Fractale use <a href="https://momentjs.com/docs/">moment.js</a> for date validation.</p>
+<ul>
+<li>Usage of <a href="https://www.npmjs.com/package/uuid">uuid</a> to generate a unique id for model instances.</li>
+<li>Usage of <a href="https://momentjs.com/docs/">moment.js</a> for date validation.</li>
+</ul>
 <h1>License</h1>
 <p>This project is licensed under the MIT License - see the <a href="https://github.com/JochLAin/fractale/blob/master/LICENSE">LICENSE</a> file for details</p>
 <h1>Authors</h1>

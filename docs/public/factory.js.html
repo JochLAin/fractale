@@ -67,7 +67,7 @@
                 <div class="column is-3" id="sidebarNav">
                     <div class="sidebar">
                         <nav>
-                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-collection_model.html">Collection model</a></li><li><a href="tutorial-complex_model.html">complex_model</a></li><li><a href="tutorial-deep_model.html">Deep model</a></li><li><a href="tutorial-form_model.html">Form model</a></li><li><a href="tutorial-huge_model.html">Huge model</a></li><li><a href="tutorial-inception_model.html">Inception model</a></li><li><a href="tutorial-inheritance_model.html">Inheritance model</a></li><li><a href="tutorial-metadata_model.html">Metadata model</a></li><li><a href="tutorial-self-reference_model.html">Self-reference model</a></li><li><a href="tutorial-simple_model.html">Simple model</a></li></ul><h3>Classes</h3><ul><li><a href="EventListener.html">EventListener</a></li><li><a href="Factory.html">Factory</a></li><li><a href="Fractale.html">Fractale</a></li><li><a href="Library.html">Library</a></li><li><a href="Model.html">Model</a></li><li><a href="Schema.html">Schema</a></li></ul></div>
+                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-1_simple_model.html">Example 1: Simple model</a></li><li><a href="tutorial-2_metadata_model.html">Example 2: Metadata model</a></li><li><a href="tutorial-3_inception_model.html">Example 3: Inception model</a></li><li><a href="tutorial-4_collection_model.html">Example 4: Collection model</a></li><li><a href="tutorial-5_reference_model.html">Example 5: Self-reference model</a></li><li><a href="tutorial-6_inheritance_model.html">Example 6: Inheritance model</a></li><li><a href="tutorial-7_form_model.html">Example 7: Form usage</a></li></ul><h3>Modules</h3><ul><li><a href="module-Fractale.html">Fractale</a></li></ul><h3>Classes</h3><ul><li><a href="EventListener.html">EventListener</a></li><li><a href="Factory.html">Factory</a></li><li><a href="Library.html">Library</a></li><li><a href="Model.html">Model</a></li><li><a href="Schema.html">Schema</a></li></ul></div>
                         </nav>
                     </div>
                 </div>
@@ -82,14 +82,13 @@
 
 
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>const logger = require('crieur');
-const library = require('./library');
+<section>
+    <article>
+        <pre class="prettyprint source linenums"><code>const library = require('./library');
 const PropertyDefiner = require('./property_definers');
 const Schema = require('./schema');
 const memory = require('./memory');
-let Model = require('./model');
+const models = require('./model');
 
 /**
  * Create model class
@@ -132,7 +131,8 @@ class Factory {
             throw new Error(`Model with name "${name}" already exists.`);
         }
 
-        let model = this.Model;
+        const Model = models.get();
+        let model = Model;
         if (typeof parent === 'string') {
             model = library.get(parent);
             schema = this.createSchema(name, schema, model.schema);
@@ -146,14 +146,15 @@ class Factory {
             schema = this.createSchema(name, parent);
         }
 
-        const entity = createEntityClass(name, model, schema);
+        const entity = createEntityClass.call(this, name, model, schema);
         Object.defineProperty(entity, 'entity', { value: entity });
         Object.defineProperty(entity, 'name', { value: name });
         Object.defineProperty(entity, 'slug', { value: name.toLowerCase() });
         Object.defineProperty(entity, 'schema', { value: schema });
         Object.defineProperty(entity, 'virtual', { value: !!options.virtual });
 
-        const proxy = createProxyEntityClass(entity);
+        const proxy = createProxyEntityClass.call(this, entity);
+        Object.defineProperty(proxy, 'entity', { value: entity });
         Object.defineProperty(entity, 'proxy', { value: proxy });
 
         const table = memory.createTable(entity);
@@ -162,23 +163,31 @@ class Factory {
         library.add(entity);
         return proxy;
     }
-
-    get Model() {
-        return Model;
-    }
-
-    set Model(_Model) {
-        if (!(_Model === Model || _Model.prototype instanceof require('./model'))) {
-            throw new Error('Your model class must inherit "Fractale.Model" class');
-        }
-        Model = _Model;
-    }
 }
 
 const createEntityClass = (name, Parent, schema) => {
+    const Model = models.get();
     return class Entity extends Parent {
+        static create(props) {
+            if (props instanceof Model) {
+                props = props.serialize();
+            }
+            const Proxy = Entity.proxy;
+            return new Proxy(props);
+        }
+
+        static from(props) {
+            if (props instanceof Model) {
+                props = props.serialize();
+            }
+            props = Object(props);
+            delete props.uuid;
+            const Proxy = Entity.proxy;
+            return new Proxy(props);
+        }
+
         constructor(props = {}) {
-            const params = props instanceof Model ? props.serialize(false) : props;
+            const params = props instanceof Model ? props.serialize(false) : Object(props);
             super(params);
 
             this.serialize = PropertyDefiner.serialize.bind(null, this);
@@ -196,7 +205,7 @@ const createProxyEntityClass = (model) => {
 
             const memory = entity.constructor.memory;
             memory.load(entity.serialize(false));
-            entity.addEventListener('change', ({ value, previous }) => {
+            entity.on('change', ({ value, previous }) => {
                 if (value !== previous) {
                     memory.update(entity.serialize(false));
                 }
@@ -207,13 +216,13 @@ const createProxyEntityClass = (model) => {
                     return model.schema.keys.includes(property);
                 },
                 get(target, property) {
-                    if (typeof property === 'string' &amp;&amp; model.schema.keys.includes(property)) {
+                    if (typeof property === 'string' &amp;&amp; model.schema.keys.includes(property) &amp;&amp; !target[property]) {
                         return target.props[property];
                     }
                     return target[property];
                 },
                 set(target, property, value) {
-                    if (typeof property === 'string' &amp;&amp; model.schema.keys.includes(property)) {
+                    if (typeof property === 'string' &amp;&amp; model.schema.keys.includes(property) &amp;&amp; !target[property]) {
                         target.props[property] = value;
                         return true;
                     }
@@ -227,8 +236,9 @@ const createProxyEntityClass = (model) => {
 
 module.exports = new Factory();
 </code></pre>
-        </article>
-    </section>
+    </article>
+</section>
+
 
 
 
