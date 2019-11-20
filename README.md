@@ -10,13 +10,15 @@ It will test value of each fields and link model between them.
 
 You can found more documentation and examples [here](http://docs.faihy.org/fractale).
 
+
+
 # Performance
 
-From a  :
-- Creation from a JSON file (1.03Go) : **~7.777s** => __137.33Mo/s__
-- Read of an atom : **~10.087s**
+From a JSON file (1.03Go) :
+- Creation : **~7.777s** => __137.33Mo/s__
+- Read of an atom _(85 * 30 * 50)_ : **~10.087s**
 
-For more information see 
+For more information see _[comming soon](#performance)_
 
 # Usage
 
@@ -272,6 +274,13 @@ const Simple = Fractale.create('Simple', {
 
 - Usage of [uuid](https://www.npmjs.com/package/uuid) to generate a unique id for model instances.
 - Usage of [moment.js](https://momentjs.com/docs/) for date validation.
+
+# Contributing
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+Please make sure to update tests as appropriate.
+
+See the [contributing](https://github.com/JochLAin/fractale/blob/master/CONTRIBUTING.md) and [code of conduct](https://github.com/JochLAin/fractale/blob/master/CODE_OF_CONDUCT.md) files for details
 
 # License
 
