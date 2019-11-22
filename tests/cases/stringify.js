@@ -3,11 +3,10 @@ const Fractale = require('../../lib');
 const { Simple, Compound, Method, Class } = require('../models');
 
 module.exports.title = 'Stringify test';
-module.exports.name = 'stringify_test';
+module.exports.name = 'stringify-test';
 module.exports.tutorialized = false;
 
 module.exports.resolver = (resolve) => {
-
     const simple = Fractale.stringify(Simple);
     const SIMPLE = `const Simple = Fractale.create("Simple", {mixed:undefined,boolean:Boolean,number:Number,string:String,date:Date});`;
     if (simple !== SIMPLE) {
@@ -17,7 +16,6 @@ module.exports.resolver = (resolve) => {
     const compound = Fractale.stringify(Compound);
     const COMPOUND = `const Compound = Fractale.create("Compound", Simple, {boards:[String],metadata:{key:String,data:{key:String,value:undefined}},collections:[{key:String,value:String}]});`;
     if (compound !== COMPOUND) {
-        console.log(Fractale.stringify(Compound, null, 4));
         throw new DetailedError('Error on compound stringify method', `Expected: ${COMPOUND}\nGot: ${compound}`);
     }
 

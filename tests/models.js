@@ -91,7 +91,7 @@ const Layer = module.exports.Layer = Fractale.create('Layer', {
     width: Number,
 });
 Layer.prototype.pixel = function (x = 0, y = 0) {
-    return this.props.pixels[y * this.props.width + x];
+    return this.pixels[y * this.width + x];
 };
 
 const Frame = module.exports.Frame = Fractale.create('Frame', {

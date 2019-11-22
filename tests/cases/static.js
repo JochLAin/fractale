@@ -3,7 +3,7 @@ const { Book } = require('../models');
 module.exports.models = [Book];
 
 module.exports.title = 'Static method test';
-module.exports.name = 'static_test';
+module.exports.name = 'static-test';
 module.exports.tutorialized = false;
 
 module.exports.resolver = (resolve) => {
@@ -33,5 +33,5 @@ module.exports.resolver = (resolve) => {
     if (clone.readable) {
         throw new DetailedError('Error on static method from', `Expected "false" got "${clone.readable}"`);
     }
-    resolve(clone.serialize());
+    resolve(clone);
 };

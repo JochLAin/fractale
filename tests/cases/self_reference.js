@@ -2,7 +2,7 @@ const { Class, Variable } = require('../models');
 module.exports.models = [Class];
 
 module.exports.title = 'Self-reference model';
-module.exports.name = 'reference_model';
+module.exports.name = 'reference-model';
 module.exports.tutorialized = true;
 
 module.exports.resolver = (resolve) => {
@@ -53,9 +53,5 @@ module.exports.resolver = (resolve) => {
         throw new Error('Error infinite self-reference accessor');
     }
 
-    if (!c.serialize()) {
-        throw new Error('Error on self-reference serialize');
-    }
-
-    resolve(c.serialize());
+    resolve(c);
 };

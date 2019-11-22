@@ -3,7 +3,7 @@ const { Author, Book, Library } = require('../models');
 
 module.exports.models = [Library];
 module.exports.title = 'Collection model';
-module.exports.name = 'collection_model';
+module.exports.name = 'collection-model';
 module.exports.tutorialized = true;
 
 module.exports.resolver = (resolve) => {
@@ -76,9 +76,5 @@ module.exports.resolver = (resolve) => {
         throw new Error('Error on array method remove accessor');
     }
 
-    if (!library.serialize()) {
-        throw new Error('Error on collection serializer');
-    }
-
-    resolve(library.serialize());
+    resolve(library);
 };

@@ -3,7 +3,7 @@ const { Compound } = require('../models');
 module.exports.models = [Compound];
 
 module.exports.title = 'Metadata model';
-module.exports.name = 'metadata_model';
+module.exports.name = 'metadata-model';
 module.exports.tutorialized = true;
 
 module.exports.resolver = (resolve) => {
@@ -34,26 +34,22 @@ module.exports.resolver = (resolve) => {
         throw new DetailedError('Error on metadata accessor with assign', `Expected "assign" got "${instance.metadata.key}"`);
     }
     if (!instance.metadata.data) {
-        throw new DetailedError('Error on metadata accessor with assign', `Expected "<uuid>" got "${instance.metadata.data}"`);
+        throw new DetailedError('Error on metadata accessor with assign', `Expected "Compound_Metadata_Data" got "${instance.metadata.data}"`);
     }
     if (instance.metadata.data.key !== 'Bar') {
         throw new DetailedError('Error on metadata accessor with assign', `Expected "Bar" got "${instance.metadata.data.key}"`);
     }
 
-    instance.metadata = { data: { key: 'after' } };
+    instance.metadata = { data: { key: 'after', value: 13 } };
     if (instance.metadata.key !== 'assign') {
         throw new DetailedError('Error on metadata accessor with bracket', `Expected "assign" got "${instance.metadata.key}"`);
     }
     if (instance.metadata.data.key !== 'after') {
         throw new DetailedError('Error on metadata accessor with bracket', `Expected "after" got "${instance.metadata.data.key}"`);
     }
-    if (instance.metadata.data.value !== 12) {
-        throw new DetailedError('Error on metadata accessor with bracket', `Expected "12" got "${instance.metadata.data.value}"`);
+    if (instance.metadata.data.value !== 13) {
+        throw new DetailedError('Error on metadata accessor with bracket', `Expected "13" got "${instance.metadata.data.value}"`);
     }
 
-    if (!instance.serialize()) {
-        throw new Error('Error on metadata serializer');
-    }
-
-    resolve(instance.serialize());
+    resolve(instance);
 };

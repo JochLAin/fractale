@@ -14,9 +14,10 @@ You can found more documentation and examples [here](http://docs.faihy.org/fract
 
 # Performance
 
-From a JSON file (1.03Go) :
-- Creation : **~7.777s** => __137.33Mo/s__
-- Read of an atom _(85 * 30 * 50)_ : **~10.087s**
+From a JSON file (405.31Mo) :
+- Deserialization : **~6.781s** => __59.77Mo/s__
+- Read of an atom _(50 * 50 * 20)_ : **~0.001s**
+- Serialization : **~2.935s** => __138.1Mo/s__
 
 For more information see _[comming soon](#performance)_
 

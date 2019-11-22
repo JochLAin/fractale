@@ -3,7 +3,7 @@ const { Author, Book } = require('../models');
 module.exports.models = [Book];
 
 module.exports.title = 'Form usage';
-module.exports.name = 'form_model';
+module.exports.name = 'form-usage';
 module.exports.tutorialized = true;
 
 module.exports.resolver = (resolve) => {
@@ -24,9 +24,5 @@ module.exports.resolver = (resolve) => {
         throw new DetailedError('Error on form setter', `Expected "Jocelyn" got "${book.author.firstname}"`);
     }
 
-    if (!book.serialize()) {
-        throw new Error('Error on form serializer');
-    }
-
-    resolve(book.serialize());
+    resolve(book);
 };

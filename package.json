@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "crieur": "^1.0.13",
+    "inquirer": "^7.0.0",
     "jsdoc": "^3.6.3",
     "lodash": ">=4.17.13"
   }

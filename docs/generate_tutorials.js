@@ -47,8 +47,8 @@ module.exports.get = () => {
         return true;
     }).map((test, index) => {
         return new Promise(test.resolver).then(result => {
-            const name = `${index + 1}_${test.name}`;
-            const content = module.exports.format(test, result);
+            const name = `${index + 1}-${test.name}`;
+            const content = module.exports.format(test, result.serialize());
             const filename = path.resolve(__dirname, `tutorials/examples/${name}.md`);
             return Object.assign(test, { content, name, filename });
         }, (error) => {

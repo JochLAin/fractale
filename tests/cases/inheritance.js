@@ -3,7 +3,7 @@ const { Parent, Child } = require('../models');
 module.exports.models = [Parent, Child];
 
 module.exports.title = 'Inheritance model';
-module.exports.name = 'inheritance_model';
+module.exports.name = 'inheritance-model';
 module.exports.tutorialized = true;
 
 module.exports.resolver = (resolve) => {
@@ -27,9 +27,5 @@ module.exports.resolver = (resolve) => {
         throw new DetailedError('Error on method inheritance', `Expected "HELLO" got "${instance.toUpperCase()}"`);
     }
 
-    if (!instance.serialize()) {
-        throw new Error('Error on inheritance serializer');
-    }
-
-    resolve(instance.serialize());
+    resolve(instance);
 };

@@ -1,7 +1,7 @@
 const Fractale = require('../../lib');
 
 module.exports.title = 'Complex model';
-module.exports.name = 'complex_model';
+module.exports.name = 'complex-model';
 module.exports.tutorialized = false;
 
 const Project = Fractale.create('Project', {
@@ -111,5 +111,5 @@ module.exports.resolver = (resolve) => {
         "deployments": [],
     });
 
-    resolve(instance.serialize());
+    resolve(instance);
 };

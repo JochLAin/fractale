@@ -1,9 +1,9 @@
-
+const { DetailedError } = require('../error');
 const { Book } = require('../models');
 module.exports.models = [Book];
 
 module.exports.title = 'Inception model';
-module.exports.name = 'inception_model';
+module.exports.name = 'inception-model';
 module.exports.tutorialized = true;
 
 module.exports.resolver = (resolve) => {
@@ -17,16 +17,15 @@ module.exports.resolver = (resolve) => {
         title: 'Air gear',
         readable: true,
     });
-
     if (book.author.comment !== 'N/A') {
-        throw new Error('Error on deep getter with dot');
+        throw new DetailedError('Error on inception setter with dot', `Expected "N/A" got "${book.author.comment}"`);
     }
 
     const author = book.author;
-    author.comment = 'I love this author';
-    book.author = author;
-    if (book.author.comment !== 'I love this author') {
-        throw new Error('Error on inception deep setter with dot');
+    const value = 'I love this author';
+    author.comment = value;
+    if (book.author.comment !== value) {
+        throw new DetailedError('Error on inception setter with dot', `Expected "${value}" got "${book.author.comment}"`);
     }
 
     book.author.comment = 'N/A';
@@ -34,9 +33,5 @@ module.exports.resolver = (resolve) => {
         throw new Error('Error on deep setter with dot');
     }
 
-    if (!book.serialize()) {
-        throw new Error('Error on inception serializer');
-    }
-
-    resolve(book.serialize());
+    resolve(book);
 };

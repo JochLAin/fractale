@@ -3,7 +3,7 @@ const { Class, Program, Variable } = require('../models');
 module.exports.models = [Class];
 
 module.exports.title = 'Deep model';
-module.exports.name = 'deep_model';
+module.exports.name = 'deep-model';
 module.exports.tutorialized = false;
 
 module.exports.resolver = (resolve) => {
@@ -54,9 +54,5 @@ module.exports.resolver = (resolve) => {
         throw new Error('Error on deep accessor');
     }
 
-    if (!program.serialize()) {
-        throw new Error('Error on deep serialize');
-    }
-
-    resolve(program.serialize());
+    resolve(program);
 };

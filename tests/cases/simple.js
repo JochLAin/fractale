@@ -3,7 +3,7 @@ const { Simple } = require('../models');
 
 module.exports.models = [Simple];
 module.exports.title = 'Simple model';
-module.exports.name = 'simple_model';
+module.exports.name = 'simple-model';
 module.exports.tutorialized = true;
 
 module.exports.resolver = (resolve) => {
@@ -45,9 +45,5 @@ module.exports.resolver = (resolve) => {
         throw new DetailedError('Error on simple accessor with type string after change', `Expected "Dolor sit amet" got "${instance.string}"`);
     }
 
-    if (!instance.serialize()) {
-        throw new Error('Error on simple serializer');
-    }
-
-    resolve(instance.serialize());
+    resolve(instance);
 };

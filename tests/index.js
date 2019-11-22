@@ -20,24 +20,25 @@ module.exports.run = () => {
         }
     });
 
-    return chain.then(loop);
+    return chain.then(loop).then(() => require('./performance').run());
 };
+
 module.exports.models = require('./models');
 module.exports.cases = [
     require('./event_listener'),
-    require('./cases/error'),
     require('./cases/simple'),
-    require('./cases/validator'),
-    require('./cases/metadata'),
     require('./cases/inception'),
+    require('./cases/metadata'),
     require('./cases/collection'),
     require('./cases/self_reference'),
     require('./cases/inheritance'),
     require('./cases/form'),
     require('./cases/complex'),
     require('./cases/deep'),
+    require('./cases/error'),
+    require('./cases/serializer'),
+    require('./cases/validator'),
     require('./cases/static'),
-    require('./cases/huge'),
     require('./cases/stringify'),
 ];
 

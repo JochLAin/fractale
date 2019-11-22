@@ -10,7 +10,7 @@ const Example_Validator = Fractale.create('Example_Validator', {
 
 module.exports.models = [Example_Validator];
 module.exports.title = 'Validator test';
-module.exports.name = 'validator_test';
+module.exports.name = 'validator-test';
 module.exports.tutorialized = false;
 
 module.exports.resolver = (resolve) => {

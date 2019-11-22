@@ -67,7 +67,7 @@
                 <div class="column is-3" id="sidebarNav">
                     <div class="sidebar">
                         <nav>
-                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-1_simple_model.html">Example 1: Simple model</a></li><li><a href="tutorial-2_metadata_model.html">Example 2: Metadata model</a></li><li><a href="tutorial-3_inception_model.html">Example 3: Inception model</a></li><li><a href="tutorial-4_collection_model.html">Example 4: Collection model</a></li><li><a href="tutorial-5_reference_model.html">Example 5: Self-reference model</a></li><li><a href="tutorial-6_inheritance_model.html">Example 6: Inheritance model</a></li><li><a href="tutorial-7_form_model.html">Example 7: Form usage</a></li></ul><h3>Modules</h3><ul><li><a href="module-Fractale.html">Fractale</a></li></ul><h3>Classes</h3><ul><li><a href="EventListener.html">EventListener</a></li><li><a href="Factory.html">Factory</a></li><li><a href="Library.html">Library</a></li><li><a href="Model.html">Model</a></li><li><a href="Schema.html">Schema</a></li></ul></div>
+                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-1-simple-model.html">Example 1: Simple model</a></li><li><a href="tutorial-2-inception-model.html">Example 2: Inception model</a></li><li><a href="tutorial-3-metadata-model.html">Example 3: Metadata model</a></li><li><a href="tutorial-4-collection-model.html">Example 4: Collection model</a></li><li><a href="tutorial-5-reference-model.html">Example 5: Self-reference model</a></li><li><a href="tutorial-6-inheritance-model.html">Example 6: Inheritance model</a></li><li><a href="tutorial-7-form-usage.html">Example 7: Form usage</a></li></ul><h3>Modules</h3><ul><li><a href="module-Fractale.html">Fractale</a></li></ul><h3>Classes</h3><ul><li><a href="EventListener.html">EventListener</a></li><li><a href="Factory.html">Factory</a></li><li><a href="Library.html">Library</a></li><li><a href="Model.html">Model</a></li><li><a href="module.exports.html">exports</a></li><li><a href="Property.html">Property</a></li><li><a href="Schema.html">Schema</a></li></ul></div>
                         </nav>
                     </div>
                 </div>
@@ -86,7 +86,7 @@
     <article>
         <pre class="prettyprint source linenums"><code>const uuid = require('uuid');
 const EventListener = require('../event_listener');
-const { FIELD_TYPE_ARRAY, FIELD_TYPE_MIXED, FIELD_TYPE_BOOLEAN, FIELD_TYPE_NUMBER, FIELD_TYPE_STRING, FIELD_TYPE_DATE, FIELD_TYPE_MODEL } = require('../constants');
+const { FIELD_KIND_ARRAY, FIELD_KIND_MIXED, FIELD_KIND_BOOLEAN, FIELD_KIND_NUMBER, FIELD_KIND_STRING, FIELD_KIND_DATE, FIELD_KIND_MODEL } = require('../constants');
 
 /**
  * Default base model class
@@ -99,34 +99,66 @@ const { FIELD_TYPE_ARRAY, FIELD_TYPE_MIXED, FIELD_TYPE_BOOLEAN, FIELD_TYPE_NUMBE
 module.exports = class Model extends EventListener {
     constructor(props) {
         super();
-        this._uuid = props.uuid || uuid.v4();
-        this._props = {};
+        if (props.uuid) {
+            this.ƒ_uuid = props.uuid;
+            delete props.uuid;
+        } else {
+            this.ƒ_uuid = uuid.v4();
+        }
+        this.props = props;
     }
 
-    toJSON() {
-        return this.serialize(true);
+    get(key, ...args) {
+        return this.ƒ_properties.get(key).get(...args);
     }
 
-    get props() {
-        return this._props;
+    set(key, ...args) {
+        return this.ƒ_properties.get(key).set(...args);
     }
 
-    set props(props) {
-        this.deserialize(props);
-        return props;
+    serialize(options = {}) {
+        options = Object.assign({
+            depth: options.depth || 512,
+            populate: options.populate === undefined ? true : options.populate,
+        });
+
+        const data = {};
+        if (this.uuid) Object.assign(data, { uuid: this.uuid });
+        const keys = [...this.ƒ_properties.keys()];
+        for (let index = 0, length = keys.length; index &lt; length; index++) {
+            Object.assign(data, {
+                [keys[index]]: this.ƒ_properties.get(keys[index]).serialize(options)
+            });
+        }
+        return data;
+    }
+
+    deserialize(data) {
+        for (const key in data) {
+            if (!data.hasOwnProperty(key)) continue;
+            if (this.ƒ_properties.has(key)) {
+                this.ƒ_properties.get(key).set(data[key]);
+            } else {
+                Object.assign(this.props, { [key]: data[key] });
+            }
+        }
+    }
+
+    get ƒ_entity() {
+        return true;
     }
 
     get uuid() {
-        return this._uuid;
+        return this.ƒ_uuid;
     }
 
     static getDependencies(model, dependencies = {}) {
         const closure = (accu, field) => {
-            if (field.type === FIELD_TYPE_ARRAY) {
+            if (field.kind === FIELD_KIND_ARRAY) {
                 return closure(accu, field.options.subfield);
             }
-            if (field.type !== FIELD_TYPE_MODEL) return accu;
-            if (field.value.name === field.schema.name) return accu;
+            if (field.kind !== FIELD_KIND_MODEL) return accu;
+            if (field.value.name === field.schema.classname) return accu;
             if (field.value.virtual) return accu;
             if (accu[field.value.name]) return accu;
             Object.assign(accu, { [field.value.name]: field.value });
@@ -137,32 +169,16 @@ module.exports = class Model extends EventListener {
     }
 
     static stringify(model, space) {
-        const parent = model.schema.parent;
-        const replacer = (key, value) => {
-            switch (value) {
-                case FIELD_TYPE_MIXED:
-                    return 'undefined';
-                case FIELD_TYPE_BOOLEAN:
-                    return 'Boolean';
-                case FIELD_TYPE_NUMBER:
-                    return 'Number';
-                case FIELD_TYPE_STRING:
-                    return 'String';
-                case FIELD_TYPE_DATE:
-                    return 'Date';
-                case FIELD_TYPE_MODEL:
-                    return value.name;
-                case FIELD_TYPE_ARRAY:
-                    return value.map(v => replacer(key, v));
-            }
-            return value || 'undefined';
-        };
-        const schema = JSON.stringify(model.schema, replacer, space).replace(/("([a-zA-Z0-9\-_.]+)":?)/g, (match, content, value) => {
+        const schema = JSON.stringify(model.schema, (k, v) => v || 'undefined', space).replace(/("([a-zA-Z0-9\-_.]+)":?)/g, (match, content, value) => {
             if (!content.match(/:$/)) return value;
             if (value.match(/^[a-zA-Z0-9]+$/)) return `${value}:`;
             return content;
         });
-        return `const ${model.name} = Fractale.create("${model.name}", ${parent ? `${parent.name}, ` : ''}${schema});`;
+        return `const ${model.name} = Fractale.create("${model.name}", ${model.parent ? `${model.parent.name}, ` : ''}${schema});`;
+    }
+
+    toJSON() {
+        return this.serialize();
     }
 };
 </code></pre>

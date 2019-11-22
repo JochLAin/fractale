@@ -4,7 +4,7 @@ const { Author, Book, Library } = require('../models');
 module.exports.models = [Library];
 
 module.exports.title = 'Error tests';
-module.exports.name = 'error_test';
+module.exports.name = 'error-test';
 module.exports.tutorialized = false;
 
 module.exports.resolver = (resolve) => {
@@ -33,8 +33,9 @@ module.exports.resolver = (resolve) => {
         book.title = 69;
     } catch (error) {
         if (error.name !== 'IncorrectTypeError') throw error;
-        if (error.message !== `Expecting "Book.title" to be string || undefined but get 'number'`) {
-            throw new DetailedError(`Error on error message for incorrect simple type`, `Expected: Expecting "Book.title" to be string || undefined but get 'number'\n     got: ${error.message}`);
+        const message = `Expecting "Book.title" to be string || undefined but get 'number'`;
+        if (error.message !== message) {
+            throw new DetailedError(`Error on error message for incorrect simple type`, `Expected: ${message}\n     got: ${error.message}`);
         }
     }
 
@@ -42,10 +43,11 @@ module.exports.resolver = (resolve) => {
         library.books = [12];
     } catch (error) {
         if (error.name !== 'IncorrectTypeError') throw error;
-        if (error.message !== `Expecting "Library.books" to be array of Book || uuid || undefined but get 'number'`) {
-            throw new DetailedError(`Error on error message for incorrect model type`, `Expected: Expecting "Library.books" to be array of Book || uuid || undefined but get 'number'\n     got: ${error.message}`);
+        const message = `Expecting "Library.books" to be array of Book || uuid || undefined but get array of 'number'`;
+        if (error.message !== message) {
+            throw new DetailedError(`Error on error message for incorrect model type`, `Expected: ${message}\n     got: ${error.message}`);
         }
     }
 
-    resolve(library.serialize());
+    resolve(library);
 };
