@@ -1,37 +1,18 @@
 const { DetailedError } = require('../error');
-const { Book } = require('../models');
-module.exports.models = [Book];
+const { Regexped } = require('../models');
+module.exports.models = [Regexped];
 
 module.exports.title = 'RegExp model';
 module.exports.name = 'regexp-model';
 module.exports.tutorialized = true;
 
 module.exports.resolver = (resolve) => {
-    const book = new Book({
-        author: {
-            firstname: 'Ito',
-            lastname: 'Ōgure',
-            surname: 'Oh! Great',
-            comment: 'N/A',
-        },
-        title: 'Air gear',
-        readable: true,
+    const regexped = new Regexped({
+        item_1: 'Foo',
+        item_2: 'Bar',
     });
-    if (book.author.comment !== 'N/A') {
-        throw new DetailedError('Error on inception setter with dot', `Expected "N/A" got "${book.author.comment}"`);
-    }
 
-    const author = book.author;
-    const value = 'I love this author';
-    author.comment = value;
-    if (book.author.comment !== value) {
-        throw new DetailedError('Error on inception setter with dot', `Expected "${value}" got "${book.author.comment}"`);
-    }
+    console.log(regexped.serialize());
 
-    book.author.comment = 'N/A';
-    if (book.author.comment !== 'N/A') {
-        throw new Error('Error on deep setter with dot');
-    }
-
-    resolve(book);
+    resolve();
 };

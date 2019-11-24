@@ -20,26 +20,29 @@ module.exports.run = () => {
         }
     });
 
-    return chain.then(loop).then(() => require('./performance').run());
+    return chain.then(loop).then(() => {
+//        require('./performance').run();
+    });
 };
 
 module.exports.models = require('./models');
 module.exports.cases = [
-    require('./event_listener'),
-    require('./cases/simple'),
-    require('./cases/inception'),
-    require('./cases/metadata'),
-    require('./cases/collection'),
-    require('./cases/self_reference'),
-    require('./cases/inheritance'),
-    require('./cases/form'),
-    require('./cases/complex'),
-    require('./cases/deep'),
-    require('./cases/error'),
-    require('./cases/serializer'),
-    require('./cases/validator'),
-    require('./cases/static'),
-    require('./cases/stringify'),
+    // require('./event_listener'),
+    // require('./cases/simple'),
+    // require('./cases/inception'),
+    // require('./cases/metadata'),
+    // require('./cases/collection'),
+    // require('./cases/self_reference'),
+    require('./cases/regexp'),
+    // require('./cases/inheritance'),
+    // require('./cases/form'),
+    // require('./cases/complex'),
+    // require('./cases/deep'),
+    // require('./cases/error'),
+    // require('./cases/serializer'),
+    // require('./cases/validator'),
+    // require('./cases/static'),
+    // require('./cases/stringify'),
 ];
 
 if (require.main === module) {

@@ -31,6 +31,10 @@ Parent.prototype.sayHelloTo = function (index) {
     return `${this.value} ${this.children[index].value}`;
 };
 
+const Regexped = module.exports.Regexped = Fractale.create('Regexped', {
+    [/item_\d+/gi]: String,
+});
+
 const Page = module.exports.Page = Fractale.create('Page', {
     title: String,
     content: String,

@@ -17,7 +17,7 @@
   ],
   "author": "Jocelyn Faihy <jocelyn@faihy.fr>",
   "license": "SEE LICENSE IN LICENSE",
-  "homepage": "https://docs.jocelyn.faihy.org/fractale",
+  "homepage": "http://docs.faihy.org/fractale",
   "dependencies": {
     "moment": "^2.24.0",
     "uuid": "^3.3.3"
