@@ -7,12 +7,22 @@ module.exports.name = 'regexp-model';
 module.exports.tutorialized = true;
 
 module.exports.resolver = (resolve) => {
-    const regexped = new Regexped({
+    const instance = new Regexped({
         item_1: 'Foo',
         item_2: 'Bar',
     });
 
-    console.log(regexped.serialize());
+    let expected;
+
+    expected = 'Foo';
+    if (instance.item_1 !== expected) {
+        throw new DetailedError('Error on regexp key accessor with type string', `Expected "${expected}" got "${instance.item_1}"`);
+    }
+
+    expected = 'Bar';
+    if (instance.item_2 !== expected) {
+        throw new DetailedError('Error on regexp key accessor with type string', `Expected "${expected}" got "${instance.item_2}"`);
+    }
 
     resolve();
 };

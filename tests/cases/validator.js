@@ -77,7 +77,7 @@ module.exports.resolver = (resolve) => {
         throw new DetailedError('Error on validator date');
     } catch (error) {
         if (error instanceof DetailedError) throw error;
-        const message = 'Expected value greater than 2015-12-31T23:00:00.000Z, got "2000-01-01"';
+        const message = 'Expected value greater than 2015-12-31T23:00:00.000Z, got "2000-01-01T00:00:00.000Z"';
         if (error.message !== message) {
             throw new DetailedError('Invalid validator message', `Expected: ${message}\nGot: ${error.message}`);
         }
@@ -88,7 +88,7 @@ module.exports.resolver = (resolve) => {
         throw new DetailedError('Error on validator date');
     } catch (error) {
         if (error instanceof DetailedError) throw error;
-        const message = 'Expected value lower than or equal to 3033-12-31T00:00:00.000Z, got "3053-01-01"';
+        const message = 'Expected value lower than or equal to 3033-12-31T00:00:00.000Z, got "3053-01-01T00:00:00.000Z"';
         if (error.message !== message) {
             throw new DetailedError('Invalid validator message', `Expected: ${message}\nGot: ${error.message}`);
         }
@@ -99,7 +99,7 @@ module.exports.resolver = (resolve) => {
         throw new DetailedError('Error on validator date');
     } catch (error) {
         if (error instanceof DetailedError) throw error;
-        const message = /^Expected value between 2016-12-31T23:00:00.000Z and ([a-zA-Z0-9\.\-: ]+), got "3023-01-01"$/;
+        const message = /^Expected value between 2016-12-31T23:00:00.000Z and ([a-zA-Z0-9\.\-: ]+), got "3023-01-01T00:00:00.000Z"$/;
         if (!error.message.match(message)) {
             throw new DetailedError('Invalid validator message', `Expected: ${message.toString()}\nGot: ${error.message}`);
         }
@@ -110,7 +110,7 @@ module.exports.resolver = (resolve) => {
         throw new DetailedError('Error on validator date');
     } catch (error) {
         if (error instanceof DetailedError) throw error;
-        const message = /^Expected value between 2016-12-31T23:00:00.000Z and ([a-zA-Z0-9\.\-: ]+), got "2016-11-30"$/;
+        const message = /^Expected value between 2016-12-31T23:00:00.000Z and ([a-zA-Z0-9\.\-: ]+), got "2016-11-30T00:00:00.000Z"$/;
         if (!error.message.match(message)) {
             throw new DetailedError('Invalid validator message', `Expected: ${message.toString()}\nGot: ${error.message}`);
         }
