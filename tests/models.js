@@ -31,17 +31,13 @@ Parent.prototype.sayHelloTo = function (index) {
     return `${this.value} ${this.children[index].value}`;
 };
 
-const Regexped = module.exports.Regexped = Fractale.create('Regexped', {
-    [/item_\d+/gi]: String,
+const Chapter = module.exports.Chapter = Fractale.create('Chapter', {
+    pages: [Fractale.from('Page')],
 });
 
 const Page = module.exports.Page = Fractale.create('Page', {
     title: String,
     content: String,
-});
-
-const Chapter = module.exports.Chapter = Fractale.create('Chapter', {
-    pages: [Page],
 });
 
 const Author = module.exports.Author = Fractale.create('Author', {

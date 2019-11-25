@@ -1,4 +1,4 @@
-const { DetailedError } = require('../error');
+const _ = require('../utils');
 const { Parent, Child } = require('../models');
 module.exports.models = [Parent, Child];
 
@@ -15,17 +15,9 @@ module.exports.resolver = (resolve) => {
         ]
     });
 
-    if (instance.sayHelloTo(0) !== 'Hello world') {
-        throw new DetailedError('Error on parent method call', `Expected "Hello world" got "${instance.sayHelloTo(0)}"`);
-    }
-
-    if (instance.sayHelloTo(1) !== 'Hello you') {
-        throw new DetailedError('Error on parent method call', `Expected "Hello you" got "${instance.sayHelloTo(1)}"`);
-    }
-
-    if (instance.toUpperCase() !== 'HELLO') {
-        throw new DetailedError('Error on method inheritance', `Expected "HELLO" got "${instance.toUpperCase()}"`);
-    }
+    _.test(instance.sayHelloTo(0), 'Hello world', `Expected "Hello world" got "${instance.sayHelloTo(0)}"`);
+    _.test(instance.sayHelloTo(1), 'Hello you', 'Error on parent method call');
+    _.test(instance.toUpperCase(), 'HELLO', 'Error on method inheritance');
 
     resolve(instance);
 };

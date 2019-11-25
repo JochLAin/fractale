@@ -1,6 +1,7 @@
 const logger = require('crieur');
 const moment = require('moment');
 const { Game, Layer } = require('./models');
+const _ = require('./utils');
 module.exports.models = [Game];
 
 module.exports.title = 'Performance';
@@ -9,7 +10,7 @@ module.exports.tutorialized = false;
 
 const LAYER_LENGTH = 50;
 const FRAME_LENGTH = 50;
-const CHARACTER_LENGTH = 20;
+const CHARACTER_LENGTH = 50;
 
 module.exports.run = () => {
     logger.info(`  > Performance`, { bold: true });
@@ -71,9 +72,7 @@ module.exports.run = () => {
         const character_idx = getRandom(CHARACTER_LENGTH);
         const frame_idx = getRandom(FRAME_LENGTH);
         const layer_idx = getRandom(LAYER_LENGTH);
-        if (game.characters[character_idx].move.bottom.frames[frame_idx].layers[layer_idx].pixel(3) !== '#000333') {
-            throw new Error('Error on huge accessor');
-        }
+        _.test(game.characters[character_idx].move.bottom.frames[frame_idx].layers[layer_idx].pixel(3), '#000333', 'Error on huge accessor');
     });
 
     logger.debug(`\nSerialize data`);

@@ -1,5 +1,4 @@
-
-const { Class, Program, Variable } = require('../models');
+const { Class, Program } = require('../models');
 module.exports.models = [Class];
 
 module.exports.title = 'Deep model';

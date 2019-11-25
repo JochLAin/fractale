@@ -1,5 +1,5 @@
 const moment = require('moment');
-const { DetailedError } = require('../error');
+const _ = require('../utils');
 const Fractale = require('../../lib');
 
 const Example_Validator = Fractale.create('Example_Validator', {
@@ -17,102 +17,102 @@ module.exports.resolver = (resolve) => {
     new Example_Validator({ mixed: 'foo' });
     try {
         new Example_Validator({ mixed: 'bar' });
-        throw new DetailedError('Error on validator in');
+        throw new Error('Error on validator in');
     } catch (error) {
-        if (error instanceof DetailedError) throw error;
+        if (error instanceof _.TestValidatorError) throw error;
         const message = 'Expected value in ["foo",42], got "bar"';
         if (error.message !== message) {
-            throw new DetailedError('Invalid validator message', `Expected: ${message}\nGot: ${error.message}`);
+            throw new _.TestError('Invalid validator message', error.message, message);
         }
     }
 
     new Example_Validator({ number: 22 });
     try {
         new Example_Validator({ number: 16 });
-        throw new DetailedError('Error on validator number');
+        throw new _.TestValidatorError('Error on validator number');
     } catch (error) {
-        if (error instanceof DetailedError) throw error;
+        if (error instanceof _.TestValidatorError) throw error;
         const message = 'Expected value greater than or equal to 18, got 16';
         if (error.message !== message) {
-            throw new DetailedError('Invalid validator message', `Expected: ${message}\nGot: ${error.message}`);
+            throw new _.TestError('Invalid validator message', error.message, message);
         }
     }
 
     try {
         new Example_Validator({ number: 52 });
-        throw new DetailedError('Error on validator number');
+        throw new _.TestValidatorError('Error on validator number');
     } catch (error) {
-        if (error instanceof DetailedError) throw error;
+        if (error instanceof _.TestValidatorError) throw error;
         const message = 'Expected value lower than 51, got 52';
         if (error.message !== message) {
-            throw new DetailedError('Invalid validator message', `Expected: ${message}\nGot: ${error.message}`);
+            throw new _.TestError('Invalid validator message', error.message, message);
         }
     }
 
     try {
         new Example_Validator({ number: 19 });
-        throw new DetailedError('Error on validator number');
+        throw new _.TestValidatorError('Error on validator number');
     } catch (error) {
-        if (error instanceof DetailedError) throw error;
+        if (error instanceof _.TestValidatorError) throw error;
         const message = 'Expected value between 20 and 30, got 19';
         if (error.message !== message) {
-            throw new DetailedError('Invalid validator message', `Expected: ${message}\nGot: ${error.message}`);
+            throw new _.TestError('Invalid validator message', error.message, message);
         }
     }
 
     try {
         new Example_Validator({ number: 45 });
-        throw new DetailedError('Error on validator number');
+        throw new _.TestValidatorError('Error on validator number');
     } catch (error) {
-        if (error instanceof DetailedError) throw error;
+        if (error instanceof _.TestValidatorError) throw error;
         const message = 'Expected value between 20 and 30, got 45';
         if (error.message !== message) {
-            throw new DetailedError('Invalid validator message', `Expected: ${message}\nGot: ${error.message}`);
+            throw new _.TestError('Invalid validator message', error.message, message);
         }
     }
 
     new Example_Validator({ date: '2018-01-01' });
     try {
         new Example_Validator({ date: '2000-01-01' });
-        throw new DetailedError('Error on validator date');
+        throw new _.TestValidatorError('Error on validator date');
     } catch (error) {
-        if (error instanceof DetailedError) throw error;
+        if (error instanceof _.TestValidatorError) throw error;
         const message = 'Expected value greater than 2015-12-31T23:00:00.000Z, got "2000-01-01T00:00:00.000Z"';
         if (error.message !== message) {
-            throw new DetailedError('Invalid validator message', `Expected: ${message}\nGot: ${error.message}`);
+            throw new _.TestError('Invalid validator message', error.message, message);
         }
     }
 
     try {
         new Example_Validator({ date: '3053-01-01' });
-        throw new DetailedError('Error on validator date');
+        throw new _.TestValidatorError('Error on validator date');
     } catch (error) {
-        if (error instanceof DetailedError) throw error;
+        if (error instanceof _.TestValidatorError) throw error;
         const message = 'Expected value lower than or equal to 3033-12-31T00:00:00.000Z, got "3053-01-01T00:00:00.000Z"';
         if (error.message !== message) {
-            throw new DetailedError('Invalid validator message', `Expected: ${message}\nGot: ${error.message}`);
+            throw new _.TestError('Invalid validator message', error.message, message);
         }
     }
 
     try {
         new Example_Validator({ date: '3023-01-01' });
-        throw new DetailedError('Error on validator date');
+        throw new _.TestValidatorError('Error on validator date');
     } catch (error) {
-        if (error instanceof DetailedError) throw error;
+        if (error instanceof _.TestValidatorError) throw error;
         const message = /^Expected value between 2016-12-31T23:00:00.000Z and ([a-zA-Z0-9\.\-: ]+), got "3023-01-01T00:00:00.000Z"$/;
         if (!error.message.match(message)) {
-            throw new DetailedError('Invalid validator message', `Expected: ${message.toString()}\nGot: ${error.message}`);
+            throw new _.TestError('Invalid validator message', error.message, message);
         }
     }
 
     try {
         new Example_Validator({ date: '2016-11-30' });
-        throw new DetailedError('Error on validator date');
+        throw new _.TestValidatorError('Error on validator date');
     } catch (error) {
-        if (error instanceof DetailedError) throw error;
+        if (error instanceof _.TestValidatorError) throw error;
         const message = /^Expected value between 2016-12-31T23:00:00.000Z and ([a-zA-Z0-9\.\-: ]+), got "2016-11-30T00:00:00.000Z"$/;
         if (!error.message.match(message)) {
-            throw new DetailedError('Invalid validator message', `Expected: ${message.toString()}\nGot: ${error.message}`);
+            throw new _.TestError('Invalid validator message', error.message, message);
         }
     }
 

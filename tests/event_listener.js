@@ -1,5 +1,3 @@
-const logger = require('crieur');
-const { DetailedError } = require('./error');
 const { Author } = require('./models');
 
 module.exports.title = 'Event listener tests';
@@ -21,9 +19,5 @@ module.exports.resolver = (resolve) => {
     });
 
     author.comment = 'Great author';
-    setTimeout(() => {
-        if (!triggered) {
-            throw new Error('Event are not triggered');
-        }
-    }, 100);
+    setTimeout(() => { if (!triggered) throw new Error('Events are not triggered'); }, 100);
 };

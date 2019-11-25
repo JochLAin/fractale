@@ -1,4 +1,4 @@
-const { DetailedError } = require('../error');
+const _ = require('../utils');
 const { Author, Book } = require('../models');
 module.exports.models = [Book];
 
@@ -7,22 +7,10 @@ module.exports.name = 'form-usage';
 module.exports.tutorialized = true;
 
 module.exports.resolver = (resolve) => {
-    const author = new Author({
-        firstname: 'Jocelyn',
-        lastname: 'Faihy',
-        surname: 'Jochlain',
-        comment: 'Great',
-    });
+    const author = new Author({ firstname: 'Jocelyn', lastname: 'Faihy', surname: 'Jochlain', comment: 'Great' });
+    const book = new Book({ author: author.uuid, title: 'Au-delà de la donnée', readable: false });
 
-    const book = new Book({
-        author: author.uuid,
-        title: 'Au-delà de la donnée',
-        readable: false,
-    });
-
-    if (book.author.firstname !== 'Jocelyn') {
-        throw new DetailedError('Error on form setter', `Expected "Jocelyn" got "${book.author.firstname}"`);
-    }
+    _.test(book.author.firstname, 'Jocelyn', 'Error on form setter');
 
     resolve(book);
 };

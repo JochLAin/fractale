@@ -10,14 +10,12 @@ It will test value of each fields and link model between them.
 
 You can found more documentation and examples [here](http://docs.faihy.org/fractale).
 
-
-
 # Performance
 
-From a JSON file (405.31Mo) :
-- Deserialization : **~6.781s** => __59.77Mo/s__
-- Read of an atom _(50 * 50 * 20)_ : **~0.001s**
-- Serialization : **~2.935s** => __138.1Mo/s__
+From a JSON file (1.01Go) :
+- Deserialization : **~0.744s** => __1.36Go/s__
+- Read of an atom _(50 * 8 * 50 * 50)_ : **~0.001s**
+- Serialization : **~0.358s** => __2.83Go/s__
 
 For more information see _[comming soon](#performance)_
 

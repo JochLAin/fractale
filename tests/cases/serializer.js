@@ -1,4 +1,4 @@
-const { DetailedError } = require('../error');
+const _ = require('../utils');
 const { Author, Book, Library } = require('../models');
 module.exports.models = [Library];
 
@@ -11,23 +11,13 @@ module.exports.resolver = (resolve) => {
     author.deserialize({ firstname: 'Ito', lastname: 'Ōgure', surname: 'Oh! Great', comment: 'N/A' });
     const book = new Book({ author, readable: false });
 
-    if (!Author.memory.read(author.uuid)) {
-        throw new Error('Error on memory / serializer');
-    }
-    if (author.firstname !== 'Ito') {
-        throw new DetailedError('Error on serializer accessor', `Expected "Ito" got "${author.firstname}"`);
-    }
+    if (!Author.memory.read(author.uuid)) throw new Error('Error on memory / serializer');
+    _.test(author.firstname, 'Ito', 'Error on serializer accessor');
 
-    if (!Book.memory.read(book.uuid)) {
-        throw new Error('Error on memory / serializer');
-    }
-    if (book.readable !== false) {
-        throw new DetailedError('Error on serializer accessor', `Expected "false" got "${book.readable}"`);
-    }
+    if (!Book.memory.read(book.uuid)) throw new Error('Error on memory / serializer');
+    _.test(book.readable, false, 'Error on serializer accessor');
 
-    if (!book.serialize()) {
-        throw new Error('Error on serializer');
-    }
+    if (!book.serialize()) throw new Error('Error on serializer');
 
     resolve(author);
 };

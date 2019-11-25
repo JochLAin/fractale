@@ -21,7 +21,7 @@ module.exports.run = () => {
     });
 
     return chain.then(loop).then(() => {
-//        require('./performance').run();
+       require('./performance').run();
     });
 };
 
