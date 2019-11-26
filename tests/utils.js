@@ -1,4 +1,3 @@
-const logger = require('crieur');
 const moment = require('moment');
 
 class TestError extends Error {
@@ -16,6 +15,7 @@ class TestError extends Error {
         }
     }
 }
+
 class TestValidatorError extends Error {
 }
 
@@ -26,14 +26,9 @@ module.exports.test = (value, expected, message) => {
     throw new TestError(message, value, expected);
 };
 
-module.exports.watch = (callback, title, level = 'debug') => {
+module.exports.watch = (callback) => {
     let start = moment();
-    if (title) logger.info(`  > ${title}`);
-    logger[level](`Start watch ${start.format('HH:mm:ss.SSS')}`);
     callback();
     let end = moment();
-    logger[level](`End watch ${end.format('HH:mm:ss.SSS')}`);
-    const duration = (end.valueOf() - start.valueOf()) / 1000;
-    logger[level](`Duration: ${duration}s`);
-    return duration;
+    return (end.valueOf() - start.valueOf()) / 1000;
 };

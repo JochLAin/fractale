@@ -1,6 +1,6 @@
 const logger = require('crieur');
 const sizeof = require('object-sizeof');
-const { Game, Layer } = require('./models');
+const { Character, Frame, Game, Layer, Sprite } = require('./models');
 const _ = require('./utils');
 module.exports.models = [Game];
 
@@ -8,12 +8,19 @@ module.exports.title = 'Performance';
 module.exports.name = 'performance';
 module.exports.tutorialized = false;
 
-const LAYER_LENGTH = 9;
-const FRAME_LENGTH = 10;
-const CHARACTER_LENGTH = 10;
+const LAYER_LENGTH = 15;
+const FRAME_LENGTH = 30;
+const CHARACTER_LENGTH = 2;
 
 module.exports.run = () => {
     logger.info(`  > Performance`, { bold: true });
+
+    // Preload all fields to save time
+    Character.schema.values;
+    Frame.schema.values;
+    Game.schema.values;
+    Layer.schema.values;
+    Sprite.schema.values;
 
     const PIXELS = [
         '#000000', '#000111', '#000222', '#000333', '#000444', '#000555', '#000666', '#000777', '#000888', '#000999',
@@ -64,23 +71,26 @@ module.exports.run = () => {
     let game;
     let duration = _.watch(() => {
         game = new Game(GAME);
-    });
+    }, 'debug');
+    logger.debug(`Duration: ${duration}s`);
     logger.debug(`Rate : ${format_size(size / duration)}o/s`);
 
     logger.debug(`\nGet a pixel in ${Layer.memory.data.size} layers`);
-    _.watch(() => {
+    duration = _.watch(() => {
         const character_idx = getRandom(CHARACTER_LENGTH);
         const frame_idx = getRandom(FRAME_LENGTH);
         const layer_idx = getRandom(LAYER_LENGTH);
         _.test(game.characters[character_idx].move.bottom.frames[frame_idx].layers[layer_idx].pixel(3), '#000333', 'Error on huge accessor');
-    });
+    }, 'debug');
+    logger.debug(`Duration: ${duration}s`);
 
     logger.debug(`\nSerialize data`);
     duration = _.watch(() => {
         if (!game.serialize()) {
             throw new Error('Error on huge serialize');
         }
-    });
+    }, 'debug');
+    logger.debug(`Duration: ${duration}s`);
     logger.debug(`Rate : ${format_size(size / duration)}o/s`);
 };
 
