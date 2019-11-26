@@ -1,3 +1,6 @@
+const logger = require('crieur');
+const moment = require('moment');
+
 class TestError extends Error {
     constructor(message, value, expected) {
         super();
@@ -9,7 +12,7 @@ class TestError extends Error {
         if (String(value).length <= 80 && String(expected).length <= 80) {
             this.detail = `Expected "${expected}" got "${value}"`;
         } else {
-            this.detail = `Expected "${expected}"\nGot "${value}"`;
+            this.detail = `Expected: ${expected}\nGot: ${value}`;
         }
     }
 }
@@ -23,3 +26,14 @@ module.exports.test = (value, expected, message) => {
     throw new TestError(message, value, expected);
 };
 
+module.exports.watch = (callback, title, level = 'debug') => {
+    let start = moment();
+    if (title) logger.info(`  > ${title}`);
+    logger[level](`Start watch ${start.format('HH:mm:ss.SSS')}`);
+    callback();
+    let end = moment();
+    logger[level](`End watch ${end.format('HH:mm:ss.SSS')}`);
+    const duration = (end.valueOf() - start.valueOf()) / 1000;
+    logger[level](`Duration: ${duration}s`);
+    return duration;
+};

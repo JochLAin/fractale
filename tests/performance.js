@@ -1,5 +1,5 @@
 const logger = require('crieur');
-const moment = require('moment');
+const sizeof = require('object-sizeof');
 const { Game, Layer } = require('./models');
 const _ = require('./utils');
 module.exports.models = [Game];
@@ -8,9 +8,9 @@ module.exports.title = 'Performance';
 module.exports.name = 'performance';
 module.exports.tutorialized = false;
 
-const LAYER_LENGTH = 50;
-const FRAME_LENGTH = 50;
-const CHARACTER_LENGTH = 50;
+const LAYER_LENGTH = 9;
+const FRAME_LENGTH = 10;
+const CHARACTER_LENGTH = 10;
 
 module.exports.run = () => {
     logger.info(`  > Performance`, { bold: true });
@@ -57,18 +57,18 @@ module.exports.run = () => {
         characters: Array(CHARACTER_LENGTH).fill(CHARACTER),
     };
 
-    const size = JSON.stringify(GAME).length;
+    const size = sizeof(GAME);
     logger.debug(`\nTry to save ${format_size(size)}o`);
     logger.debug(`Number of layers : ${LAYER_LENGTH * FRAME_LENGTH * 8 * CHARACTER_LENGTH}`);
 
     let game;
-    let duration = watch(() => {
+    let duration = _.watch(() => {
         game = new Game(GAME);
     });
     logger.debug(`Rate : ${format_size(size / duration)}o/s`);
 
     logger.debug(`\nGet a pixel in ${Layer.memory.data.size} layers`);
-    watch(() => {
+    _.watch(() => {
         const character_idx = getRandom(CHARACTER_LENGTH);
         const frame_idx = getRandom(FRAME_LENGTH);
         const layer_idx = getRandom(LAYER_LENGTH);
@@ -76,7 +76,7 @@ module.exports.run = () => {
     });
 
     logger.debug(`\nSerialize data`);
-    duration = watch(() => {
+    duration = _.watch(() => {
         if (!game.serialize()) {
             throw new Error('Error on huge serialize');
         }
@@ -105,17 +105,6 @@ const format_size = (size) => {
     }
 
     return `${Math.round((size / (10 ** (pow * 3))) * 100) / 100}${index}`;
-};
-
-const watch = (callback) => {
-    let start = moment();
-    logger.debug(`Start watch ${start.format('HH:mm:ss.SSSS')}`);
-    callback();
-    let end = moment();
-    logger.debug(`End watch ${end.format('HH:mm:ss.SSSS')}`);
-    const duration = (end.valueOf() - start.valueOf()) / 1000;
-    logger.debug(`Duration: ${duration}s`);
-    return duration;
 };
 
 const getRandom = (max) => {

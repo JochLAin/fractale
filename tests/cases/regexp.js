@@ -17,17 +17,8 @@ module.exports.resolver = (resolve) => {
         item_2: 'Bar',
     });
 
-    let expected;
-
-    expected = 'Foo';
-    if (instance.item_1 !== expected) {
-        throw new DetailedError('Error on regexp key accessor with type string', `Expected "${expected}" got "${instance.item_1}"`);
-    }
-
-    expected = 'Bar';
-    if (instance.item_2 !== expected) {
-        throw new DetailedError('Error on regexp key accessor with type string', `Expected "${expected}" got "${instance.item_2}"`);
-    }
+    _.test(instance.item_1, 'Foo', 'Error on regexp key accessor with type string');
+    _.test(instance.item_2, 'Bar', 'Error on regexp key accessor with type string');
 
     resolve();
 };
