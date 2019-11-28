@@ -298,7 +298,7 @@ This project is licensed under the MIT License - see the [LICENSE](https://githu
 
 ## Authors
 
-* **Jocelyn Faihy** - *Web developer* - [Jochlain](https://github.com/JochLAin)
+* **Jocelyn Faihy** - *Web developer* and *Blob of Internets* - [Jochlain](https://github.com/JochLAin)
 
 See also the list of [contributors](https://github.com/JochLAin/fractale/graphs/contributors) who participated in this project.
 
