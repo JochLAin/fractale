@@ -1,13 +1,13 @@
+const Fractale = require('../../lib');
 const _ = require('../utils');
-const { Parent, Child } = require('../models');
-module.exports.models = [Parent, Child];
 
 module.exports.title = 'Inheritance model';
 module.exports.name = 'inheritance-model';
 module.exports.tutorialized = true;
 
 module.exports.resolver = (resolve) => {
-    const instance = new Parent({
+    const { Inheritance_Parent } = module.exports.get();
+    const instance = new Inheritance_Parent({
         value: 'Hello',
         children: [
             { value: 'world' },
@@ -20,4 +20,35 @@ module.exports.resolver = (resolve) => {
     _.test(instance.toUpperCase(), 'HELLO', 'Error on method inheritance');
 
     resolve(instance);
+};
+
+module.exports.create = () => {
+    const Inheritance_Child = Fractale.create('Inheritance_Child', {
+        value: String,
+    });
+    Inheritance_Child.prototype.toUpperCase = function () {
+        return this.value.toUpperCase();
+    };
+    Inheritance_Child.prototype.toLowerCase = function () {
+        return this.value.toLowerCase();
+    };
+
+    const Inheritance_Parent = Fractale.create('Inheritance_Parent', Inheritance_Child, {
+        children: [Inheritance_Child],
+    });
+    Inheritance_Parent.prototype.sayHelloTo = function (index) {
+        return `${this.value} ${this.children[index].value}`;
+    };
+
+    return { Inheritance_Child, Inheritance_Parent };
+};
+
+let models;
+module.exports.get = () => {
+    if (models) return models;
+    return models = module.exports.create();
+};
+
+module.exports.used = () => {
+    return module.exports.get().Inheritance_Parent;
 };

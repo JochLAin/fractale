@@ -67,7 +67,7 @@
                 <div class="column is-3" id="sidebarNav">
                     <div class="sidebar">
                         <nav>
-                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-1-simple-model.html">Example 1: Simple model</a></li><li><a href="tutorial-2-inception-model.html">Example 2: Inception model</a></li><li><a href="tutorial-3-metadata-model.html">Example 3: Metadata model</a></li><li><a href="tutorial-4-collection-model.html">Example 4: Collection model</a></li><li><a href="tutorial-5-reference-model.html">Example 5: Self-reference model</a></li><li><a href="tutorial-6-inheritance-model.html">Example 6: Inheritance model</a></li><li><a href="tutorial-7-form-usage.html">Example 7: Form usage</a></li></ul><h3>Modules</h3><ul><li><a href="module-Fractale.html">Fractale</a></li></ul><h3>Classes</h3><ul><li><a href="EventListener.html">EventListener</a></li><li><a href="Factory.html">Factory</a></li><li><a href="Library.html">Library</a></li><li><a href="Model.html">Model</a></li><li><a href="module.exports.html">exports</a></li><li><a href="Property.html">Property</a></li><li><a href="Schema.html">Schema</a></li></ul></div>
+                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-1-simple-model.html">Example 1: Simple model</a></li><li><a href="tutorial-2-inception-model.html">Example 2: Inception model</a></li><li><a href="tutorial-3-metadata-model.html">Example 3: Metadata model</a></li><li><a href="tutorial-4-collection-model.html">Example 4: Collection model</a></li><li><a href="tutorial-5-reference-model.html">Example 5: Self-reference model</a></li><li><a href="tutorial-6-inheritance-model.html">Example 6: Inheritance model</a></li><li><a href="tutorial-7-form-usage.html">Example 7: Form usage</a></li></ul><h3>Modules</h3><ul><li><a href="module-Factory.html">Factory</a></li><li><a href="module-Fractale.html">Fractale</a></li></ul><h3>Classes</h3><ul><li><a href="EventListener.html">EventListener</a></li><li><a href="Model.html">Model</a></li><li><a href="Property.html">Property</a></li><li><a href="PropertyType.html">PropertyType</a></li><li><a href="PropertyTypeCompound.html">PropertyTypeCompound</a></li><li><a href="Schema.html">Schema</a></li></ul><h3>Global</h3><ul><li><a href="global.html#entities">entities</a></li></ul></div>
                         </nav>
                     </div>
                 </div>
@@ -84,74 +84,111 @@
     
 <section>
     <article>
-        <pre class="prettyprint source linenums"><code>const Field = require('./field');
+        <pre class="prettyprint source linenums"><code>'use strict';
+
+const TYPES = require('./types');
 
 /**
- * Schema class
  * @class Schema
+ * @param {Model} model
+ * @param {Object} props
+ *
  * @author Jocelyn Faihy &lt;jocelyn@faihy.fr>
  */
-class Schema {
-    constructor(entity, props = {}) {
+module.exports = class Schema {
+    constructor(model, props) {
         if (props.uuid) {
             throw new Error('Field "uuid" is automatically set');
         }
 
-        this.entity = entity;
-        this.classname = entity.name;
+        this.model = model;
+        this.props = props;
+        this.classname = this.model.name;
+    }
 
-        this.fields = [];
-        for (const key in props) {
-            if (!props.hasOwnProperty(key)) continue;
-            const value = props[key] === null ? undefined : props[key];
-            this.fields.push(new Field(this, key, value));
+    evaluate(key, input, options = {}) {
+        // const match = key.match(/^\/(.+)\/([gmixXsuUAJD]*)?$/);
+        const _typeof = typeof input;
+        if (_typeof === 'object' &amp;&amp; input &amp;&amp; input.hasOwnProperty('ƒ_type')) {
+            if (input.hasOwnProperty('ƒ_options')) {
+                if (input.ƒ_options.hasOwnProperty('validator')) {
+                    Object.assign(input.ƒ_options, { validator: Object.assign({}, options.validator, input.ƒ_options.validator) });
+                }
+                Object.assign(options, input.ƒ_options);
+            }
+            return this.evaluate( key, input.ƒ_type, options);
+        }
+        for (let index = 0, types = TYPES.get(), length = types.length; index &lt; length; index++) {
+            if (types[index].evaluate(input, _typeof)) {
+                return new types[index](this, key, input, options);
+            }
+        }
+        throw new Error(`Type ${input instanceof Function ? input.name : _typeof} is not processed`);
+    }
+
+    get(key, full = true) {
+        for (let index = 0, types = !full ? this.types : this.values, length = types.length; index &lt; length; index++) {
+            if (types[index].match(key)) return types[index];
+        }
+    }
+
+    get types() {
+        if (this._types) return this._types;
+        this._types = [];
+        for (const key in this.props) {
+            if (!this.props.hasOwnProperty(key)) continue;
+            this._types.push(this.evaluate(key, this.props[key]));
         }
 
-        if (!this.parent) this.values = this.fields;
-        else this.values = [].concat(this.parent.schema.values, this.fields);
-        this.keys = this.values.map(field => field.key);
+        return this._types.sort((a, b) => {
+            // if (!a.ƒ_regexp &amp;&amp; b.ƒ_regexp) return -1;
+            // if (a.ƒ_regexp &amp;&amp; !b.ƒ_regexp) return 1;
+            return 0;
+        });
     }
 
-    filter(params) {
-        const keys = this.fields.map(field => field.key);
-        const props = {};
-        for (const key in params) {
-            if (!params.hasOwnProperty(key)) continue;
-            if (keys.includes(key)) continue;
-            props[key] = params[key];
-        }
-        return props;
+    get keys() {
+        if (this._keys) return this._keys;
+        return this._keys = this.values.map(type => type.key);
     }
 
-    get(key) {
-        return this.fields.find(field => field.key === key);
-    }
-
-    instantiate(instance, props = {}) {
-        const properties = instance.ƒ_properties || new Map();
-        for (let index = 0, length = this.fields.length; index &lt; length; index++) {
-            const field = this.fields[index];
-            properties.set(field.key, field.instantiate(instance, props[field.key]));
-        }
-        instance.ƒ_properties = properties;
-        return properties;
-    }
-
-    get factory() {
-        if (this._factory) return this._factory;
-        return this._factory = require('../factory');
+    get values() {
+        if (this._values) return this._values;
+        if (!this.model.parent) return this._values = this.types;
+        return this._values = [].concat(
+            this.model.parent.schema.values,
+            this.types
+        ).sort((a, b) => {
+            // if (!a.ƒ_regexp &amp;&amp; b.ƒ_regexp) return -1;
+            // if (a.ƒ_regexp &amp;&amp; !b.ƒ_regexp) return 1;
+            return 0;
+        });
     }
 
     toJSON() {
-        return this.fields.reduce((accu, field) => {
+        return this.types.reduce((accu, type) => {
             return Object.assign({}, accu, {
-                [field.key]: field
+                [type.key]: type
             });
         }, {});
     }
-}
+};
 
-module.exports = Schema;
+const parseOptions = (input, options = {}) => {
+    if (typeof input === 'object' &amp;&amp; input !== null) {
+        if (input.hasOwnProperty('ƒ_type')) {
+            if (input.hasOwnProperty('ƒ_options')) {
+                let validator;
+                if (input.ƒ_options.validator) {
+                    validator = Object.assign({}, options.validator, input.ƒ_options.validator);
+                }
+                Object.assign(options, input.ƒ_options, { validator });
+            }
+            return parseOptions(input.ƒ_type, options);
+        }
+    }
+    return options;
+};
 </code></pre>
     </article>
 </section>

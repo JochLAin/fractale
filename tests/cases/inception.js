@@ -1,32 +1,48 @@
+const Fractale = require('../../lib');
 const _ = require('../utils');
-const { Book } = require('../models');
-module.exports.models = [Book];
 
 module.exports.title = 'Inception model';
 module.exports.name = 'inception-model';
 module.exports.tutorialized = true;
 
 module.exports.resolver = (resolve) => {
-    const book = new Book({
-        author: {
-            firstname: 'Ito',
-            lastname: 'Ōgure',
-            surname: 'Oh! Great',
-            comment: 'N/A',
-        },
-        title: 'Air gear',
-        readable: true,
+    const { Inception_Child } = module.exports.get();
+    const child = new Inception_Child({
+        parent: { value: 'foo' },
+        value: 'bar',
     });
-    _.test(book.author.comment, 'N/A', 'Error on inception setter with dot');
 
-    const author = book.author;
-    const value = 'I love this author';
-    author.comment = value;
+    _.test(child.parent.value, 'foo', 'Error on inception setter with dot');
 
-    _.test(book.author.comment, value, 'Error on inception setter with dot');
+    const parent = child.parent;
+    const value = 'hello world';
+    parent.value = value;
+    _.test(child.parent.value, value, 'Error on inception setter with dot');
 
-    book.author.comment = 'N/A';
-    _.test(book.author.comment, 'N/A', 'Error on deep setter with dot');
+    child.parent.value = 'foo';
+    _.test(child.parent.value, 'foo', 'Error on deep setter with dot');
 
-    resolve(book);
+    resolve(child);
+};
+
+module.exports.create = () => {
+    const Inception_Parent = Fractale.create('Inception_Parent', {
+        value: String,
+    });
+    const Inception_Child = Fractale.create('Inception_Child', {
+        parent: Inception_Parent,
+        value: String,
+    });
+
+    return { Inception_Parent, Inception_Child };
+};
+
+let models;
+module.exports.get = () => {
+    if (models) return models;
+    return models = module.exports.create();
+};
+
+module.exports.used = () => {
+    return module.exports.get().Inception_Child;
 };

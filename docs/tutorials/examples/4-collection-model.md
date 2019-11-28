@@ -1,36 +1,13 @@
 <article class="mb-4"><a href="#models" class="border border-1" data-toggle="collapse">Models used for examples</a><div id="models" class="border border-1 collapse">
 
 ```javascript
-const Book = Fractale.create("Book", {
-    author: Author,
-    readable: Boolean,
-    title: String,
-    chapters: [
-        Chapter
-    ]
+const Collection_Item = Fractale.create("Collection_Item", {
+    value: String
 });
 
-const Author = Fractale.create("Author", {
-    firstname: String,
-    lastname: String,
-    surname: String,
-    comment: String
-});
-
-const Chapter = Fractale.create("Chapter", {
-    pages: [
-        Page
-    ]
-});
-
-const Page = Fractale.create("Page", {
-    title: String,
-    content: String
-});
-
-const Library = Fractale.create("Library", {
-    books: [
-        Book
+const Collection_Category = Fractale.create("Collection_Category", {
+    items: [
+        Collection_Item
     ]
 });
 ```
@@ -38,103 +15,49 @@ const Library = Fractale.create("Library", {
 </div></article>
 
 ```javascript
-const author = new Author({
-    firstname: 'Ito',
-    lastname: 'Ōgure',
-    surname: 'Oh! Great',
-    comment: 'N/A',
-});
+const { Collection_Category, Collection_Item } = module.exports.get();
+const item = new Collection_Item({ value: 'foo' });
+const category = new Collection_Category({ items: [item, { value: 'bar' }] });
 
-const book = new Book({
-    title: 'Air gear',
-    readable: true,
-    author: author,
-});
-
-const library = new Library({
-    books: [book, {
-        title: 'Tenjo tenge',
-        readable: false,
-        author: author,
-    }]
-});
-
-if (library.books[0].title !== 'Air gear') {
-    throw new DetailedError('Error on collection accessor with brace', `Expected "Air gear" got "${library.books[0].title}"`);
-}
-if (library.books[1].title !== 'Tenjo tenge') {
-    throw new DetailedError('Error on collection accessor with brace', `Expected "Tenjo tenge" got "${library.books[1].title}"`);
-}
+_.test(category.items[0].value, 'foo', 'Error on collection accessor with brace');
+_.test(category.items[1].value, 'bar', 'Error on collection accessor with brace');
 
 let changed = false;
-library.addEventListener('change', () => changed = true);
-library.books[0].title = 'Bakemonogatari';
+category.addEventListener('change', () => changed = true);
+category.items[0].value = 'hello';
 
 if (!changed) {
     throw new Error('Error on collection change event');
 }
-if (library.books[0].title !== 'Bakemonogatari') {
-    throw new Error('Error on collection accessor with brace');
-}
-if (library.books.first.title !== 'Bakemonogatari') {
-    throw new Error('Error on array method first accessor');
-}
+_.test(category.items[0].value, 'hello', 'Error on collection accessor with brace after change');
+_.test(category.items.first.value, 'hello', 'Error on collection method first accessor');
 
-library.books.push({
-    title: 'Biorg trinity',
-    readable: false,
-    author: author,
-});
+category.items.push({ value: 'world' });
 
-if (library.books.last.title !== 'Biorg trinity') {
-    throw new Error('Error on array method last accessor');
-}
+_.test(category.items.last.value, 'world', 'Error on collection method last accessor');
+_.test(category.items.map(item => item.value).join(', '), 'hello, bar, world', 'Error on array method map accessor');
+_.test(category.items.filter(item => item.value === 'hello').map(item => item.value).join(', '), 'hello', 'Error on array method filter accessor');
+_.test(category.items.reduce((accu, item) => `${accu} ${item.value}`, '').trim(), 'hello bar world', 'Error on array method reduce accessor');
 
-if (library.books.map(book => book.title).join(', ') !== 'Bakemonogatari, Tenjo tenge, Biorg trinity') {
-    throw new Error('Error on array method map accessor');
-}
+category.items.remove(item);
+if (category.items.length !== 2) throw new Error('Error on array method remove accessor');
 
-if (library.books.filter(book => book.readable).map(book => book.title).join(', ') !== 'Bakemonogatari') {
-    throw new Error('Error on array method filter accessor');
-}
-
-if (library.books.reduce((accu, book) => `${accu} ${book.title}`, '').trim() !== 'Bakemonogatari Tenjo tenge Biorg trinity') {
-    throw new Error('Error on array method reduce accessor');
-}
-
-library.books.remove(book);
-if (library.books.length !== 2) {
-    throw new Error('Error on array method remove accessor');
-}
-
-resolve(library);
+resolve(category);
 ```
 
 ### Results
 
 ```json
 {
-    "uuid": "bdfaacd6-4083-4e6a-8c61-5c2f30635520",
-    "books": [
+    "uuid": "ffcfd0a4-a3b6-4a5f-92d0-94db66c3f9c2",
+    "items": [
         {
-            "uuid": "a3f384df-15a9-4975-9e9b-b3b689f502ab",
-            "author": {
-                "uuid": "4874b063-e25c-42ea-8a18-4cabf20e567e",
-                "firstname": "Ito",
-                "lastname": "Ōgure",
-                "surname": "Oh! Great",
-                "comment": "N/A"
-            },
-            "readable": false,
-            "title": "Tenjo tenge",
-            "chapters": []
+            "uuid": "1669c487-dfd7-488c-81d4-ff5e20991f46",
+            "value": "bar"
         },
         {
-            "uuid": "1c598e55-05bb-495a-9479-3340abfe8a44",
-            "author": "4874b063-e25c-42ea-8a18-4cabf20e567e",
-            "readable": false,
-            "title": "Biorg trinity",
-            "chapters": []
+            "uuid": "9367c35e-0583-4397-a822-3b40bb55c367",
+            "value": "world"
         }
     ]
 }

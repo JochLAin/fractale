@@ -27,10 +27,11 @@ module.exports.clean = (code) => {
 };
 
 module.exports.format = (test, results) => {
+    logger.info(`Format ${test.title}`);
     let content = `<article class="mb-4">`;
     content += `<a href="#models" class="border border-1" data-toggle="collapse">Models used for examples</a>`;
     content += `<div id="models" class="border border-1 collapse">`;
-    content += `${KEY_CODE_JAVASCRIPT}${test.models.map(model => Fractale.stringify(model, { space: 4, dependencies: true }))}${KEY_CODE}`;
+    content += `${KEY_CODE_JAVASCRIPT}${Fractale.stringify(test.used(), { space: 4, dependencies: true })}${KEY_CODE}`;
     content += `</div>`;
     content += `</article>`;
     content += `${KEY_CODE_JAVASCRIPT}${module.exports.clean(test.resolver.toString())}${KEY_CODE}`;
@@ -46,6 +47,7 @@ module.exports.get = () => {
         if (!test.tutorialized) return;
         return true;
     }).map((test, index) => {
+        logger.info(`Run ${test.title}`);
         return new Promise(test.resolver).then(result => {
             const name = `${index + 1}-${test.name}`;
             const content = module.exports.format(test, result.serialize());

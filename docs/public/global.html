@@ -1,11 +1,9 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
         
         <meta charset="utf-8">
-        <title>Fractale: property/normalizers/mixed.js</title>
+        <title>Fractale: Global</title>
 
         <script src="scripts/prettify/prettify.js"></script>
         <script src="scripts/prettify/lang-css.js"></script>
@@ -67,53 +65,189 @@
                 <div class="column is-3" id="sidebarNav">
                     <div class="sidebar">
                         <nav>
-                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-1-simple-model.html">Example 1: Simple model</a></li><li><a href="tutorial-2-inception-model.html">Example 2: Inception model</a></li><li><a href="tutorial-3-metadata-model.html">Example 3: Metadata model</a></li><li><a href="tutorial-4-collection-model.html">Example 4: Collection model</a></li><li><a href="tutorial-5-reference-model.html">Example 5: Self-reference model</a></li><li><a href="tutorial-6-inheritance-model.html">Example 6: Inheritance model</a></li><li><a href="tutorial-7-form-usage.html">Example 7: Form usage</a></li></ul><h3>Modules</h3><ul><li><a href="module-Fractale.html">Fractale</a></li></ul><h3>Classes</h3><ul><li><a href="EventListener.html">EventListener</a></li><li><a href="Factory.html">Factory</a></li><li><a href="Library.html">Library</a></li><li><a href="Model.html">Model</a></li><li><a href="module.exports.html">exports</a></li><li><a href="Property.html">Property</a></li><li><a href="Schema.html">Schema</a></li></ul></div>
+                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-1-simple-model.html">Example 1: Simple model</a></li><li><a href="tutorial-2-inception-model.html">Example 2: Inception model</a></li><li><a href="tutorial-3-metadata-model.html">Example 3: Metadata model</a></li><li><a href="tutorial-4-collection-model.html">Example 4: Collection model</a></li><li><a href="tutorial-5-reference-model.html">Example 5: Self-reference model</a></li><li><a href="tutorial-6-inheritance-model.html">Example 6: Inheritance model</a></li><li><a href="tutorial-7-form-usage.html">Example 7: Form usage</a></li></ul><h3>Modules</h3><ul><li><a href="module-Factory.html">Factory</a></li><li><a href="module-Fractale.html">Fractale</a></li></ul><h3>Classes</h3><ul><li><a href="EventListener.html">EventListener</a></li><li><a href="Model.html">Model</a></li><li><a href="Property.html">Property</a></li><li><a href="PropertyType.html">PropertyType</a></li><li><a href="PropertyTypeCompound.html">PropertyTypeCompound</a></li><li><a href="Schema.html">Schema</a></li></ul><h3>Global</h3><ul><li><a href="global.html#entities">entities</a></li></ul></div>
                         </nav>
                     </div>
                 </div>
                 <div class="column is-9-desktop">
                     <div class="content" id="main-content-wrapper">
                         <header class="page-title">
-                            <p>Source</p>
-                            <h1>property/normalizers/mixed.js</h1>
+                            <p>Data modeling</p>
+                            <h1>Global</h1>
                         </header>
                         
 
 
 
-    
+
 <section>
-    <article>
-        <pre class="prettyprint source linenums"><code>/**
- * @class
- */
-module.exports = class MixedNormalizer {
-    /**
-     * Dedenormalize the value
-     * @param {Field} field
-     * @param next
-     * @param previous
-     * @returns {*}
-     */
-    static normalize(field, next, previous) {
-        return next || undefined;
-    }
 
-    /**
-     * Normalize the value
-     * @param {Field} field
-     * @param next
-     * @param previous
-     * @method
-     */
-    static denormalize(field, next, previous) {
-        return next || undefined;
-    }
-};
-</code></pre>
-    </article>
+<header>
+    
+        
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+        <div class='vertical-section'>
+            <h3 class="title"><span>Members</span></h3>
+            <div class="members">
+            
+                <div class="member">
+
+    <span class="method-parameter is-pulled-right">
+        <label>Type:</label>
+        
+    <span class="param-type">Array.&lt;<a href="Model.html">Model</a>></span>
+    
+
+
+    </span>
+
+<h4 class="name" id="entities">
+    
+    <span class="code-name">
+        entities
+    </span>
+</h4>
+
+
+
+
+<div class="description">
+    Model storage manager
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:jocelyn@faihy.fr">Jocelyn Faihy</a></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="library.js.html" class="button">View Source</a>
+            <span>
+                <a href="library.js.html">library.js</a>, <a href="library.js.html#line5">line 5</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+</div>
+            
+            </div>
+        </div>
+    
+
+    
+
+    
+
+    
+</article>
+
 </section>
-
 
 
 

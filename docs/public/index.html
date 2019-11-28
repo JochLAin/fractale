@@ -65,7 +65,7 @@
                 <div class="column is-3" id="sidebarNav">
                     <div class="sidebar">
                         <nav>
-                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-1-simple-model.html">Example 1: Simple model</a></li><li><a href="tutorial-2-inception-model.html">Example 2: Inception model</a></li><li><a href="tutorial-3-metadata-model.html">Example 3: Metadata model</a></li><li><a href="tutorial-4-collection-model.html">Example 4: Collection model</a></li><li><a href="tutorial-5-reference-model.html">Example 5: Self-reference model</a></li><li><a href="tutorial-6-inheritance-model.html">Example 6: Inheritance model</a></li><li><a href="tutorial-7-form-usage.html">Example 7: Form usage</a></li></ul><h3>Modules</h3><ul><li><a href="module-Fractale.html">Fractale</a></li></ul><h3>Classes</h3><ul><li><a href="EventListener.html">EventListener</a></li><li><a href="Factory.html">Factory</a></li><li><a href="Library.html">Library</a></li><li><a href="Model.html">Model</a></li><li><a href="module.exports.html">exports</a></li><li><a href="Property.html">Property</a></li><li><a href="Schema.html">Schema</a></li></ul></div>
+                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-1-simple-model.html">Example 1: Simple model</a></li><li><a href="tutorial-2-inception-model.html">Example 2: Inception model</a></li><li><a href="tutorial-3-metadata-model.html">Example 3: Metadata model</a></li><li><a href="tutorial-4-collection-model.html">Example 4: Collection model</a></li><li><a href="tutorial-5-reference-model.html">Example 5: Self-reference model</a></li><li><a href="tutorial-6-inheritance-model.html">Example 6: Inheritance model</a></li><li><a href="tutorial-7-form-usage.html">Example 7: Form usage</a></li></ul><h3>Modules</h3><ul><li><a href="module-Factory.html">Factory</a></li><li><a href="module-Fractale.html">Fractale</a></li></ul><h3>Classes</h3><ul><li><a href="EventListener.html">EventListener</a></li><li><a href="Model.html">Model</a></li><li><a href="Property.html">Property</a></li><li><a href="PropertyType.html">PropertyType</a></li><li><a href="PropertyTypeCompound.html">PropertyTypeCompound</a></li><li><a href="Schema.html">Schema</a></li></ul><h3>Global</h3><ul><li><a href="global.html#entities">entities</a></li></ul></div>
                         </nav>
                     </div>
                 </div>
@@ -97,20 +97,12 @@
     <section>
         <article><p>Inspired from <a href="https://mongoosejs.com/docs/guide.html">Mongoose</a>, it allows you to modeling your data to be explicit on data format.</p>
 <p>It will test value of each fields and link model between them.</p>
-<h1>Installation</h1>
+<h2>Installation</h2>
 <p><code>npm install --save fractale</code></p>
-<h1>Documentation</h1>
+<h2>Documentation</h2>
 <p>You can found more documentation and examples <a href="http://docs.faihy.org/fractale">here</a>.</p>
-<h1>Performance</h1>
-<p>From a JSON file (405.31Mo) :</p>
-<ul>
-<li>Deserialization : <strong>~6.781s</strong> =&gt; <strong>59.77Mo/s</strong></li>
-<li>Read of an atom <em>(50 * 50 * 20)</em> : <strong>~0.001s</strong></li>
-<li>Serialization : <strong>~2.935s</strong> =&gt; <strong>138.1Mo/s</strong></li>
-</ul>
-<p>For more information see <em><a href="#performance">comming soon</a></em></p>
-<h1>Usage</h1>
-<h2>Declaration</h2>
+<h2>Usage</h2>
+<h3>Declaration</h3>
 <pre class="prettyprint source lang-javascript"><code>'use strict';
 
 const Fractale = require('fractale');
@@ -155,7 +147,7 @@ const After = Fractale.create('After', {
     end: Date,
 });
 </code></pre>
-<h2>Instanciation</h2>
+<h3>Instanciation</h3>
 <pre class="prettyprint source lang-javascript"><code>const instance = new Model({
     mixed: 'Great !',
     boolean: true,
@@ -194,7 +186,7 @@ const serialized = instance.serialize();
 delete serialized.uuid;
 const clone = new Full(serialized);
 </code></pre>
-<h2>Modification</h2>
+<h3>Modification</h3>
 <pre class="prettyprint source lang-javascript"><code>console.log(instance.mixed); // > true
 instance.mixed = 123;
 console.log(instance.mixed); // > 123
@@ -248,7 +240,7 @@ console.log(instance.serialize()); /*
     inception: { key: 'new_key', value: 'updated_value' }
 } */
 </code></pre>
-<h2>Array helpers</h2>
+<h3>Array helpers</h3>
 <pre class="prettyprint source lang-javascript"><code>/* Array methods use */
 instance.collections.push({ key: 'azertyuiop', value: 2 });
 instance.collections = instance.collections.concat([{ key: 'new_key', value: 3 }, { key: 'N3W_K3Y', value: 4 }]);
@@ -261,8 +253,8 @@ console.log(instance.serialize().collections); /*
     { key: 'N3W_K3Y', value: 4 }
 ] */
 </code></pre>
-<h2>Options</h2>
-<h3>Global options</h3>
+<h3>Options</h3>
+<h4>Global options</h4>
 <pre class="prettyprint source lang-javascript"><code>'use strict';
 
 const Fractale = require('fractale');
@@ -271,7 +263,7 @@ Fractale.setOptions({
     moment: true, // Specify to fractale to transform date to moment instance. Default: true
 });
 </code></pre>
-<h3>Field options</h3>
+<h4>Field options</h4>
 <pre class="prettyprint source lang-javascript"><code>'use strict';
 
 const Fractale = require('fractale');
@@ -297,7 +289,7 @@ const Parent = Fractale.create('Parent', Child, {
     ],
 });
 </code></pre>
-<h3>Field validators</h3>
+<h4>Field validators</h4>
 <pre class="prettyprint source lang-javascript"><code>'use strict';
 
 const Fractale = require('fractale');
@@ -336,23 +328,40 @@ const Simple = Fractale.create('Simple', {
     }),
 });
 </code></pre>
-<h1>Dependencies</h1>
+<h2>Performance</h2>
+<p>From a JSON of 10.45M (local storage limit):</p>
+<ul>
+<li>Deserialization: ~0.789s =&gt; 13.24Mo/s</li>
+<li>Read: ~0.001s</li>
+<li>Serialization: ~0.001s =&gt; 10.45Go/s</li>
+</ul>
+<p>From a JSON of 339.06M:
+Deserialization: ~2.733s =&gt; 124.06Mo/s
+Read: ~0.001s
+Serialization: ~0.004s =&gt; 84.76Go/s</p>
+<p>From a JSON of 1.27G:
+Deserialization: ~10.657s =&gt; 119.28Mo/s
+Read: ~0.001s
+Serialization: ~0.004s =&gt; 317.8Go/s</p>
+<p><img src="https://github.com/JochLAin/fractale/blob/master/docs/theme/static/images/graph_complexity_x_rate.png" alt="Graph - Complexity x Rate">
+<img src="https://github.com/JochLAin/fractale/blob/master/docs/theme/static/images/graph_size_x_rate.png" alt="Graph - Size x Rate"></p>
+<h2>Dependencies</h2>
 <ul>
 <li>Usage of <a href="https://www.npmjs.com/package/uuid">uuid</a> to generate a unique id for model instances.</li>
 <li>Usage of <a href="https://momentjs.com/docs/">moment.js</a> for date validation.</li>
 </ul>
-<h1>Contributing</h1>
+<h2>Contributing</h2>
 <p>Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 Please make sure to update tests as appropriate.</p>
 <p>See the <a href="https://github.com/JochLAin/fractale/blob/master/CONTRIBUTING.md">contributing</a> and <a href="https://github.com/JochLAin/fractale/blob/master/CODE_OF_CONDUCT.md">code of conduct</a> files for details</p>
-<h1>License</h1>
+<h2>License</h2>
 <p>This project is licensed under the MIT License - see the <a href="https://github.com/JochLAin/fractale/blob/master/LICENSE">LICENSE</a> file for details</p>
-<h1>Authors</h1>
+<h2>Authors</h2>
 <ul>
 <li><strong>Jocelyn Faihy</strong> - <em>Web developer</em> - <a href="https://github.com/JochLAin">Jochlain</a></li>
 </ul>
 <p>See also the list of <a href="https://github.com/JochLAin/fractale/graphs/contributors">contributors</a> who participated in this project.</p>
-<h1>Thanks</h1>
+<h2>Thanks</h2>
 <p><img src="https://media1.giphy.com/media/yoJC2El7xJkYCadlWE/giphy.gif" alt="Thanks BP"></p></article>
     </section>
 

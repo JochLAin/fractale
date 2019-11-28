@@ -65,7 +65,7 @@
                 <div class="column is-3" id="sidebarNav">
                     <div class="sidebar">
                         <nav>
-                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-1-simple-model.html">Example 1: Simple model</a></li><li><a href="tutorial-2-inception-model.html">Example 2: Inception model</a></li><li><a href="tutorial-3-metadata-model.html">Example 3: Metadata model</a></li><li><a href="tutorial-4-collection-model.html">Example 4: Collection model</a></li><li><a href="tutorial-5-reference-model.html">Example 5: Self-reference model</a></li><li><a href="tutorial-6-inheritance-model.html">Example 6: Inheritance model</a></li><li><a href="tutorial-7-form-usage.html">Example 7: Form usage</a></li></ul><h3>Modules</h3><ul><li><a href="module-Fractale.html">Fractale</a></li></ul><h3>Classes</h3><ul><li><a href="EventListener.html">EventListener</a></li><li><a href="Factory.html">Factory</a></li><li><a href="Library.html">Library</a></li><li><a href="Model.html">Model</a></li><li><a href="module.exports.html">exports</a></li><li><a href="Property.html">Property</a></li><li><a href="Schema.html">Schema</a></li></ul></div>
+                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-1-simple-model.html">Example 1: Simple model</a></li><li><a href="tutorial-2-inception-model.html">Example 2: Inception model</a></li><li><a href="tutorial-3-metadata-model.html">Example 3: Metadata model</a></li><li><a href="tutorial-4-collection-model.html">Example 4: Collection model</a></li><li><a href="tutorial-5-reference-model.html">Example 5: Self-reference model</a></li><li><a href="tutorial-6-inheritance-model.html">Example 6: Inheritance model</a></li><li><a href="tutorial-7-form-usage.html">Example 7: Form usage</a></li></ul><h3>Modules</h3><ul><li><a href="module-Factory.html">Factory</a></li><li><a href="module-Fractale.html">Fractale</a></li></ul><h3>Classes</h3><ul><li><a href="EventListener.html">EventListener</a></li><li><a href="Model.html">Model</a></li><li><a href="Property.html">Property</a></li><li><a href="PropertyType.html">PropertyType</a></li><li><a href="PropertyTypeCompound.html">PropertyTypeCompound</a></li><li><a href="Schema.html">Schema</a></li></ul><h3>Global</h3><ul><li><a href="global.html#entities">entities</a></li></ul></div>
                         </nav>
                     </div>
                 </div>
@@ -81,75 +81,42 @@
     </header>
     <article>
         <article class="mb-4"><a href="#models" class="border border-1" data-toggle="collapse">Models used for examples</a><div id="models" class="border border-1 collapse">
-<pre class="prettyprint source lang-javascript"><code>const Author = Fractale.create(&quot;Author&quot;, {
-    firstname: String,
-    lastname: String,
-    surname: String,
-    comment: String
+<pre class="prettyprint source lang-javascript"><code>const Inception_Parent = Fractale.create(&quot;Inception_Parent&quot;, {
+    value: String
 });
 
-const Chapter = Fractale.create(&quot;Chapter&quot;, {
-    pages: [
-        Page
-    ]
-});
-
-const Page = Fractale.create(&quot;Page&quot;, {
-    title: String,
-    content: String
-});
-
-const Book = Fractale.create(&quot;Book&quot;, {
-    author: Author,
-    readable: Boolean,
-    title: String,
-    chapters: [
-        Chapter
-    ]
+const Inception_Child = Fractale.create(&quot;Inception_Child&quot;, {
+    parent: Inception_Parent,
+    value: String
 });
 </code></pre>
 </div></article>
-<pre class="prettyprint source lang-javascript"><code>const book = new Book({
-    author: {
-        firstname: 'Ito',
-        lastname: 'Ōgure',
-        surname: 'Oh! Great',
-        comment: 'N/A',
-    },
-    title: 'Air gear',
-    readable: true,
+<pre class="prettyprint source lang-javascript"><code>const { Inception_Child } = module.exports.get();
+const child = new Inception_Child({
+    parent: { value: 'foo' },
+    value: 'bar',
 });
-if (book.author.comment !== 'N/A') {
-    throw new DetailedError('Error on inception setter with dot', `Expected &quot;N/A&quot; got &quot;${book.author.comment}&quot;`);
-}
 
-const author = book.author;
-const value = 'I love this author';
-author.comment = value;
-if (book.author.comment !== value) {
-    throw new DetailedError('Error on inception setter with dot', `Expected &quot;${value}&quot; got &quot;${book.author.comment}&quot;`);
-}
+_.test(child.parent.value, 'foo', 'Error on inception setter with dot');
 
-book.author.comment = 'N/A';
-if (book.author.comment !== 'N/A') {
-    throw new Error('Error on deep setter with dot');
-}
+const parent = child.parent;
+const value = 'hello world';
+parent.value = value;
+_.test(child.parent.value, value, 'Error on inception setter with dot');
 
-resolve(book);
+child.parent.value = 'foo';
+_.test(child.parent.value, 'foo', 'Error on deep setter with dot');
+
+resolve(child);
 </code></pre>
 <h3>Results</h3>
 <pre class="prettyprint source lang-json"><code>{
-    &quot;uuid&quot;: &quot;ee127d61-882c-4e92-9df2-23a3204dad15&quot;,
-    &quot;author&quot;: {
-        &quot;uuid&quot;: &quot;4fb70b5b-1c26-43d5-9abb-316c565a3498&quot;,
-        &quot;firstname&quot;: &quot;Ito&quot;,
-        &quot;lastname&quot;: &quot;Ōgure&quot;,
-        &quot;surname&quot;: &quot;Oh! Great&quot;,
-        &quot;comment&quot;: &quot;N/A&quot;
+    &quot;uuid&quot;: &quot;335760a2-e354-4d8b-a1bb-e69423b11eb3&quot;,
+    &quot;parent&quot;: {
+        &quot;uuid&quot;: &quot;13801def-ecfb-42d0-8299-78f30fafba67&quot;,
+        &quot;value&quot;: &quot;foo&quot;
     },
-    &quot;readable&quot;: true,
-    &quot;title&quot;: &quot;Air gear&quot;,
-    &quot;chapters&quot;: []
+    &quot;value&quot;: &quot;bar&quot;
 }
 </code></pre>
     </article>

@@ -1,15 +1,13 @@
+const Fractale = require('../../lib');
 const _ = require('../utils');
-const { Compound } = require('../models');
-module.exports.models = [Compound];
 
 module.exports.title = 'Metadata model';
 module.exports.name = 'metadata-model';
 module.exports.tutorialized = true;
 
 module.exports.resolver = (resolve) => {
-    const instance = new Compound({
-        string: 'Hello world',
-        boards: ['Lorem ipsum', 'Dolores sit amet'],
+    const { Metadata } = module.exports.get();
+    const instance = new Metadata({
         metadata: { key: 'Foo', data: { key: 'Bar', value: 12 }}
     });
 
@@ -33,4 +31,22 @@ module.exports.resolver = (resolve) => {
     _.test(instance.metadata.data.value, 13, 'Error on metadata accessor with bracket');
 
     resolve(instance);
+};
+
+module.exports.create = () => {
+    const Metadata = Fractale.create('Metadata', {
+        metadata: { key: String, data: { key: String, value: undefined } },
+    });
+
+    return { Metadata };
+};
+
+let models;
+module.exports.get = () => {
+    if (models) return models;
+    return models = module.exports.create();
+};
+
+module.exports.used = () => {
+    return module.exports.get().Metadata;
 };

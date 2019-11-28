@@ -1,11 +1,9 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
         
         <meta charset="utf-8">
-        <title>Fractale: property/serializers/mixed.js</title>
+        <title>Fractale: PropertyType</title>
 
         <script src="scripts/prettify/prettify.js"></script>
         <script src="scripts/prettify/lang-css.js"></script>
@@ -67,54 +65,292 @@
                 <div class="column is-3" id="sidebarNav">
                     <div class="sidebar">
                         <nav>
-                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-1-simple-model.html">Example 1: Simple model</a></li><li><a href="tutorial-2-inception-model.html">Example 2: Inception model</a></li><li><a href="tutorial-3-metadata-model.html">Example 3: Metadata model</a></li><li><a href="tutorial-4-collection-model.html">Example 4: Collection model</a></li><li><a href="tutorial-5-reference-model.html">Example 5: Self-reference model</a></li><li><a href="tutorial-6-inheritance-model.html">Example 6: Inheritance model</a></li><li><a href="tutorial-7-form-usage.html">Example 7: Form usage</a></li></ul><h3>Modules</h3><ul><li><a href="module-Fractale.html">Fractale</a></li></ul><h3>Classes</h3><ul><li><a href="EventListener.html">EventListener</a></li><li><a href="Factory.html">Factory</a></li><li><a href="Library.html">Library</a></li><li><a href="Model.html">Model</a></li><li><a href="module.exports.html">exports</a></li><li><a href="Property.html">Property</a></li><li><a href="Schema.html">Schema</a></li></ul></div>
+                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-1-simple-model.html">Example 1: Simple model</a></li><li><a href="tutorial-2-inception-model.html">Example 2: Inception model</a></li><li><a href="tutorial-3-metadata-model.html">Example 3: Metadata model</a></li><li><a href="tutorial-4-collection-model.html">Example 4: Collection model</a></li><li><a href="tutorial-5-reference-model.html">Example 5: Self-reference model</a></li><li><a href="tutorial-6-inheritance-model.html">Example 6: Inheritance model</a></li><li><a href="tutorial-7-form-usage.html">Example 7: Form usage</a></li></ul><h3>Modules</h3><ul><li><a href="module-Factory.html">Factory</a></li><li><a href="module-Fractale.html">Fractale</a></li></ul><h3>Classes</h3><ul><li><a href="EventListener.html">EventListener</a></li><li><a href="Model.html">Model</a></li><li><a href="Property.html">Property</a></li><li><a href="PropertyType.html">PropertyType</a></li><li><a href="PropertyTypeCompound.html">PropertyTypeCompound</a></li><li><a href="Schema.html">Schema</a></li></ul><h3>Global</h3><ul><li><a href="global.html#entities">entities</a></li></ul></div>
                         </nav>
                     </div>
                 </div>
                 <div class="column is-9-desktop">
                     <div class="content" id="main-content-wrapper">
                         <header class="page-title">
-                            <p>Source</p>
-                            <h1>property/serializers/mixed.js</h1>
+                            <p>Class</p>
+                            <h1>PropertyType</h1>
                         </header>
                         
 
 
 
-    
+
 <section>
-    <article>
-        <pre class="prettyprint source linenums"><code>/**
- * @class
- */
-module.exports = class MixedSerializer {
-    /**
-     * Deserialize the value
-     * @param {Field} field
-     * @param {*} value
-     * @param {Object} options
-     * @returns {*}
-     */
-    static deserialize(field, value) {
-        return value || undefined;
-    }
 
-    /**
-     * Normalize the value
-     * @param {Field} field
-     * @param {*} value
-     * @param {Object} options
-     * @returns {*}
-     * @method
-     */
-    static serialize(field, value, options = {}) {
-        return value || undefined;
-    }
-};
-</code></pre>
-    </article>
+<header>
+    
+        
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class='vertical-section'>
+                <h3 class="title"><span>Constructor</span></h3>
+                <div class="members">
+                    <div class="member">
+
+    
+    <h4 class="name" id="PropertyType">
+        
+        <span class="code-name">
+            new PropertyType<span class="signature">(schema, key, input, options)</span><span class="type-signature"></span>
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Define property on an instance of Model
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>schema</code></td>
+  
+
+  <td class="type">
+  
+      
+    <span class="param-type"><a href="Schema.html">Schema</a></span>
+    
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>key</code></td>
+  
+
+  <td class="type">
+  
+      
+    <span class="param-type">String</span>
+    
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>input</code></td>
+  
+
+  <td class="type">
+  
+      
+    <span class="param-type">*</span>
+    
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>options</code></td>
+  
+
+  <td class="type">
+  
+      
+    <span class="param-type">Object</span>
+    
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:jocelyn@faihy.fr">Jocelyn Faihy</a></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="property_types_index.js.html" class="button">View Source</a>
+            <span>
+                <a href="property_types_index.js.html">property/types/index.js</a>, <a href="property_types_index.js.html#line20">line 20</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+                </div>
+            </div>
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+</article>
+
 </section>
-
 
 
 

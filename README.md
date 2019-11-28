@@ -2,26 +2,17 @@ Inspired from [Mongoose](https://mongoosejs.com/docs/guide.html), it allows you 
 
 It will test value of each fields and link model between them.
 
-# Installation
+## Installation
 
 `npm install --save fractale`
 
-# Documentation
+## Documentation
 
 You can found more documentation and examples [here](http://docs.faihy.org/fractale).
 
-# Performance
+## Usage
 
-From a JSON file (1.01Go) :
-- Deserialization : **~0.744s** => __1.36Go/s__
-- Read of an atom _(50 * 8 * 50 * 50)_ : **~0.001s**
-- Serialization : **~0.358s** => __2.83Go/s__
-
-For more information see _[comming soon](#performance)_
-
-# Usage
-
-## Declaration
+### Declaration
 
 ```javascript
 'use strict';
@@ -69,7 +60,7 @@ const After = Fractale.create('After', {
 });
 ```
 
-## Instanciation
+### Instanciation
 
 ```javascript
 const instance = new Model({
@@ -111,7 +102,7 @@ delete serialized.uuid;
 const clone = new Full(serialized);
 ```
 
-## Modification
+### Modification
 
 ```javascript
 console.log(instance.mixed); // > true
@@ -168,7 +159,7 @@ console.log(instance.serialize()); /*
 } */
 ```
 
-## Array helpers
+### Array helpers
 
 ```javascript
 /* Array methods use */
@@ -184,9 +175,9 @@ console.log(instance.serialize().collections); /*
 ] */
 ```
 
-## Options
+### Options
 
-### Global options
+#### Global options
 
 ```javascript
 'use strict';
@@ -198,7 +189,7 @@ Fractale.setOptions({
 });
 ```
 
-### Field options
+#### Field options
 
 ```javascript
 'use strict';
@@ -227,7 +218,7 @@ const Parent = Fractale.create('Parent', Child, {
 });
 ```
 
-### Field validators
+#### Field validators
 
 ```javascript
 'use strict';
@@ -269,28 +260,48 @@ const Simple = Fractale.create('Simple', {
 });
 ```
 
-# Dependencies
+## Performance
+
+From a JSON of 10.45M (local storage limit):
+- Deserialization: ~0.789s => 13.24Mo/s
+- Read: ~0.001s
+- Serialization: ~0.001s => 10.45Go/s
+
+From a JSON of 339.06M:
+Deserialization: ~2.733s => 124.06Mo/s
+Read: ~0.001s
+Serialization: ~0.004s => 84.76Go/s
+
+From a JSON of 1.27G:
+Deserialization: ~10.657s => 119.28Mo/s
+Read: ~0.001s
+Serialization: ~0.004s => 317.8Go/s
+
+![Graph - Complexity x Rate](https://github.com/JochLAin/fractale/blob/master/docs/theme/static/images/graph_complexity_x_rate.png)
+![Graph - Size x Rate](https://github.com/JochLAin/fractale/blob/master/docs/theme/static/images/graph_size_x_rate.png)
+
+## Dependencies
 
 - Usage of [uuid](https://www.npmjs.com/package/uuid) to generate a unique id for model instances.
 - Usage of [moment.js](https://momentjs.com/docs/) for date validation.
 
-# Contributing
+## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 Please make sure to update tests as appropriate.
 
 See the [contributing](https://github.com/JochLAin/fractale/blob/master/CONTRIBUTING.md) and [code of conduct](https://github.com/JochLAin/fractale/blob/master/CODE_OF_CONDUCT.md) files for details
 
-# License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](https://github.com/JochLAin/fractale/blob/master/LICENSE) file for details
 
-# Authors
+## Authors
 
 * **Jocelyn Faihy** - *Web developer* - [Jochlain](https://github.com/JochLAin)
 
 See also the list of [contributors](https://github.com/JochLAin/fractale/graphs/contributors) who participated in this project.
 
-# Thanks
+## Thanks
 
 ![Thanks BP](https://media1.giphy.com/media/yoJC2El7xJkYCadlWE/giphy.gif)

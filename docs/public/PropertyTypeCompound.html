@@ -1,11 +1,9 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
         
         <meta charset="utf-8">
-        <title>Fractale: property/validators/mixed.js</title>
+        <title>Fractale: PropertyTypeCompound</title>
 
         <script src="scripts/prettify/prettify.js"></script>
         <script src="scripts/prettify/lang-css.js"></script>
@@ -67,99 +65,174 @@
                 <div class="column is-3" id="sidebarNav">
                     <div class="sidebar">
                         <nav>
-                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-1-simple-model.html">Example 1: Simple model</a></li><li><a href="tutorial-2-inception-model.html">Example 2: Inception model</a></li><li><a href="tutorial-3-metadata-model.html">Example 3: Metadata model</a></li><li><a href="tutorial-4-collection-model.html">Example 4: Collection model</a></li><li><a href="tutorial-5-reference-model.html">Example 5: Self-reference model</a></li><li><a href="tutorial-6-inheritance-model.html">Example 6: Inheritance model</a></li><li><a href="tutorial-7-form-usage.html">Example 7: Form usage</a></li></ul><h3>Modules</h3><ul><li><a href="module-Fractale.html">Fractale</a></li></ul><h3>Classes</h3><ul><li><a href="EventListener.html">EventListener</a></li><li><a href="Factory.html">Factory</a></li><li><a href="Library.html">Library</a></li><li><a href="Model.html">Model</a></li><li><a href="module.exports.html">exports</a></li><li><a href="Property.html">Property</a></li><li><a href="Schema.html">Schema</a></li></ul></div>
+                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-1-simple-model.html">Example 1: Simple model</a></li><li><a href="tutorial-2-inception-model.html">Example 2: Inception model</a></li><li><a href="tutorial-3-metadata-model.html">Example 3: Metadata model</a></li><li><a href="tutorial-4-collection-model.html">Example 4: Collection model</a></li><li><a href="tutorial-5-reference-model.html">Example 5: Self-reference model</a></li><li><a href="tutorial-6-inheritance-model.html">Example 6: Inheritance model</a></li><li><a href="tutorial-7-form-usage.html">Example 7: Form usage</a></li></ul><h3>Modules</h3><ul><li><a href="module-Factory.html">Factory</a></li><li><a href="module-Fractale.html">Fractale</a></li></ul><h3>Classes</h3><ul><li><a href="EventListener.html">EventListener</a></li><li><a href="Model.html">Model</a></li><li><a href="Property.html">Property</a></li><li><a href="PropertyType.html">PropertyType</a></li><li><a href="PropertyTypeCompound.html">PropertyTypeCompound</a></li><li><a href="Schema.html">Schema</a></li></ul><h3>Global</h3><ul><li><a href="global.html#entities">entities</a></li></ul></div>
                         </nav>
                     </div>
                 </div>
                 <div class="column is-9-desktop">
                     <div class="content" id="main-content-wrapper">
                         <header class="page-title">
-                            <p>Source</p>
-                            <h1>property/validators/mixed.js</h1>
+                            <p>Class</p>
+                            <h1>PropertyTypeCompound</h1>
                         </header>
                         
 
 
 
-    
+
 <section>
-    <article>
-        <pre class="prettyprint source linenums"><code>const models = require('../../model');
 
-class IncorrectTypeError extends Error {
-    constructor(field, expected, type) {
-        super();
-        if (Error.captureStackTrace) {
-            Error.captureStackTrace(this, IncorrectTypeError);
-        }
-        this.name = 'IncorrectTypeError';
-        this.field = field;
-        this.key = `${field.schema.classname}.${field.key}`;
-        this.expected = expected;
-        this.type = type;
-        this.message = `Expecting "${this.key}" to be ${this.expected} but get ${this.type}`;
-    }
-}
+<header>
+    
+        
+    
 
-/**
- * @class
- */
-module.exports = class MixedValidator {
-    static createIncorrectTypeError(field, expected, type, keepType = false) {
-        if (!keepType) type = type instanceof models.get() ? `'${type.constructor.name}'` : `'${typeof type}'`;
-        return new IncorrectTypeError(field, expected, type);
-    }
+    
+    <h3 class="subsection-title">Extends</h3>
 
-    /**
-     * Validate if value correspond on property type
-     * @method
-     * @param {Field} field
-     * @param value
-     */
-    static validate(field, value) {
-        if (value !== undefined &amp;&amp; field.options.validator) {
-            const validator = field.options.validator;
-            if (typeof validator === 'function') {
-                if (!validator(value, field.value)) {
-                    throw new Error(`Invalid value for ${field.schema.classname}.${field.key}`);
-                }
-            } else if (typeof validator === 'object') {
-                if (validator.hasOwnProperty('eq')) {
-                    if (value !== validator.eq) {
-                        throw new Error(`Expected value equal to ${JSON.stringify(validator.eq)}, got ${JSON.stringify(value)}`);
-                    }
-                }
-                if (validator.hasOwnProperty('neq')) {
-                    if (value === validator.neq) {
-                        throw new Error(`Expected value different of ${JSON.stringify(validator.neq)}, got ${JSON.stringify(value)}`);
-                    }
-                }
-                if (validator.hasOwnProperty('in')) {
-                    if (!Array.isArray(validator.in)) {
-                        throw new Error(`Expected array as value for in validator, got ${typeof validator.in}`);
-                    }
-                    if (!validator.in.includes(value)) {
-                        throw new Error(`Expected value in ${JSON.stringify(validator.in)}, got ${JSON.stringify(value)}`);
-                    }
-                }
-                if (validator.hasOwnProperty('notin')) {
-                    if (!Array.isArray(validator.notin)) {
-                        throw new Error(`Expected array as value for notin validator, got ${typeof validator.notin}`);
-                    }
-                    if (validator.notin.includes(value)) {
-                        throw new Error(`Expected value not in ${JSON.stringify(validator.notin)}, got ${JSON.stringify(value)}`);
-                    }
-                }
-            }
-        }
-    }
-};
+    
 
-module.exports.IncorrectTypeError = IncorrectTypeError;
-</code></pre>
-    </article>
+
+    <ul>
+        <li><a href="PropertyType.html">PropertyType</a></li>
+    </ul>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class='vertical-section'>
+                <h3 class="title"><span>Constructor</span></h3>
+                <div class="members">
+                    <div class="member">
+
+    
+    <h4 class="name" id="PropertyTypeCompound">
+        
+        <span class="code-name">
+            new PropertyTypeCompound<span class="signature">()</span><span class="type-signature"></span>
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Define property on an instance of array
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:jocelyn@faihy.fr">Jocelyn Faihy</a></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="property_types_array.js.html" class="button">View Source</a>
+            <span>
+                <a href="property_types_array.js.html">property/types/array.js</a>, <a href="property_types_array.js.html#line6">line 6</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+                </div>
+            </div>
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+</article>
+
 </section>
-
 
 
 

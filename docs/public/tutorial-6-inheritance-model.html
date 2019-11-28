@@ -65,7 +65,7 @@
                 <div class="column is-3" id="sidebarNav">
                     <div class="sidebar">
                         <nav>
-                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-1-simple-model.html">Example 1: Simple model</a></li><li><a href="tutorial-2-inception-model.html">Example 2: Inception model</a></li><li><a href="tutorial-3-metadata-model.html">Example 3: Metadata model</a></li><li><a href="tutorial-4-collection-model.html">Example 4: Collection model</a></li><li><a href="tutorial-5-reference-model.html">Example 5: Self-reference model</a></li><li><a href="tutorial-6-inheritance-model.html">Example 6: Inheritance model</a></li><li><a href="tutorial-7-form-usage.html">Example 7: Form usage</a></li></ul><h3>Modules</h3><ul><li><a href="module-Fractale.html">Fractale</a></li></ul><h3>Classes</h3><ul><li><a href="EventListener.html">EventListener</a></li><li><a href="Factory.html">Factory</a></li><li><a href="Library.html">Library</a></li><li><a href="Model.html">Model</a></li><li><a href="module.exports.html">exports</a></li><li><a href="Property.html">Property</a></li><li><a href="Schema.html">Schema</a></li></ul></div>
+                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-1-simple-model.html">Example 1: Simple model</a></li><li><a href="tutorial-2-inception-model.html">Example 2: Inception model</a></li><li><a href="tutorial-3-metadata-model.html">Example 3: Metadata model</a></li><li><a href="tutorial-4-collection-model.html">Example 4: Collection model</a></li><li><a href="tutorial-5-reference-model.html">Example 5: Self-reference model</a></li><li><a href="tutorial-6-inheritance-model.html">Example 6: Inheritance model</a></li><li><a href="tutorial-7-form-usage.html">Example 7: Form usage</a></li></ul><h3>Modules</h3><ul><li><a href="module-Factory.html">Factory</a></li><li><a href="module-Fractale.html">Fractale</a></li></ul><h3>Classes</h3><ul><li><a href="EventListener.html">EventListener</a></li><li><a href="Model.html">Model</a></li><li><a href="Property.html">Property</a></li><li><a href="PropertyType.html">PropertyType</a></li><li><a href="PropertyTypeCompound.html">PropertyTypeCompound</a></li><li><a href="Schema.html">Schema</a></li></ul><h3>Global</h3><ul><li><a href="global.html#entities">entities</a></li></ul></div>
                         </nav>
                     </div>
                 </div>
@@ -81,20 +81,19 @@
     </header>
     <article>
         <article class="mb-4"><a href="#models" class="border border-1" data-toggle="collapse">Models used for examples</a><div id="models" class="border border-1 collapse">
-<pre class="prettyprint source lang-javascript"><code>const Child = Fractale.create(&quot;Child&quot;, {
+<pre class="prettyprint source lang-javascript"><code>const Inheritance_Child = Fractale.create(&quot;Inheritance_Child&quot;, {
     value: String
 });
 
-const Parent = Fractale.create(&quot;Parent&quot;, Child, {
+const Inheritance_Parent = Fractale.create(&quot;Inheritance_Parent&quot;, Inheritance_Child, {
     children: [
-        Child
+        Inheritance_Child
     ]
-});,const Child = Fractale.create(&quot;Child&quot;, {
-    value: String
 });
 </code></pre>
 </div></article>
-<pre class="prettyprint source lang-javascript"><code>const instance = new Parent({
+<pre class="prettyprint source lang-javascript"><code>const { Inheritance_Parent } = module.exports.get();
+const instance = new Inheritance_Parent({
     value: 'Hello',
     children: [
         { value: 'world' },
@@ -102,31 +101,23 @@ const Parent = Fractale.create(&quot;Parent&quot;, Child, {
     ]
 });
 
-if (instance.sayHelloTo(0) !== 'Hello world') {
-    throw new DetailedError('Error on parent method call', `Expected &quot;Hello world&quot; got &quot;${instance.sayHelloTo(0)}&quot;`);
-}
-
-if (instance.sayHelloTo(1) !== 'Hello you') {
-    throw new DetailedError('Error on parent method call', `Expected &quot;Hello you&quot; got &quot;${instance.sayHelloTo(1)}&quot;`);
-}
-
-if (instance.toUpperCase() !== 'HELLO') {
-    throw new DetailedError('Error on method inheritance', `Expected &quot;HELLO&quot; got &quot;${instance.toUpperCase()}&quot;`);
-}
+_.test(instance.sayHelloTo(0), 'Hello world', `Expected &quot;Hello world&quot; got &quot;${instance.sayHelloTo(0)}&quot;`);
+_.test(instance.sayHelloTo(1), 'Hello you', 'Error on parent method call');
+_.test(instance.toUpperCase(), 'HELLO', 'Error on method inheritance');
 
 resolve(instance);
 </code></pre>
 <h3>Results</h3>
 <pre class="prettyprint source lang-json"><code>{
-    &quot;uuid&quot;: &quot;7150cd8f-0c20-46b4-bb8b-34cae02af51b&quot;,
+    &quot;uuid&quot;: &quot;df66825d-8143-4de6-875f-63a3b5806351&quot;,
     &quot;value&quot;: &quot;Hello&quot;,
     &quot;children&quot;: [
         {
-            &quot;uuid&quot;: &quot;389e52f0-16a1-414a-9f94-712e10c0caf5&quot;,
+            &quot;uuid&quot;: &quot;ad7cd319-cc67-4810-b94f-65e264f9610e&quot;,
             &quot;value&quot;: &quot;world&quot;
         },
         {
-            &quot;uuid&quot;: &quot;f21d4a4a-9ef5-4fea-9873-c9436dcf4829&quot;,
+            &quot;uuid&quot;: &quot;8aeefc0e-9436-4946-a24b-cf3ebb473421&quot;,
             &quot;value&quot;: &quot;you&quot;
         }
     ]

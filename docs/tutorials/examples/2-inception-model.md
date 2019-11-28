@@ -1,80 +1,47 @@
 <article class="mb-4"><a href="#models" class="border border-1" data-toggle="collapse">Models used for examples</a><div id="models" class="border border-1 collapse">
 
 ```javascript
-const Author = Fractale.create("Author", {
-    firstname: String,
-    lastname: String,
-    surname: String,
-    comment: String
+const Inception_Parent = Fractale.create("Inception_Parent", {
+    value: String
 });
 
-const Chapter = Fractale.create("Chapter", {
-    pages: [
-        Page
-    ]
-});
-
-const Page = Fractale.create("Page", {
-    title: String,
-    content: String
-});
-
-const Book = Fractale.create("Book", {
-    author: Author,
-    readable: Boolean,
-    title: String,
-    chapters: [
-        Chapter
-    ]
+const Inception_Child = Fractale.create("Inception_Child", {
+    parent: Inception_Parent,
+    value: String
 });
 ```
 
 </div></article>
 
 ```javascript
-const book = new Book({
-    author: {
-        firstname: 'Ito',
-        lastname: 'Ōgure',
-        surname: 'Oh! Great',
-        comment: 'N/A',
-    },
-    title: 'Air gear',
-    readable: true,
+const { Inception_Child } = module.exports.get();
+const child = new Inception_Child({
+    parent: { value: 'foo' },
+    value: 'bar',
 });
-if (book.author.comment !== 'N/A') {
-    throw new DetailedError('Error on inception setter with dot', `Expected "N/A" got "${book.author.comment}"`);
-}
 
-const author = book.author;
-const value = 'I love this author';
-author.comment = value;
-if (book.author.comment !== value) {
-    throw new DetailedError('Error on inception setter with dot', `Expected "${value}" got "${book.author.comment}"`);
-}
+_.test(child.parent.value, 'foo', 'Error on inception setter with dot');
 
-book.author.comment = 'N/A';
-if (book.author.comment !== 'N/A') {
-    throw new Error('Error on deep setter with dot');
-}
+const parent = child.parent;
+const value = 'hello world';
+parent.value = value;
+_.test(child.parent.value, value, 'Error on inception setter with dot');
 
-resolve(book);
+child.parent.value = 'foo';
+_.test(child.parent.value, 'foo', 'Error on deep setter with dot');
+
+resolve(child);
 ```
 
 ### Results
 
 ```json
 {
-    "uuid": "ee127d61-882c-4e92-9df2-23a3204dad15",
-    "author": {
-        "uuid": "4fb70b5b-1c26-43d5-9abb-316c565a3498",
-        "firstname": "Ito",
-        "lastname": "Ōgure",
-        "surname": "Oh! Great",
-        "comment": "N/A"
+    "uuid": "335760a2-e354-4d8b-a1bb-e69423b11eb3",
+    "parent": {
+        "uuid": "13801def-ecfb-42d0-8299-78f30fafba67",
+        "value": "foo"
     },
-    "readable": true,
-    "title": "Air gear",
-    "chapters": []
+    "value": "bar"
 }
 ```

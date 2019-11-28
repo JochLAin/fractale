@@ -5,7 +5,8 @@
   "main": "lib/index.js",
   "scripts": {
     "build-doc": "rm -rf ./docs/public/* && node ./docs/generate_tutorials.js && npx jsdoc -c docs/config.js",
-    "test": "node ./tests/index.js"
+    "test": "node --max-old-space-size=4096 ./tests/index.js",
+    "performance": "node --max-old-space-size=4096 ./tests/performance.js"
   },
   "repository": {
     "type": "git",
@@ -23,10 +24,11 @@
     "uuid": "^3.3.3"
   },
   "devDependencies": {
+    "chart.js": "^2.9.3",
+    "chartjs-node": "^1.7.1",
+    "cli-progress": "^3.4.0",
     "crieur": "^1.0.13",
-    "inquirer": "^7.0.0",
     "jsdoc": "^3.6.3",
-    "lodash": ">=4.17.13",
     "object-sizeof": "^1.5.2"
   }
 }

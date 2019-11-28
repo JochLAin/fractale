@@ -67,7 +67,7 @@
                 <div class="column is-3" id="sidebarNav">
                     <div class="sidebar">
                         <nav>
-                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-1-simple-model.html">Example 1: Simple model</a></li><li><a href="tutorial-2-inception-model.html">Example 2: Inception model</a></li><li><a href="tutorial-3-metadata-model.html">Example 3: Metadata model</a></li><li><a href="tutorial-4-collection-model.html">Example 4: Collection model</a></li><li><a href="tutorial-5-reference-model.html">Example 5: Self-reference model</a></li><li><a href="tutorial-6-inheritance-model.html">Example 6: Inheritance model</a></li><li><a href="tutorial-7-form-usage.html">Example 7: Form usage</a></li></ul><h3>Modules</h3><ul><li><a href="module-Fractale.html">Fractale</a></li></ul><h3>Classes</h3><ul><li><a href="EventListener.html">EventListener</a></li><li><a href="Factory.html">Factory</a></li><li><a href="Library.html">Library</a></li><li><a href="Model.html">Model</a></li><li><a href="module.exports.html">exports</a></li><li><a href="Property.html">Property</a></li><li><a href="Schema.html">Schema</a></li></ul></div>
+                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-1-simple-model.html">Example 1: Simple model</a></li><li><a href="tutorial-2-inception-model.html">Example 2: Inception model</a></li><li><a href="tutorial-3-metadata-model.html">Example 3: Metadata model</a></li><li><a href="tutorial-4-collection-model.html">Example 4: Collection model</a></li><li><a href="tutorial-5-reference-model.html">Example 5: Self-reference model</a></li><li><a href="tutorial-6-inheritance-model.html">Example 6: Inheritance model</a></li><li><a href="tutorial-7-form-usage.html">Example 7: Form usage</a></li></ul><h3>Modules</h3><ul><li><a href="module-Factory.html">Factory</a></li><li><a href="module-Fractale.html">Fractale</a></li></ul><h3>Classes</h3><ul><li><a href="EventListener.html">EventListener</a></li><li><a href="Model.html">Model</a></li><li><a href="Property.html">Property</a></li><li><a href="PropertyType.html">PropertyType</a></li><li><a href="PropertyTypeCompound.html">PropertyTypeCompound</a></li><li><a href="Schema.html">Schema</a></li></ul><h3>Global</h3><ul><li><a href="global.html#entities">entities</a></li></ul></div>
                         </nav>
                     </div>
                 </div>
@@ -84,84 +84,111 @@
     
 <section>
     <article>
-        <pre class="prettyprint source linenums"><code>const library = require('./library');
+        <pre class="prettyprint source linenums"><code>'use strict';
+
+/**
+ * @module Factory
+ *
+ * @author Jocelyn Faihy &lt;jocelyn@faihy.fr>
+ */
+
+const library = require('./library');
 const memory = require('./memory');
 const models = require('./model');
+const Property = require('./property');
 const Schema = require('./property/schema');
 
 /**
- * Create model class
- *
- * @class Factory
- * @author Jocelyn Faihy &lt;jocelyn@faihy.fr>
+ * Check if model name is already used
+ * @method validate
+ * @param {String} name - Name of the model
  */
-class Factory {
-    /**
-     * Check if model name is already used
-     * @param {String} name - Name of the model
-     */
-    static validate(name) {
-        return !library.names.includes(name.toLowerCase());
+module.exports.validate = (name) => {
+    if (!name) {
+        throw new Error('You need to pass a name to your model.');
+    }
+    const regexp = /^((?:[a-zA-Z0-9_\-\.]|\[\])+)$/g;
+    if (!regexp.test(name)) {
+        throw new Error(`Invalid model name ${name}, it must match ${regexp.toString()}`);
+    }
+    if (library.names.includes(name.toLowerCase())) {
+        throw new Error(`Model with name "${name}" already exists.`);
+    }
+};
+
+/**
+ * Create a model class
+ *
+ * @method createModel
+ * @param {String} name - Name of the model
+ * @param {String|Model} parent - Parent from which the schema is inherited
+ * @param {Object} schema - Schema of the model
+ * @param {Object} options
+ * @returns {Model}
+ */
+module.exports.createModel = (name, parent, schema = {}, options = {}) => {
+    module.exports.validate(name);
+
+    let model;
+    if (typeof parent === 'string') {
+        parent = model = library.get(parent);
+    } else if (parent instanceof Function &amp;&amp; parent.hasOwnProperty('ƒ_model')) {
+        parent = model = library.get(parent.name);
+    } else {
+        model = models.get();
+        options = schema;
+        schema = parent;
+        parent = undefined;
     }
 
-    /**
-     * Create a model class
-     *
-     * @param {String} name - Name of the model
-     * @param {String|Model} parent - Parent from which the schema is inherited
-     * @param {Object} schema - Schema of the model
-     * @param {Object} options
-     * @returns {Model}
-     */
-    createModel(name, parent, schema = {}, options = {}) {
-        if (!name) {
-            throw new Error('You need to pass a name to your model.');
-        }
-        if (!Factory.validate(name)) {
-            throw new Error(`Model with name "${name}" already exists.`);
-        }
+    const entity = createEntityClass.call(null, name, model);
+    /** @property {Boolean} ƒ_model @memberof Model @static */
+    Object.defineProperty(entity, 'ƒ_model', { value: true });
+    /** @property {Model} entity @memberof Model @static */
+    Object.defineProperty(entity, 'entity', { value: entity });
+    /** @property {String} name @memberof Model @static */
+    Object.defineProperty(entity, 'name', { value: name });
+    /** @property {Model|undefined} parent @memberof Model @static */
+    Object.defineProperty(entity, 'parent', { value: parent });
+    /** @property {String} slug @memberof Model @static */
+    Object.defineProperty(entity, 'slug', { value: name.toLowerCase() });
+    /** @property {Boolean} virtual @memberof Model @static */
+    Object.defineProperty(entity, 'virtual', { value: !!options.virtual });
 
-        let model;
-        if (typeof parent === 'string') {
-            parent = model = library.get(parent);
-        } else if (parent instanceof Function &amp;&amp; parent.hasOwnProperty('ƒ_model')) {
-            parent = model = library.get(parent.name);
-        } else {
-            model = models.get();
-            options = schema;
-            schema = parent;
-            parent = undefined;
-        }
+    schema = new Schema(entity, schema);
+    /** @property {Schema} schema @memberof Model @static */
+    Object.defineProperty(entity, 'schema', { value: schema });
 
-        const entity = createEntityClass.call(this, name, model);
-        Object.defineProperty(entity, 'ƒ_model', { value: true });
-        Object.defineProperty(entity, 'entity', { value: entity });
-        Object.defineProperty(entity, 'name', { value: name });
-        Object.defineProperty(entity, 'parent', { value: parent });
-        Object.defineProperty(entity, 'slug', { value: name.toLowerCase() });
-        Object.defineProperty(entity, 'virtual', { value: !!options.virtual });
+    /** @property {Proxy} proxy @memberof Model @static */
+    const proxy = createProxyEntityClass.call(null, entity);
+    Object.defineProperty(entity, 'proxy', { value: proxy });
 
-        schema = new Schema(entity, schema);
-        Object.defineProperty(entity, 'schema', { value: schema });
+    const table = memory.createTable(entity);
+    Object.defineProperty(entity, 'memory', { value: table });
 
-        const proxy = createProxyEntityClass.call(this, entity);
-        Object.defineProperty(entity, 'proxy', { value: proxy });
-
-        const table = memory.createTable(entity);
-        Object.defineProperty(entity, 'memory', { value: table });
-
-        library.add(entity);
-        return proxy;
-    }
-}
+    library.add(entity);
+    return proxy;
+};
 
 const createEntityClass = (name, Parent) => {
     return class Entity extends Parent {
         constructor(params = {}) {
             if (params.ƒ_entity) params = params.serialize({ populate: false });
-            const props = Entity.schema.filter(params);
+            const props = {};
+
+            for (let index = 0, keys = Object.keys(params), length = keys.length; index &lt; length; index++) {
+                if (Entity.schema.get(keys[index], false)) continue;
+                props[keys[index]] = params[keys[index]];
+                delete params[keys[index]];
+            }
             super(props);
-            Entity.schema.instantiate(this, params);
+            for (let index = 0, types = Entity.schema.types, length = types.length; index &lt; length; index++) {
+                this.ƒ_properties.set(
+                    types[index].key,
+                    new Property(this, types[index])
+                );
+            }
+            this.deserialize(params);
         }
 
         static create(props = {}) {
@@ -194,41 +221,45 @@ const createProxyEntityClass = (model) => {
             if (props.uuid) memory.update(entity.serialize({ populate: false }));
             else memory.create(entity.serialize({ populate: false }));
             entity.on('change', ({ key, value, previous }) => {
-                if (!entity.ƒ_properties.has(key)) return;
+                if (!model.schema.get(key)) return;
                 if (value === previous) return;
                 memory.update(entity.serialize({ populate: false }));
             });
 
             return new Proxy(entity, {
                 has(target, property) {
-                    return entity.ƒ_properties.has(property);
+                    return model.schema.get(property);
                 },
                 get(target, property) {
-                    if (typeof property === 'string' &amp;&amp; entity.ƒ_properties.has(property)) {
+                    const type = model.schema.get(property);
+                    if (!type) return target[property];
+                    if (typeof property === 'string') {
                         if (target[property]) {
                             throw new Error(`Property ${property} is defined in schema and class ${model.name}`);
                         }
-                        return entity.ƒ_properties.get(property).get();
+                        return entity.get(property);
+                    } else if (property instanceof RegExp) {
+                        return entity.get(property);
                     }
-                    return target[property];
                 },
                 set(target, property, value) {
-                    if (typeof property === 'string' &amp;&amp; entity.ƒ_properties.has(property) &amp;&amp; !target[property]) {
+                    const type = model.schema.get(property);
+                    if (!type) {
+                        target[property] = value;
+                        return true;
+                    }
+                    if (typeof property === 'string') {
                         if (target[property]) {
                             throw new Error(`Property ${property} is defined in schema and class ${model.name}`);
                         }
-                        entity.ƒ_properties.get(property).set(value);
+                        entity.set(property, value);
                         return true;
                     }
-                    target[property] = value;
-                    return true;
                 },
             });
         }
     });
 };
-
-module.exports = new Factory();
 </code></pre>
     </article>
 </section>

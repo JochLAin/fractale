@@ -1,72 +1,43 @@
 <article class="mb-4"><a href="#models" class="border border-1" data-toggle="collapse">Models used for examples</a><div id="models" class="border border-1 collapse">
 
 ```javascript
-const Compound = Fractale.create("Compound", Simple, {
-    boards: [
-        String
-    ],
+const Metadata = Fractale.create("Metadata", {
     metadata: {
         key: String,
         data: {
             key: String,
             value: undefined
         }
-    },
-    collections: [
-        {
-            key: String,
-            value: String
-        }
-    ]
+    }
 });
 ```
 
 </div></article>
 
 ```javascript
-const instance = new Compound({
-    string: 'Hello world',
-    boards: ['Lorem ipsum', 'Dolores sit amet'],
+const { Metadata } = module.exports.get();
+const instance = new Metadata({
     metadata: { key: 'Foo', data: { key: 'Bar', value: 12 }}
 });
 
-if (instance.metadata.key !== 'Foo') {
-    throw new DetailedError('Error on metadata accessor', `Expected "Foo" got "${instance.metadata.key}"`);
-}
+_.test(instance.metadata.key, 'Foo', 'Error on metadata accessor');
 
 const metadata = instance.metadata;
 metadata.key = 'decomposition';
 
-if (instance.metadata.key !== 'decomposition') {
-    throw new DetailedError('Error on metadata accessor with decomposition', `Expected "decomposition" got "${instance.metadata.key}"`);
-}
+_.test(instance.metadata.key, 'decomposition', 'Error on metadata accessor with decomposition');
 
 instance.metadata.key = 'dot';
-if (instance.metadata.key !== 'dot') {
-    throw new DetailedError('Error on metadata accessor with dot', `Expected "dot" got "${instance.metadata.key}"`);
-}
+_.test(instance.metadata.key, 'dot', 'Error on metadata accessor with dot');
 
 instance.metadata = { key: 'assign' };
-if (instance.metadata.key !== 'assign') {
-    throw new DetailedError('Error on metadata accessor with assign', `Expected "assign" got "${instance.metadata.key}"`);
-}
-if (!instance.metadata.data) {
-    throw new DetailedError('Error on metadata accessor with assign', `Expected "Compound_Metadata_Data" got "${instance.metadata.data}"`);
-}
-if (instance.metadata.data.key !== 'Bar') {
-    throw new DetailedError('Error on metadata accessor with assign', `Expected "Bar" got "${instance.metadata.data.key}"`);
-}
+_.test(instance.metadata.key, 'assign', 'Error on metadata accessor with assign');
+_.test(instance.metadata.data.key, 'Bar', 'Error on metadata accessor with assign');
 
 instance.metadata = { data: { key: 'after', value: 13 } };
-if (instance.metadata.key !== 'assign') {
-    throw new DetailedError('Error on metadata accessor with bracket', `Expected "assign" got "${instance.metadata.key}"`);
-}
-if (instance.metadata.data.key !== 'after') {
-    throw new DetailedError('Error on metadata accessor with bracket', `Expected "after" got "${instance.metadata.data.key}"`);
-}
-if (instance.metadata.data.value !== 13) {
-    throw new DetailedError('Error on metadata accessor with bracket', `Expected "13" got "${instance.metadata.data.value}"`);
-}
+_.test(instance.metadata.key, 'assign', 'Error on metadata accessor with bracket');
+_.test(instance.metadata.data.key, 'after', 'Error on metadata accessor with bracket');
+_.test(instance.metadata.data.value, 13, 'Error on metadata accessor with bracket');
 
 resolve(instance);
 ```
@@ -75,21 +46,15 @@ resolve(instance);
 
 ```json
 {
-    "uuid": "27f7e52b-18db-4381-9377-aafeca11875f",
-    "string": "Hello world",
-    "boards": [
-        "Lorem ipsum",
-        "Dolores sit amet"
-    ],
+    "uuid": "f760592a-fbfa-4051-8b66-0f8409a3d4a0",
     "metadata": {
-        "uuid": "8ebc49b8-e82b-4215-bea3-4177c60b9b7e",
+        "uuid": "8bf7a9c9-9644-459f-abcd-cad4f235ba5a",
         "key": "assign",
         "data": {
-            "uuid": "fb7c4a13-c5cf-4985-950c-ee919dd536f3",
+            "uuid": "f50eb191-031f-46eb-a315-7a4a16642d6d",
             "key": "after",
             "value": 13
         }
-    },
-    "collections": []
+    }
 }
 ```

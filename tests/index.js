@@ -1,4 +1,9 @@
 const logger = require('crieur');
+const Fractale = require('../lib');
+
+Fractale.library.on('add', ({ name }) => {
+    logger.debug(`Create model ${name}`);
+});
 
 if (process.env.LOG_LEVEL) {
     logger.level = process.env.LOG_LEVEL;
@@ -8,12 +13,13 @@ module.exports.run = () => {
     const cases = Array.from(module.exports.cases);
     const chain = Promise.resolve();
     const loop = () => Promise.resolve().then(() => {
-        let current = cases.shift();
-        if (current) {
-            logger.info(`  > ${current.title}`, { bold: true });
-            const promise = new Promise(current.resolver);
+        let test = cases.shift();
+        if (test) {
+            logger.info(`  > ${test.title}`, { bold: true });
+            const promise = new Promise(test.resolver);
             return promise.then(() => {
                 logger.success('Test passed !', { block: true });
+                Fractale.memory.clear();
             }).then(() => {
                 return loop();
             });
@@ -21,11 +27,12 @@ module.exports.run = () => {
     });
 
     return chain.then(loop).then(() => {
-       require('./performance').run();
+        logger.info(`  > Performance`, { bold: true });
+
+        require('./performance').run();
     });
 };
 
-module.exports.models = require('./models');
 module.exports.cases = [
     require('./event_listener'),
     require('./cases/simple'),
@@ -33,16 +40,16 @@ module.exports.cases = [
     require('./cases/metadata'),
     require('./cases/collection'),
     require('./cases/self_reference'),
-    require('./cases/regexp'),
     require('./cases/inheritance'),
     require('./cases/form'),
     require('./cases/complex'),
     require('./cases/deep'),
-    require('./cases/error'),
     require('./cases/serializer'),
     require('./cases/validator'),
+    require('./cases/error'),
     require('./cases/static'),
     require('./cases/stringify'),
+    // 'cases/regexp',
 ];
 
 if (require.main === module) {

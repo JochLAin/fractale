@@ -1,22 +1,17 @@
 const moment = require('moment');
-const _ = require('../utils');
 const Fractale = require('../../lib');
+const _ = require('../utils');
 
-const Example_Validator = Fractale.create('Example_Validator', {
-    mixed: Fractale.with(undefined, { validator: { in: ['foo', 42] }}),
-    number: Fractale.with(Number, { validator: { gte: 18, lt: 51, between: [20, 30] }}),
-    date: Fractale.with(Date, { validator: { gt: '2016-01-01', lte: new Date('3033-12-31'), between: [moment('2017-01-01')] }})
-});
-
-module.exports.models = [Example_Validator];
 module.exports.title = 'Validator test';
 module.exports.name = 'validator-test';
 module.exports.tutorialized = false;
 
 module.exports.resolver = (resolve) => {
-    new Example_Validator({ mixed: 'foo' });
+    const { Example } = module.exports.get();
+
+    new Example({ mixed: 'foo' });
     try {
-        new Example_Validator({ mixed: 'bar' });
+        new Example({ mixed: 'bar' });
         throw new Error('Error on validator in');
     } catch (error) {
         if (error instanceof _.TestValidatorError) throw error;
@@ -26,9 +21,9 @@ module.exports.resolver = (resolve) => {
         }
     }
 
-    new Example_Validator({ number: 22 });
+    new Example({ number: 22 });
     try {
-        new Example_Validator({ number: 16 });
+        new Example({ number: 16 });
         throw new _.TestValidatorError('Error on validator number');
     } catch (error) {
         if (error instanceof _.TestValidatorError) throw error;
@@ -39,7 +34,7 @@ module.exports.resolver = (resolve) => {
     }
 
     try {
-        new Example_Validator({ number: 52 });
+        new Example({ number: 52 });
         throw new _.TestValidatorError('Error on validator number');
     } catch (error) {
         if (error instanceof _.TestValidatorError) throw error;
@@ -50,7 +45,7 @@ module.exports.resolver = (resolve) => {
     }
 
     try {
-        new Example_Validator({ number: 19 });
+        new Example({ number: 19 });
         throw new _.TestValidatorError('Error on validator number');
     } catch (error) {
         if (error instanceof _.TestValidatorError) throw error;
@@ -61,7 +56,7 @@ module.exports.resolver = (resolve) => {
     }
 
     try {
-        new Example_Validator({ number: 45 });
+        new Example({ number: 45 });
         throw new _.TestValidatorError('Error on validator number');
     } catch (error) {
         if (error instanceof _.TestValidatorError) throw error;
@@ -71,9 +66,9 @@ module.exports.resolver = (resolve) => {
         }
     }
 
-    new Example_Validator({ date: '2018-01-01' });
+    new Example({ date: '2018-01-01' });
     try {
-        new Example_Validator({ date: '2000-01-01' });
+        new Example({ date: '2000-01-01' });
         throw new _.TestValidatorError('Error on validator date');
     } catch (error) {
         if (error instanceof _.TestValidatorError) throw error;
@@ -84,7 +79,7 @@ module.exports.resolver = (resolve) => {
     }
 
     try {
-        new Example_Validator({ date: '3053-01-01' });
+        new Example({ date: '3053-01-01' });
         throw new _.TestValidatorError('Error on validator date');
     } catch (error) {
         if (error instanceof _.TestValidatorError) throw error;
@@ -95,7 +90,7 @@ module.exports.resolver = (resolve) => {
     }
 
     try {
-        new Example_Validator({ date: '3023-01-01' });
+        new Example({ date: '3023-01-01' });
         throw new _.TestValidatorError('Error on validator date');
     } catch (error) {
         if (error instanceof _.TestValidatorError) throw error;
@@ -106,7 +101,7 @@ module.exports.resolver = (resolve) => {
     }
 
     try {
-        new Example_Validator({ date: '2016-11-30' });
+        new Example({ date: '2016-11-30' });
         throw new _.TestValidatorError('Error on validator date');
     } catch (error) {
         if (error instanceof _.TestValidatorError) throw error;
@@ -117,4 +112,20 @@ module.exports.resolver = (resolve) => {
     }
 
     resolve();
+};
+
+module.exports.create = () => {
+    const Example = Fractale.create('Validator_Example', {
+        mixed: Fractale.with(undefined, { validator: { in: ['foo', 42] }}),
+        number: Fractale.with(Number, { validator: { gte: 18, lt: 51, between: [20, 30] }}),
+        date: Fractale.with(Date, { validator: { gt: '2016-01-01', lte: new Date('3033-12-31'), between: [moment('2017-01-01')] }})
+    });
+
+    return { Example };
+};
+
+let models;
+module.exports.get = () => {
+    if (models) return models;
+    return models = module.exports.create();
 };

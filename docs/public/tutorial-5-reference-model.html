@@ -65,7 +65,7 @@
                 <div class="column is-3" id="sidebarNav">
                     <div class="sidebar">
                         <nav>
-                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-1-simple-model.html">Example 1: Simple model</a></li><li><a href="tutorial-2-inception-model.html">Example 2: Inception model</a></li><li><a href="tutorial-3-metadata-model.html">Example 3: Metadata model</a></li><li><a href="tutorial-4-collection-model.html">Example 4: Collection model</a></li><li><a href="tutorial-5-reference-model.html">Example 5: Self-reference model</a></li><li><a href="tutorial-6-inheritance-model.html">Example 6: Inheritance model</a></li><li><a href="tutorial-7-form-usage.html">Example 7: Form usage</a></li></ul><h3>Modules</h3><ul><li><a href="module-Fractale.html">Fractale</a></li></ul><h3>Classes</h3><ul><li><a href="EventListener.html">EventListener</a></li><li><a href="Factory.html">Factory</a></li><li><a href="Library.html">Library</a></li><li><a href="Model.html">Model</a></li><li><a href="module.exports.html">exports</a></li><li><a href="Property.html">Property</a></li><li><a href="Schema.html">Schema</a></li></ul></div>
+                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-1-simple-model.html">Example 1: Simple model</a></li><li><a href="tutorial-2-inception-model.html">Example 2: Inception model</a></li><li><a href="tutorial-3-metadata-model.html">Example 3: Metadata model</a></li><li><a href="tutorial-4-collection-model.html">Example 4: Collection model</a></li><li><a href="tutorial-5-reference-model.html">Example 5: Self-reference model</a></li><li><a href="tutorial-6-inheritance-model.html">Example 6: Inheritance model</a></li><li><a href="tutorial-7-form-usage.html">Example 7: Form usage</a></li></ul><h3>Modules</h3><ul><li><a href="module-Factory.html">Factory</a></li><li><a href="module-Fractale.html">Fractale</a></li></ul><h3>Classes</h3><ul><li><a href="EventListener.html">EventListener</a></li><li><a href="Model.html">Model</a></li><li><a href="Property.html">Property</a></li><li><a href="PropertyType.html">PropertyType</a></li><li><a href="PropertyTypeCompound.html">PropertyTypeCompound</a></li><li><a href="Schema.html">Schema</a></li></ul><h3>Global</h3><ul><li><a href="global.html#entities">entities</a></li></ul></div>
                         </nav>
                     </div>
                 </div>
@@ -81,189 +81,35 @@
     </header>
     <article>
         <article class="mb-4"><a href="#models" class="border border-1" data-toggle="collapse">Models used for examples</a><div id="models" class="border border-1 collapse">
-<pre class="prettyprint source lang-javascript"><code>const Variable = Fractale.create(&quot;Variable&quot;, {
-    name: String,
-    value: undefined,
-    static: Boolean,
-    scope: String
-});
-
-const Method = Fractale.create(&quot;Method&quot;, {
-    signature: {
-        name: String,
-        variables: [
-            Variable
-        ]
-    },
-    body: String
-});
-
-const Class = Fractale.create(&quot;Class&quot;, {
-    uses: [
-        Fractale.SELF
-    ],
-    name: String,
-    inheritance: Fractale.SELF,
-    properties: [
-        Variable
-    ],
-    methods: [
-        Method
-    ]
+<pre class="prettyprint source lang-javascript"><code>const Self = Fractale.create(&quot;Self&quot;, {
+    self: Self,
+    value: String
 });
 </code></pre>
 </div></article>
-<pre class="prettyprint source lang-javascript"><code>const _a = new Variable({ name: 'a', value: 0 });
-const a = new Class({
-    name: 'A',
-    properties: [_a],
-    methods: [
-        { signature: { name: 'getA' }},
-        { signature: { name: 'setA', variables: [{ name: 'a' }] }}
-    ]
-});
+<pre class="prettyprint source lang-javascript"><code>const { Self } = module.exports.get();
+const instance_1 = new Self({ value: 'foo' });
+const instance_2 = new Self({ self: { self: instance_1, value: 'bar' }, value: 'hello' });
 
-const b = new Class({
-    name: 'B',
-    inheritance: a,
-    properties: [
-        { name: 'b', value: 0 },
-    ],
-    methods: [
-        { signature: { name: 'getB' }},
-        { signature: { name: 'setB', variables: [{ name: 'b' }] }}
-    ]
-});
+_.test(instance_1.value, 'foo', 'Error on deep accessor variable name');
+_.test(instance_2.self.value, 'bar', 'Error on self-reference accessor');
+_.test(instance_2.self.self.value, 'foo', 'Error on double self-reference accessor');
+_.test(instance_2.self.self.self, undefined, 'Error infinite self-reference accessor');
 
-const c = new Class({
-    name: 'C',
-    inheritance: b,
-    properties: [
-        { name: 'c', value: 0 },
-    ],
-    methods: [
-        { signature: { name: 'getC' }},
-        { signature: { name: 'setC', variables: [{ name: 'c' }] }}
-    ]
-});
-
-if (a.properties[0].name !== 'a') {
-    throw new Error('Error on deep accessor variable name');
-}
-if (c.inheritance.name !== 'B') {
-    throw new Error('Error on self-reference accessor');
-}
-if (c.inheritance.inheritance.name !== 'A') {
-    throw new Error('Error on double self-reference accessor');
-}
-if (c.inheritance.inheritance.inheritance) {
-    throw new Error('Error infinite self-reference accessor');
-}
-
-resolve(c);
+resolve(instance_2);
 </code></pre>
 <h3>Results</h3>
 <pre class="prettyprint source lang-json"><code>{
-    &quot;uuid&quot;: &quot;eac753d8-f595-493a-8080-e7ce3ff7843d&quot;,
-    &quot;uses&quot;: [],
-    &quot;name&quot;: &quot;C&quot;,
-    &quot;inheritance&quot;: {
-        &quot;uuid&quot;: &quot;7354ad9b-8b52-4498-990b-459d07fd87e5&quot;,
-        &quot;uses&quot;: [],
-        &quot;name&quot;: &quot;B&quot;,
-        &quot;inheritance&quot;: {
-            &quot;uuid&quot;: &quot;4975b754-b16d-439a-8e11-c0345766d681&quot;,
-            &quot;uses&quot;: [],
-            &quot;name&quot;: &quot;A&quot;,
-            &quot;properties&quot;: [
-                {
-                    &quot;uuid&quot;: &quot;54c67039-7918-4712-9713-beb4d649a6c8&quot;,
-                    &quot;name&quot;: &quot;a&quot;
-                }
-            ],
-            &quot;methods&quot;: [
-                {
-                    &quot;uuid&quot;: &quot;d39177ca-e088-4431-ba9d-e377ee4830e6&quot;,
-                    &quot;signature&quot;: {
-                        &quot;uuid&quot;: &quot;fa8e7c50-6792-4d55-a921-a698b51502a4&quot;,
-                        &quot;name&quot;: &quot;getA&quot;,
-                        &quot;variables&quot;: []
-                    }
-                },
-                {
-                    &quot;uuid&quot;: &quot;824bf4a6-f0a1-438a-b0ce-85fa3a5652ef&quot;,
-                    &quot;signature&quot;: {
-                        &quot;uuid&quot;: &quot;53aa9124-b012-4daa-ad2e-db30c2d25e6b&quot;,
-                        &quot;name&quot;: &quot;setA&quot;,
-                        &quot;variables&quot;: [
-                            {
-                                &quot;uuid&quot;: &quot;ca50bf64-3d6d-470a-a351-d23cca6fb839&quot;,
-                                &quot;name&quot;: &quot;a&quot;
-                            }
-                        ]
-                    }
-                }
-            ]
+    &quot;uuid&quot;: &quot;621609f2-c287-4de0-b3ab-f11004184253&quot;,
+    &quot;self&quot;: {
+        &quot;uuid&quot;: &quot;c388b07d-0716-43bb-be7e-84c65a60a399&quot;,
+        &quot;self&quot;: {
+            &quot;uuid&quot;: &quot;e845e9aa-8fe5-4745-944f-cf635b7a28a0&quot;,
+            &quot;value&quot;: &quot;foo&quot;
         },
-        &quot;properties&quot;: [
-            {
-                &quot;uuid&quot;: &quot;c9cc07bf-164e-4af9-a96d-c0e9340cb60f&quot;,
-                &quot;name&quot;: &quot;b&quot;
-            }
-        ],
-        &quot;methods&quot;: [
-            {
-                &quot;uuid&quot;: &quot;a44650ea-e7c2-4cfe-95f9-2f86b7204144&quot;,
-                &quot;signature&quot;: {
-                    &quot;uuid&quot;: &quot;bf3d8b57-55a1-4a5a-82e5-3a8b7b586c2d&quot;,
-                    &quot;name&quot;: &quot;getB&quot;,
-                    &quot;variables&quot;: []
-                }
-            },
-            {
-                &quot;uuid&quot;: &quot;1826a1f8-efab-405c-b3ff-c9f5b31277bb&quot;,
-                &quot;signature&quot;: {
-                    &quot;uuid&quot;: &quot;5cb92508-1787-4829-9757-e0f213b99c73&quot;,
-                    &quot;name&quot;: &quot;setB&quot;,
-                    &quot;variables&quot;: [
-                        {
-                            &quot;uuid&quot;: &quot;3397dbfb-06f3-4ece-9261-ed3d219cc40b&quot;,
-                            &quot;name&quot;: &quot;b&quot;
-                        }
-                    ]
-                }
-            }
-        ]
+        &quot;value&quot;: &quot;bar&quot;
     },
-    &quot;properties&quot;: [
-        {
-            &quot;uuid&quot;: &quot;917629fa-65e8-4ba0-9443-127d308f01f0&quot;,
-            &quot;name&quot;: &quot;c&quot;
-        }
-    ],
-    &quot;methods&quot;: [
-        {
-            &quot;uuid&quot;: &quot;144ceb51-1983-4e96-8210-bc0e1b8237f9&quot;,
-            &quot;signature&quot;: {
-                &quot;uuid&quot;: &quot;c32c575c-1799-4f61-a40e-a9907666f08c&quot;,
-                &quot;name&quot;: &quot;getC&quot;,
-                &quot;variables&quot;: []
-            }
-        },
-        {
-            &quot;uuid&quot;: &quot;3437c495-55de-4fe7-a07c-4a1048c351c1&quot;,
-            &quot;signature&quot;: {
-                &quot;uuid&quot;: &quot;af1ca30d-79ea-4f49-b3fc-f0613b0a7b28&quot;,
-                &quot;name&quot;: &quot;setC&quot;,
-                &quot;variables&quot;: [
-                    {
-                        &quot;uuid&quot;: &quot;60b9e3a6-52e9-45a7-9262-b67bcc3c96aa&quot;,
-                        &quot;name&quot;: &quot;c&quot;
-                    }
-                ]
-            }
-        }
-    ]
+    &quot;value&quot;: &quot;hello&quot;
 }
 </code></pre>
     </article>

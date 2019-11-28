@@ -67,7 +67,7 @@
                 <div class="column is-3" id="sidebarNav">
                     <div class="sidebar">
                         <nav>
-                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-1-simple-model.html">Example 1: Simple model</a></li><li><a href="tutorial-2-inception-model.html">Example 2: Inception model</a></li><li><a href="tutorial-3-metadata-model.html">Example 3: Metadata model</a></li><li><a href="tutorial-4-collection-model.html">Example 4: Collection model</a></li><li><a href="tutorial-5-reference-model.html">Example 5: Self-reference model</a></li><li><a href="tutorial-6-inheritance-model.html">Example 6: Inheritance model</a></li><li><a href="tutorial-7-form-usage.html">Example 7: Form usage</a></li></ul><h3>Modules</h3><ul><li><a href="module-Fractale.html">Fractale</a></li></ul><h3>Classes</h3><ul><li><a href="EventListener.html">EventListener</a></li><li><a href="Factory.html">Factory</a></li><li><a href="Library.html">Library</a></li><li><a href="Model.html">Model</a></li><li><a href="module.exports.html">exports</a></li><li><a href="Property.html">Property</a></li><li><a href="Schema.html">Schema</a></li></ul></div>
+                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-1-simple-model.html">Example 1: Simple model</a></li><li><a href="tutorial-2-inception-model.html">Example 2: Inception model</a></li><li><a href="tutorial-3-metadata-model.html">Example 3: Metadata model</a></li><li><a href="tutorial-4-collection-model.html">Example 4: Collection model</a></li><li><a href="tutorial-5-reference-model.html">Example 5: Self-reference model</a></li><li><a href="tutorial-6-inheritance-model.html">Example 6: Inheritance model</a></li><li><a href="tutorial-7-form-usage.html">Example 7: Form usage</a></li></ul><h3>Modules</h3><ul><li><a href="module-Factory.html">Factory</a></li><li><a href="module-Fractale.html">Fractale</a></li></ul><h3>Classes</h3><ul><li><a href="EventListener.html">EventListener</a></li><li><a href="Model.html">Model</a></li><li><a href="Property.html">Property</a></li><li><a href="PropertyType.html">PropertyType</a></li><li><a href="PropertyTypeCompound.html">PropertyTypeCompound</a></li><li><a href="Schema.html">Schema</a></li></ul><h3>Global</h3><ul><li><a href="global.html#entities">entities</a></li></ul></div>
                         </nav>
                     </div>
                 </div>
@@ -84,82 +84,72 @@
     
 <section>
     <article>
-        <pre class="prettyprint source linenums"><code>const PropertyDefiner = require('./definers');
+        <pre class="prettyprint source linenums"><code>'use strict';
 
 /**
- * @class
+ * @class Property
+ *
+ * @param {Model} instance
+ * @param {ƒ_type} type
+ *
+ * @author Jocelyn Faihy &lt;jocelyn@faihy.fr>
  */
-const Property = module.exports = class Property {
-    constructor(instance, field) {
+module.exports = class Property {
+    static create(instance, type) {
+        return new Property(instance, type);
+    }
+
+    constructor(instance, type) {
         this.instance = instance;
-        this.field = field;
-        this.definer = PropertyDefiner.get(field);
+        this.type = type;
         this._value = undefined;
     }
 
-    get(...args) {
-        return this.definer.get(this, ...args);
+    split(key) {
+        return Property
+            .create(this.instance, this.type.split(key))
+            .set(this.value &amp;&amp; this.value[key])
+        ;
     }
 
-    set(...args) {
-        return this.definer.set(this, ...args);
+    set(value) {
+        value = this.type.format(value, this.value);
+        this.value = value;
+        return this;
     }
 
-    normalize(...args) {
-        return this.field.normalize(...args);
+    get() {
+        return this.type.expose(this);
     }
 
-    denormalize(...args) {
-        return this.field.denormalize(...args);
+    serialize(options) {
+        return this.type.serialize(this.value, options);
     }
 
-    serialize(...args) {
-        return this.field.serialize(this.value, ...args);
-    }
-
-    deserialize(...args) {
-        return this.field.deserialize(this.value, ...args);
-    }
-
-    validate(...args) {
-        return this.field.validate(...args);
+    validate(value) {
+        return this.type.validate(value);
     }
 
     get key() {
-        return this.field.key;
-    }
-
-    get options() {
-        return this.field.options;
+        return this.type.key;
     }
 
     set value(value) {
-        if (value === this.value) {
-            return this.value;
+        if (value === this._value) {
+            return this._value;
         }
-        const previous = this.value;
+        const previous = this._value;
         this._value = value;
         this.instance.emit('change', {
             key: this.key,
-            value: this.value,
+            value: this._value,
             previous
         });
-        return this._value = value;
+        return this._value;
     }
 
     get value() {
         return this._value;
-    }
-};
-
-module.exports.SubProperty = class SubProperty extends Property {
-    constructor(instance, field, index) {
-        super(instance, field);
-        this.index = index;
-    }
-
-    get key() {
-        return `${this.field.key}[${this.index}]`;
     }
 };
 </code></pre>

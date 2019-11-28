@@ -65,7 +65,7 @@
                 <div class="column is-3" id="sidebarNav">
                     <div class="sidebar">
                         <nav>
-                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-1-simple-model.html">Example 1: Simple model</a></li><li><a href="tutorial-2-inception-model.html">Example 2: Inception model</a></li><li><a href="tutorial-3-metadata-model.html">Example 3: Metadata model</a></li><li><a href="tutorial-4-collection-model.html">Example 4: Collection model</a></li><li><a href="tutorial-5-reference-model.html">Example 5: Self-reference model</a></li><li><a href="tutorial-6-inheritance-model.html">Example 6: Inheritance model</a></li><li><a href="tutorial-7-form-usage.html">Example 7: Form usage</a></li></ul><h3>Modules</h3><ul><li><a href="module-Fractale.html">Fractale</a></li></ul><h3>Classes</h3><ul><li><a href="EventListener.html">EventListener</a></li><li><a href="Factory.html">Factory</a></li><li><a href="Library.html">Library</a></li><li><a href="Model.html">Model</a></li><li><a href="module.exports.html">exports</a></li><li><a href="Property.html">Property</a></li><li><a href="Schema.html">Schema</a></li></ul></div>
+                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-1-simple-model.html">Example 1: Simple model</a></li><li><a href="tutorial-2-inception-model.html">Example 2: Inception model</a></li><li><a href="tutorial-3-metadata-model.html">Example 3: Metadata model</a></li><li><a href="tutorial-4-collection-model.html">Example 4: Collection model</a></li><li><a href="tutorial-5-reference-model.html">Example 5: Self-reference model</a></li><li><a href="tutorial-6-inheritance-model.html">Example 6: Inheritance model</a></li><li><a href="tutorial-7-form-usage.html">Example 7: Form usage</a></li></ul><h3>Modules</h3><ul><li><a href="module-Factory.html">Factory</a></li><li><a href="module-Fractale.html">Fractale</a></li></ul><h3>Classes</h3><ul><li><a href="EventListener.html">EventListener</a></li><li><a href="Model.html">Model</a></li><li><a href="Property.html">Property</a></li><li><a href="PropertyType.html">PropertyType</a></li><li><a href="PropertyTypeCompound.html">PropertyTypeCompound</a></li><li><a href="Schema.html">Schema</a></li></ul><h3>Global</h3><ul><li><a href="global.html#entities">entities</a></li></ul></div>
                         </nav>
                     </div>
                 </div>
@@ -81,66 +81,33 @@
     </header>
     <article>
         <article class="mb-4"><a href="#models" class="border border-1" data-toggle="collapse">Models used for examples</a><div id="models" class="border border-1 collapse">
-<pre class="prettyprint source lang-javascript"><code>const Author = Fractale.create(&quot;Author&quot;, {
-    firstname: String,
-    lastname: String,
-    surname: String,
-    comment: String
+<pre class="prettyprint source lang-javascript"><code>const Form_Parent = Fractale.create(&quot;Form_Parent&quot;, {
+    value: String
 });
 
-const Chapter = Fractale.create(&quot;Chapter&quot;, {
-    pages: [
-        Page
-    ]
-});
-
-const Page = Fractale.create(&quot;Page&quot;, {
-    title: String,
-    content: String
-});
-
-const Book = Fractale.create(&quot;Book&quot;, {
-    author: Author,
-    readable: Boolean,
-    title: String,
-    chapters: [
-        Chapter
-    ]
+const Form_Child = Fractale.create(&quot;Form_Child&quot;, {
+    parent: Form_Parent,
+    value: String
 });
 </code></pre>
 </div></article>
-<pre class="prettyprint source lang-javascript"><code>const author = new Author({
-    firstname: 'Jocelyn',
-    lastname: 'Faihy',
-    surname: 'Jochlain',
-    comment: 'Great',
-});
+<pre class="prettyprint source lang-javascript"><code>const { Form_Parent, Form_Child } = module.exports.get();
+const parent = new Form_Parent({ value: 'foo' });
+const child = new Form_Child({ parent: parent.uuid, value: 'bar' });
 
-const book = new Book({
-    author: author.uuid,
-    title: 'Au-delà de la donnée',
-    readable: false,
-});
+_.test(child.value, 'bar', 'Error on form setter');
+_.test(child.parent.value, 'foo', 'Error on form setter');
 
-if (book.author.firstname !== 'Jocelyn') {
-    throw new DetailedError('Error on form setter', `Expected &quot;Jocelyn&quot; got &quot;${book.author.firstname}&quot;`);
-}
-
-resolve(book);
+resolve(child);
 </code></pre>
 <h3>Results</h3>
 <pre class="prettyprint source lang-json"><code>{
-    &quot;uuid&quot;: &quot;bad91564-bb5f-4b74-b6bf-be6533148f99&quot;,
-    &quot;author&quot;: {
-        &quot;uuid&quot;: &quot;e014b8a5-36d7-42f1-ab55-f7300864ff0b&quot;,
-        &quot;firstname&quot;: &quot;Jocelyn&quot;,
-        &quot;lastname&quot;: &quot;Faihy&quot;,
-        &quot;surname&quot;: &quot;Jochlain&quot;,
-        &quot;comment&quot;: &quot;Great&quot;
+    &quot;uuid&quot;: &quot;749e092a-213e-4757-840b-8b85aa77c13b&quot;,
+    &quot;parent&quot;: {
+        &quot;uuid&quot;: &quot;baf6aade-8a83-466e-a0b1-45df59d0daaf&quot;,
+        &quot;value&quot;: &quot;foo&quot;
     },
-    &quot;readable&quot;: false,
-    &quot;title&quot;: &quot;Au-delà de la donnée&quot;,
-    &quot;chapters&quot;: []
+    &quot;value&quot;: &quot;bar&quot;
 }
 </code></pre>
     </article>

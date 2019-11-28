@@ -65,7 +65,7 @@
                 <div class="column is-3" id="sidebarNav">
                     <div class="sidebar">
                         <nav>
-                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-1-simple-model.html">Example 1: Simple model</a></li><li><a href="tutorial-2-inception-model.html">Example 2: Inception model</a></li><li><a href="tutorial-3-metadata-model.html">Example 3: Metadata model</a></li><li><a href="tutorial-4-collection-model.html">Example 4: Collection model</a></li><li><a href="tutorial-5-reference-model.html">Example 5: Self-reference model</a></li><li><a href="tutorial-6-inheritance-model.html">Example 6: Inheritance model</a></li><li><a href="tutorial-7-form-usage.html">Example 7: Form usage</a></li></ul><h3>Modules</h3><ul><li><a href="module-Fractale.html">Fractale</a></li></ul><h3>Classes</h3><ul><li><a href="EventListener.html">EventListener</a></li><li><a href="Factory.html">Factory</a></li><li><a href="Library.html">Library</a></li><li><a href="Model.html">Model</a></li><li><a href="module.exports.html">exports</a></li><li><a href="Property.html">Property</a></li><li><a href="Schema.html">Schema</a></li></ul></div>
+                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-1-simple-model.html">Example 1: Simple model</a></li><li><a href="tutorial-2-inception-model.html">Example 2: Inception model</a></li><li><a href="tutorial-3-metadata-model.html">Example 3: Metadata model</a></li><li><a href="tutorial-4-collection-model.html">Example 4: Collection model</a></li><li><a href="tutorial-5-reference-model.html">Example 5: Self-reference model</a></li><li><a href="tutorial-6-inheritance-model.html">Example 6: Inheritance model</a></li><li><a href="tutorial-7-form-usage.html">Example 7: Form usage</a></li></ul><h3>Modules</h3><ul><li><a href="module-Factory.html">Factory</a></li><li><a href="module-Fractale.html">Fractale</a></li></ul><h3>Classes</h3><ul><li><a href="EventListener.html">EventListener</a></li><li><a href="Model.html">Model</a></li><li><a href="Property.html">Property</a></li><li><a href="PropertyType.html">PropertyType</a></li><li><a href="PropertyTypeCompound.html">PropertyTypeCompound</a></li><li><a href="Schema.html">Schema</a></li></ul><h3>Global</h3><ul><li><a href="global.html#entities">entities</a></li></ul></div>
                         </nav>
                     </div>
                 </div>
@@ -90,53 +90,40 @@
 });
 </code></pre>
 </div></article>
-<pre class="prettyprint source lang-javascript"><code>const instance = new Simple({
+<pre class="prettyprint source lang-javascript"><code>const { Simple } = module.exports.get();
+const instance = new Simple({
     mixed: 'It\'s dangerous to go alone! Take this.',
     boolean: false,
     number: 31,
-    string: 'Lorem ipsum'
+    string: 'Lorem ipsum',
+    date: '2000-01-01',
 });
 
-if (instance.mixed !== 'It\'s dangerous to go alone! Take this.') {
-    throw new DetailedError('Error on simple accessor with type mixed', `Expected &quot;It's dangerous to go alone! Take this.&quot; got &quot;${instance.mixed}&quot;`);
-}
-if (instance.boolean !== false) {
-    throw new DetailedError('Error on simple accessor with type boolean', `Expected &quot;false&quot; got &quot;${instance.boolean}&quot;`);
-}
-if (instance.number !== 31) {
-    throw new DetailedError('Error on simple accessor with type number', `Expected &quot;31&quot; got &quot;${instance.number}&quot;`);
-}
-if (instance.string !== 'Lorem ipsum') {
-    throw new DetailedError('Error on simple accessor with type string', `Expected &quot;Lorem ipsum&quot; got &quot;${instance.string}&quot;`);
-}
+_.test(instance.mixed, 'It\'s dangerous to go alone! Take this.', 'Error on simple accessor with type mixed');
+_.test(instance.boolean, false, 'Error on simple accessor with type boolean');
+_.test(instance.number, 31, 'Error on simple accessor with type number');
+_.test(instance.string, 'Lorem ipsum', 'Error on simple accessor with type string');
 
 instance.mixed = -1;
 instance.boolean = true;
 instance.number = 42;
 instance.string = 'Dolor sit amet';
 
-if (instance.mixed !== -1) {
-    throw new DetailedError('Error on simple accessor with type mixed after change', `Expected &quot;-1&quot; got &quot;${instance.mixed}&quot;`);
-}
-if (instance.boolean !== true) {
-    throw new DetailedError('Error on simple accessor with type boolean after change', `Expected &quot;true&quot; got &quot;${instance.boolean}&quot;`);
-}
-if (instance.number !== 42) {
-    throw new DetailedError('Error on simple accessor with type number after change', `Expected &quot;42&quot; got &quot;${instance.number}&quot;`);
-}
-if (instance.string !== 'Dolor sit amet') {
-    throw new DetailedError('Error on simple accessor with type string after change', `Expected &quot;Dolor sit amet&quot; got &quot;${instance.string}&quot;`);
-}
+_.test(instance.mixed, -1, 'Error on simple accessor with type mixed after change');
+_.test(instance.boolean, true, 'Error on simple accessor with type boolean after change');
+_.test(instance.number, 42, 'Error on simple accessor with type number after change');
+_.test(instance.string, 'Dolor sit amet', 'Error on simple accessor with type string after change');
 
 resolve(instance);
 </code></pre>
 <h3>Results</h3>
 <pre class="prettyprint source lang-json"><code>{
-    &quot;uuid&quot;: &quot;614a08d1-faf0-45fc-b238-0817cc9963f6&quot;,
+    &quot;uuid&quot;: &quot;8a5471ff-cb25-4584-a4bb-10c9c179cd05&quot;,
     &quot;mixed&quot;: -1,
     &quot;boolean&quot;: true,
     &quot;number&quot;: 42,
-    &quot;string&quot;: &quot;Dolor sit amet&quot;
+    &quot;string&quot;: &quot;Dolor sit amet&quot;,
+    &quot;date&quot;: &quot;2000-01-01T02:00:00.000Z&quot;
 }
 </code></pre>
     </article>

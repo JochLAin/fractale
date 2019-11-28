@@ -1,23 +1,22 @@
 <article class="mb-4"><a href="#models" class="border border-1" data-toggle="collapse">Models used for examples</a><div id="models" class="border border-1 collapse">
 
 ```javascript
-const Child = Fractale.create("Child", {
+const Inheritance_Child = Fractale.create("Inheritance_Child", {
     value: String
 });
 
-const Parent = Fractale.create("Parent", Child, {
+const Inheritance_Parent = Fractale.create("Inheritance_Parent", Inheritance_Child, {
     children: [
-        Child
+        Inheritance_Child
     ]
-});,const Child = Fractale.create("Child", {
-    value: String
 });
 ```
 
 </div></article>
 
 ```javascript
-const instance = new Parent({
+const { Inheritance_Parent } = module.exports.get();
+const instance = new Inheritance_Parent({
     value: 'Hello',
     children: [
         { value: 'world' },
@@ -25,17 +24,9 @@ const instance = new Parent({
     ]
 });
 
-if (instance.sayHelloTo(0) !== 'Hello world') {
-    throw new DetailedError('Error on parent method call', `Expected "Hello world" got "${instance.sayHelloTo(0)}"`);
-}
-
-if (instance.sayHelloTo(1) !== 'Hello you') {
-    throw new DetailedError('Error on parent method call', `Expected "Hello you" got "${instance.sayHelloTo(1)}"`);
-}
-
-if (instance.toUpperCase() !== 'HELLO') {
-    throw new DetailedError('Error on method inheritance', `Expected "HELLO" got "${instance.toUpperCase()}"`);
-}
+_.test(instance.sayHelloTo(0), 'Hello world', `Expected "Hello world" got "${instance.sayHelloTo(0)}"`);
+_.test(instance.sayHelloTo(1), 'Hello you', 'Error on parent method call');
+_.test(instance.toUpperCase(), 'HELLO', 'Error on method inheritance');
 
 resolve(instance);
 ```
@@ -44,15 +35,15 @@ resolve(instance);
 
 ```json
 {
-    "uuid": "7150cd8f-0c20-46b4-bb8b-34cae02af51b",
+    "uuid": "df66825d-8143-4de6-875f-63a3b5806351",
     "value": "Hello",
     "children": [
         {
-            "uuid": "389e52f0-16a1-414a-9f94-712e10c0caf5",
+            "uuid": "ad7cd319-cc67-4810-b94f-65e264f9610e",
             "value": "world"
         },
         {
-            "uuid": "f21d4a4a-9ef5-4fea-9873-c9436dcf4829",
+            "uuid": "8aeefc0e-9436-4946-a24b-cf3ebb473421",
             "value": "you"
         }
     ]

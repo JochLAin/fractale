@@ -65,7 +65,7 @@
                 <div class="column is-3" id="sidebarNav">
                     <div class="sidebar">
                         <nav>
-                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-1-simple-model.html">Example 1: Simple model</a></li><li><a href="tutorial-2-inception-model.html">Example 2: Inception model</a></li><li><a href="tutorial-3-metadata-model.html">Example 3: Metadata model</a></li><li><a href="tutorial-4-collection-model.html">Example 4: Collection model</a></li><li><a href="tutorial-5-reference-model.html">Example 5: Self-reference model</a></li><li><a href="tutorial-6-inheritance-model.html">Example 6: Inheritance model</a></li><li><a href="tutorial-7-form-usage.html">Example 7: Form usage</a></li></ul><h3>Modules</h3><ul><li><a href="module-Fractale.html">Fractale</a></li></ul><h3>Classes</h3><ul><li><a href="EventListener.html">EventListener</a></li><li><a href="Factory.html">Factory</a></li><li><a href="Library.html">Library</a></li><li><a href="Model.html">Model</a></li><li><a href="module.exports.html">exports</a></li><li><a href="Property.html">Property</a></li><li><a href="Schema.html">Schema</a></li></ul></div>
+                            <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-1-simple-model.html">Example 1: Simple model</a></li><li><a href="tutorial-2-inception-model.html">Example 2: Inception model</a></li><li><a href="tutorial-3-metadata-model.html">Example 3: Metadata model</a></li><li><a href="tutorial-4-collection-model.html">Example 4: Collection model</a></li><li><a href="tutorial-5-reference-model.html">Example 5: Self-reference model</a></li><li><a href="tutorial-6-inheritance-model.html">Example 6: Inheritance model</a></li><li><a href="tutorial-7-form-usage.html">Example 7: Form usage</a></li></ul><h3>Modules</h3><ul><li><a href="module-Factory.html">Factory</a></li><li><a href="module-Fractale.html">Fractale</a></li></ul><h3>Classes</h3><ul><li><a href="EventListener.html">EventListener</a></li><li><a href="Model.html">Model</a></li><li><a href="Property.html">Property</a></li><li><a href="PropertyType.html">PropertyType</a></li><li><a href="PropertyTypeCompound.html">PropertyTypeCompound</a></li><li><a href="Schema.html">Schema</a></li></ul><h3>Global</h3><ul><li><a href="global.html#entities">entities</a></li></ul></div>
                         </nav>
                     </div>
                 </div>
@@ -81,134 +81,57 @@
     </header>
     <article>
         <article class="mb-4"><a href="#models" class="border border-1" data-toggle="collapse">Models used for examples</a><div id="models" class="border border-1 collapse">
-<pre class="prettyprint source lang-javascript"><code>const Book = Fractale.create(&quot;Book&quot;, {
-    author: Author,
-    readable: Boolean,
-    title: String,
-    chapters: [
-        Chapter
-    ]
+<pre class="prettyprint source lang-javascript"><code>const Collection_Item = Fractale.create(&quot;Collection_Item&quot;, {
+    value: String
 });
 
-const Author = Fractale.create(&quot;Author&quot;, {
-    firstname: String,
-    lastname: String,
-    surname: String,
-    comment: String
-});
-
-const Chapter = Fractale.create(&quot;Chapter&quot;, {
-    pages: [
-        Page
-    ]
-});
-
-const Page = Fractale.create(&quot;Page&quot;, {
-    title: String,
-    content: String
-});
-
-const Library = Fractale.create(&quot;Library&quot;, {
-    books: [
-        Book
+const Collection_Category = Fractale.create(&quot;Collection_Category&quot;, {
+    items: [
+        Collection_Item
     ]
 });
 </code></pre>
 </div></article>
-<pre class="prettyprint source lang-javascript"><code>const author = new Author({
-    firstname: 'Ito',
-    lastname: 'Ōgure',
-    surname: 'Oh! Great',
-    comment: 'N/A',
-});
+<pre class="prettyprint source lang-javascript"><code>const { Collection_Category, Collection_Item } = module.exports.get();
+const item = new Collection_Item({ value: 'foo' });
+const category = new Collection_Category({ items: [item, { value: 'bar' }] });
 
-const book = new Book({
-    title: 'Air gear',
-    readable: true,
-    author: author,
-});
-
-const library = new Library({
-    books: [book, {
-        title: 'Tenjo tenge',
-        readable: false,
-        author: author,
-    }]
-});
-
-if (library.books[0].title !== 'Air gear') {
-    throw new DetailedError('Error on collection accessor with brace', `Expected &quot;Air gear&quot; got &quot;${library.books[0].title}&quot;`);
-}
-if (library.books[1].title !== 'Tenjo tenge') {
-    throw new DetailedError('Error on collection accessor with brace', `Expected &quot;Tenjo tenge&quot; got &quot;${library.books[1].title}&quot;`);
-}
+_.test(category.items[0].value, 'foo', 'Error on collection accessor with brace');
+_.test(category.items[1].value, 'bar', 'Error on collection accessor with brace');
 
 let changed = false;
-library.addEventListener('change', () => changed = true);
-library.books[0].title = 'Bakemonogatari';
+category.addEventListener('change', () => changed = true);
+category.items[0].value = 'hello';
 
 if (!changed) {
     throw new Error('Error on collection change event');
 }
-if (library.books[0].title !== 'Bakemonogatari') {
-    throw new Error('Error on collection accessor with brace');
-}
-if (library.books.first.title !== 'Bakemonogatari') {
-    throw new Error('Error on array method first accessor');
-}
+_.test(category.items[0].value, 'hello', 'Error on collection accessor with brace after change');
+_.test(category.items.first.value, 'hello', 'Error on collection method first accessor');
 
-library.books.push({
-    title: 'Biorg trinity',
-    readable: false,
-    author: author,
-});
+category.items.push({ value: 'world' });
 
-if (library.books.last.title !== 'Biorg trinity') {
-    throw new Error('Error on array method last accessor');
-}
+_.test(category.items.last.value, 'world', 'Error on collection method last accessor');
+_.test(category.items.map(item => item.value).join(', '), 'hello, bar, world', 'Error on array method map accessor');
+_.test(category.items.filter(item => item.value === 'hello').map(item => item.value).join(', '), 'hello', 'Error on array method filter accessor');
+_.test(category.items.reduce((accu, item) => `${accu} ${item.value}`, '').trim(), 'hello bar world', 'Error on array method reduce accessor');
 
-if (library.books.map(book => book.title).join(', ') !== 'Bakemonogatari, Tenjo tenge, Biorg trinity') {
-    throw new Error('Error on array method map accessor');
-}
+category.items.remove(item);
+if (category.items.length !== 2) throw new Error('Error on array method remove accessor');
 
-if (library.books.filter(book => book.readable).map(book => book.title).join(', ') !== 'Bakemonogatari') {
-    throw new Error('Error on array method filter accessor');
-}
-
-if (library.books.reduce((accu, book) => `${accu} ${book.title}`, '').trim() !== 'Bakemonogatari Tenjo tenge Biorg trinity') {
-    throw new Error('Error on array method reduce accessor');
-}
-
-library.books.remove(book);
-if (library.books.length !== 2) {
-    throw new Error('Error on array method remove accessor');
-}
-
-resolve(library);
+resolve(category);
 </code></pre>
 <h3>Results</h3>
 <pre class="prettyprint source lang-json"><code>{
-    &quot;uuid&quot;: &quot;bdfaacd6-4083-4e6a-8c61-5c2f30635520&quot;,
-    &quot;books&quot;: [
+    &quot;uuid&quot;: &quot;ffcfd0a4-a3b6-4a5f-92d0-94db66c3f9c2&quot;,
+    &quot;items&quot;: [
         {
-            &quot;uuid&quot;: &quot;a3f384df-15a9-4975-9e9b-b3b689f502ab&quot;,
-            &quot;author&quot;: {
-                &quot;uuid&quot;: &quot;4874b063-e25c-42ea-8a18-4cabf20e567e&quot;,
-                &quot;firstname&quot;: &quot;Ito&quot;,
-                &quot;lastname&quot;: &quot;Ōgure&quot;,
-                &quot;surname&quot;: &quot;Oh! Great&quot;,
-                &quot;comment&quot;: &quot;N/A&quot;
-            },
-            &quot;readable&quot;: false,
-            &quot;title&quot;: &quot;Tenjo tenge&quot;,
-            &quot;chapters&quot;: []
+            &quot;uuid&quot;: &quot;1669c487-dfd7-488c-81d4-ff5e20991f46&quot;,
+            &quot;value&quot;: &quot;bar&quot;
         },
         {
-            &quot;uuid&quot;: &quot;1c598e55-05bb-495a-9479-3340abfe8a44&quot;,
-            &quot;author&quot;: &quot;4874b063-e25c-42ea-8a18-4cabf20e567e&quot;,
-            &quot;readable&quot;: false,
-            &quot;title&quot;: &quot;Biorg trinity&quot;,
-            &quot;chapters&quot;: []
+            &quot;uuid&quot;: &quot;9367c35e-0583-4397-a822-3b40bb55c367&quot;,
+            &quot;value&quot;: &quot;world&quot;
         }
     ]
 }
