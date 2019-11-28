@@ -90,7 +90,7 @@ module.exports.run = () => {
                 intersect: true,
                 title: {
                     display: true,
-                    text: 'Fractale - Performance graph',
+                    text: 'Fractale - Performance graph by size',
                 },
                 scales: {
                     xAxes: [{
@@ -138,7 +138,7 @@ module.exports.run = () => {
                 intersect: true,
                 title: {
                     display: true,
-                    text: 'Fractale - Performance graph',
+                    text: 'Fractale - Performance graph by complexity',
                 },
                 scales: {
                     yAxes: [{
