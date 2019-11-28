@@ -277,8 +277,8 @@ Deserialization: ~10.657s => 119.28Mo/s
 Read: ~0.001s
 Serialization: ~0.004s => 317.8Go/s
 
-![Graph - Complexity x Rate](https://github.com/JochLAin/fractale/blob/master/docs/theme/static/images/graph_complexity_x_rate.png)
-![Graph - Size x Rate](https://github.com/JochLAin/fractale/blob/master/docs/theme/static/images/graph_size_x_rate.png)
+![Graph - Complexity x Rate](https://raw.githubusercontent.com/JochLAin/fractale/master/docs/theme/static/images/graph_complexity_x_rate.png)
+![Graph - Size x Rate](https://raw.githubusercontent.com/JochLAin/fractale/master/docs/theme/static/images/graph_size_x_rate.png)
 
 ## Dependencies
 
