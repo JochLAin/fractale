@@ -262,17 +262,17 @@ const Simple = Fractale.create('Simple', {
 
 ## Performance
 
-From a JSON of 10.45M (local storage limit):
+From a JSON of 10.45Mo (local storage limit):
 - Deserialization: ~0.789s => 13.24Mo/s
 - Read: ~0.001s
 - Serialization: ~0.001s => 10.45Go/s
 
-From a JSON of 339.06M:
+From a JSON of 339.06Mo:
 - Deserialization: ~2.733s => 124.06Mo/s
 - Read: ~0.001s
 - Serialization: ~0.004s => 84.76Go/s
 
-From a JSON of 1.27G:
+From a JSON of 1.27Go:
 - Deserialization: ~10.657s => 119.28Mo/s
 - Read: ~0.001s
 - Serialization: ~0.004s => 317.8Go/s
