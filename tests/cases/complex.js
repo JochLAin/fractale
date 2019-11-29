@@ -1,7 +1,7 @@
 const Fractale = require('../../lib');
 
 module.exports.title = 'Complex model';
-module.exports.name = 'complex-model';
+module.exports.name = 'complex';
 module.exports.tutorialized = false;
 
 module.exports.resolver = (resolve) => {

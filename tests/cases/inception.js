@@ -2,7 +2,7 @@ const Fractale = require('../../lib');
 const _ = require('../utils');
 
 module.exports.title = 'Inception model';
-module.exports.name = 'inception-model';
+module.exports.name = 'inception';
 module.exports.tutorialized = true;
 
 module.exports.resolver = (resolve) => {

@@ -2,7 +2,7 @@ const Fractale = require('../../lib');
 const _ = require('../utils');
 
 module.exports.title = 'Metadata model';
-module.exports.name = 'metadata-model';
+module.exports.name = 'metadata';
 module.exports.tutorialized = true;
 
 module.exports.resolver = (resolve) => {

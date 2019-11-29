@@ -3,7 +3,7 @@ const Fractale = require('../../lib');
 const _ = require('../utils');
 
 module.exports.title = 'Validator test';
-module.exports.name = 'validator-test';
+module.exports.name = 'validator';
 module.exports.tutorialized = false;
 
 module.exports.resolver = (resolve) => {

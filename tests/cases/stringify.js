@@ -2,7 +2,7 @@ const Fractale = require('../../lib');
 const _ = require('../utils');
 
 module.exports.title = 'Stringify test';
-module.exports.name = 'stringify-test';
+module.exports.name = 'stringify';
 module.exports.tutorialized = false;
 
 module.exports.resolver = (resolve) => {

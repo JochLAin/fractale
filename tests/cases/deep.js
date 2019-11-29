@@ -2,7 +2,7 @@ const Fractale = require('../../lib');
 const _ = require('../utils');
 
 module.exports.title = 'Deep model';
-module.exports.name = 'deep-model';
+module.exports.name = 'deep';
 module.exports.tutorialized = false;
 
 module.exports.resolver = (resolve) => {
