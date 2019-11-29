@@ -4,8 +4,7 @@
   "description": "Modeling architecture data",
   "main": "lib/index.js",
   "scripts": {
-    "test": "node --max-old-space-size=4096 ./tests/index.js",
-    "performance": "node --max-old-space-size=4096 ./tests/performance.js"
+    "test": "node --max-old-space-size=4096 ./tests/index.js"
   },
   "repository": {
     "type": "git",
