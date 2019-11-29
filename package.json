@@ -4,7 +4,6 @@
   "description": "Modeling architecture data",
   "main": "lib/index.js",
   "scripts": {
-    "build-doc": "rm -rf ./docs/public/* && node ./docs/generate_tutorials.js && npx jsdoc -c docs/config.js",
     "test": "node --max-old-space-size=4096 ./tests/index.js",
     "performance": "node --max-old-space-size=4096 ./tests/performance.js"
   },
