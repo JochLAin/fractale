@@ -12,6 +12,9 @@
     "type": "git",
     "url": "git+https://github.com/JochLAin/fractale.git"
   },
+  "bugd": {
+    "url": "https://github.com/JochLAin/fractale/issues"
+  },
   "keywords": [
     "modeling",
     "architecture"
@@ -24,11 +27,7 @@
     "uuid": "^3.3.3"
   },
   "devDependencies": {
-    "chart.js": "^2.9.3",
-    "chartjs-node": "^1.7.1",
-    "cli-progress": "^3.4.0",
     "crieur": "^1.0.13",
-    "jsdoc": "^3.6.3",
     "object-sizeof": "^1.5.2"
   }
 }
