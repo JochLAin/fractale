@@ -25,7 +25,7 @@
     "uuid": "^3.3.3"
   },
   "devDependencies": {
-    "crieur": "^1.0.13",
+    "crieur": "^1.0.14",
     "object-sizeof": "^1.5.2"
   }
 }

@@ -6,6 +6,16 @@ module.exports.title = 'Validator test';
 module.exports.name = 'validator';
 module.exports.tutorialized = false;
 
+module.exports.create = () => {
+    const Example = Fractale.create('Validator_Example', {
+        mixed: Fractale.with(undefined, { validator: { in: ['foo', 42] }}),
+        number: Fractale.with(Number, { validator: { gte: 18, lt: 51, between: [20, 30] }}),
+        date: Fractale.with(Date, { validator: { gt: '2016-01-01', lte: new Date('3033-12-31'), between: [moment('2017-01-01')] }})
+    });
+
+    return { Example };
+};
+
 module.exports.resolver = (resolve) => {
     const { Example } = module.exports.get();
 
@@ -15,7 +25,18 @@ module.exports.resolver = (resolve) => {
         throw new Error('Error on validator in');
     } catch (error) {
         if (error instanceof _.TestValidatorError) throw error;
-        const message = 'Expected value in ["foo",42], got "bar"';
+        const message = 'Error in validator "in"\nExpected value in [foo, 42] but got bar';
+        if (error.message !== message) {
+            throw new _.TestError('Invalid validator message', error.message, message);
+        }
+    }
+
+    try {
+        new Example({ number: 52 });
+        throw new _.TestValidatorError('Error on validator.lt number');
+    } catch (error) {
+        if (error instanceof _.TestValidatorError) throw error;
+        const message = 'Error in validator "lt"\nExpected value lower than 51 but got 52';
         if (error.message !== message) {
             throw new _.TestError('Invalid validator message', error.message, message);
         }
@@ -24,21 +45,10 @@ module.exports.resolver = (resolve) => {
     new Example({ number: 22 });
     try {
         new Example({ number: 16 });
-        throw new _.TestValidatorError('Error on validator number');
+        throw new _.TestValidatorError('Error on validator.gte number');
     } catch (error) {
         if (error instanceof _.TestValidatorError) throw error;
-        const message = 'Expected value greater than or equal to 18, got 16';
-        if (error.message !== message) {
-            throw new _.TestError('Invalid validator message', error.message, message);
-        }
-    }
-
-    try {
-        new Example({ number: 52 });
-        throw new _.TestValidatorError('Error on validator number');
-    } catch (error) {
-        if (error instanceof _.TestValidatorError) throw error;
-        const message = 'Expected value lower than 51, got 52';
+        const message = 'Error in validator "gte"\nExpected value greater than or equal 18 but got 16';
         if (error.message !== message) {
             throw new _.TestError('Invalid validator message', error.message, message);
         }
@@ -46,10 +56,10 @@ module.exports.resolver = (resolve) => {
 
     try {
         new Example({ number: 19 });
-        throw new _.TestValidatorError('Error on validator number');
+        throw new _.TestValidatorError('Error on validator.between number');
     } catch (error) {
         if (error instanceof _.TestValidatorError) throw error;
-        const message = 'Expected value between 20 and 30, got 19';
+        const message = 'Error in validator "between"\nExpected value between 20 and 30 but got 19';
         if (error.message !== message) {
             throw new _.TestError('Invalid validator message', error.message, message);
         }
@@ -60,7 +70,7 @@ module.exports.resolver = (resolve) => {
         throw new _.TestValidatorError('Error on validator number');
     } catch (error) {
         if (error instanceof _.TestValidatorError) throw error;
-        const message = 'Expected value between 20 and 30, got 45';
+        const message = 'Error in validator "between"\nExpected value between 20 and 30 but got 45';
         if (error.message !== message) {
             throw new _.TestError('Invalid validator message', error.message, message);
         }
@@ -72,7 +82,7 @@ module.exports.resolver = (resolve) => {
         throw new _.TestValidatorError('Error on validator date');
     } catch (error) {
         if (error instanceof _.TestValidatorError) throw error;
-        const message = 'Expected value greater than 2015-12-31T23:00:00.000Z, got "2000-01-01"';
+        const message = 'Error in validator "gt"\nExpected value greater than 01/01/2016-00:00:00 but got 01/01/2000-00:00:00';
         if (error.message !== message) {
             throw new _.TestError('Invalid validator message', error.message, message);
         }
@@ -83,7 +93,7 @@ module.exports.resolver = (resolve) => {
         throw new _.TestValidatorError('Error on validator date');
     } catch (error) {
         if (error instanceof _.TestValidatorError) throw error;
-        const message = 'Expected value lower than or equal to 3033-12-31T00:00:00.000Z, got "3053-01-01"';
+        const message = 'Error in validator "lte"\nExpected value lower than or equal to 31/12/3033-01:00:00 but got 01/01/3053-00:00:00';
         if (error.message !== message) {
             throw new _.TestError('Invalid validator message', error.message, message);
         }
@@ -94,7 +104,7 @@ module.exports.resolver = (resolve) => {
         throw new _.TestValidatorError('Error on validator date');
     } catch (error) {
         if (error instanceof _.TestValidatorError) throw error;
-        const message = /^Expected value between 2016-12-31T23:00:00.000Z and ([a-zA-Z0-9\.\-: ]+), got "3023-01-01"$/;
+        const message = /^Error in validator "between"(\r\n|\r|\n)Expected value between 01\/01\/2017-00:00:00 and ([0-9\-:\/]+) but got 01\/01\/3023-00:00:00$/gm;
         if (!error.message.match(message)) {
             throw new _.TestError('Invalid validator message', error.message, message);
         }
@@ -105,23 +115,13 @@ module.exports.resolver = (resolve) => {
         throw new _.TestValidatorError('Error on validator date');
     } catch (error) {
         if (error instanceof _.TestValidatorError) throw error;
-        const message = /^Expected value between 2016-12-31T23:00:00.000Z and ([a-zA-Z0-9\.\-: ]+), got "2016-11-30"$/;
+        const message = /^Error in validator "between"(\r\n|\r|\n)Expected value between 01\/01\/2017-00:00:00 and ([0-9\-:\/]+) but got 30\/11\/2016-00:00:00$/gm;
         if (!error.message.match(message)) {
             throw new _.TestError('Invalid validator message', error.message, message);
         }
     }
 
     resolve();
-};
-
-module.exports.create = () => {
-    const Example = Fractale.create('Validator_Example', {
-        mixed: Fractale.with(undefined, { validator: { in: ['foo', 42] }}),
-        number: Fractale.with(Number, { validator: { gte: 18, lt: 51, between: [20, 30] }}),
-        date: Fractale.with(Date, { validator: { gt: '2016-01-01', lte: new Date('3033-12-31'), between: [moment('2017-01-01')] }})
-    });
-
-    return { Example };
 };
 
 let models;
