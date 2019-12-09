@@ -15,7 +15,7 @@ module.exports.resolver = (resolve) => {
     _.test(instance.item_1, 'Foo', 'Error on regexp key accessor with type string');
     _.test(instance.item_2, 'Bar', 'Error on regexp key accessor with type string');
 
-    resolve();
+    resolve(instance);
 };
 
 module.exports.create = () => {
@@ -31,4 +31,8 @@ let models;
 module.exports.get = () => {
     if (models) return models;
     return models = module.exports.create();
+};
+
+module.exports.used = () => {
+    return module.exports.get().ModelWithRegExpAsKey;
 };
