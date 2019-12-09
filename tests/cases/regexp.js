@@ -19,7 +19,7 @@ module.exports.resolver = (resolve) => {
 };
 
 module.exports.create = () => {
-    const regexp = /item_\d+/gi;
+    const regexp = /item_\d+/i;
     const ModelWithRegExpAsKey = Fractale.create('ModelWithRegExpAsKey', {
         [regexp]: String,
     });

@@ -1,8 +1,5 @@
 'use strict';
 
-const Chart = require('chartjs-node');
-const _progress = require('cli-progress');
-const logger = require('crieur');
 const sizeof = require('object-sizeof');
 const Fractale = require('../lib');
 const _ = require('./utils');
@@ -20,15 +17,15 @@ module.exports.run = () => {
 
     let tmp;
     // Local Storage size
-    tmp = run( undefined,{ character: 20, dash: 9, frame: 20, layer: 20, height: 2, width: 2 });
+    tmp = run('MMORPG', { character: 20, dash: 9, frame: 20, layer: 20, height: 2, width: 2 });
     console.log(`From a JSON of ${log10text(tmp.size)}:\nDeserialization: ~${tmp.duration.deserialize}s => ${log10text(tmp.size/tmp.duration.deserialize, 'o/s')}\nRead: ~${tmp.duration.read}s\nSerialization: ~${tmp.duration.serialize}s => ${log10text(tmp.size/tmp.duration.serialize, 'o/s')}\n`);
 
     // Heavy size
-    tmp = run(undefined, { character: 20, dash: 20, frame: 20, layer: 20, height: 10, width: 10 });
+    tmp = run('MOBA', { character: 20, dash: 20, frame: 20, layer: 20, height: 10, width: 10 });
     console.log(`From a JSON of ${log10text(tmp.size)}:\nDeserialization: ~${tmp.duration.deserialize}s => ${log10text(tmp.size/tmp.duration.deserialize, 'o/s')}\nRead: ~${tmp.duration.read}s\nSerialization: ~${tmp.duration.serialize}s => ${log10text(tmp.size/tmp.duration.serialize, 'o/s')}\n`);
 
-    // // Huge size
-    tmp = run(undefined, { character: 25, dash: 30, frame: 30, layer: 30, height: 10, width: 10 });
+    // Huge size
+    tmp = run('BR', { character: 25, dash: 30, frame: 30, layer: 30, height: 10, width: 10 });
     console.log(`From a JSON of ${log10text(tmp.size)}:\nDeserialization: ~${tmp.duration.deserialize}s => ${log10text(tmp.size/tmp.duration.deserialize, 'o/s')}\nRead: ~${tmp.duration.read}s\nSerialization: ~${tmp.duration.serialize}s => ${log10text(tmp.size/tmp.duration.serialize, 'o/s')}\n`);
 };
 
@@ -92,18 +89,10 @@ const PIXELS = [
     '#999000', '#999111', '#999222', '#999333', '#999444', '#999555', '#999666', '#999777', '#999888', '#999999',
 ];
 
-const run = (progress, options = {}) => {
+const run = (name = 'mmo', options = { character: 1, dash: 1, frame: 1, layer: 1, pixel: 1, height: 1, width: 1 }) => {
     const { Game } = module.exports.get();
     const params = Object.assign({
-        length: Object.assign( {
-            character: 1,
-            dash: 1,
-            frame: 1,
-            layer: 1,
-            pixel: 1,
-            height: 1,
-            width: 1,
-        }, options),
+        length: options,
         count: {},
         duration: {},
     });
@@ -124,12 +113,9 @@ const run = (progress, options = {}) => {
         },
     });
 
-    const _game = create('mmo', params);
+    const _game = create(name, params);
     const size = sizeof(_game);
     Object.assign(params, { size });
-    if (progress) {
-        progress.increment(1, { text: `${params.complexity} (${log10text(size, 'o')})` });
-    }
 
     let game;
     params.duration.deserialize = _.watch(() => {
