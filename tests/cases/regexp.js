@@ -1,8 +1,8 @@
 const Fractale = require('../../lib');
 const _ = require('../utils');
 
-module.exports.title = 'RegExp model';
-module.exports.name = 'regexp-model';
+module.exports.title = 'RegExp key model';
+module.exports.name = 'regexp';
 module.exports.tutorialized = true;
 
 module.exports.resolver = (resolve) => {

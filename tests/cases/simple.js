@@ -2,7 +2,7 @@ const Fractale = require('../../lib');
 const _ = require('../utils');
 
 module.exports.title = 'Simple model';
-module.exports.name = 'simple-model';
+module.exports.name = 'simple';
 module.exports.tutorialized = true;
 const { base64 } = require('../../lib/property/types/array/buffer');
 

@@ -2,7 +2,7 @@ const Fractale = require('../../lib');
 const _ = require('../utils');
 
 module.exports.title = 'Static method test';
-module.exports.name = 'static-test';
+module.exports.name = 'static';
 module.exports.tutorialized = false;
 
 module.exports.resolver = (resolve) => {

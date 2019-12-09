@@ -2,7 +2,7 @@ const Fractale = require('../../lib');
 const _ = require('../utils');
 
 module.exports.title = 'Form usage';
-module.exports.name = 'form-usage';
+module.exports.name = 'form';
 module.exports.tutorialized = true;
 
 module.exports.resolver = (resolve) => {

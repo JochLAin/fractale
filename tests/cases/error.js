@@ -2,7 +2,7 @@ const Fractale = require('../../lib');
 const _ = require('../utils');
 
 module.exports.title = 'Error tests';
-module.exports.name = 'error-test';
+module.exports.name = 'error';
 module.exports.tutorialized = false;
 
 module.exports.resolver = (resolve) => {

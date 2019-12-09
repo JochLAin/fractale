@@ -2,7 +2,7 @@ const Fractale = require('../../lib');
 const _ = require('../utils');
 
 module.exports.title = 'Self-reference model';
-module.exports.name = 'reference-model';
+module.exports.name = 'reference';
 module.exports.tutorialized = true;
 
 module.exports.resolver = (resolve) => {

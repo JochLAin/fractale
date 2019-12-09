@@ -2,7 +2,7 @@ const Fractale = require('../../lib');
 const _ = require('../utils');
 
 module.exports.title = 'Inheritance model';
-module.exports.name = 'inheritance-model';
+module.exports.name = 'inheritance';
 module.exports.tutorialized = true;
 
 module.exports.resolver = (resolve) => {

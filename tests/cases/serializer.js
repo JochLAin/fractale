@@ -2,7 +2,7 @@ const Fractale = require('../../lib');
 const _ = require('../utils');
 
 module.exports.title = 'Serializer tests';
-module.exports.name = 'serializer-test';
+module.exports.name = 'serializer';
 module.exports.tutorialized = false;
 
 module.exports.resolver = (resolve) => {

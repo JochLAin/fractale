@@ -2,7 +2,7 @@ const Fractale = require('../../lib');
 const _ = require('../utils');
 
 module.exports.title = 'Collection model';
-module.exports.name = 'collection-model';
+module.exports.name = 'collection';
 module.exports.tutorialized = true;
 
 module.exports.resolver = (resolve) => {
