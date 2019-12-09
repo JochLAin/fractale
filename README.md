@@ -77,7 +77,8 @@ const instance = new Model({
     ]
 });
 
-console.log(instance.serialize()); /* 
+console.log(instance.serialize());
+/* 
 > { 
     mixed: 'Great !',
     boolean: true,
@@ -90,7 +91,8 @@ console.log(instance.serialize()); /*
         { key: 'foo', value: 123 },
         { key: 'bar', value: 456 }
     ]
-} */
+}
+*/
 
 /* Copy props to another instance */
 // Method 1
@@ -143,7 +145,8 @@ instance.collections[0] = { value: 789 };
 console.log(instance.collections[0].key); // > 'pass'
 console.log(instance.collections[0].value); // > 789
 
-console.log(instance.serialize()); /* 
+console.log(instance.serialize());
+/* 
 > { 
     mixed: 123,
     boolean: false,
@@ -156,7 +159,8 @@ console.log(instance.serialize()); /*
         { key: 'bar', value: 456 }
     ],
     inception: { key: 'new_key', value: 'updated_value' }
-} */
+}
+*/
 ```
 
 ### Array helpers
@@ -165,14 +169,16 @@ console.log(instance.serialize()); /*
 /* Array methods use */
 instance.collections.push({ key: 'azertyuiop', value: 2 });
 instance.collections = instance.collections.concat([{ key: 'new_key', value: 3 }, { key: 'N3W_K3Y', value: 4 }]);
-console.log(instance.serialize().collections); /*
+console.log(instance.serialize().collections);
+/*
 > [
     { key: 'pass', value: 789 },
     { key: 'bar', value: 456 },
     { key: 'qwerty', value: 1 },
     { key: 'new_key', value: 3 },
     { key: 'N3W_K3Y', value: 4 }
-] */
+]
+*/
 ```
 
 ### Options
@@ -262,20 +268,20 @@ const Simple = Fractale.create('Simple', {
 
 ## Performance
 
-From a JSON of 10.45Mo (local storage limit):
-- Deserialization: ~0.789s => 13.24Mo/s
-- Read: ~0.001s
-- Serialization: ~0.001s => 10.45Go/s
+From a JSON of 10.45M:
+- Deserialization: ~0.878s => 11.9Mo/s
+- Read: ~0s
+- Serialization: ~0.282s => 37.06Mo/s
 
-From a JSON of 339.06Mo:
-- Deserialization: ~2.733s => 124.06Mo/s
-- Read: ~0.001s
-- Serialization: ~0.004s => 84.76Go/s
+From a JSON of 339.06M:
+- Deserialization: ~3.004s => 112.87Mo/s
+- Read: ~0s
+- Serialization: ~1.402s => 241.84Mo/s
 
-From a JSON of 1.27Go:
-- Deserialization: ~10.657s => 119.28Mo/s
-- Read: ~0.001s
-- Serialization: ~0.004s => 317.8Go/s
+From a JSON of 1.27G:
+- Deserialization: ~11.503s => 110.51Mo/s
+- Read: ~0s
+- Serialization: ~5.245s => 242.37Mo/s
 
 
 ![Graph - Complexity x Rate](http://docs.faihy.org/fractale/images/graph_complexity_x_rate.png)
