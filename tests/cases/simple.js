@@ -7,8 +7,9 @@ module.exports.tutorialized = true;
 const { base64 } = require('../../lib/property/types/array/buffer');
 
 module.exports.resolver = (resolve) => {
-    const { Simple } = module.exports.get();
-    const instance = new Simple({
+    const { Inherited } = module.exports.get();
+
+    const instance = new Inherited({
         mixed: 'It\'s dangerous to go alone! Take this.',
         boolean: false,
         number: 31,
@@ -87,7 +88,11 @@ module.exports.create = () => {
         biguint64: BigUint64Array,
     });
 
-    return { Simple };
+    class Inherited extends Simple {
+
+    }
+
+    return { Simple, Inherited };
 };
 
 let models;
