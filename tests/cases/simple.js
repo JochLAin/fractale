@@ -4,7 +4,7 @@ const _ = require('../utils');
 module.exports.title = 'Simple model';
 module.exports.name = 'simple';
 module.exports.tutorialized = true;
-const { base64 } = require('../../lib/property/types/array/buffer');
+const base64 = require('../../lib/utils/base64');
 
 module.exports.resolver = (resolve) => {
     const { Inherited } = module.exports.get();
@@ -15,6 +15,7 @@ module.exports.resolver = (resolve) => {
         number: 31,
         bigint: 31n,
         string: 'Lorem ipsum',
+        color: 11141120,
         date: '2000-01-01',
         regexp: '/toto/g',
         buffer: 'RnJhY3RhbGUgYnVmZmVyIHNhdmU=',
@@ -35,8 +36,10 @@ module.exports.resolver = (resolve) => {
     _.test(instance.boolean, false, 'Error on simple accessor with type boolean');
     _.test(instance.number, 31, 'Error on simple accessor with type number');
     _.test(instance.bigint, 31n, 'Error on simple accessor with type bigint');
-    _.test(instance.regexp.toString(), /toto/g.toString(), 'Error on simple accessor with type bigint');
     _.test(instance.string, 'Lorem ipsum', 'Error on simple accessor with type string');
+    _.test(instance.color.hex(), '#AA0000', 'Error on simple accessor with type color');
+    _.test(instance.date.format('DD/MM/YYYY'), '01/01/2000', 'Error on simple accessor with type date');
+    _.test(instance.regexp.toString(), /toto/g.toString(), 'Error on simple accessor with type bigint');
     _.test(base64.encode(instance.buffer), 'RnJhY3RhbGUgYnVmZmVyIHNhdmU=', 'Error on simple accessor with type buffer');
     _.test(base64.encode(instance.int8.buffer), 'RnJhY3RhbGUgSW50OEFycmF5IHNhdmU=', 'Error on simple accessor with type int8');
     _.test(base64.encode(instance.uint8.buffer), 'RnJhY3RhbGUgVWludDhBcnJheSBzYXZl', 'Error on simple accessor with type uint8');
@@ -55,12 +58,14 @@ module.exports.resolver = (resolve) => {
     instance.number = 42;
     instance.bigint = 42n;
     instance.string = 'Dolor sit amet';
+    instance.color = 'rgba(0, 0, 255, 0)';
 
     _.test(instance.mixed, -1, 'Error on simple accessor with type mixed after change');
     _.test(instance.boolean, true, 'Error on simple accessor with type boolean after change');
     _.test(instance.number, 42, 'Error on simple accessor with type number after change');
     _.test(instance.bigint, 42n, 'Error on simple accessor with type number after change');
     _.test(instance.string, 'Dolor sit amet', 'Error on simple accessor with type string after change');
+    _.test(instance.color.hex(), '#0000FF00', 'Error on simple accessor with type string after change');
 
     resolve(instance);
 };
@@ -72,6 +77,7 @@ module.exports.create = () => {
         number: Number,
         bigint: BigInt,
         string: String,
+        color: Fractale.helpers.Color,
         date: Date,
         regexp: RegExp,
         buffer: ArrayBuffer,
