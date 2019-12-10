@@ -47,6 +47,7 @@ module.exports.cases = [
     require('./cases/deep'),
     require('./cases/serializer'),
     require('./cases/validator'),
+    require('./cases/options/global'),
     require('./cases/error'),
     require('./cases/static'),
     require('./cases/stringify'),
