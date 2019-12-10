@@ -21,8 +21,11 @@
   "license": "SEE LICENSE IN LICENSE",
   "homepage": "http://docs.faihy.org/fractale",
   "dependencies": {
-    "moment": "^2.24.0",
     "uuid": "^3.3.3"
+  },
+  "peerDependencies": {
+    "moment": "^2.24.0",
+    "color": "^3.1.2"
   },
   "devDependencies": {
     "crieur": "^1.0.14",
