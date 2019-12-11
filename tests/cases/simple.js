@@ -34,6 +34,7 @@ module.exports.resolver = (resolve) => {
 
     _.test(instance.mixed, 'It\'s dangerous to go alone! Take this.', 'Error on simple accessor with type mixed');
     _.test(instance.boolean, false, 'Error on simple accessor with type boolean');
+    _.test(instance.is(), false, 'Error on simple accessor with type boolean');
     _.test(instance.number, 31, 'Error on simple accessor with type number');
     _.test(instance.bigint, 31n, 'Error on simple accessor with type bigint');
     _.test(instance.string, 'Lorem ipsum', 'Error on simple accessor with type string');
@@ -62,6 +63,7 @@ module.exports.resolver = (resolve) => {
 
     _.test(instance.mixed, -1, 'Error on simple accessor with type mixed after change');
     _.test(instance.boolean, true, 'Error on simple accessor with type boolean after change');
+    _.test(instance.is(), true, 'Error on simple accessor with type boolean after change');
     _.test(instance.number, 42, 'Error on simple accessor with type number after change');
     _.test(instance.bigint, 42n, 'Error on simple accessor with type number after change');
     _.test(instance.string, 'Dolor sit amet', 'Error on simple accessor with type string after change');
@@ -71,7 +73,7 @@ module.exports.resolver = (resolve) => {
 };
 
 module.exports.create = () => {
-    const Simple = module.exports.Simple = Fractale.create('Simple', {
+    const Simple = Fractale.create('Simple', {
         mixed: null,
         boolean: Boolean,
         number: Number,
@@ -93,9 +95,10 @@ module.exports.create = () => {
         bigint64:BigInt64Array,
         biguint64: BigUint64Array,
     });
-
     class Inherited extends Simple {
-
+        is() {
+            return this.boolean;
+        }
     }
 
     return { Simple, Inherited };

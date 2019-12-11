@@ -1,6 +1,6 @@
 {
   "name": "fractale",
-  "version": "2.6.7",
+  "version": "2.6.6",
   "description": "Modeling architecture data",
   "main": "lib/index.js",
   "scripts": {
@@ -15,7 +15,11 @@
   },
   "keywords": [
     "modeling",
-    "architecture"
+    "data",
+    "structure",
+    "architecture",
+    "regexp key",
+    "regex key"
   ],
   "author": "Jocelyn Faihy <jocelyn@faihy.fr>",
   "license": "SEE LICENSE IN LICENSE",
