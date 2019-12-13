@@ -8,8 +8,8 @@ module.exports.tutorialized = false;
 module.exports.resolver = (resolve) => {
     const { Author, Book, Library } = module.exports.get();
     const author = new Author({ firstname: 'Ito', lastname: 'Ōgure', surname: 'Oh! Great', comment: 'N/A' });
-    const book = new Book({ title: 'Air gear', readable: true, author: author });
-    const library = new Library({ books: [book, { title: 'Tenjo tenge', readable: false, author: author }] });
+    const book = new Book({ title: 'Air gear', readable: true, author });
+    const library = new Library({ books: [book, { title: 'Tenjo tenge', readable: false, author }] });
 
     try {
         book.title = 69;

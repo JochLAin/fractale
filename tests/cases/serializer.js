@@ -38,7 +38,7 @@ module.exports.create = () => {
         title: String,
     });
 
-    return { Author, Book }
+    return { Author, Book };
 };
 
 let models;

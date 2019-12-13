@@ -7,9 +7,9 @@ module.exports.tutorialized = true;
 const base64 = require('../../lib/utils/base64');
 
 module.exports.resolver = (resolve) => {
-    const { Inherited } = module.exports.get();
+    const { Simple } = module.exports.get();
 
-    const instance = new Inherited({
+    const instance = new Simple({
         mixed: 'It\'s dangerous to go alone! Take this.',
         boolean: false,
         number: 31,
@@ -34,7 +34,6 @@ module.exports.resolver = (resolve) => {
 
     _.test(instance.mixed, 'It\'s dangerous to go alone! Take this.', 'Error on simple accessor with type mixed');
     _.test(instance.boolean, false, 'Error on simple accessor with type boolean');
-    _.test(instance.is(), false, 'Error on simple accessor with type boolean');
     _.test(instance.number, 31, 'Error on simple accessor with type number');
     _.test(instance.bigint, 31n, 'Error on simple accessor with type bigint');
     _.test(instance.string, 'Lorem ipsum', 'Error on simple accessor with type string');
@@ -63,7 +62,6 @@ module.exports.resolver = (resolve) => {
 
     _.test(instance.mixed, -1, 'Error on simple accessor with type mixed after change');
     _.test(instance.boolean, true, 'Error on simple accessor with type boolean after change');
-    _.test(instance.is(), true, 'Error on simple accessor with type boolean after change');
     _.test(instance.number, 42, 'Error on simple accessor with type number after change');
     _.test(instance.bigint, 42n, 'Error on simple accessor with type number after change');
     _.test(instance.string, 'Dolor sit amet', 'Error on simple accessor with type string after change');
@@ -83,25 +81,19 @@ module.exports.create = () => {
         date: Date,
         regexp: RegExp,
         buffer: ArrayBuffer,
-        int8:Int8Array,
+        int8: Int8Array,
         uint8: Uint8Array,
         uint8_clamped: Uint8ClampedArray,
-        int16:Int16Array,
+        int16: Int16Array,
         uint16: Uint16Array,
-        int32:Int32Array,
+        int32: Int32Array,
         uint32: Uint32Array,
-        float32:Float32Array,
-        float64:Float64Array,
-        bigint64:BigInt64Array,
+        float32: Float32Array,
+        float64: Float64Array,
+        bigint64: BigInt64Array,
         biguint64: BigUint64Array,
     });
-    class Inherited extends Simple {
-        is() {
-            return this.boolean;
-        }
-    }
-
-    return { Simple, Inherited };
+    return { Simple };
 };
 
 let models;

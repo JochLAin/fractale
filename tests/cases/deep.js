@@ -12,8 +12,8 @@ module.exports.resolver = (resolve) => {
         name: 'A',
         properties: [{ name: 'a', value: 0 }],
         methods: [
-            { signature: { name: 'getA' }},
-            { signature: { name: 'setA', variables: [{ name: 'a' }] }}
+            { signature: { name: 'getA' } },
+            { signature: { name: 'setA', variables: [{ name: 'a' }] } }
         ]
     });
 
@@ -23,8 +23,8 @@ module.exports.resolver = (resolve) => {
             { name: 'b', value: 0 },
         ],
         methods: [
-            { signature: { name: 'getB' }},
-            { signature: { name: 'setB', variables: [{ name: 'b' }] }}
+            { signature: { name: 'getB' } },
+            { signature: { name: 'setB', variables: [{ name: 'b' }] } }
         ]
     });
 
@@ -36,8 +36,8 @@ module.exports.resolver = (resolve) => {
             { name: 'c', value: 0 },
         ],
         methods: [
-            { signature: { name: 'getC' }},
-            { signature: { name: 'setC', variables: [{ name: 'c' }] }}
+            { signature: { name: 'getC' } },
+            { signature: { name: 'setC', variables: [{ name: 'c' }] } }
         ]
     });
 

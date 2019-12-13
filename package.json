@@ -4,6 +4,7 @@
   "description": "Modeling architecture data",
   "main": "lib/index.js",
   "scripts": {
+    "build-dev": "npx webpack-turnkey --watch --sourcemap --eslint",
     "test": "node --max-old-space-size=4096 ./tests/index.js"
   },
   "repository": {
@@ -30,10 +31,15 @@
   "peerDependencies": {
     "moment": "^2.24.0"
   },
+  "engines": {
+    "node": ">=8.0.0"
+  },
   "devDependencies": {
-    "crieur": "^1.0.14",
-    "dom-storage": "^2.1.0",
-    "fake-indexeddb": "^3.0.0",
-    "object-sizeof": "^1.5.2"
+    "@babel/plugin-syntax-bigint": "^7.7.4",
+    "crieur": "file:../crieur",
+    "object-sizeof": "^1.5.2",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
+    "webpack-turnkey": "^1.9.4"
   }
 }

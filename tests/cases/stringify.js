@@ -25,7 +25,7 @@ module.exports.create = () => {
 
     const Compound = Fractale.create('Stringify_Compound', Simple, {
         boards: [String],
-        metadata: { key: String, data: { key: String, value: null }},
+        metadata: { key: String, data: { key: String, value: null } },
         collections: [{ key: String, value: String }],
     });
 

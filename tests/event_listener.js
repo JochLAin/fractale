@@ -1,5 +1,4 @@
 const Fractale = require('../lib');
-const _ = require('./utils');
 
 module.exports.title = 'Event listener tests';
 module.exports.name = 'event_listener_test';
@@ -21,7 +20,11 @@ module.exports.resolver = (resolve) => {
     });
 
     author.comment = 'Great author';
-    setTimeout(() => { if (!triggered) throw new Error('Events are not triggered'); }, 100);
+    setTimeout(() => {
+        if (!triggered) {
+            throw new Error('Events are not triggered');
+        }
+    }, 100);
 };
 
 module.exports.create = () => {

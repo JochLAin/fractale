@@ -1,7 +1,11 @@
 .idea
-docs/
 .gitignore
 jsdoc.json
+
+.babelrc
+.eslintrc.js
+assets/
+public/
 
 # Logs
 logs

@@ -8,7 +8,7 @@ module.exports.tutorialized = true;
 module.exports.resolver = (resolve) => {
     const { Metadata } = module.exports.get();
     const instance = new Metadata({
-        metadata: { key: 'Foo', data: { key: 'Bar', value: 12 }}
+        metadata: { key: 'Foo', data: { key: 'Bar', value: 12 } }
     });
 
     _.test(instance.metadata.key, 'Foo', 'Error on metadata accessor');

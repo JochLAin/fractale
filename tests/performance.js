@@ -1,4 +1,4 @@
-'use strict';
+
 
 const sizeof = require('object-sizeof');
 const Fractale = require('../lib');
@@ -18,15 +18,15 @@ module.exports.run = () => {
     let tmp;
     // Local Storage size
     tmp = run('MMORPG', { character: 20, dash: 9, frame: 20, layer: 20, height: 2, width: 2 });
-    console.log(`From a JSON of ${log10text(tmp.size)}:\nDeserialization: ~${tmp.duration.deserialize}s => ${log10text(tmp.size/tmp.duration.deserialize, 'o/s')}\nRead: ~${tmp.duration.read}s\nSerialization: ~${tmp.duration.serialize}s => ${log10text(tmp.size/tmp.duration.serialize, 'o/s')}\n`);
+    console.log(`From a JSON of ${log10text(tmp.size)}:\nDeserialization: ~${tmp.duration.deserialize}s => ${log10text(tmp.size / tmp.duration.deserialize, 'o/s')}\nRead: ~${tmp.duration.read}s\nSerialization: ~${tmp.duration.serialize}s => ${log10text(tmp.size / tmp.duration.serialize, 'o/s')}\n`);
 
     // Heavy size
     tmp = run('MOBA', { character: 20, dash: 20, frame: 20, layer: 20, height: 10, width: 10 });
-    console.log(`From a JSON of ${log10text(tmp.size)}:\nDeserialization: ~${tmp.duration.deserialize}s => ${log10text(tmp.size/tmp.duration.deserialize, 'o/s')}\nRead: ~${tmp.duration.read}s\nSerialization: ~${tmp.duration.serialize}s => ${log10text(tmp.size/tmp.duration.serialize, 'o/s')}\n`);
+    console.log(`From a JSON of ${log10text(tmp.size)}:\nDeserialization: ~${tmp.duration.deserialize}s => ${log10text(tmp.size / tmp.duration.deserialize, 'o/s')}\nRead: ~${tmp.duration.read}s\nSerialization: ~${tmp.duration.serialize}s => ${log10text(tmp.size / tmp.duration.serialize, 'o/s')}\n`);
 
     // Huge size
     tmp = run('BR', { character: 25, dash: 30, frame: 30, layer: 30, height: 10, width: 10 });
-    console.log(`From a JSON of ${log10text(tmp.size)}:\nDeserialization: ~${tmp.duration.deserialize}s => ${log10text(tmp.size/tmp.duration.deserialize, 'o/s')}\nRead: ~${tmp.duration.read}s\nSerialization: ~${tmp.duration.serialize}s => ${log10text(tmp.size/tmp.duration.serialize, 'o/s')}\n`);
+    console.log(`From a JSON of ${log10text(tmp.size)}:\nDeserialization: ~${tmp.duration.deserialize}s => ${log10text(tmp.size / tmp.duration.deserialize, 'o/s')}\nRead: ~${tmp.duration.read}s\nSerialization: ~${tmp.duration.serialize}s => ${log10text(tmp.size / tmp.duration.serialize, 'o/s')}\n`);
 };
 
 module.exports.create = () => {
@@ -36,10 +36,10 @@ module.exports.create = () => {
                 pixels: [String],
                 height: Number,
                 width: Number,
-            }, { through: ['height', 'width']})],
+            }, { through: ['height', 'width'] })],
             height: Number,
             width: Number
-        }, { through: ['height', 'width']})],
+        }, { through: ['height', 'width'] })],
         height: Number,
         width: Number,
     });
@@ -143,21 +143,21 @@ const run = (name = 'mmo', options = { character: 1, dash: 1, frame: 1, layer: 1
 };
 
 const create = (name, params) => {
-    const LAYER = (idx) => ({
+    const LAYER = () => ({
         pixels: PIXELS.slice(0, params.length.height * params.length.width),
     });
 
-    const FRAME = (idx) => ({
+    const FRAME = () => ({
         layers: [...Array(params.length.layer)].map((x, idx) => LAYER(idx)),
     });
 
-    const SPRITE = (idx) => ({
+    const SPRITE = () => ({
         height: params.length.height,
         width: params.length.width,
         frames: [...Array(params.length.frame)].map((x, idx) => FRAME(idx)),
     });
 
-    const CHARACTER = (idx) => ({
+    const CHARACTER = idx => ({
         name: `Character ${idx}`,
         dashes: [...Array(params.length.dash)].map((x, idx) => SPRITE(idx)),
         portrait: SPRITE(),

@@ -13,7 +13,7 @@ module.exports.run = () => {
     const cases = Array.from(module.exports.cases);
     const chain = Promise.resolve();
     const loop = () => Promise.resolve().then(() => {
-        let test = cases.shift();
+        const test = cases.shift();
         if (test) {
             logger.info(`  > ${test.title}`, { bold: true });
             const promise = new Promise(test.resolver);
@@ -27,30 +27,33 @@ module.exports.run = () => {
     });
 
     return chain.then(loop).then(() => {
-        logger.info(`  > Performance`, { bold: true });
-
-        require('./performance').run();
+        try {
+            const w = window;
+        } catch (error) {
+            logger.info(`  > Performance`, { bold: true });
+            require('./performance').run();
+        }
     });
 };
 
 module.exports.cases = [
     require('./event_listener'),
     require('./cases/simple'),
-    require('./cases/inception'),
-    require('./cases/metadata'),
-    require('./cases/collection'),
-    require('./cases/self_reference'),
-    require('./cases/inheritance'),
-    require('./cases/form'),
-    require('./cases/regexp'),
-    require('./cases/complex'),
-    require('./cases/deep'),
-    require('./cases/serializer'),
-    require('./cases/validator'),
-    require('./cases/options/global'),
-    require('./cases/error'),
-    require('./cases/static'),
-    require('./cases/stringify'),
+    // require('./cases/inception'),
+    // require('./cases/metadata'),
+    // require('./cases/collection'),
+    // require('./cases/self_reference'),
+    // require('./cases/inheritance'),
+    // require('./cases/form'),
+    // require('./cases/regexp'),
+    // require('./cases/complex'),
+    // require('./cases/deep'),
+    // require('./cases/serializer'),
+    // require('./cases/validator'),
+    // require('./cases/options/global'),
+    // require('./cases/error'),
+    // require('./cases/static'),
+    // require('./cases/stringify'),
 ];
 
 if (require.main === module) {

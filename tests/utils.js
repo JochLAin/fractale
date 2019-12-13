@@ -34,8 +34,8 @@ module.exports.test = (value, expected, message) => {
 };
 
 module.exports.watch = (callback) => {
-    let start = moment();
+    const start = moment();
     callback();
-    let end = moment();
+    const end = moment();
     return (end.valueOf() - start.valueOf()) / 1000;
 };
