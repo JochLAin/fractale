@@ -19,7 +19,7 @@ module.exports.run = () => {
             const promise = new Promise(test.resolver);
             return promise.then(() => {
                 logger.success('Test passed !', { block: true });
-                Fractale.memory.clear();
+                // Fractale.memory.clear();
             }).then(() => {
                 return loop();
             });
@@ -39,21 +39,21 @@ module.exports.run = () => {
 module.exports.cases = [
     require('./event_listener'),
     require('./cases/simple'),
-    // require('./cases/inception'),
-    // require('./cases/metadata'),
-    // require('./cases/collection'),
-    // require('./cases/self_reference'),
-    // require('./cases/inheritance'),
-    // require('./cases/form'),
-    // require('./cases/regexp'),
-    // require('./cases/complex'),
-    // require('./cases/deep'),
-    // require('./cases/serializer'),
-    // require('./cases/validator'),
-    // require('./cases/options/global'),
-    // require('./cases/error'),
-    // require('./cases/static'),
-    // require('./cases/stringify'),
+    require('./cases/inception'),
+    require('./cases/metadata'),
+    require('./cases/collection'),
+    require('./cases/self_reference'),
+    require('./cases/inheritance'),
+    require('./cases/form'),
+    require('./cases/regexp'),
+    require('./cases/complex'),
+    require('./cases/deep'),
+    require('./cases/serializer'),
+    require('./cases/validator'),
+    require('./cases/options/global'),
+    require('./cases/error'),
+    require('./cases/static'),
+    require('./cases/stringify'),
 ];
 
 if (require.main === module) {
