@@ -1,8 +1,9 @@
 const Fractale = require('../../lib');
-const logger = require('crieur');
-logger.level = 2;
 
 window.Fractale = Fractale;
+
+// const logger = require('crieur');
+// logger.level = 2;
 
 /** Global testing */
 // Promise.resolve()

@@ -35,7 +35,13 @@ module.exports.resolver = (resolve) => {
 
 module.exports.create = () => {
     const Metadata = Fractale.create('Metadata', {
-        metadata: { key: String, data: { key: String, value: undefined } },
+        metadata: {
+            key: String,
+            data: {
+                key: String,
+                value: undefined
+            }
+        },
     });
 
     return { Metadata };

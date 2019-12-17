@@ -269,20 +269,19 @@ const Simple = Fractale.create('Simple', {
 ## Performance
 
 From a JSON of 10.45M:
-- Deserialization: ~0.878s => 11.9Mo/s
-- Read: ~0s
-- Serialization: ~0.282s => 37.06Mo/s
+- Deserialization: ~0.877s => 11.92Mo/s
+- Read: ~0.001s
+- Serialization: ~0.29s => 36.03Mo/s
 
 From a JSON of 339.06M:
-- Deserialization: ~3.004s => 112.87Mo/s
-- Read: ~0s
-- Serialization: ~1.402s => 241.84Mo/s
+- Deserialization: ~3.104s => 109.23Mo/s
+- Read: ~0.001s
+- Serialization: ~1.13s => 300.05Mo/s
 
 From a JSON of 1.27G:
-- Deserialization: ~11.503s => 110.51Mo/s
+- Deserialization: ~12.334s => 103.07Mo/s
 - Read: ~0s
-- Serialization: ~5.245s => 242.37Mo/s
-
+- Serialization: ~5.942s => 213.94Mo/s
 
 ![Graph - Complexity x Rate](http://docs.faihy.org/fractale/images/graph_complexity_x_rate.png)
 ![Graph - Size x Rate](http://docs.faihy.org/fractale/images/graph_size_x_rate.png)
