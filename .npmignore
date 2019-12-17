@@ -1,11 +1,17 @@
 .idea
 .gitignore
+.github
+.git
 jsdoc.json
 
 .babelrc
 .eslintrc.js
 assets/
 public/
+tests/
+
+CODE_OF_CONDUCT.md
+CONTRIBUTING.md
 
 # Logs
 logs
