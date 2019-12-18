@@ -26,11 +26,12 @@
   "license": "SEE LICENSE IN LICENSE",
   "homepage": "http://docs.faihy.org/fractale",
   "dependencies": {
-    "teinte": "^1.0.1",
     "uuid": "^3.3.3"
   },
-  "peerDependencies": {
+  "optionalDependencies": {
     "moment": "^2.24.0",
+    "mongoose": "^5.8.1",
+    "prop-types": "^15.7.2",
     "teinte": "^1.0.1"
   },
   "engines": {

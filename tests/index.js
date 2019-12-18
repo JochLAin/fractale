@@ -54,6 +54,7 @@ module.exports.cases = [
     require('./cases/error'),
     require('./cases/static'),
     require('./cases/stringify'),
+    // require('./cases/bridge'),
 ];
 
 if (require.main === module) {

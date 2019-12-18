@@ -191,7 +191,7 @@ console.log(instance.serialize().collections);
 const Fractale = require('fractale');
 
 Fractale.setOptions({
-    moment: true, // Specify to fractale to transform date to moment instance. Default: true
+    use_moment: () => { try { require('moment'); return true; } catch (error) { return false; }}, // Specify to fractale to transform date to moment instance
 });
 ```
 
@@ -266,22 +266,96 @@ const Simple = Fractale.create('Simple', {
 });
 ```
 
+## Plugins
+
+Fractale add other custom types which need other optional modules
+
+### Color
+
+_Need `npm i -S teinte`_
+```javascript
+const Colored = Fractale.create('Colored', {
+    color: Fractale.Color
+});
+
+const colored = new Colored({ color: '#0f0f0f' });
+console.log(colored.hsl());
+```
+
+### Moment
+
+> If moment module is installed Date will be automatically transform to moment instance
+
+_Need `npm i -S moment`_
+```javascript
+const Article = Fractale.create('Article', {
+    content: String,
+    created_at: Date,
+    updated_at: Date,
+});
+
+const article = new Article({
+    content: 'This module is awesome',
+    created_at: '2000-01-01',
+    updated_at: '2000-01-01',
+});
+console.log(article.created_at.format('DD/MM/YYYY'));
+```
+
+## Providers
+
+Fractale lets you possibility to save and retrieve values in a storage
+
+```javascript
+// To use Web localStorage
+Fractale.memory.setProvider('local');
+
+// To use Web sessionStorage
+Fractale.memory.setProvider('session');
+
+// To use Web cookie
+Fractale.memory.setProvider('cookie', { expires: 6048e5 });
+
+// To use Web IndexedDB
+Fractale.memory.setProvider('idb', { database: 'ƒ_database' });
+```
+
+## Bridge
+
+> /!\ Experimental
+
+Fractale lets you possibility to transform models to other types
+
+### Transform to Mongoose Model
+
+_Need `npm i -S mongoose`_
+```javascript
+const model = Model.toMongoose();
+```
+
+### Transform to PropTypes
+
+_Need `npm i -S prop-types`_
+```javascript
+const propTypes = Model.toPropTypes();
+```
+
 ## Performance
 
 From a JSON of 10.45M:
-- Deserialization: ~0.834s => 12.53Mo/s
+- Deserialization: ~0.895s => 11.68Mo/s
 - Read: ~0.001s
-- Serialization: ~0.273s => 38.28Mo/s
+- Serialization: ~0.304s => 34.37Mo/s
 
 From a JSON of 339.06M:
-- Deserialization: ~3.137s => 108.08Mo/s
-- Read: ~0s
-- Serialization: ~1.081s => 313.65Mo/s
+- Deserialization: ~3.301s => 102.71Mo/s
+- Read: ~0.001s
+- Serialization: ~1.173s => 289.05Mo/s
 
 From a JSON of 1.27G:
-- Deserialization: ~12.387s => 102.62Mo/s
-- Read: ~0.001s
-- Serialization: ~5.128s => 247.9Mo/s
+- Deserialization: ~12.942s => 98.22Mo/s
+- Read: ~0s
+- Serialization: ~6.089s => 208.77Mo/s
 
 ![Graph - Complexity x Rate](http://docs.faihy.org/fractale/images/graph_complexity_x_rate.png)
 ![Graph - Size x Rate](http://docs.faihy.org/fractale/images/graph_size_x_rate.png)
