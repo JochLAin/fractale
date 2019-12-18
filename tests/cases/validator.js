@@ -9,7 +9,7 @@ module.exports.tutorialized = false;
 
 module.exports.create = () => {
     const Example = Fractale.create('Validator_Example', {
-        mixed: Fractale.with(undefined, { validator: { in: ['foo', 42] } }),
+        mixed: Fractale.with(undefined, { required: true, validator: { in: ['foo', 42] } }),
         number: Fractale.with(Number, { validator: { gte: 18, lt: 51, between: [20, 30] } }),
         date: Fractale.with(Date, { validator: { gt: '2016-01-01', lte: new Date('3033-12-31'), between: [moment('2017-01-01')] } })
     });
@@ -20,7 +20,19 @@ module.exports.create = () => {
 module.exports.resolver = (resolve) => {
     const { Example } = module.exports.get();
 
+    try {
+        new Example();
+        throw new Error('Error on validator required');
+    } catch (error) {
+        if (!(error instanceof Type.ValidatorError)) throw error;
+        const message = 'Error in validator "required"\nExpected value to be define but got undefined';
+        if (error.message !== message) {
+            throw new _.TestError('Invalid validator message', error.message, message);
+        }
+    }
+
     new Example({ mixed: 'foo' });
+
     try {
         new Example({ mixed: 'bar' });
         throw new Error('Error on validator in');
@@ -33,7 +45,7 @@ module.exports.resolver = (resolve) => {
     }
 
     try {
-        new Example({ number: 52 });
+        new Example({ mixed: 'foo', number: 52 });
         throw new Error('Error on validator.lt number');
     } catch (error) {
         if (!(error instanceof Type.ValidatorError)) throw error;
@@ -43,9 +55,9 @@ module.exports.resolver = (resolve) => {
         }
     }
 
-    new Example({ number: 22 });
+    new Example({ mixed: 'foo', number: 22 });
     try {
-        new Example({ number: 16 });
+        new Example({ mixed: 'foo', number: 16 });
         throw new Error('Error on validator.gte number');
     } catch (error) {
         if (!(error instanceof Type.ValidatorError)) throw error;
@@ -56,7 +68,7 @@ module.exports.resolver = (resolve) => {
     }
 
     try {
-        new Example({ number: 19 });
+        new Example({ mixed: 'foo', number: 19 });
         throw new Error('Error on validator.between number');
     } catch (error) {
         if (!(error instanceof Type.ValidatorError)) throw error;
@@ -67,7 +79,7 @@ module.exports.resolver = (resolve) => {
     }
 
     try {
-        new Example({ number: 45 });
+        new Example({ mixed: 'foo', number: 45 });
         throw new Error('Error on validator number');
     } catch (error) {
         if (!(error instanceof Type.ValidatorError)) throw error;
@@ -77,9 +89,9 @@ module.exports.resolver = (resolve) => {
         }
     }
 
-    new Example({ date: '2018-01-01' });
+    new Example({ mixed: 'foo', date: '2018-01-01' });
     try {
-        new Example({ date: '2000-01-01' });
+        new Example({ mixed: 'foo', date: '2000-01-01' });
         throw new Error('Error on validator date');
     } catch (error) {
         if (!(error instanceof Type.ValidatorError)) throw error;
@@ -90,7 +102,7 @@ module.exports.resolver = (resolve) => {
     }
 
     try {
-        new Example({ date: '3053-01-01' });
+        new Example({ mixed: 'foo', date: '3053-01-01' });
         throw new Error('Error on validator date');
     } catch (error) {
         if (!(error instanceof Type.ValidatorError)) throw error;
@@ -101,7 +113,7 @@ module.exports.resolver = (resolve) => {
     }
 
     try {
-        new Example({ date: '3023-01-01' });
+        new Example({ mixed: 'foo', date: '3023-01-01' });
         throw new Error('Error on validator date');
     } catch (error) {
         if (!(error instanceof Type.ValidatorError)) throw error;
@@ -112,7 +124,7 @@ module.exports.resolver = (resolve) => {
     }
 
     try {
-        new Example({ date: '2016-11-30' });
+        new Example({ mixed: 'foo', date: '2016-11-30' });
         throw new Error('Error on validator date');
     } catch (error) {
         if (!(error instanceof Type.ValidatorError)) throw error;
