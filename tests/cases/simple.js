@@ -25,8 +25,6 @@ module.exports.resolver = (resolve) => {
         biguint64: 'RnJhY3RhbGUgQmlnVUludDY0QXJyYXkgdGVzdGluZ3M=',
     });
 
-    console.log(instance.date);
-
     _.test(instance.mixed, 'It\'s dangerous to go alone! Take this.', 'Error on simple accessor with type mixed');
     _.test(instance.boolean, false, 'Error on simple accessor with type boolean');
     _.test(instance.number, 31, 'Error on simple accessor with type number');
