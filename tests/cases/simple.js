@@ -11,7 +11,6 @@ module.exports.resolver = (resolve) => {
 
     const instance = new Simple({
         mixed: 'It\'s dangerous to go alone! Take this.',
-        date: '2000-01-01',
         buffer: 'RnJhY3RhbGUgYnVmZmVyIHNhdmU=',
         int8: 'RnJhY3RhbGUgSW50OEFycmF5IHNhdmU=',
         uint8: 'RnJhY3RhbGUgVWludDhBcnJheSBzYXZl',
@@ -74,7 +73,7 @@ module.exports.create = () => {
         bigint: 31n,
         string: 'Lorem ipsum',
         color: '#AA0000',
-        date: Date,
+        date: Fractale.with(Date, { default: '2000-01-01' }),
         regexp: '/toto/g',
         buffer: ArrayBuffer,
         int8: Int8Array,
