@@ -55,7 +55,7 @@ const Full = Fractale.create(
 );
 
 const After = Fractale.create('After', {
-    start: Date,
+    start: Fractale.with(Date, { required: true, default: '2000-01-01' }),
     end: Date,
 });
 ```
