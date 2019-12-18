@@ -11,13 +11,7 @@ module.exports.resolver = (resolve) => {
 
     const instance = new Simple({
         mixed: 'It\'s dangerous to go alone! Take this.',
-        boolean: false,
-        number: 31,
-        bigint: 31n,
-        string: 'Lorem ipsum',
-        color: 11141120,
         date: '2000-01-01',
-        regexp: '/toto/g',
         buffer: 'RnJhY3RhbGUgYnVmZmVyIHNhdmU=',
         int8: 'RnJhY3RhbGUgSW50OEFycmF5IHNhdmU=',
         uint8: 'RnJhY3RhbGUgVWludDhBcnJheSBzYXZl',
@@ -31,6 +25,8 @@ module.exports.resolver = (resolve) => {
         bigint64: 'RnJhY3RhbGUgQmlnSW50NjRBcnJheSB1bml0IHRlc3Q=',
         biguint64: 'RnJhY3RhbGUgQmlnVUludDY0QXJyYXkgdGVzdGluZ3M=',
     });
+
+    console.log(instance.date);
 
     _.test(instance.mixed, 'It\'s dangerous to go alone! Take this.', 'Error on simple accessor with type mixed');
     _.test(instance.boolean, false, 'Error on simple accessor with type boolean');
@@ -72,14 +68,14 @@ module.exports.resolver = (resolve) => {
 
 module.exports.create = () => {
     const Simple = Fractale.create('Simple', {
-        mixed: null,
-        boolean: Boolean,
-        number: Number,
-        bigint: BigInt,
-        string: String,
-        color: Fractale.helpers.Color,
+        mixed: undefined,
+        boolean: false,
+        number: 31,
+        bigint: 31n,
+        string: 'Lorem ipsum',
+        color: '#AA0000',
         date: Date,
-        regexp: RegExp,
+        regexp: '/toto/g',
         buffer: ArrayBuffer,
         int8: Int8Array,
         uint8: Uint8Array,

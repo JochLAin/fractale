@@ -29,10 +29,7 @@ window.Fractale = Fractale;
 // ;
 
 /** Testing load */
-// const Sample = Fractale.create('Sample', {
-//     value: String,
-// });
-//
+// const Sample = Fractale.create('Sample', { value: String });
 // Promise.resolve().then(() => {
 //     return Fractale.memory.setProvider('idb');
 // }).then(() => {
