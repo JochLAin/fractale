@@ -363,7 +363,12 @@ From a JSON of 1.27G:
 ## Dependencies
 
 - Usage of [uuid](https://www.npmjs.com/package/uuid) to generate a unique id for model instances.
-- Usage of [moment.js](https://momentjs.com/docs/) for date validation.
+
+Optional :
+- Usage of [moment](https://momentjs.com/docs/) for date.
+- Usage of [teinte](https://www.npmjs.com/package/teinte) for color.
+- Usage of [mongoose](https://mongoosejs.com) for bridge / provider.
+- Usage of [prop-types](https://www.npmjs.com/package/prop-types) for bridge.
 
 ## Contributing
 
