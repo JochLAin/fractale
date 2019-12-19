@@ -8,7 +8,7 @@ It will test value of each fields and link model between them.
 
 ## Documentation
 
-You can found more documentation and examples [here](http://docs.faihy.org/fractale).
+You can found more documentation and examples [here](https://jocelyn-faihy.gitbook.io/fractale/).
 
 ## Usage
 

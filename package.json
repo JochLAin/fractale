@@ -4,10 +4,13 @@
   "description": "Modeling architecture data",
   "main": "lib/index.js",
   "scripts": {
-    "docs:build-api": "npx jsdoc2md --files lib/**/*.js > docs/api.md",
-    "docs:prepare": "npx gitbook init",
-    "docs:build": "npm run docs:build-api && npm run docs:prepare && npx gitbook build",
-    "docs:start": "npm run docs:prepare && npm run docs:build-api && npx gitbook serve",
+    "build-examples": "node bin/generate_examples.js",
+    "build-api": "node bin/generate_api.js",
+    "build-summary": "node bin/generate_summary.js",
+    "build-doc": "npm run build-examples && npm run build-summary",
+    "publish-major": "npm run test && npm run build-doc && npm version major && git push origin master && git push --tags && npm publish",
+    "publish-minor": "npm run test && npm run build-doc && npm version minor && git push origin master && git push --tags && npm publish",
+    "publish-patch": "npm run test && npm run build-doc && npm version patch && git push origin master && git push --tags && npm publish",
     "test": "node --max-old-space-size=4096 ./tests/index.js"
   },
   "repository": {
@@ -45,6 +48,7 @@
     "chartjs-node": "^1.7.1",
     "cli-progress": "^3.4.0",
     "crieur": "^1.3.0",
+    "jsdoc-to-markdown": "^5.0.3",
     "object-sizeof": "^1.5.2"
   }
 }

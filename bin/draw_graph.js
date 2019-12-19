@@ -81,7 +81,7 @@ if (require.main === module) {
         };
 
         return chart.drawChart({type: 'line', data: { datasets }, options}).then(() => {
-            const filename = require('path').resolve(__dirname, 'theme/static/images', 'graph_size_x_rate.png');
+            const filename = require('path').resolve(__dirname, '../docs/images', 'graph_size_x_rate.png');
             return chart.writeImageToFile('image/png', filename);
         });
     }));
@@ -123,7 +123,7 @@ if (require.main === module) {
         };
 
         return chart.drawChart({type: 'bar', data: { labels: params.map(p => p.complexity), datasets }, options}).then(() => {
-            const filename = require('path').resolve(__dirname, 'theme/static/images', 'graph_complexity_x_rate.png');
+            const filename = require('path').resolve(__dirname, '../docs/images', 'graph_complexity_x_rate.png');
             return chart.writeImageToFile('image/png', filename);
         });
     }));

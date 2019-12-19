@@ -79,7 +79,7 @@ const remove = module.exports.remove = source => {
     if (!exists(source)) {
         throw new Error(`Source ${source} doesn't exist`);
     }
-    return child_process.execSync(`rm -rf ${source}`);
+    return child_process.execSync(`rm -rf ${source}`).toString();
 };
 
 const touch = module.exports.touch = source => {
@@ -88,7 +88,7 @@ const touch = module.exports.touch = source => {
         throw new Error(`Source ${source} already exists`);
     }
     mkdir(source);
-    return child_process.execSync(`touch ${source}`);
+    return child_process.execSync(`touch ${source}`).toString();
 };
 
 const write = module.exports.write = (source, content) => {
@@ -100,4 +100,11 @@ const write = module.exports.write = (source, content) => {
         content = JSON.stringify(content, null, 4);
     }
     return fs.writeFileSync(source, content, source.match(/(\.jpg|\.jpeg|\.png|\.bmp)$/) ? 'binary' : undefined);
+};
+
+const find = module.exports.find = (source, pattern) => {
+    if (!exists(source)) {
+        throw new Error(`Source ${source} not found`);
+    }
+    return child_process.execSync(`find ${source} -name "${pattern}"`).toString();
 };

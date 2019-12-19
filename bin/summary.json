@@ -1,0 +1,109 @@
+{
+   "title": "Summary",
+   "children": [
+      {
+         "title": "Introduction",
+         "url": "/"
+      },
+      {
+         "title": "Philosophy",
+         "url": "/philosophy",
+         "file": "philosophy.md"
+      },
+      {
+         "title": "API Documentation",
+         "children": [
+            {
+               "title": "Fractale",
+               "url": "api/fractale",
+               "file": "examples/fractale.md"
+            },
+            {
+               "title": "Model",
+               "url": "api/model",
+               "file": "examples/model.md"
+            },
+            {
+               "title": "Factory",
+               "url": "api/factory",
+               "file": "examples/factory.md"
+            },
+            {
+               "title": "EventListener",
+               "url": "api/eventlistener",
+               "file": "examples/eventlistener.md"
+            },
+            {
+               "title": "Schema",
+               "url": "api/schema",
+               "file": "examples/schema.md"
+            },
+            {
+               "title": "PropertyType",
+               "url": "api/propertytype",
+               "file": "examples/propertytype.md"
+            },
+            {
+               "title": "PropertyTypeCompound",
+               "url": "api/propertytypecompound",
+               "file": "examples/propertytypecompound.md"
+            },
+            {
+               "title": "Property",
+               "url": "api/property",
+               "file": "examples/property.md"
+            }
+         ]
+      },
+      {
+         "title": "Examples",
+         "children": [
+            {
+               "title": "Simple model",
+               "url": "examples/simple",
+               "file": "examples/simple.md"
+            },
+            {
+               "title": "Inception model",
+               "url": "examples/inception",
+               "file": "examples/inception.md"
+            },
+            {
+               "title": "Metadata model",
+               "url": "examples/metadata",
+               "file": "examples/metadata.md"
+            },
+            {
+               "title": "Collection model",
+               "url": "examples/collection",
+               "file": "examples/collection.md"
+            },
+            {
+               "title": "Self-reference model",
+               "url": "examples/reference",
+               "file": "examples/reference.md"
+            },
+            {
+               "title": "Inheritance model",
+               "url": "examples/inheritance",
+               "file": "examples/inheritance.md"
+            },
+            {
+               "title": "Form usage",
+               "url": "examples/form",
+               "file": "examples/form.md"
+            },
+            {
+               "title": "RegExp key model",
+               "url": "examples/regexp",
+               "file": "examples/regexp.md"
+            },
+            {
+               "title": "Global options",
+               "url": "examples/global_options",
+               "file": "examples/global_options.md"
+            }
+         ]
+      }
+   ]
+}
