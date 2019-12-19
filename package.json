@@ -28,7 +28,7 @@
   "dependencies": {
     "uuid": "^3.3.3"
   },
-  "optionalDependencies": {
+  "peerDependencies": {
     "moment": "^2.24.0",
     "mongoose": "^5.8.1",
     "prop-types": "^15.7.2",
