@@ -7,7 +7,7 @@
     "build-examples": "node bin/generate_examples.js",
     "build-api": "node bin/generate_api.js",
     "build-summary": "node bin/generate_summary.js",
-    "build-doc": "npm run build-examples && npm run build-summary",
+    "build-doc": "npm run build-examples && npm run build-api && npm run build-summary",
     "publish-major": "npm run test && npm run build-doc && npm version major && git push origin master && git push --tags && npm publish",
     "publish-minor": "npm run test && npm run build-doc && npm version minor && git push origin master && git push --tags && npm publish",
     "publish-patch": "npm run test && npm run build-doc && npm version patch && git push origin master && git push --tags && npm publish",

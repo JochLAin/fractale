@@ -1,16 +1,11 @@
 .idea
-.gitignore
-.github
-.git
-jsdoc.json
-
-.babelrc
-.eslintrc.js
-assets/
-docs/
-public/
+.git/
+.github/
+bin/
 tests/
-
+wiki/
+.gitignore
+.gitmodules
 CODE_OF_CONDUCT.md
 CONTRIBUTING.md
 

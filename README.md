@@ -29,7 +29,7 @@ const KeyValuePair = Fractale.create(
 
 /* More complete example */
 const Model = Fractale.create(
-    'Model', 
+    'Model',
     {
         mixed: undefined,
         boolean: Boolean,

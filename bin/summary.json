@@ -3,11 +3,11 @@
    "children": [
       {
          "title": "Introduction",
-         "url": "/"
+         "url": ""
       },
       {
          "title": "Philosophy",
-         "url": "/philosophy",
+         "url": "philosophy",
          "file": "philosophy.md"
       },
       {
@@ -15,43 +15,35 @@
          "children": [
             {
                "title": "Fractale",
-               "url": "api/fractale",
-               "file": "examples/fractale.md"
+               "url": "api/fractale.md"
             },
             {
                "title": "Model",
-               "url": "api/model",
-               "file": "examples/model.md"
+               "url": "api/model.md"
             },
             {
                "title": "Factory",
-               "url": "api/factory",
-               "file": "examples/factory.md"
+               "url": "api/factory.md"
             },
             {
                "title": "EventListener",
-               "url": "api/eventlistener",
-               "file": "examples/eventlistener.md"
+               "url": "api/eventlistener.md"
             },
             {
                "title": "Schema",
-               "url": "api/schema",
-               "file": "examples/schema.md"
+               "url": "api/schema.md"
             },
             {
                "title": "PropertyType",
-               "url": "api/propertytype",
-               "file": "examples/propertytype.md"
+               "url": "api/propertytype.md"
             },
             {
                "title": "PropertyTypeCompound",
-               "url": "api/propertytypecompound",
-               "file": "examples/propertytypecompound.md"
+               "url": "api/propertytypecompound.md"
             },
             {
                "title": "Property",
-               "url": "api/property",
-               "file": "examples/property.md"
+               "url": "api/property.md"
             }
          ]
       },
@@ -60,48 +52,39 @@
          "children": [
             {
                "title": "Simple model",
-               "url": "examples/simple",
-               "file": "examples/simple.md"
+               "url": "examples/simple.md"
             },
             {
                "title": "Inception model",
-               "url": "examples/inception",
-               "file": "examples/inception.md"
+               "url": "examples/inception.md"
             },
             {
                "title": "Metadata model",
-               "url": "examples/metadata",
-               "file": "examples/metadata.md"
+               "url": "examples/metadata.md"
             },
             {
                "title": "Collection model",
-               "url": "examples/collection",
-               "file": "examples/collection.md"
+               "url": "examples/collection.md"
             },
             {
                "title": "Self-reference model",
-               "url": "examples/reference",
-               "file": "examples/reference.md"
+               "url": "examples/reference.md"
             },
             {
                "title": "Inheritance model",
-               "url": "examples/inheritance",
-               "file": "examples/inheritance.md"
+               "url": "examples/inheritance.md"
             },
             {
                "title": "Form usage",
-               "url": "examples/form",
-               "file": "examples/form.md"
+               "url": "examples/form.md"
             },
             {
                "title": "RegExp key model",
-               "url": "examples/regexp",
-               "file": "examples/regexp.md"
+               "url": "examples/regexp.md"
             },
             {
                "title": "Global options",
-               "url": "examples/global_options",
-               "file": "examples/global_options.md"
+               "url": "examples/global_options.md"
             }
          ]
       }
