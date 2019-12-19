@@ -7,7 +7,8 @@ const fs = require('./utils/filesystem');
 
 module.exports.run = () => {
     const files = fs.find(path.resolve(__dirname, '../lib'), '*.js').split('\n').slice(0, -1);
-    return js2md.getTemplateData({ files }).then((data) => {
+    return js2md.getTemplateData({ files, configure: path.resolve(__dirname, '..', 'jsdoc.json') }).then((data) => {
+        fs.write(path.resolve(__dirname, 'docs.json'), JSON.stringify(data, null, 3));
         return Promise.all(data.reduce((accu, item) => {
             if (item.kind === 'module' && item.name === 'Fractale') accu.push(item);
             else if (item.kind === 'class') accu.push(item);
@@ -32,8 +33,11 @@ module.exports.run = () => {
             url: `api/${item.name.toLowerCase()}`,
             file: `api/${item.name.toLowerCase()}.md`
         }));
-        fs.write(path.resolve(__dirname, 'summary.json'), JSON.stringify(summary, null, 3));
-    })
+        fs.write(
+            path.resolve(__dirname, 'summary.json'),
+            JSON.stringify(summary, null, 3)
+        );
+    });
 };
 
 if (require.main === module) {

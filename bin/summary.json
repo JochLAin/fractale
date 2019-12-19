@@ -15,35 +15,103 @@
          "children": [
             {
                "title": "Fractale",
-               "url": "api/fractale.md"
-            },
-            {
-               "title": "Model",
-               "url": "api/model.md"
-            },
-            {
-               "title": "Factory",
-               "url": "api/factory.md"
-            },
-            {
-               "title": "EventListener",
-               "url": "api/eventlistener.md"
-            },
-            {
-               "title": "Schema",
-               "url": "api/schema.md"
-            },
-            {
-               "title": "PropertyType",
-               "url": "api/propertytype.md"
-            },
-            {
-               "title": "PropertyTypeCompound",
-               "url": "api/propertytypecompound.md"
+               "url": "api/fractale",
+               "file": "api/fractale.md"
             },
             {
                "title": "Property",
-               "url": "api/property.md"
+               "url": "api/property",
+               "file": "api/property.md"
+            },
+            {
+               "title": "Factory",
+               "url": "api/factory",
+               "file": "api/factory.md"
+            },
+            {
+               "title": "IndexedDBProvider",
+               "url": "api/indexeddbprovider",
+               "file": "api/indexeddbprovider.md"
+            },
+            {
+               "title": "Provider",
+               "url": "api/provider",
+               "file": "api/provider.md"
+            },
+            {
+               "title": "SessionProvider",
+               "url": "api/sessionprovider",
+               "file": "api/sessionprovider.md"
+            },
+            {
+               "title": "InternalProvider",
+               "url": "api/internalprovider",
+               "file": "api/internalprovider.md"
+            },
+            {
+               "title": "LocalProvider",
+               "url": "api/localprovider",
+               "file": "api/localprovider.md"
+            },
+            {
+               "title": "CookieProvider",
+               "url": "api/cookieprovider",
+               "file": "api/cookieprovider.md"
+            },
+            {
+               "title": "Table",
+               "url": "api/table",
+               "file": "api/table.md"
+            },
+            {
+               "title": "Model",
+               "url": "api/model",
+               "file": "api/model.md"
+            },
+            {
+               "title": "EventListener",
+               "url": "api/eventlistener",
+               "file": "api/eventlistener.md"
+            },
+            {
+               "title": "MongooseBridge",
+               "url": "api/mongoosebridge",
+               "file": "api/mongoosebridge.md"
+            },
+            {
+               "title": "PropTypesBridge",
+               "url": "api/proptypesbridge",
+               "file": "api/proptypesbridge.md"
+            },
+            {
+               "title": "Bridge",
+               "url": "api/bridge",
+               "file": "api/bridge.md"
+            },
+            {
+               "title": "SchemaError",
+               "url": "api/schemaerror",
+               "file": "api/schemaerror.md"
+            },
+            {
+               "title": "Schema",
+               "url": "api/schema",
+               "file": "api/schema.md"
+            },
+            {
+               "title": "PropertyType",
+               "url": "api/propertytype",
+               "file": "api/propertytype.md"
+            },
+            {
+               "title": "ArrayPropertyType",
+               "url": "api/arraypropertytype",
+               "file": "api/arraypropertytype.md"
+            },
+            {
+               "title": "Memory",
+               "url": "api/memory",
+               "file": "api/memory.md"
             }
          ]
       },
@@ -52,39 +120,48 @@
          "children": [
             {
                "title": "Simple model",
-               "url": "examples/simple.md"
+               "url": "examples/simple",
+               "file": "examples/simple.md"
             },
             {
                "title": "Inception model",
-               "url": "examples/inception.md"
+               "url": "examples/inception",
+               "file": "examples/inception.md"
             },
             {
                "title": "Metadata model",
-               "url": "examples/metadata.md"
+               "url": "examples/metadata",
+               "file": "examples/metadata.md"
             },
             {
                "title": "Collection model",
-               "url": "examples/collection.md"
+               "url": "examples/collection",
+               "file": "examples/collection.md"
             },
             {
                "title": "Self-reference model",
-               "url": "examples/reference.md"
+               "url": "examples/reference",
+               "file": "examples/reference.md"
             },
             {
                "title": "Inheritance model",
-               "url": "examples/inheritance.md"
+               "url": "examples/inheritance",
+               "file": "examples/inheritance.md"
             },
             {
                "title": "Form usage",
-               "url": "examples/form.md"
+               "url": "examples/form",
+               "file": "examples/form.md"
             },
             {
                "title": "RegExp key model",
-               "url": "examples/regexp.md"
+               "url": "examples/regexp",
+               "file": "examples/regexp.md"
             },
             {
                "title": "Global options",
-               "url": "examples/global_options.md"
+               "url": "examples/global_options",
+               "file": "examples/global_options.md"
             }
          ]
       }

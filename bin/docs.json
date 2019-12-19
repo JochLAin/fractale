@@ -1,0 +1,1473 @@
+[
+   {
+      "id": "module:helpers",
+      "longname": "module:helpers",
+      "name": "helpers",
+      "kind": "module",
+      "description": "Module helpers",
+      "author": [
+         "Jocelyn Faihy <jocelyn@faihy.fr>"
+      ],
+      "meta": {
+         "lineno": 1,
+         "filename": "helpers.js",
+         "path": "/var/www/fractale/lib"
+      },
+      "order": 0
+   },
+   {
+      "id": "module:Fractale",
+      "longname": "module:Fractale",
+      "name": "Fractale",
+      "kind": "module",
+      "description": "Module endpoint",
+      "author": [
+         "Jocelyn Faihy <jocelyn@faihy.fr>"
+      ],
+      "meta": {
+         "lineno": 9,
+         "filename": "index.js",
+         "path": "/var/www/fractale/lib"
+      },
+      "order": 31
+   },
+   {
+      "id": "Model()",
+      "longname": "Model",
+      "name": "Model",
+      "kind": "constructor",
+      "description": "Default base model class",
+      "memberof": "Model",
+      "params": [
+         {
+            "type": {
+               "names": [
+                  "Object"
+               ]
+            },
+            "description": "Properties pass to instance",
+            "name": "props"
+         }
+      ],
+      "order": 4
+   },
+   {
+      "id": "IndexedDBProvider()",
+      "longname": "IndexedDBProvider",
+      "name": "IndexedDBProvider",
+      "kind": "constructor",
+      "description": "Provider that save entities into an IndexedDB",
+      "memberof": "IndexedDBProvider",
+      "order": 10
+   },
+   {
+      "id": "Provider()",
+      "longname": "Provider",
+      "name": "Provider",
+      "kind": "constructor",
+      "description": "Class that save entity in another place",
+      "memberof": "Provider",
+      "params": [
+         {
+            "type": {
+               "names": [
+                  "Model"
+               ]
+            },
+            "description": "Model that provider manage",
+            "name": "model"
+         },
+         {
+            "type": {
+               "names": [
+                  "Object"
+               ]
+            },
+            "description": "Provider options",
+            "name": "options"
+         }
+      ],
+      "order": 12
+   },
+   {
+      "id": "SessionProvider()",
+      "longname": "SessionProvider",
+      "name": "SessionProvider",
+      "kind": "constructor",
+      "description": "Provider that save entities into SessionStorage",
+      "memberof": "SessionProvider",
+      "order": 14
+   },
+   {
+      "id": "InternalProvider()",
+      "longname": "InternalProvider",
+      "name": "InternalProvider",
+      "kind": "constructor",
+      "description": "Provider that save entities into a Map",
+      "memberof": "InternalProvider",
+      "order": 16
+   },
+   {
+      "id": "LocalProvider()",
+      "longname": "LocalProvider",
+      "name": "LocalProvider",
+      "kind": "constructor",
+      "description": "Provider that save entities into a LocalStorage",
+      "memberof": "LocalProvider",
+      "order": 18
+   },
+   {
+      "id": "CookieProvider()",
+      "longname": "CookieProvider",
+      "name": "CookieProvider",
+      "kind": "constructor",
+      "description": "Provider that save entities into cookie",
+      "memberof": "CookieProvider",
+      "order": 20
+   },
+   {
+      "id": "Table()",
+      "longname": "Table",
+      "name": "Table",
+      "kind": "constructor",
+      "description": "Class which save data and relay to provider if exists",
+      "memberof": "Table",
+      "params": [
+         {
+            "type": {
+               "names": [
+                  "Model"
+               ]
+            },
+            "description": "The model that the table manage",
+            "name": "model"
+         },
+         {
+            "type": {
+               "names": [
+                  "Provider"
+               ]
+            },
+            "description": "The provider used to save data in another place",
+            "name": "provider"
+         }
+      ],
+      "order": 22
+   },
+   {
+      "id": "Memory()",
+      "longname": "Memory",
+      "name": "Memory",
+      "kind": "constructor",
+      "description": "Memory which manage save of an entity into stores",
+      "memberof": "Memory",
+      "order": 25
+   },
+   {
+      "id": "EventListener()",
+      "longname": "EventListener",
+      "name": "EventListener",
+      "kind": "constructor",
+      "description": "Enable event listener",
+      "memberof": "EventListener",
+      "params": [
+         {
+            "type": {
+               "names": [
+                  "Object"
+               ]
+            },
+            "description": "Map of events with key, the event name, and value, an array of listeners",
+            "name": "ƒ_events"
+         }
+      ],
+      "order": 29
+   },
+   {
+      "id": "MongooseBridge()",
+      "longname": "MongooseBridge",
+      "name": "MongooseBridge",
+      "kind": "constructor",
+      "description": "Mongoose bridge that transform model into mongoose model",
+      "memberof": "MongooseBridge",
+      "order": 49
+   },
+   {
+      "id": "PropTypesBridge()",
+      "longname": "PropTypesBridge",
+      "name": "PropTypesBridge",
+      "kind": "constructor",
+      "description": "PropTypes bridge that transform model into PropTypes object",
+      "memberof": "PropTypesBridge",
+      "order": 51
+   },
+   {
+      "id": "Bridge()",
+      "longname": "Bridge",
+      "name": "Bridge",
+      "kind": "constructor",
+      "description": "Base class that transform model into something else",
+      "memberof": "Bridge",
+      "order": 53
+   },
+   {
+      "id": "SchemaError()",
+      "longname": "SchemaError",
+      "name": "SchemaError",
+      "kind": "constructor",
+      "description": "Specific error for incorrect schema",
+      "memberof": "SchemaError",
+      "order": 55
+   },
+   {
+      "id": "Schema()",
+      "longname": "Schema",
+      "name": "Schema",
+      "kind": "constructor",
+      "memberof": "Schema",
+      "params": [
+         {
+            "type": {
+               "names": [
+                  "Model"
+               ]
+            },
+            "description": "Model attached to this schema",
+            "name": "model"
+         },
+         {
+            "type": {
+               "names": [
+                  "Object"
+               ]
+            },
+            "description": "Schema object",
+            "name": "props"
+         }
+      ],
+      "order": 57
+   },
+   {
+      "id": "PropertyType()",
+      "longname": "PropertyType",
+      "name": "PropertyType",
+      "kind": "constructor",
+      "description": "Define property on an instance of Model",
+      "memberof": "PropertyType",
+      "params": [
+         {
+            "type": {
+               "names": [
+                  "Schema"
+               ]
+            },
+            "name": "schema"
+         },
+         {
+            "type": {
+               "names": [
+                  "String"
+               ]
+            },
+            "name": "key"
+         },
+         {
+            "type": {
+               "names": [
+                  "*"
+               ]
+            },
+            "name": "generator"
+         },
+         {
+            "type": {
+               "names": [
+                  "*"
+               ]
+            },
+            "name": "input"
+         },
+         {
+            "type": {
+               "names": [
+                  "Object"
+               ]
+            },
+            "name": "options"
+         },
+         {
+            "type": {
+               "names": [
+                  "Object"
+               ]
+            },
+            "name": "options.validator"
+         }
+      ],
+      "order": 60
+   },
+   {
+      "id": "ArrayPropertyType()",
+      "longname": "ArrayPropertyType",
+      "name": "ArrayPropertyType",
+      "kind": "constructor",
+      "description": "Define property on an instance of array",
+      "memberof": "ArrayPropertyType",
+      "order": 62
+   },
+   {
+      "id": "Property()",
+      "longname": "Property",
+      "name": "Property",
+      "kind": "constructor",
+      "memberof": "Property",
+      "params": [
+         {
+            "type": {
+               "names": [
+                  "Model"
+               ]
+            },
+            "name": "instance"
+         },
+         {
+            "type": {
+               "names": [
+                  "PropertyType"
+               ]
+            },
+            "name": "type"
+         }
+      ],
+      "order": 64
+   },
+   {
+      "id": "Model",
+      "longname": "Model",
+      "name": "Model",
+      "kind": "class",
+      "scope": "global",
+      "augments": [
+         "EventListener"
+      ],
+      "author": [
+         "Jocelyn Faihy <jocelyn@faihy.fr>"
+      ],
+      "meta": {
+         "lineno": 6,
+         "filename": "base.js",
+         "path": "/var/www/fractale/lib/model"
+      },
+      "order": 3
+   },
+   {
+      "id": "Factory",
+      "longname": "Factory",
+      "name": "Factory",
+      "kind": "class",
+      "scope": "global",
+      "author": [
+         "Jocelyn Faihy <jocelyn@faihy.fr>"
+      ],
+      "meta": {
+         "lineno": 1,
+         "filename": "factory.js",
+         "path": "/var/www/fractale/lib"
+      },
+      "order": 5
+   },
+   {
+      "id": "IndexedDBProvider",
+      "longname": "IndexedDBProvider",
+      "name": "IndexedDBProvider",
+      "kind": "class",
+      "scope": "global",
+      "augments": [
+         "Provider"
+      ],
+      "meta": {
+         "lineno": 5,
+         "filename": "idb.js",
+         "path": "/var/www/fractale/lib/memory/providers"
+      },
+      "order": 9
+   },
+   {
+      "id": "Provider",
+      "longname": "Provider",
+      "name": "Provider",
+      "kind": "class",
+      "scope": "global",
+      "properties": [
+         {
+            "type": {
+               "names": [
+                  "String"
+               ]
+            },
+            "description": "Key formatted with the model slug and prefix_memory option",
+            "name": "key"
+         }
+      ],
+      "meta": {
+         "lineno": 5,
+         "filename": "index.js",
+         "path": "/var/www/fractale/lib/memory/providers"
+      },
+      "order": 11
+   },
+   {
+      "id": "SessionProvider",
+      "longname": "SessionProvider",
+      "name": "SessionProvider",
+      "kind": "class",
+      "scope": "global",
+      "augments": [
+         "Provider"
+      ],
+      "meta": {
+         "lineno": 5,
+         "filename": "session.js",
+         "path": "/var/www/fractale/lib/memory/providers"
+      },
+      "order": 13
+   },
+   {
+      "id": "InternalProvider",
+      "longname": "InternalProvider",
+      "name": "InternalProvider",
+      "kind": "class",
+      "scope": "global",
+      "augments": [
+         "Provider"
+      ],
+      "meta": {
+         "lineno": 3,
+         "filename": "internal.js",
+         "path": "/var/www/fractale/lib/memory/providers"
+      },
+      "order": 15
+   },
+   {
+      "id": "LocalProvider",
+      "longname": "LocalProvider",
+      "name": "LocalProvider",
+      "kind": "class",
+      "scope": "global",
+      "augments": [
+         "Provider"
+      ],
+      "meta": {
+         "lineno": 5,
+         "filename": "local.js",
+         "path": "/var/www/fractale/lib/memory/providers"
+      },
+      "order": 17
+   },
+   {
+      "id": "CookieProvider",
+      "longname": "CookieProvider",
+      "name": "CookieProvider",
+      "kind": "class",
+      "scope": "global",
+      "augments": [
+         "Provider"
+      ],
+      "meta": {
+         "lineno": 5,
+         "filename": "cookie.js",
+         "path": "/var/www/fractale/lib/memory/providers"
+      },
+      "order": 19
+   },
+   {
+      "id": "Table",
+      "longname": "Table",
+      "name": "Table",
+      "kind": "class",
+      "scope": "global",
+      "augments": [
+         "InternalProvider"
+      ],
+      "meta": {
+         "lineno": 3,
+         "filename": "table.js",
+         "path": "/var/www/fractale/lib/memory"
+      },
+      "order": 21
+   },
+   {
+      "id": "Memory",
+      "longname": "Memory",
+      "name": "Memory",
+      "kind": "class",
+      "scope": "global",
+      "properties": [
+         {
+            "type": {
+               "names": [
+                  "Map"
+               ]
+            },
+            "description": "Map of tables with key, the model, and value, the table",
+            "name": "tables"
+         },
+         {
+            "type": {
+               "names": [
+                  "function",
+                  "undefined"
+               ]
+            },
+            "description": "The provider class to use",
+            "name": "provider"
+         }
+      ],
+      "author": [
+         "Jocelyn Faihy <jocelyn@faihy.fr>"
+      ],
+      "meta": {
+         "lineno": 14,
+         "filename": "index.js",
+         "path": "/var/www/fractale/lib/memory"
+      },
+      "order": 24
+   },
+   {
+      "id": "EventListener",
+      "longname": "EventListener",
+      "name": "EventListener",
+      "kind": "class",
+      "scope": "global",
+      "author": [
+         "Jocelyn Faihy <jocelyn@faihy.fr>"
+      ],
+      "meta": {
+         "lineno": 1,
+         "filename": "event_listener.js",
+         "path": "/var/www/fractale/lib/utils"
+      },
+      "order": 28
+   },
+   {
+      "id": "MongooseBridge",
+      "longname": "MongooseBridge",
+      "name": "MongooseBridge",
+      "kind": "class",
+      "scope": "global",
+      "augments": [
+         "Bridge"
+      ],
+      "author": [
+         "Jocelyn Faihy <jocelyn@faihy.fr>"
+      ],
+      "meta": {
+         "lineno": 4,
+         "filename": "mongoose.js",
+         "path": "/var/www/fractale/lib/bridges"
+      },
+      "order": 48
+   },
+   {
+      "id": "PropTypesBridge",
+      "longname": "PropTypesBridge",
+      "name": "PropTypesBridge",
+      "kind": "class",
+      "scope": "global",
+      "augments": [
+         "Bridge"
+      ],
+      "author": [
+         "Jocelyn Faihy <jocelyn@faihy.fr>"
+      ],
+      "meta": {
+         "lineno": 4,
+         "filename": "prop_types.js",
+         "path": "/var/www/fractale/lib/bridges"
+      },
+      "order": 50
+   },
+   {
+      "id": "Bridge",
+      "longname": "Bridge",
+      "name": "Bridge",
+      "kind": "class",
+      "scope": "global",
+      "properties": [
+         {
+            "type": {
+               "names": [
+                  "String"
+               ]
+            },
+            "description": "Bridge name use in from/to shortcut method",
+            "name": "name"
+         }
+      ],
+      "author": [
+         "Jocelyn Faihy <jocelyn@faihy.fr>"
+      ],
+      "meta": {
+         "lineno": 1,
+         "filename": "index.js",
+         "path": "/var/www/fractale/lib/bridges"
+      },
+      "order": 52
+   },
+   {
+      "id": "SchemaError",
+      "longname": "SchemaError",
+      "name": "SchemaError",
+      "kind": "class",
+      "scope": "global",
+      "augments": [
+         "Error"
+      ],
+      "meta": {
+         "lineno": 3,
+         "filename": "schema.js",
+         "path": "/var/www/fractale/lib/property"
+      },
+      "order": 54
+   },
+   {
+      "id": "Schema",
+      "longname": "Schema",
+      "name": "Schema",
+      "kind": "class",
+      "scope": "global",
+      "properties": [
+         {
+            "type": {
+               "names": [
+                  "String"
+               ]
+            },
+            "description": "Model name",
+            "name": "classname"
+         },
+         {
+            "type": {
+               "names": [
+                  "Array.<String>"
+               ]
+            },
+            "description": "Schema keys",
+            "name": "keys"
+         },
+         {
+            "type": {
+               "names": [
+                  "Array.<PropertyType>"
+               ]
+            },
+            "description": "fields for this schema",
+            "name": "fields"
+         },
+         {
+            "type": {
+               "names": [
+                  "Array.<PropertyType>"
+               ]
+            },
+            "description": "fields for this extended schema",
+            "name": "values"
+         },
+         {
+            "type": {
+               "names": [
+                  "Object"
+               ]
+            },
+            "description": "Properties default values",
+            "name": "default"
+         }
+      ],
+      "author": [
+         "Jocelyn Faihy <jocelyn@faihy.fr>"
+      ],
+      "meta": {
+         "lineno": 24,
+         "filename": "schema.js",
+         "path": "/var/www/fractale/lib/property"
+      },
+      "order": 56
+   },
+   {
+      "id": "PropertyType",
+      "longname": "PropertyType",
+      "name": "PropertyType",
+      "kind": "class",
+      "scope": "global",
+      "author": [
+         "Jocelyn Faihy <jocelyn@faihy.fr>"
+      ],
+      "meta": {
+         "lineno": 1,
+         "filename": "index.js",
+         "path": "/var/www/fractale/lib/property/types"
+      },
+      "order": 59
+   },
+   {
+      "id": "ArrayPropertyType",
+      "longname": "ArrayPropertyType",
+      "name": "ArrayPropertyType",
+      "kind": "class",
+      "scope": "global",
+      "augments": [
+         "PropertyType"
+      ],
+      "author": [
+         "Jocelyn Faihy <jocelyn@faihy.fr>"
+      ],
+      "meta": {
+         "lineno": 4,
+         "filename": "index.js",
+         "path": "/var/www/fractale/lib/property/types/array"
+      },
+      "order": 61
+   },
+   {
+      "id": "Property",
+      "longname": "Property",
+      "name": "Property",
+      "kind": "class",
+      "scope": "global",
+      "author": [
+         "Jocelyn Faihy <jocelyn@faihy.fr>"
+      ],
+      "meta": {
+         "lineno": 1,
+         "filename": "index.js",
+         "path": "/var/www/fractale/lib/property"
+      },
+      "order": 63
+   },
+   {
+      "id": "names",
+      "longname": "names",
+      "name": "names",
+      "kind": "member",
+      "scope": "global",
+      "augments": [
+         "EventListener"
+      ],
+      "description": "Model storage manager",
+      "type": {
+         "names": [
+            "Array.<Model>"
+         ]
+      },
+      "author": [
+         "Jocelyn Faihy <jocelyn@faihy.fr>"
+      ],
+      "meta": {
+         "lineno": 3,
+         "filename": "library.js",
+         "path": "/var/www/fractale/lib"
+      },
+      "order": 8
+   },
+   {
+      "id": "helpers.module.exports.base64",
+      "longname": "helpers.module.exports.base64",
+      "name": "module.exports.base64",
+      "kind": "member",
+      "scope": "static",
+      "description": "Base 64 helper",
+      "memberof": "helpers",
+      "meta": {
+         "lineno": 8,
+         "filename": "helpers.js",
+         "path": "/var/www/fractale/lib"
+      },
+      "order": 1
+   },
+   {
+      "id": "helpers.module.exports.Percent",
+      "longname": "helpers.module.exports.Percent",
+      "name": "module.exports.Percent",
+      "kind": "member",
+      "scope": "static",
+      "description": "Percent field helper",
+      "memberof": "helpers",
+      "meta": {
+         "lineno": 22,
+         "filename": "helpers.js",
+         "path": "/var/www/fractale/lib"
+      },
+      "order": 2
+   },
+   {
+      "id": "module:Fractale.Color",
+      "longname": "module:Fractale.Color",
+      "name": "Color",
+      "kind": "member",
+      "scope": "static",
+      "description": "Fractale color shortcut",
+      "memberof": "module:Fractale",
+      "params": [
+         {
+            "type": {
+               "names": [
+                  "Color"
+               ]
+            },
+            "name": "Color"
+         }
+      ],
+      "meta": {
+         "lineno": 16,
+         "filename": "index.js",
+         "path": "/var/www/fractale/lib"
+      },
+      "order": 32
+   },
+   {
+      "id": "module:Fractale.SELF",
+      "longname": "module:Fractale.SELF",
+      "name": "SELF",
+      "kind": "member",
+      "scope": "static",
+      "description": "Keyword used for self-referenced model",
+      "memberof": "module:Fractale",
+      "params": [
+         {
+            "type": {
+               "names": [
+                  "String"
+               ]
+            },
+            "name": "SELF"
+         }
+      ],
+      "meta": {
+         "lineno": 22,
+         "filename": "index.js",
+         "path": "/var/www/fractale/lib"
+      },
+      "order": 33
+   },
+   {
+      "id": "module:Fractale.factory",
+      "longname": "module:Fractale.factory",
+      "name": "factory",
+      "kind": "member",
+      "scope": "static",
+      "description": "Factory that create models",
+      "memberof": "module:Fractale",
+      "params": [
+         {
+            "type": {
+               "names": [
+                  "Factory"
+               ]
+            },
+            "name": "factory"
+         }
+      ],
+      "meta": {
+         "lineno": 28,
+         "filename": "index.js",
+         "path": "/var/www/fractale/lib"
+      },
+      "order": 34
+   },
+   {
+      "id": "module:Fractale.helpers",
+      "longname": "module:Fractale.helpers",
+      "name": "helpers",
+      "kind": "member",
+      "scope": "static",
+      "description": "Fractale helpers",
+      "memberof": "module:Fractale",
+      "params": [
+         {
+            "type": {
+               "names": [
+                  "Object"
+               ]
+            },
+            "name": "helpers"
+         }
+      ],
+      "see": [
+         "helpers"
+      ],
+      "meta": {
+         "lineno": 34,
+         "filename": "index.js",
+         "path": "/var/www/fractale/lib"
+      },
+      "order": 35
+   },
+   {
+      "id": "module:Fractale.library",
+      "longname": "module:Fractale.library",
+      "name": "library",
+      "kind": "member",
+      "scope": "static",
+      "description": "Library that register models",
+      "memberof": "module:Fractale",
+      "params": [
+         {
+            "type": {
+               "names": [
+                  "Library"
+               ]
+            },
+            "name": "library"
+         }
+      ],
+      "meta": {
+         "lineno": 41,
+         "filename": "index.js",
+         "path": "/var/www/fractale/lib"
+      },
+      "order": 36
+   },
+   {
+      "id": "module:Fractale.memory",
+      "longname": "module:Fractale.memory",
+      "name": "memory",
+      "kind": "member",
+      "scope": "static",
+      "description": "Memory that register model instances",
+      "memberof": "module:Fractale",
+      "params": [
+         {
+            "type": {
+               "names": [
+                  "Memory"
+               ]
+            },
+            "name": "memory"
+         }
+      ],
+      "meta": {
+         "lineno": 47,
+         "filename": "index.js",
+         "path": "/var/www/fractale/lib"
+      },
+      "order": 37
+   },
+   {
+      "id": "Factory.validate",
+      "longname": "Factory.validate",
+      "name": "validate",
+      "kind": "function",
+      "scope": "static",
+      "description": "Check if model name is already used",
+      "memberof": "Factory",
+      "params": [
+         {
+            "type": {
+               "names": [
+                  "String"
+               ]
+            },
+            "description": "Name of the model",
+            "name": "name"
+         }
+      ],
+      "meta": {
+         "lineno": 15,
+         "filename": "factory.js",
+         "path": "/var/www/fractale/lib"
+      },
+      "order": 6
+   },
+   {
+      "id": "Factory.createModel",
+      "longname": "Factory.createModel",
+      "name": "createModel",
+      "kind": "function",
+      "scope": "static",
+      "description": "Create a model class",
+      "memberof": "Factory",
+      "params": [
+         {
+            "type": {
+               "names": [
+                  "String"
+               ]
+            },
+            "description": "Name of the model",
+            "name": "name"
+         },
+         {
+            "type": {
+               "names": [
+                  "String",
+                  "Model"
+               ]
+            },
+            "description": "Parent from which the schema is inherited",
+            "name": "parent"
+         },
+         {
+            "type": {
+               "names": [
+                  "Object"
+               ]
+            },
+            "description": "Schema of the model",
+            "name": "schema"
+         },
+         {
+            "type": {
+               "names": [
+                  "Object"
+               ]
+            },
+            "name": "options"
+         }
+      ],
+      "returns": [
+         {
+            "type": {
+               "names": [
+                  "Model"
+               ]
+            }
+         }
+      ],
+      "meta": {
+         "lineno": 34,
+         "filename": "factory.js",
+         "path": "/var/www/fractale/lib"
+      },
+      "order": 7
+   },
+   {
+      "id": "Table.read",
+      "longname": "Table.read",
+      "name": "read",
+      "kind": "function",
+      "scope": "static",
+      "description": "Get an entity saved by its ID",
+      "memberof": "Table",
+      "params": [
+         {
+            "name": "uuid"
+         }
+      ],
+      "returns": [
+         {
+            "type": {
+               "names": [
+                  "Model",
+                  "undefined"
+               ]
+            }
+         }
+      ],
+      "meta": {
+         "lineno": 17,
+         "filename": "table.js",
+         "path": "/var/www/fractale/lib/memory"
+      },
+      "order": 23
+   },
+   {
+      "id": "Memory.createTable",
+      "longname": "Memory.createTable",
+      "name": "createTable",
+      "kind": "function",
+      "scope": "static",
+      "description": "Create a Table from a model",
+      "memberof": "Memory",
+      "params": [
+         {
+            "name": "model"
+         }
+      ],
+      "returns": [
+         {
+            "type": {
+               "names": [
+                  "Table",
+                  "undefined"
+               ]
+            }
+         }
+      ],
+      "meta": {
+         "lineno": 29,
+         "filename": "index.js",
+         "path": "/var/www/fractale/lib/memory"
+      },
+      "order": 26
+   },
+   {
+      "id": "Memory.create",
+      "longname": "Memory.create",
+      "name": "create",
+      "kind": "function",
+      "scope": "static",
+      "description": "Shortcut to create method of a table",
+      "memberof": "Memory",
+      "params": [
+         {
+            "type": {
+               "names": [
+                  "Model",
+                  "String"
+               ]
+            },
+            "description": "The key of the table",
+            "name": "entity"
+         },
+         {
+            "type": {
+               "names": [
+                  "Model"
+               ]
+            },
+            "description": "Entity to save",
+            "name": "item"
+         }
+      ],
+      "returns": [
+         {
+            "type": {
+               "names": [
+                  "Promise.<Model>",
+                  "Model",
+                  "undefined"
+               ]
+            }
+         }
+      ],
+      "meta": {
+         "lineno": 109,
+         "filename": "index.js",
+         "path": "/var/www/fractale/lib/memory"
+      },
+      "order": 27
+   },
+   {
+      "id": "EventListener.emit",
+      "longname": "EventListener.emit",
+      "name": "emit",
+      "kind": "function",
+      "scope": "static",
+      "description": "Proxy to dispatchEvent method",
+      "memberof": "EventListener",
+      "params": [
+         {
+            "type": {
+               "names": [
+                  "String"
+               ]
+            },
+            "description": "Event name",
+            "name": "name"
+         },
+         {
+            "type": {
+               "names": [
+                  "Object"
+               ]
+            },
+            "variable": true,
+            "description": "Parameter send to callback",
+            "name": "details"
+         }
+      ],
+      "see": [
+         "EventListener#dispatchEvent"
+      ],
+      "meta": {
+         "lineno": 13,
+         "filename": "event_listener.js",
+         "path": "/var/www/fractale/lib/utils"
+      },
+      "order": 30
+   },
+   {
+      "id": "module:Fractale.create",
+      "longname": "module:Fractale.create",
+      "name": "create",
+      "kind": "function",
+      "scope": "static",
+      "description": "Proxy to Factory createModel method",
+      "memberof": "module:Fractale",
+      "see": [
+         "Factory"
+      ],
+      "meta": {
+         "lineno": 53,
+         "filename": "index.js",
+         "path": "/var/www/fractale/lib"
+      },
+      "order": 38
+   },
+   {
+      "id": "module:Fractale.get",
+      "longname": "module:Fractale.get",
+      "name": "get",
+      "kind": "function",
+      "scope": "static",
+      "description": "Proxy to Library get method",
+      "memberof": "module:Fractale",
+      "see": [
+         "Library"
+      ],
+      "meta": {
+         "lineno": 62,
+         "filename": "index.js",
+         "path": "/var/www/fractale/lib"
+      },
+      "order": 39
+   },
+   {
+      "id": "module:Fractale.setOption",
+      "longname": "module:Fractale.setOption",
+      "name": "setOption",
+      "kind": "function",
+      "scope": "static",
+      "description": "Proxy to Option set method",
+      "memberof": "module:Fractale",
+      "see": [
+         "Option"
+      ],
+      "meta": {
+         "lineno": 73,
+         "filename": "index.js",
+         "path": "/var/www/fractale/lib"
+      },
+      "order": 40
+   },
+   {
+      "id": "module:Fractale.getOption",
+      "longname": "module:Fractale.getOption",
+      "name": "getOption",
+      "kind": "function",
+      "scope": "static",
+      "description": "Proxy to Option get method",
+      "memberof": "module:Fractale",
+      "see": [
+         "Option"
+      ],
+      "meta": {
+         "lineno": 82,
+         "filename": "index.js",
+         "path": "/var/www/fractale/lib"
+      },
+      "order": 41
+   },
+   {
+      "id": "module:Fractale.setModel",
+      "longname": "module:Fractale.setModel",
+      "name": "setModel",
+      "kind": "function",
+      "scope": "static",
+      "description": "Set the Model base class",
+      "memberof": "module:Fractale",
+      "meta": {
+         "lineno": 91,
+         "filename": "index.js",
+         "path": "/var/www/fractale/lib"
+      },
+      "order": 42
+   },
+   {
+      "id": "module:Fractale.getModel",
+      "longname": "module:Fractale.getModel",
+      "name": "getModel",
+      "kind": "function",
+      "scope": "static",
+      "description": "Set the Model base class",
+      "memberof": "module:Fractale",
+      "see": [
+         "Model"
+      ],
+      "meta": {
+         "lineno": 99,
+         "filename": "index.js",
+         "path": "/var/www/fractale/lib"
+      },
+      "order": 43
+   },
+   {
+      "id": "module:Fractale.from",
+      "longname": "module:Fractale.from",
+      "name": "from",
+      "kind": "function",
+      "scope": "static",
+      "description": "Proxy to async model type",
+      "memberof": "module:Fractale",
+      "meta": {
+         "lineno": 108,
+         "filename": "index.js",
+         "path": "/var/www/fractale/lib"
+      },
+      "order": 44
+   },
+   {
+      "id": "module:Fractale.validate",
+      "longname": "module:Fractale.validate",
+      "name": "validate",
+      "kind": "function",
+      "scope": "static",
+      "description": "Proxy to Factory validate method",
+      "memberof": "module:Fractale",
+      "see": [
+         "Factory"
+      ],
+      "meta": {
+         "lineno": 116,
+         "filename": "index.js",
+         "path": "/var/www/fractale/lib"
+      },
+      "order": 45
+   },
+   {
+      "id": "module:Fractale..with",
+      "longname": "module:Fractale..with",
+      "name": "with",
+      "kind": "function",
+      "scope": "static",
+      "description": "Helper to create type with options",
+      "memberof": "module:Fractale.",
+      "params": [
+         {
+            "type": {
+               "names": [
+                  "undefined",
+                  "Boolean",
+                  "Number",
+                  "String",
+                  "Date",
+                  "Model",
+                  "Array",
+                  "Object"
+               ]
+            },
+            "description": "Property type",
+            "name": "type"
+         },
+         {
+            "type": {
+               "names": [
+                  "Object"
+               ]
+            },
+            "description": "Options pass to type",
+            "name": "options"
+         }
+      ],
+      "meta": {
+         "lineno": 125,
+         "filename": "index.js",
+         "path": "/var/www/fractale/lib"
+      },
+      "order": 46
+   },
+   {
+      "id": "module:Fractale.stringify",
+      "longname": "module:Fractale.stringify",
+      "name": "stringify",
+      "kind": "function",
+      "scope": "static",
+      "description": "Stringify a model",
+      "memberof": "module:Fractale",
+      "meta": {
+         "lineno": 135,
+         "filename": "index.js",
+         "path": "/var/www/fractale/lib"
+      },
+      "order": 47
+   },
+   {
+      "id": "Schema.evaluate",
+      "longname": "Schema.evaluate",
+      "name": "evaluate",
+      "kind": "function",
+      "scope": "static",
+      "description": "Evaluate what kind of property the input is",
+      "memberof": "Schema",
+      "params": [
+         {
+            "type": {
+               "names": [
+                  "String"
+               ]
+            },
+            "name": "key"
+         },
+         {
+            "type": {
+               "names": [
+                  "*"
+               ]
+            },
+            "name": "input"
+         },
+         {
+            "type": {
+               "names": [
+                  "Object"
+               ]
+            },
+            "name": "options"
+         }
+      ],
+      "returns": [
+         {
+            "type": {
+               "names": [
+                  "PropertyType"
+               ]
+            }
+         }
+      ],
+      "exceptions": [
+         {
+            "description": "SchemaError"
+         }
+      ],
+      "meta": {
+         "lineno": 47,
+         "filename": "schema.js",
+         "path": "/var/www/fractale/lib/property"
+      },
+      "order": 58
+   },
+   {
+      "id": "Property.explode",
+      "longname": "Property.explode",
+      "name": "explode",
+      "kind": "function",
+      "scope": "static",
+      "description": "Create a new property for ModelPropertyType\nIt helps for display comprehensible errors",
+      "memberof": "Property",
+      "params": [
+         {
+            "type": {
+               "names": [
+                  "String"
+               ]
+            },
+            "name": "key"
+         }
+      ],
+      "returns": [
+         {
+            "type": {
+               "names": [
+                  "Property"
+               ]
+            }
+         }
+      ],
+      "meta": {
+         "lineno": 20,
+         "filename": "index.js",
+         "path": "/var/www/fractale/lib/property"
+      },
+      "order": 65
+   }
+]

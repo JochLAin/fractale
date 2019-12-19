@@ -22,7 +22,11 @@ module.exports.run = () => {
             if (group.children) {
                 return `\n${Array(level).fill('#').join('')} ${group.title}\n\n${group.children.map(child => closure(child, level + 1)).join('\n')}`;
             }
-            return `* [${group.title}](https://github.com/JochLAin/fractale/wiki/docs/${group.url})`;
+            let url = group.url;
+            url = url.slice(url.lastIndexOf('/') + 1);
+            url = url.split('.')[0];
+
+            return `* [${group.title}](https://github.com/JochLAin/fractale/wiki/${url})`;
         };
         const content = closure(summary).trim();
         fs.write(path.resolve(__dirname, '../wiki', '_Sidebar.md'), content);
