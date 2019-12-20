@@ -56,6 +56,7 @@ module.exports.get = () => {
 };
 
 module.exports.run = () => {
+    fs.remove(path.resolve(__dirname, '../wiki', 'docs/examples/*'));
     const promises = module.exports.get().map(promise => promise.then((test) => {
         const filename = path.resolve(__dirname, '../wiki/docs/examples', `${test.name}.md`);
         fs.write(filename, test.content);

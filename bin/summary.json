@@ -2,13 +2,35 @@
    "title": "Summary",
    "children": [
       {
-         "title": "Introduction",
-         "url": ""
+         "title": "Introduction"
       },
       {
          "title": "Philosophy",
-         "url": "philosophy",
          "file": "philosophy.md"
+      },
+      {
+         "title": "Usage",
+         "file": "usage.md"
+      },
+      {
+         "title": "Options",
+         "file": "options.md"
+      },
+      {
+         "title": "Plugin",
+         "file": "plugin.md"
+      },
+      {
+         "title": "Provider",
+         "file": "provider.md"
+      },
+      {
+         "title": "Bridge",
+         "file": "bridge.md"
+      },
+      {
+         "title": "Performance",
+         "file": "performance.md"
       },
       {
          "title": "API Documentation",
@@ -19,19 +41,14 @@
                "file": "api/fractale.md"
             },
             {
-               "title": "PropTypesBridge",
-               "url": "api/proptypesbridge",
-               "file": "api/proptypesbridge.md"
+               "title": "Factory",
+               "url": "api/factory",
+               "file": "api/factory.md"
             },
             {
                "title": "Library",
                "url": "api/library",
                "file": "api/library.md"
-            },
-            {
-               "title": "SchemaError",
-               "url": "api/schemaerror",
-               "file": "api/schemaerror.md"
             },
             {
                "title": "Schema",
@@ -59,9 +76,9 @@
                "file": "api/memory.md"
             },
             {
-               "title": "Factory",
-               "url": "api/factory",
-               "file": "api/factory.md"
+               "title": "Table",
+               "url": "api/table",
+               "file": "api/table.md"
             },
             {
                "title": "Provider",
@@ -104,9 +121,29 @@
                "file": "api/mongoosebridge.md"
             },
             {
-               "title": "Table",
-               "url": "api/table",
-               "file": "api/table.md"
+               "title": "PropTypesBridge",
+               "url": "api/proptypesbridge",
+               "file": "api/proptypesbridge.md"
+            },
+            {
+               "title": "IncorrectValidatorTypeError",
+               "url": "api/incorrectvalidatortypeerror",
+               "file": "api/incorrectvalidatortypeerror.md"
+            },
+            {
+               "title": "IncorrectTypeError",
+               "url": "api/incorrecttypeerror",
+               "file": "api/incorrecttypeerror.md"
+            },
+            {
+               "title": "SchemaError",
+               "url": "api/schemaerror",
+               "file": "api/schemaerror.md"
+            },
+            {
+               "title": "ValidatorError",
+               "url": "api/validatorerror",
+               "file": "api/validatorerror.md"
             }
          ]
       },

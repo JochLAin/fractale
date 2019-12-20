@@ -147,13 +147,142 @@
       "order": 28
    },
    {
+      "id": "IncorrectTypeError()",
+      "longname": "IncorrectTypeError",
+      "name": "IncorrectTypeError",
+      "kind": "constructor",
+      "memberof": "IncorrectTypeError",
+      "params": [
+         {
+            "type": {
+               "names": [
+                  "PropertyType"
+               ]
+            },
+            "description": "Type which throw error",
+            "name": "type"
+         },
+         {
+            "type": {
+               "names": [
+                  "String"
+               ]
+            },
+            "description": "The expected type",
+            "name": "expected"
+         },
+         {
+            "type": {
+               "names": [
+                  "*"
+               ]
+            },
+            "description": "The received value",
+            "name": "received"
+         }
+      ],
+      "order": 30
+   },
+   {
+      "id": "IncorrectValidatorTypeError()",
+      "longname": "IncorrectValidatorTypeError",
+      "name": "IncorrectValidatorTypeError",
+      "kind": "constructor",
+      "memberof": "IncorrectValidatorTypeError",
+      "params": [
+         {
+            "type": {
+               "names": [
+                  "PropertyType"
+               ]
+            },
+            "description": "Type which throw error",
+            "name": "type"
+         },
+         {
+            "type": {
+               "names": [
+                  "String"
+               ]
+            },
+            "description": "Validator key",
+            "name": "key"
+         },
+         {
+            "type": {
+               "names": [
+                  "String"
+               ]
+            },
+            "description": "The expected type",
+            "name": "expected"
+         },
+         {
+            "type": {
+               "names": [
+                  "String"
+               ]
+            },
+            "description": "The received type",
+            "name": "received"
+         }
+      ],
+      "order": 32
+   },
+   {
+      "id": "ValidatorError()",
+      "longname": "ValidatorError",
+      "name": "ValidatorError",
+      "kind": "constructor",
+      "memberof": "ValidatorError",
+      "params": [
+         {
+            "type": {
+               "names": [
+                  "PropertyType"
+               ]
+            },
+            "description": "Type which throw error",
+            "name": "type"
+         },
+         {
+            "type": {
+               "names": [
+                  "String"
+               ]
+            },
+            "description": "Validator key",
+            "name": "key"
+         },
+         {
+            "type": {
+               "names": [
+                  "String"
+               ]
+            },
+            "description": "The expected type",
+            "name": "expected"
+         },
+         {
+            "type": {
+               "names": [
+                  "String"
+               ]
+            },
+            "description": "The received type",
+            "name": "received"
+         }
+      ],
+      "order": 34
+   },
+   {
       "id": "ArrayPropertyType()",
       "longname": "ArrayPropertyType",
       "name": "ArrayPropertyType",
       "kind": "constructor",
       "description": "Define property on an instance of array",
       "memberof": "ArrayPropertyType",
-      "order": 30
+      "order": 36
    },
    {
       "id": "Memory()",
@@ -162,7 +291,7 @@
       "kind": "constructor",
       "description": "Memory which manage save of an entity into stores",
       "memberof": "Memory",
-      "order": 32
+      "order": 38
    },
    {
       "id": "Table()",
@@ -191,7 +320,7 @@
             "name": "provider"
          }
       ],
-      "order": 35
+      "order": 41
    },
    {
       "id": "Provider()",
@@ -220,7 +349,7 @@
             "name": "options"
          }
       ],
-      "order": 37
+      "order": 43
    },
    {
       "id": "InternalProvider()",
@@ -229,7 +358,7 @@
       "kind": "constructor",
       "description": "Provider that save entities into a Map",
       "memberof": "InternalProvider",
-      "order": 39
+      "order": 45
    },
    {
       "id": "LocalProvider()",
@@ -238,7 +367,7 @@
       "kind": "constructor",
       "description": "Provider that save entities into a LocalStorage",
       "memberof": "LocalProvider",
-      "order": 41
+      "order": 47
    },
    {
       "id": "SessionProvider()",
@@ -247,7 +376,7 @@
       "kind": "constructor",
       "description": "Provider that save entities into SessionStorage",
       "memberof": "SessionProvider",
-      "order": 43
+      "order": 49
    },
    {
       "id": "CookieProvider()",
@@ -256,7 +385,7 @@
       "kind": "constructor",
       "description": "Provider that save entities into cookie",
       "memberof": "CookieProvider",
-      "order": 45
+      "order": 51
    },
    {
       "id": "IndexedDBProvider()",
@@ -265,7 +394,7 @@
       "kind": "constructor",
       "description": "Provider that save entities into an IndexedDB",
       "memberof": "IndexedDBProvider",
-      "order": 47
+      "order": 53
    },
    {
       "id": "Bridge()",
@@ -285,7 +414,7 @@
             "name": "name"
          }
       ],
-      "order": 49
+      "order": 55
    },
    {
       "id": "MongooseBridge()",
@@ -294,7 +423,7 @@
       "kind": "constructor",
       "description": "Mongoose bridge that transform model into mongoose model",
       "memberof": "MongooseBridge",
-      "order": 51
+      "order": 57
    },
    {
       "id": "PropTypesBridge()",
@@ -303,7 +432,7 @@
       "kind": "constructor",
       "description": "PropTypes bridge that transform model into PropTypes object",
       "memberof": "PropTypesBridge",
-      "order": 53
+      "order": 59
    },
    {
       "id": "Factory",
@@ -472,6 +601,54 @@
       "order": 27
    },
    {
+      "id": "IncorrectTypeError",
+      "longname": "IncorrectTypeError",
+      "name": "IncorrectTypeError",
+      "kind": "class",
+      "scope": "global",
+      "augments": [
+         "Error"
+      ],
+      "meta": {
+         "lineno": 269,
+         "filename": "index.js",
+         "path": "/var/www/fractale/lib/property/types"
+      },
+      "order": 29
+   },
+   {
+      "id": "IncorrectValidatorTypeError",
+      "longname": "IncorrectValidatorTypeError",
+      "name": "IncorrectValidatorTypeError",
+      "kind": "class",
+      "scope": "global",
+      "augments": [
+         "Error"
+      ],
+      "meta": {
+         "lineno": 294,
+         "filename": "index.js",
+         "path": "/var/www/fractale/lib/property/types"
+      },
+      "order": 31
+   },
+   {
+      "id": "ValidatorError",
+      "longname": "ValidatorError",
+      "name": "ValidatorError",
+      "kind": "class",
+      "scope": "global",
+      "augments": [
+         "Error"
+      ],
+      "meta": {
+         "lineno": 324,
+         "filename": "index.js",
+         "path": "/var/www/fractale/lib/property/types"
+      },
+      "order": 33
+   },
+   {
       "id": "ArrayPropertyType",
       "longname": "ArrayPropertyType",
       "name": "ArrayPropertyType",
@@ -488,7 +665,7 @@
          "filename": "index.js",
          "path": "/var/www/fractale/lib/property/types/array"
       },
-      "order": 29
+      "order": 35
    },
    {
       "id": "Memory",
@@ -525,7 +702,7 @@
          "filename": "index.js",
          "path": "/var/www/fractale/lib/memory"
       },
-      "order": 31
+      "order": 37
    },
    {
       "id": "Table",
@@ -541,7 +718,7 @@
          "filename": "table.js",
          "path": "/var/www/fractale/lib/memory"
       },
-      "order": 34
+      "order": 40
    },
    {
       "id": "Provider",
@@ -565,7 +742,7 @@
          "filename": "index.js",
          "path": "/var/www/fractale/lib/memory/providers"
       },
-      "order": 36
+      "order": 42
    },
    {
       "id": "InternalProvider",
@@ -581,7 +758,7 @@
          "filename": "internal.js",
          "path": "/var/www/fractale/lib/memory/providers"
       },
-      "order": 38
+      "order": 44
    },
    {
       "id": "LocalProvider",
@@ -597,7 +774,7 @@
          "filename": "local.js",
          "path": "/var/www/fractale/lib/memory/providers"
       },
-      "order": 40
+      "order": 46
    },
    {
       "id": "SessionProvider",
@@ -613,7 +790,7 @@
          "filename": "session.js",
          "path": "/var/www/fractale/lib/memory/providers"
       },
-      "order": 42
+      "order": 48
    },
    {
       "id": "CookieProvider",
@@ -629,7 +806,7 @@
          "filename": "cookie.js",
          "path": "/var/www/fractale/lib/memory/providers"
       },
-      "order": 44
+      "order": 50
    },
    {
       "id": "IndexedDBProvider",
@@ -645,7 +822,7 @@
          "filename": "idb.js",
          "path": "/var/www/fractale/lib/memory/providers"
       },
-      "order": 46
+      "order": 52
    },
    {
       "id": "Bridge",
@@ -661,7 +838,7 @@
          "filename": "index.js",
          "path": "/var/www/fractale/lib/bridges"
       },
-      "order": 48
+      "order": 54
    },
    {
       "id": "MongooseBridge",
@@ -680,7 +857,7 @@
          "filename": "mongoose.js",
          "path": "/var/www/fractale/lib/bridges"
       },
-      "order": 50
+      "order": 56
    },
    {
       "id": "PropTypesBridge",
@@ -699,7 +876,7 @@
          "filename": "prop_types.js",
          "path": "/var/www/fractale/lib/bridges"
       },
-      "order": 52
+      "order": 58
    },
    {
       "id": "value",
@@ -745,7 +922,7 @@
          "filename": "index.js",
          "path": "/var/www/fractale/lib/memory"
       },
-      "order": 33
+      "order": 39
    },
    {
       "id": "module:Fractale.Color",

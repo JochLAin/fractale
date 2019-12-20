@@ -29,6 +29,7 @@ module.exports.run = () => {
         path.resolve(__dirname, '../lib', 'bridges/prop_types.js'),
     ];
     return js2md.getTemplateData({ files, configure: path.resolve(__dirname, '..', 'jsdoc.json') }).then((data) => {
+        fs.remove(path.resolve(__dirname, '../wiki', 'docs/api/*'));
         fs.write(path.resolve(__dirname, 'docs.json'), JSON.stringify(data, null, 3));
         return Promise.all(data.reduce((accu, item) => {
             if (item.kind === 'module' && item.name === 'Fractale') accu.push(item);
@@ -36,7 +37,12 @@ module.exports.run = () => {
             return accu;
         }, []).sort((a, b) => {
             if (a.kind === 'module' && b.kind === 'class') return -1;
-            return a.name - b.name;
+            if (a.kind === 'class' && b.kind === 'module') return 1;
+            if (a.augments && a.augments.includes('Error')) return 1;
+            if (b.augments && b.augments.includes('Error')) return -1;
+            const posA = files.indexOf(path.resolve(a.meta.path, a.meta.filename));
+            const posB = files.indexOf(path.resolve(b.meta.path, b.meta.filename));
+            return (posA - posB) > 0 ? 1 : -1;
         }).map((item) => {
             logger.debug(`Generate documentation for ${item.name}`);
             const template = `{{#${item.kind} name="${item.name}"}}{{>docs}}{{/${item.kind}}}`;
