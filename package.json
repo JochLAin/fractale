@@ -10,9 +10,9 @@
     "build-doc": "npm run build-examples && npm run build-api && npm run build-summary && cp README.md wiki/Home.md",
     "prepare-doc": "npx gitbook install",
     "serve-doc": "npm run prepare-doc && npm run build-doc && npx gitbook serve ./wiki",
-    "publish-major": "npm run test && npm run build-doc && npm version major && git push origin master && git push --tags && npm publish",
-    "publish-minor": "npm run test && npm run build-doc && npm version minor && git push origin master && git push --tags && npm publish",
-    "publish-patch": "npm run test && npm run build-doc && npm version patch && git push origin master && git push --tags && npm publish",
+    "publish-major": "npm run test && npm version major && git push origin master && git push --tags && npm publish",
+    "publish-minor": "npm run test && npm version minor && git push origin master && git push --tags && npm publish",
+    "publish-patch": "npm run test && npm version patch && git push origin master && git push --tags && npm publish",
     "test": "node --max-old-space-size=4096 ./tests/index.js"
   },
   "repository": {
