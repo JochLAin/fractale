@@ -11,6 +11,7 @@ module.exports.run = () => {
             if (group.children) {
                 return `\n${Array(level).fill('#').join('')} ${group.title}\n\n${group.children.map(child => closure(child, level + 1)).join('\n')}\n`;
             }
+            if (!group.url) return '';
             return `* [${group.title}](${group.url})`;
         };
         const content = closure(summary).trim();
