@@ -19,6 +19,7 @@ module.exports.getAPI = (files, data) => {
             return module.exports.render(data, item).then(() => item);
         })
     ).then(items => {
+        console.log(items);
         return module.exports.writeSummary('API Documentation', items);
     });
 };
@@ -36,6 +37,7 @@ module.exports.getError = (files, data) => {
             return module.exports.render(data, item).then(() => item);
         })
     ).then(items => {
+        console.log(items);
         return module.exports.writeSummary('Error', items);
     });
 };
