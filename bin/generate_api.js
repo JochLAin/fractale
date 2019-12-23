@@ -5,11 +5,11 @@ const logger = require('crieur');
 const path = require('path');
 const fs = require('./utils/filesystem');
 
-module.exports.getAPI = (data, files) => {
+module.exports.getAPI = (files, data) => {
     return Promise.all(
-        data.filter((accu, item) => {
+        data.filter((item) => {
             return (item.augments ? !item.augments.includes('Error') : true) && ['module', 'class'].includes(item.kind);
-        }, []).sort((a, b) => {
+        }).sort((a, b) => {
             if (a.kind === 'module' && b.kind === 'class') return -1;
             if (a.kind === 'class' && b.kind === 'module') return 1;
             const posA = files.indexOf(path.resolve(a.meta.path, a.meta.filename));
@@ -23,15 +23,16 @@ module.exports.getAPI = (data, files) => {
     });
 };
 
-module.exports.getError = (data, files) => {
+module.exports.getError = (files, data) => {
+    const errors = data.filter((item) => {
+        return item.augments && item.augments.includes('Error');
+    }).sort((a, b) => {
+        const posA = files.indexOf(path.resolve(a.meta.path, a.meta.filename));
+        const posB = files.indexOf(path.resolve(b.meta.path, b.meta.filename));
+        return (posA - posB) > 0 ? 1 : -1;
+    });
     return Promise.all(
-        data.filter((accu, item) => {
-            return item.augments && item.augments.includes('Error');
-        }, []).sort((a, b) => {
-            const posA = files.indexOf(path.resolve(a.meta.path, a.meta.filename));
-            const posB = files.indexOf(path.resolve(b.meta.path, b.meta.filename));
-            return (posA - posB) > 0 ? 1 : -1;
-        }).map((item) => {
+        errors.map((item) => {
             return module.exports.render(data, item).then(() => item);
         })
     ).then(items => {
@@ -75,8 +76,8 @@ module.exports.run = () => {
         fs.remove(path.resolve(__dirname, '../wiki', 'docs/api/*'));
         fs.write(path.resolve(__dirname, 'docs.json'), JSON.stringify(data, null, 3));
         return Promise.all([
-            module.exports.getAPI(data, files),
-            module.exports.getError(data, files),
+            module.exports.getAPI(files, data),
+            module.exports.getError(files, data),
         ]).then(() => data);
     });
 };
