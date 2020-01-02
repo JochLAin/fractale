@@ -1,3 +1,6 @@
 [submodule "wiki"]
 	path = wiki
 	url = git@github.com:JochLAin/fractale.wiki.git
+[submodule "bin"]
+	path = bin
+	url = git@github.com:JochLAin/doc-fractale.git
