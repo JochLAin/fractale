@@ -48,7 +48,7 @@ module.exports.resolver = (resolve) => {
 
     instance.mixed = -1;
     instance.boolean = true;
-    instance.number = 42;
+    instance.number = '42';
     instance.bigint = 42n;
     instance.string = 'Dolor sit amet';
     instance.color = 'rgba(0, 0, 255, 0)';
