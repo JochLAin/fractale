@@ -1,4 +1,4 @@
-const moment = require('moment');
+// const moment = require('moment');
 
 class TestError extends Error {
     constructor(message, value, expected) {
@@ -34,8 +34,9 @@ module.exports.test = (value, expected, message) => {
 };
 
 module.exports.watch = (callback) => {
-    const start = moment();
+    // const start = moment();
     callback();
-    const end = moment();
-    return (end.valueOf() - start.valueOf()) / 1000;
+    // const end = moment();
+    // return (end.valueOf() - start.valueOf()) / 1000;
+    return 0;
 };

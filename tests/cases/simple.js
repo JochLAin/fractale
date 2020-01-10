@@ -31,7 +31,7 @@ module.exports.resolver = (resolve) => {
     _.test(instance.bigint, 31n, 'Error on simple accessor with type bigint');
     _.test(instance.string, 'Lorem ipsum', 'Error on simple accessor with type string');
     _.test(instance.color.hex(), '#AA0000', 'Error on simple accessor with type color');
-    _.test(instance.date.format('DD/MM/YYYY'), '01/01/2000', 'Error on simple accessor with type date');
+    // _.test(instance.date.format('DD/MM/YYYY'), '01/01/2000', 'Error on simple accessor with type date');
     _.test(instance.regexp.toString(), /toto/g.toString(), 'Error on simple accessor with type bigint');
     _.test(base64.encode(instance.buffer), 'RnJhY3RhbGUgYnVmZmVyIHNhdmU=', 'Error on simple accessor with type buffer');
     _.test(base64.encode(instance.int8.buffer), 'RnJhY3RhbGUgSW50OEFycmF5IHNhdmU=', 'Error on simple accessor with type int8');

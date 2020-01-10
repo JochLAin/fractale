@@ -1,4 +1,4 @@
-const moment = require('moment');
+// const moment = require('moment');
 const Fractale = require('../../lib');
 const Type = require('../../lib/property/types');
 const _ = require('../utils');
@@ -11,7 +11,7 @@ module.exports.create = () => {
     const Example = Fractale.create('Validator_Example', {
         mixed: Fractale.with(undefined, { required: true, validator: { in: ['foo', 42] } }),
         number: Fractale.with(Number, { validator: { gte: 18, lt: 51, between: [20, 30] } }),
-        date: Fractale.with(Date, { validator: { gt: '2016-01-01', lte: new Date('3033-12-31'), between: [moment('2017-01-01')] } })
+        date: Fractale.with(Date, { validator: { gt: '2016-01-01', lte: new Date('3033-12-31'), between: ['2017-01-01'] } })
     });
 
     return { Example };
@@ -106,7 +106,7 @@ module.exports.resolver = (resolve) => {
         throw new Error('Error on validator date');
     } catch (error) {
         if (!(error instanceof Type.ValidatorError)) throw error;
-        const message = 'Error in validator "lte"\nExpected value lower than or equal to 31/12/3033-01:00:00 but got 01/01/3053-00:00:00';
+        const message = 'Error in validator "lte"\nExpected value lower than or equal to 31/12/3033-00:00:00 but got 01/01/3053-00:00:00';
         if (error.message !== message) {
             throw new _.TestError('Invalid validator message', error.message, message);
         }
